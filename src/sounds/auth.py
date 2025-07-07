@@ -9,8 +9,6 @@ from .base import Base
 from .constants import COOKIE_ID, VERBOSE_LOG_LEVEL, URLs
 from .exceptions import LoginFailedException
 
-logger = logging.getLogger(__name__)
-
 
 class AuthService(Base):
     @property
@@ -36,7 +34,7 @@ class AuthService(Base):
     async def authenticate(self, username: str, password: str) -> bool:
         """Signs into BBC Sounds"""
         if self.authenticated:
-            logger.log(VERBOSE_LOG_LEVEL, "Existing session found, reusing")
+            self.logger.log(VERBOSE_LOG_LEVEL, "Existing session found, reusing")
             return True
 
         username_url = await self._get_login_form()
@@ -49,7 +47,7 @@ class AuthService(Base):
         soup = BeautifulSoup(html, "html.parser")
         form = soup.find("form")
         if form:
-            logger.debug("Found form successfully")
+            self.logger.debug("Found form successfully")
         # form = soup.find("form", attrs={"id": "loginForm"}) or soup.select_one(
         # "form[action]"
         # )
@@ -63,7 +61,7 @@ class AuthService(Base):
             headers=self._build_headers(),
         )
         username_form_action = self._get_form_action(html_contents)
-        logger.debug(f"Found username form target: {username_form_action}")
+        self.logger.debug(f"Found username form target: {username_form_action}")
         if not username_form_action:
             raise RuntimeError("Could not find BBC sign-in form URL")
         url = f"{URLs.LOGIN_BASE}{username_form_action}"
@@ -77,14 +75,14 @@ class AuthService(Base):
             data={"username": username},
             headers=self._build_headers(referer=URLs.LOGIN_START),
         )
-        logger.log(VERBOSE_LOG_LEVEL, html_contents[:200])
+        self.logger.log(VERBOSE_LOG_LEVEL, html_contents[:200])
 
         # Grab the form target for the password page
         password_form_action = self._get_form_action(html_contents)
         if not password_form_action:
             raise LoginFailedException("Could not find BBC password form URL")
         password_url = f"{URLs.LOGIN_BASE}{password_form_action}"
-        logger.debug(f"Found password form target: {password_url}")
+        self.logger.debug(f"Found password form target: {password_url}")
 
         return password_url
 
@@ -98,7 +96,7 @@ class AuthService(Base):
             allow_redirects=True,
         ) as resp:
             if resp.status != 200 or not self.authenticated:
-                logger.error(f"Login failed, response code {resp.status}")
-                logger.log(constants.VERBOSE_LOG_LEVEL, resp)
+                self.logger.error(f"Login failed, response code {resp.status}")
+                self.logger.log(constants.VERBOSE_LOG_LEVEL, resp)
                 raise LoginFailedException(f"BBC sign-in failed: {resp.status}")
-            logger.info("Authenticated succesfully")
+            self.logger.info("Authenticated succesfully")

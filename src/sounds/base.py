@@ -6,8 +6,6 @@ from typing import Optional
 from .constants import URLs
 from .exceptions import SoundsAPIException
 
-logger = logging.getLogger(__name__)
-
 
 class Base(ABC):
     """Base class for other classes to inherit shared session and state"""
@@ -33,7 +31,7 @@ class Base(ABC):
                 resp.raise_for_status()
                 return resp
         except aiohttp.ClientError as e:
-            logger.error(f"HTTP request failed: {method} {url} - {e}")
+            self.logger.error(f"HTTP request failed: {method} {url} - {e}")
             raise SoundsAPIException(f"Request failed: {e}")
 
     async def _get_json(self, url: str, **kwargs) -> dict:
@@ -46,7 +44,7 @@ class Base(ABC):
                 resp.raise_for_status()
                 return await resp.json()
         except aiohttp.ClientError as e:
-            logger.error(f"HTTP request failed: {url} - {e}")
+            self.logger.error(f"HTTP request failed: {url} - {e}")
             raise SoundsAPIException(f"Request failed: {e}")
 
     async def _get_html(self, url: str, method: str = "GET", **kwargs) -> str:
@@ -58,7 +56,7 @@ class Base(ABC):
                 resp.raise_for_status()
                 return await resp.text()
         except aiohttp.ClientError as e:
-            logger.error(f"HTTP request failed: {method} {url} - {e}")
+            self.logger.error(f"HTTP request failed: {method} {url} - {e}")
             raise SoundsAPIException(f"Request failed: {e}")
 
     async def get_jwt_token(self, station_id):

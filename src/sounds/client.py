@@ -12,8 +12,6 @@ from .stations import StationsService
 from .streaming import StreamingService
 from .models import Segment, Station, Stream
 
-logger = logging.getLogger(__name__)
-
 
 class SoundsClient:
     """A client to interact with the Sounds API"""
@@ -22,10 +20,15 @@ class SoundsClient:
         self,
         session: aiohttp.ClientSession | None = None,
         update_handler: Callable | None = None,
+        logger: logging.Logger | None = None,
         log_level: str | None = None,
     ) -> None:
-        self.setLogger(log_level)
-        logger.log(constants.VERBOSE_LOG_LEVEL, "SoundsClient.__init__()")
+        if logger:
+            self.logger = logger
+        else:
+            self.logger = logging.getLogger()
+            self.setLogger(log_level)
+            self.logger.log(constants.VERBOSE_LOG_LEVEL, "SoundsClient.__init__()")
         self._update_handler = update_handler
         self.current_station: Station | None = None
         self.current_stream: Stream | None = None
@@ -72,9 +75,9 @@ class SoundsClient:
             )
         )
         if log_level:
-            logger.setLevel(log_level)
+            self.logger.setLevel(log_level)
         else:
-            logger.setLevel(constants.VERBOSE_LOG_LEVEL)
+            self.logger.setLevel(constants.VERBOSE_LOG_LEVEL)
 
     async def close(self):
         if self._session and self.managing_session:
@@ -85,5 +88,5 @@ class SoundsClient:
 
     async def __aexit__(self, *args):
         if self._session:
-            logger.debug("Closed session")
+            self.logger.debug("Closed session")
         await self.close()

@@ -12,8 +12,6 @@ from .exceptions import APIResponseException
 from .models import Stream
 from .utils import image_from_recipe
 
-logger = logging.getLogger(__name__)
-
 
 class StreamingService(Base):
 
@@ -39,8 +37,8 @@ class StreamingService(Base):
             raise APIResponseException("Could not find embedded player JSON")
 
         json_response = json.loads(match.group(1))
-        logger.log(constants.VERBOSE_LOG_LEVEL, "Getting stream details...")
-        logger.log(constants.VERBOSE_LOG_LEVEL, json_response)
+        self.logger.log(constants.VERBOSE_LOG_LEVEL, "Getting stream details...")
+        self.logger.log(constants.VERBOSE_LOG_LEVEL, json_response)
 
         programme_details = json_response["programmes"]["current"]
         jwt_token = await self.get_jwt_token(station_id)
@@ -57,7 +55,7 @@ class StreamingService(Base):
 
             try:
                 stream = self.get_best_stream(data["media"][0]["connection"])
-                logger.debug(f"Found stream: {stream}")
+                self.logger.debug(f"Found stream: {stream}")
             except (StopIteration, KeyError):
                 raise RuntimeError("No valid stream found")
 
@@ -78,8 +76,8 @@ class StreamingService(Base):
 
     def get_best_stream(self, streams: dict, prefer_type="hls") -> Optional[str]:
         """Looks for the first valid stream with the requested format."""
-        logger.log(constants.VERBOSE_LOG_LEVEL, "Looking for best stream in:")
-        logger.log(constants.VERBOSE_LOG_LEVEL, streams)
+        self.logger.log(constants.VERBOSE_LOG_LEVEL, "Looking for best stream in:")
+        self.logger.log(constants.VERBOSE_LOG_LEVEL, streams)
 
         return next(
             (

@@ -5,8 +5,6 @@ from .constants import URLs
 from .models import Segment
 from .utils import image_from_recipe
 
-logger = logging.getLogger(__name__)
-
 
 class SegmentsService(Base):
 
