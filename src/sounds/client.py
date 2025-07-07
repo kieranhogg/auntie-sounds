@@ -5,7 +5,7 @@ from colorlog import ColoredFormatter
 
 import aiohttp
 
-import constants
+from . import constants
 from .auth import AuthService
 from .segments import SegmentsService
 from .stations import StationsService
