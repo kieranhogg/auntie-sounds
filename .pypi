@@ -13,7 +13,13 @@ package_tagline: 'A module for interacting with BBC Radio stations and streams'
 package_title: auntie-sounds
 project_env: ''
 readme: .github/README.md
-requires: []
+requires: [
+  "aiohttp",
+  "beautifulsoup4",
+  "colorlog",
+  "typing-extensions",
+  "yarl"
+]
 scripts: []
 skip: []
 test_requires: []
