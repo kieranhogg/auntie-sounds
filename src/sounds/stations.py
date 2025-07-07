@@ -1,5 +1,6 @@
 import logging
-from . import constantsfrom .base import Base
+from . import constants
+from .base import Base
 from .constants import URLs
 from .models import Station
 from .utils import network_logo

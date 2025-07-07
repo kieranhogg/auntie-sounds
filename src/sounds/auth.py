@@ -4,7 +4,8 @@ from bs4 import BeautifulSoup
 
 from yarl import URL
 
-from . import constantsfrom .base import Base
+from . import constants
+from .base import Base
 from .constants import COOKIE_ID, VERBOSE_LOG_LEVEL, URLs
 from .exceptions import LoginFailedException
 
