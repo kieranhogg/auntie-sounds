@@ -7,11 +7,11 @@ from typing import Optional
 from src.sounds import constants
 
 from .utils import network_logo
-from src.sounds.base import Base
-from src.sounds.constants import URLs
-from src.sounds.exceptions import APIResponseException
-from src.sounds.models import Stream
-from src.sounds.utils import image_from_recipe
+from .base import Base
+from .constants import URLs
+from .exceptions import APIResponseException
+from .models import Stream
+from .utils import image_from_recipe
 
 logger = logging.getLogger(__name__)
 

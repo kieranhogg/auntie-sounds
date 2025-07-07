@@ -1,9 +1,9 @@
 import logging
 
-from src.sounds.base import Base
-from src.sounds.constants import URLs
-from src.sounds.models import Segment
-from src.sounds.utils import image_from_recipe
+from .base import Base
+from .constants import URLs
+from .models import Segment
+from .utils import image_from_recipe
 
 logger = logging.getLogger(__name__)
 

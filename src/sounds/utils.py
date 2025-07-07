@@ -1,4 +1,4 @@
-from src.sounds.constants import ImageType
+from .constants import ImageType
 
 
 def network_logo(

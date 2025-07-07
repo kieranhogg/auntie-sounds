@@ -5,13 +5,12 @@ from colorlog import ColoredFormatter
 
 import aiohttp
 
-from src.sounds import constants
-from src.sounds.constants import VERBOSE_LOG_LEVEL
-from src.sounds.auth import AuthService
-from src.sounds.segments import SegmentsService
-from src.sounds.stations import StationsService
-from src.sounds.streaming import StreamingService
-from src.sounds.models import Segment, Station, Stream
+import constants
+from .auth import AuthService
+from .segments import SegmentsService
+from .stations import StationsService
+from .streaming import StreamingService
+from .models import Segment, Station, Stream
 
 logger = logging.getLogger(__name__)
 
@@ -51,9 +50,9 @@ class SoundsClient:
         self.segments = SegmentsService(**service_kwargs)
 
     def setLogger(self, log_level=None):
-        logging.addLevelName(VERBOSE_LOG_LEVEL, "VERBOSE")
+        logging.addLevelName(constants.VERBOSE_LOG_LEVEL, "VERBOSE")
         logging.basicConfig(
-            level=VERBOSE_LOG_LEVEL,
+            level=constants.VERBOSE_LOG_LEVEL,
             format="%(asctime)s -%(levelname)s -on line: %(lineno)d -%(message)s",
         )
         log_fmt = "%(asctime)s.%(msecs)03d %(levelname)s (%(threadName)s) [%(name)s] %(message)s"
@@ -75,7 +74,7 @@ class SoundsClient:
         if log_level:
             logger.setLevel(log_level)
         else:
-            logger.setLevel(VERBOSE_LOG_LEVEL)
+            logger.setLevel(constants.VERBOSE_LOG_LEVEL)
 
     async def close(self):
         if self._session and self.managing_session:

@@ -1,9 +1,9 @@
 import logging
 from src.sounds import constants
-from src.sounds.base import Base
-from src.sounds.constants import URLs
-from src.sounds.models import Station
-from src.sounds.utils import network_logo
+from .base import Base
+from .constants import URLs
+from .models import Station
+from .utils import network_logo
 
 logger = logging.getLogger(__name__)
 
