@@ -1,6 +1,6 @@
 [project]
 name = "auntie-sounds"
-version = "0.1.0"
+version = "1.0"
 description = "A module for interacting with BBC Radio stations and streams"
 readme = "README.md"
 requires-python = ">=3.13"
@@ -19,3 +19,13 @@ dependencies = [
     "typing-extensions>=4.14.1",
     "yarl>=1.20.1",
 ]
+
+[build-system]
+requires = ["uv_build>=0.7.19,<0.8"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+package-dir = "src"
+namespace = true
+module-name = "sounds"
+
