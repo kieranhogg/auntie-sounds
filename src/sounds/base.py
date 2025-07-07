@@ -13,7 +13,6 @@ class Base(ABC):
     def __init__(
         self,
         session: aiohttp.ClientSession,
-        logger: Optional[logging.Logger] = None,
         timeout: Optional[aiohttp.ClientTimeout] = None,
     ):
         self._session = session

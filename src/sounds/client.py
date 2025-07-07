@@ -45,6 +45,7 @@ class SoundsClient:
         service_kwargs = {
             "session": self._session,
             "timeout": self.timeout,
+            "logger": self.logger,
         }
 
         self.auth = AuthService(**service_kwargs)
