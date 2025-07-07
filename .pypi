@@ -1,0 +1,24 @@
+a_description_for_the_package: A module for interacting with BBC Radio stations and streams
+classifiers:
+- 'Programming Language :: Python :: 3'
+console_scripts: []
+first_year_of_publication: '2025'
+github_account: kieranhogg
+github_repo_name: auntie-sounds
+keywords_describing_the_package: BBC Sounds streaming radio API
+license: Apache License 2.0
+package_module_name: sounds
+package_name: auntie-sounds
+package_tagline: 'A module for interacting with BBC Radio stations and streams'
+package_title: auntie-sounds
+project_env: ''
+readme: .github/README.md
+requires: []
+scripts: []
+skip: []
+test_requires: []
+version: 1.0
+your_author_name: Kieran Hogg
+your_email_address: kieran.hogg@gmail.com
+your_full_name: Kieran Hogg
+your_name: Kieran Hogg

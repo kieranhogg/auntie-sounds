@@ -3,7 +3,6 @@ aiohttp==3.12.13
 aiosignal==1.4.0
 attrs==25.3.0
 beautifulsoup4==4.13.4
-bs4==0.0.2
 colorlog==6.9.0
 frozenlist==1.7.0
 idna==3.10

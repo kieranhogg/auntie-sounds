@@ -1,0 +1,21 @@
+[project]
+name = "auntie-sounds"
+version = "0.1.0"
+description = "A module for interacting with BBC Radio stations and streams"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "aiohappyeyeballs>=2.6.1",
+    "aiohttp>=3.12.13",
+    "aiosignal>=1.4.0",
+    "attrs>=25.3.0",
+    "beautifulsoup4>=4.13.4",
+    "colorlog>=6.9.0",
+    "frozenlist>=1.7.0",
+    "idna>=3.10",
+    "multidict>=6.6.3",
+    "propcache>=0.3.2",
+    "soupsieve>=2.7",
+    "typing-extensions>=4.14.1",
+    "yarl>=1.20.1",
+]

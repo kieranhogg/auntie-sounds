@@ -9,7 +9,7 @@ DESCRIPTION = "A module for interacting with BBC Radio stations and streams"
 LICENSE = "Apache License 2.0"
 KEYWORDS = "BBC Sounds streaming radio API"
 URL = "https://github.com/kieranhogg/" + NAME
-README = ".github/README.md"
+README = "README.md"
 CLASSIFIERS = [
     "Programming Language :: Python :: 3",
 ]
