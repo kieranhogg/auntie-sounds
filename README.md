@@ -15,8 +15,8 @@ A library for interacting with BBC radio stations via an interface to BBC Sounds
 ❌ Displaying and listening to previous shows
 
 ## Notes
-- While not a requirement, it is written as an async library
-- A BBC account is required to authenticate with to retrieve a working stream
+- It is written as an async library
+- A BBC account is not required for most actions, but as BBC region-locks streams, is it the supported way to use it
 
 ## Example Usage
 
@@ -30,10 +30,6 @@ async def main():
             stations = await client.stations.get_stations()
             stream = await client.streaming.get_stream_info("bbc_6music")
             segments = await client.segments.now_playing("bbc_6music")
-
-            # Services share state automatically
-            assert client.auth._session is client.streaming._session
-
 
 asyncio.run(main())
 ```
