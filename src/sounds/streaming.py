@@ -4,8 +4,7 @@ import re
 from datetime import datetime as dt
 from typing import Optional
 
-from src.sounds import constants
-
+from . import constants
 from .utils import network_logo
 from .base import Base
 from .constants import URLs
