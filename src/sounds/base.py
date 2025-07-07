@@ -13,9 +13,11 @@ class Base(ABC):
     def __init__(
         self,
         session: aiohttp.ClientSession,
+        logger: logging.Logger | None = None,
         timeout: Optional[aiohttp.ClientTimeout] = None,
     ):
         self._session = session
+        self.logger = logger
         self._timeout = timeout or aiohttp.ClientTimeout(total=10)
 
     async def _make_request(
