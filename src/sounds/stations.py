@@ -37,7 +37,7 @@ class StationsService(Base):
         # TODO: include listings here?
         json_resp = await self._get_json(URLs.STATIONS_URL)
         self.logger.log(constants.VERBOSE_LOG_LEVEL, "Getting station list...")
-        self.logger.log(constants.VERBOSE_LOG_LEVEL, json_resp)
+        self.logger.log(constants.VERBOSE_LOG_LEVEL, json_resp["data"][0]["data"])
         station_data = [
             station for station in json_resp if station["id"] == station_id
         ][0]
