@@ -17,28 +17,19 @@ class StreamingService(Base):
 
     async def get_stream_info(
         self,
-        station_id: str | None = None,
-        station: Station | None = None,
+        station: Station,
         stream_format="hls",
         logo_size=800,
     ) -> Stream:
         """
         Gets the stream and details of the currently playing show on a given station.
 
-        :param station_id: The id of the station, e.g. bbc_6music
-        :param station: A Station object,
+        :param station: A Station object
         :type station_id: str
         :returns: Stream object of stream information
         :rtype: Stream
         """
-        if not station_id and not station:
-            self.logger.warning(
-                "get_stream_info() called without a station_id or station"
-            )
-            return
-        if station:
-            station_id = station.id
-        url = URLs.LIVE_STATION_URL.format(station_id=station_id)
+        url = URLs.LIVE_STATION_URL.format(station_id=station.id)
         html_resp = await self._get_html(url)
         match = re.search(
             r"window\.__PRELOADED_STATE__\s*=\s*(.*?);\s*</script>",
@@ -53,11 +44,11 @@ class StreamingService(Base):
         self.logger.log(constants.VERBOSE_LOG_LEVEL, json_response)
 
         programme_details = json_response["programmes"]["current"]
-        jwt_token = await self.get_jwt_token(station_id)
+        jwt_token = await self.get_jwt_token(station.id)
 
         async with self._session.get(
             URLs.MEDIASET_URL.format(
-                station_id=station_id,
+                station_id=station.id,
                 jwt_auth_token=jwt_token,
             )
         ) as resp:
@@ -81,10 +72,9 @@ class StreamingService(Base):
             image_url=image_from_recipe(
                 programme_details["image_url"], size=f"{logo_size}x{logo_size}"
             ),
-            network=programme_details["network"]["short_title"],
-            network_logo=network_logo(programme_details["network"]["logo_url"]),
             show_title=programme_details["titles"]["primary"],
             show_description=programme_details["titles"]["secondary"],
+            station=station,
         )
         return self.current_stream
 
