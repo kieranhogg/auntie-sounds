@@ -1,14 +1,14 @@
-class SoundsAPIException(Exception):
+class SoundsException(Exception):
     """Generic exception for the module"""
 
 
-class LoginFailedException(SoundsAPIException):
+class LoginFailedException(SoundsException):
     pass
 
 
-class NetworkErrorException(SoundsAPIException):
+class NetworkErrorException(SoundsException):
     pass
 
 
-class APIResponseException(SoundsAPIException):
+class APIResponseException(SoundsException):
     pass
