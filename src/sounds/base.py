@@ -4,7 +4,7 @@ from abc import ABC
 from typing import Optional
 
 from .constants import URLs
-from .exceptions import SoundsAPIException
+from .exceptions import SoundsException
 
 
 class Base(ABC):
@@ -33,7 +33,7 @@ class Base(ABC):
                 return resp
         except aiohttp.ClientError as e:
             self.logger.error(f"HTTP request failed: {method} {url} - {e}")
-            raise SoundsAPIException(f"Request failed: {e}")
+            raise SoundsException(f"Request failed: {e}")
 
     async def _get_json(self, url: str, **kwargs) -> dict:
         """Gets JSON response"""
@@ -46,7 +46,7 @@ class Base(ABC):
                 return await resp.json()
         except aiohttp.ClientError as e:
             self.logger.error(f"HTTP request failed: {url} - {e}")
-            raise SoundsAPIException(f"Request failed: {e}")
+            raise SoundsException(f"Request failed: {e}")
 
     async def _get_html(self, url: str, method: str = "GET", **kwargs) -> str:
         kwargs.setdefault("timeout", self._timeout)
@@ -58,7 +58,7 @@ class Base(ABC):
                 return await resp.text()
         except aiohttp.ClientError as e:
             self.logger.error(f"HTTP request failed: {method} {url} - {e}")
-            raise SoundsAPIException(f"Request failed: {e}")
+            raise SoundsException(f"Request failed: {e}")
 
     async def get_jwt_token(self, station_id):
         async with self._session.get(
