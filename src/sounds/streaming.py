@@ -9,23 +9,35 @@ from .utils import network_logo
 from .base import Base
 from .constants import URLs
 from .exceptions import APIResponseException
-from .models import Stream
+from .models import Station, Stream
 from .utils import image_from_recipe
 
 
 class StreamingService(Base):
 
     async def get_stream_info(
-        self, station_id: str, stream_format="hls", logo_size=800
+        self,
+        station_id: str | None = None,
+        station: Station | None = None,
+        stream_format="hls",
+        logo_size=800,
     ) -> Stream:
         """
         Gets the stream and details of the currently playing show on a given station.
 
         :param station_id: The id of the station, e.g. bbc_6music
+        :param station: A Station object,
         :type station_id: str
         :returns: Stream object of stream information
         :rtype: Stream
         """
+        if not station_id and not station:
+            self.logger.warning(
+                "get_stream_info() called without a station_id or station"
+            )
+            return
+        if station:
+            station_id = station.id
         url = URLs.LIVE_STATION_URL.format(station_id=station_id)
         html_resp = await self._get_html(url)
         match = re.search(
@@ -54,7 +66,9 @@ class StreamingService(Base):
             data = await resp.json()
 
             try:
-                stream = self.get_best_stream(data["media"][0]["connection"])
+                stream = self.get_best_stream(
+                    data["media"][0]["connection"], prefer_type=stream_format
+                )
                 self.logger.debug(f"Found stream: {stream}")
             except (StopIteration, KeyError):
                 raise RuntimeError("No valid stream found")
