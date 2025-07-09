@@ -2,17 +2,17 @@ import logging
 
 from .base import Base
 from .constants import URLs
-from .models import Segment
+from .models import Segment, Station
 from .utils import image_from_recipe
 
 
 class SegmentsService(Base):
 
     async def now_playing(
-        self, station_id: str, logo_size=450, results=10
+        self, station: Station, logo_size=450, results=10
     ) -> list[Segment]:
         """Gets the recent playing segements on this station"""
-        url = URLs.NOW_PLAYING_URL.format(station_id=station_id, limit=results)
+        url = URLs.NOW_PLAYING_URL.format(station_id=station.id, limit=results)
         json = await self._get_json(url)
 
         return [
