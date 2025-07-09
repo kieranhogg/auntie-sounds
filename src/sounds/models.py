@@ -4,6 +4,29 @@ from pprint import pformat
 
 
 @dataclass
+class Station:
+    """
+    Represents a radio or media station with its metadata.
+
+    Attributes:
+        id (str): Unique identifier for the station.
+        name (str): Human-readable name of the station.
+        description (str): Description of the station's content or focus.
+        logo_url (str): URL to the station's logo image.
+        local (bool): Flag indicating whether the station is considered local.
+    """
+
+    id: str
+    name: str
+    description: str
+    logo_url: str
+    local: bool
+
+    def __str__(self):
+        return pformat(self)
+
+
+@dataclass
 class Stream:
     """
     Represents a station stream.
@@ -28,38 +51,14 @@ class Stream:
     end: dt
     uri: str
     image_url: str
-    network: str
-    network_logo: str
     show_title: str
     show_description: str
+    station: Station
 
     @property
     def can_seek(self):
         # For future development
         return False
-
-
-@dataclass
-class Station:
-    """
-    Represents a radio or media station with its metadata.
-
-    Attributes:
-        id (str): Unique identifier for the station.
-        name (str): Human-readable name of the station.
-        description (str): Description of the station's content or focus.
-        logo_url (str): URL to the station's logo image.
-        local (bool): Flag indicating whether the station is considered local.
-    """
-
-    id: str
-    name: str
-    description: str
-    logo_url: str
-    local: bool
-
-    def __str__(self):
-        return pformat(self)
 
 
 @dataclass
