@@ -3,7 +3,7 @@ name = "auntie-sounds"
 version = "1.0"
 description = "A module for interacting with BBC Radio stations and streams"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.11"
 dependencies = [
     "aiohappyeyeballs>=2.6.1",
     "aiohttp>=3.12.13",
