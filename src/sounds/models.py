@@ -1,29 +1,7 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime as dt
 from pprint import pformat
-
-
-@dataclass
-class Station:
-    """
-    Represents a radio or media station with its metadata.
-
-    Attributes:
-        id (str): Unique identifier for the station.
-        name (str): Human-readable name of the station.
-        description (str): Description of the station's content or focus.
-        logo_url (str): URL to the station's logo image.
-        local (bool): Flag indicating whether the station is considered local.
-    """
-
-    id: str
-    name: str
-    description: str
-    logo_url: str
-    local: bool
-
-    def __str__(self):
-        return pformat(self)
+from typing import List, Optional
 
 
 @dataclass
@@ -53,7 +31,7 @@ class Stream:
     image_url: str
     show_title: str
     show_description: str
-    station: Station
+    station: "Station"
 
     @property
     def can_seek(self):
@@ -89,3 +67,44 @@ class Segment:
     end_seconds: int
     label: str
     now_playing: bool
+
+
+@dataclass
+class ScheduleItem:
+    id: str
+    urn: str
+    start: dt
+    end: dt
+    duration: int
+    short_synopsis: str
+    medium_synopsis: str
+    long_synopsis: str
+    image_url: str
+    primary_title: str
+    secondary_title: str
+    tertiary_title: Optional[str] = None
+
+
+@dataclass
+class Station:
+    """
+    Represents a radio or media station with its metadata.
+
+    Attributes:
+        id (str): Unique identifier for the station.
+        name (str): Human-readable name of the station.
+        description (str): Description of the station's content or focus.
+        logo_url (str): URL to the station's logo image.
+        local (bool): Flag indicating whether the station is considered local.
+    """
+
+    id: str
+    name: str
+    description: str
+    logo_url: str
+    local: bool
+    stream: Optional[Stream] = None
+    schedule: Optional[List[ScheduleItem]] = None
+
+    def __str__(self):
+        return pformat(self)

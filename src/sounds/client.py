@@ -7,8 +7,8 @@ import aiohttp
 
 from . import constants
 from .auth import AuthService
-from .segments import SegmentsService
-from .stations import StationsService
+from .schedules import ScheduleService
+from .stations import StationService
 from .streaming import StreamingService
 from .models import Segment, Station, Stream
 
@@ -49,9 +49,13 @@ class SoundsClient:
         }
 
         self.auth = AuthService(**service_kwargs)
-        self.stations = StationsService(**service_kwargs)
         self.streaming = StreamingService(**service_kwargs)
-        self.segments = SegmentsService(**service_kwargs)
+        self.schedules = ScheduleService(**service_kwargs)
+        self.stations = StationService(
+            streaming_service=self.streaming,
+            schedule_service=self.schedules,
+            **service_kwargs,
+        )
 
     def setLogger(self, log_level=None):
         logging.addLevelName(constants.VERBOSE_LOG_LEVEL, "VERBOSE")

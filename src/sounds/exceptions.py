@@ -12,3 +12,7 @@ class NetworkErrorException(SoundsException):
 
 class APIResponseException(SoundsException):
     pass
+
+
+class InvalidFormatException(SoundsException):
+    pass

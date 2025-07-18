@@ -20,14 +20,14 @@ class StreamingService(Base):
         station: Station,
         stream_format="hls",
         logo_size=800,
-    ) -> Stream:
+    ) -> Stream | None:
         """
         Gets the stream and details of the currently playing show on a given station.
 
         :param station: A Station object
         :type station_id: str
         :returns: Stream object of stream information
-        :rtype: Stream
+        :rtype: Stream | None
         """
         url = URLs.LIVE_STATION_URL.format(station_id=station.id)
         html_resp = await self._get_html(url)
@@ -63,6 +63,8 @@ class StreamingService(Base):
                 self.logger.debug(f"Found stream: {stream}")
             except (StopIteration, KeyError):
                 raise RuntimeError("No valid stream found")
+        if not stream:
+            return None
 
         self.current_stream = Stream(
             id=programme_details["id"],

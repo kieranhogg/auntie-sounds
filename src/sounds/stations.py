@@ -1,14 +1,32 @@
 import itertools
+
 from . import constants
 from .base import Base
 from .constants import URLs
 from .models import Station
+from .schedules import ScheduleService
+from .streaming import StreamingService
 from .utils import network_logo
 
 
-class StationsService(Base):
+class StationService(Base):
 
-    async def get_stations(self, include_local=False) -> list[Station]:
+    def __init__(
+        self,
+        streaming_service: StreamingService,
+        schedule_service: ScheduleService,
+        **kwargs,
+    ):
+        super().__init__(**kwargs)
+        self.streams = streaming_service
+        self.schedules = schedule_service
+
+    async def get_stations(
+        self,
+        include_local: bool = False,
+        include_streams: bool = False,
+        include_schedules: bool = False,
+    ) -> list[Station]:
         """
         Gets the list of all stations
 
@@ -37,7 +55,7 @@ class StationsService(Base):
         else:
             # Just get the national data list
             stations = json_resp["data"][0]["data"]
-        return [
+        stations = [
             Station(
                 id=s["id"],
                 name=s["network"]["short_title"],
@@ -47,17 +65,40 @@ class StationsService(Base):
             )
             for s in stations
         ]
+        if include_streams:
+            for station in stations:
+                station.stream = await self.streams.get_stream_info(station)
 
-    async def get_station(self, station_id: str) -> Station | None:
+        if include_schedules:
+            for station in stations:
+                station.schedule = await self.schedules.get_schedule(station.id)
+
+        return stations
+
+    async def get_station(
+        self,
+        station_id: str,
+        include_stream: bool = False,
+        include_schedule: bool = False,
+    ) -> Station | None:
         """
         Gets a station's details
 
         :return: A Station object
         :rtype: Station
         """
-        # TODO: include listings here?
-        stations = await self.get_stations(include_local=True)
-        try:
-            return [station for station in stations if station.id == station_id][0]
-        except KeyError:
+        stations = await self.get_stations(
+            include_local=True,
+        )
+        station = next(
+            (station for station in stations if station.id == station_id),
+            None,
+        )
+        if not station:
             return None
+
+        if include_stream:
+            station.stream = await self.streams.get_stream_info(station)
+        if include_schedule:
+            station.schedule = await self.schedules.get_schedule(station.id)
+        return station
