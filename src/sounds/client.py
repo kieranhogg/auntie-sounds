@@ -59,8 +59,10 @@ class SoundsClient:
 
     def setLogger(self, log_level=None):
         logging.addLevelName(constants.VERBOSE_LOG_LEVEL, "VERBOSE")
+        if not log_level:
+            log_level = logging.WARN
         logging.basicConfig(
-            level=constants.VERBOSE_LOG_LEVEL,
+            level=log_level,
             format="%(asctime)s -%(levelname)s -on line: %(lineno)d -%(message)s",
         )
         log_fmt = "%(asctime)s.%(msecs)03d %(levelname)s (%(threadName)s) [%(name)s] %(message)s"
