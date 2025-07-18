@@ -17,7 +17,10 @@ class Base(ABC):
         timeout: Optional[aiohttp.ClientTimeout] = None,
     ):
         self._session = session
-        self.logger = logger
+        if logger:
+            self.logger = logger
+        else:
+            self.logger = logging.getLogger(__name__)
         self._timeout = timeout or aiohttp.ClientTimeout(total=10)
 
     async def _make_request(
