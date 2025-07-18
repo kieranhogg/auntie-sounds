@@ -1,7 +1,5 @@
 name: Upload Python Package (to PyPi test)
 on:
-  release:
-    types: [published]
   workflow_dispatch:
     inputs:
       logLevel:
@@ -12,45 +10,20 @@ on:
         description: 'Environment to deploy'
         required: false
         default: 'pypi-test'
-permissions:
-  contents: read
 jobs:
-  release-build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6
-        with:
-          version: "0.8.0"
-      - name: Build release distributions
-        run: |
-          uv build
-      - name: Upload distributions
-        uses: actions/upload-artifact@v4
-        with:
-          name: release-dists
-          path: dist/
   pypi-publish:
+    name: Upload release to PyPI Test
     runs-on: ubuntu-latest
-    needs:
-      - release-build
-    permissions:
-      id-token: write
     environment:
       name: pypi-test
-      url: https://test.pypi.org/project/auntie-sounds/${{ github.event.release.name }}
+      url: https://test.pypi.org/p/auntie-sounds
+    permissions:
+      id-token: write
     steps:
       - name: Retrieve release distributions
         uses: actions/download-artifact@v4
         with:
           name: release-dists
           path: dist/
-
-      - name: Publish release distributions to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          packages-dir: dist/
+    - name: Publish package distributions to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
