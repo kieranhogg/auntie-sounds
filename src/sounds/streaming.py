@@ -8,7 +8,7 @@ from . import constants
 from .utils import network_logo
 from .base import Base
 from .constants import URLs
-from .exceptions import APIResponseException
+from .exceptions import APIResponseError
 from .models import Station, Stream
 from .utils import image_from_recipe
 
@@ -37,7 +37,7 @@ class StreamingService(Base):
             re.DOTALL,
         )
         if not match:
-            raise APIResponseException("Could not find embedded player JSON")
+            raise APIResponseError("Could not find embedded player JSON")
 
         json_response = json.loads(match.group(1))
         self.logger.log(constants.VERBOSE_LOG_LEVEL, "Getting stream details...")

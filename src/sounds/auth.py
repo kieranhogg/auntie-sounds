@@ -1,4 +1,3 @@
-import logging
 from typing import Optional
 from bs4 import BeautifulSoup
 
@@ -7,7 +6,7 @@ from yarl import URL
 from . import constants
 from .base import Base
 from .constants import COOKIE_ID, VERBOSE_LOG_LEVEL, URLs
-from .exceptions import LoginFailedException
+from .exceptions import LoginFailedError
 
 
 class AuthService(Base):
@@ -48,10 +47,10 @@ class AuthService(Base):
         form = soup.find("form")
         if form:
             self.logger.debug("Found form successfully")
-        # form = soup.find("form", attrs={"id": "loginForm"}) or soup.select_one(
-        # "form[action]"
-        # )
-        return form.get("action") if form else None
+            return str(form.get("action"))  # type: ignore
+
+        else:
+            return None
 
     async def _get_login_form(self) -> str:
         # Get the initial login page form target
@@ -80,7 +79,7 @@ class AuthService(Base):
         # Grab the form target for the password page
         password_form_action = self._get_form_action(html_contents)
         if not password_form_action:
-            raise LoginFailedException("Could not find BBC password form URL")
+            raise LoginFailedError("Could not find BBC password form URL")
         password_url = f"{URLs.LOGIN_BASE}{password_form_action}"
         self.logger.debug(f"Found password form target: {password_url}")
 
@@ -98,5 +97,5 @@ class AuthService(Base):
             if resp.status != 200 or not self.authenticated:
                 self.logger.error(f"Login failed, response code {resp.status}")
                 self.logger.log(constants.VERBOSE_LOG_LEVEL, resp)
-                raise LoginFailedException(f"BBC sign-in failed: {resp.status}")
+                raise LoginFailedError(f"BBC sign-in failed: {resp.status}")
             self.logger.info("Authenticated succesfully")

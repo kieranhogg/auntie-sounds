@@ -3,13 +3,12 @@ from datetime import datetime as dt
 from . import constants
 from .base import Base
 from .constants import URLs
-from .exceptions import InvalidFormatException
+from .exceptions import InvalidFormatError
 from .models import ScheduleItem, Segment, Station
 from .utils import image_from_recipe
 
 
 class ScheduleService(Base):
-
     async def get_schedule(
         self, station_id: str, date: str | None = None, image_size=320
     ) -> list[ScheduleItem]:
@@ -18,7 +17,7 @@ class ScheduleService(Base):
             try:
                 _ = dt.strptime(date, "%Y-%m-%d")
             except ValueError:
-                raise InvalidFormatException(
+                raise InvalidFormatError(
                     "Invalid date specified, must be in the format YYYY-MM-DD"
                 )
             url = f"{url}/{date}"
@@ -46,10 +45,10 @@ class ScheduleService(Base):
             for item in schedule
         ]
 
-    async def now_playing(
+    async def recently_played_items(
         self, station: Station, logo_size=450, results=10
     ) -> list[Segment]:
-        """Gets the recent playing segements on this station"""
+        """Gets the recent playing items on this station"""
         url = URLs.NOW_PLAYING_URL.format(station_id=station.id, limit=results)
         json = await self._get_json(url)
 
@@ -71,6 +70,12 @@ class ScheduleService(Base):
             for segment in json["data"]
         ]
 
-    async def song_playing(self, station_id) -> list[Segment] | list[None]:
+    async def currently_playing_song(self, station_id) -> Segment | None:
         """Gets the currently playing song, if one is playing."""
-        return list(filter(lambda x: x.now_playing, await self.now_playing(station_id)))
+        recently_played = await self.recently_played_items(station_id)
+        try:
+            if recently_played[0].now_playing:
+                return recently_played[0]
+        except KeyError:
+            pass
+        return None
