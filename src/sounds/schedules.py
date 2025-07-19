@@ -46,7 +46,7 @@ class ScheduleService(Base):
         ]
 
     async def recently_played_items(
-        self, station: Station, logo_size=450, results=10
+        self, station: Station, image_size=450, results=10
     ) -> list[Segment]:
         """Gets the recent playing items on this station"""
         url = URLs.NOW_PLAYING_URL.format(station_id=station.id, limit=results)
@@ -60,7 +60,7 @@ class ScheduleService(Base):
                 tertiary_title=segment["titles"]["tertiary"],
                 entity_title=segment["titles"]["entity_title"],
                 image_url=image_from_recipe(
-                    segment["image_url"], f"{logo_size}x{logo_size}"
+                    segment["image_url"], f"{image_size}x{image_size}"
                 ),
                 start_seconds=segment["offset"]["start"],
                 end_seconds=segment["offset"]["start"],
@@ -70,9 +70,11 @@ class ScheduleService(Base):
             for segment in json["data"]
         ]
 
-    async def currently_playing_song(self, station_id) -> Segment | None:
+    async def currently_playing_song(
+        self, station_id, image_size=450
+    ) -> Segment | None:
         """Gets the currently playing song, if one is playing."""
-        recently_played = await self.recently_played_items(station_id)
+        recently_played = await self.recently_played_items(station_id, image_size)
         try:
             if recently_played[0].now_playing:
                 return recently_played[0]
