@@ -16,20 +16,29 @@ A library for interacting with BBC radio stations via an interface to BBC Sounds
 
 ## Notes
 - It is written as an async library
-- A BBC account is not required for most actions, but as BBC region-locks streams, is it the supported way to use it
+- A BBC account is not required for most actions, but as BBC region-locks streams and is turning off non-UK access soon, is it the supported way to use it
 
 ## Example Usage
 
 ```python
 import asyncio
+from sounds import exceptions
 from sounds.client import SoundsClient
 
 async def main():
-    async with SoundsClient() as client:
-        if await client.auth.authenticate("username", "password"):
-            stations = await client.stations.get_stations()
-            stream = await client.streaming.get_stream_info("bbc_6music")
-            segments = await client.segments.now_playing("bbc_6music")
+    try:
+        async with SoundsClient() as client:
+            if await client.auth.authenticate(username, password):
+                stations = await client.stations.get_stations()
+                bbc_6music = await client.stations.get_station("bbc_6music", include_stream=True)
+                stream = bbc_6music.stream.uri
+                schedule = bbc_6music.schedule
+    except exceptions.LoginFailedError:
+        ...
+    except exceptions.APIResponseError:
+        ...
+    except exceptions.NetworkError:
+        ...
 
 asyncio.run(main())
 ```
