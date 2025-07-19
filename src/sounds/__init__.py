@@ -1,12 +1,12 @@
-from client import SoundsClient
-from constants import URLs, ImageType
-from exceptions import (
+from .client import SoundsClient
+from .constants import URLs, ImageType
+from .exceptions import (
     APIResponseError,
     InvalidFormatError,
     LoginFailedError,
     NetworkError,
 )
-from models import ScheduleItem, Segment, Station, Stream
+from .models import ScheduleItem, Segment, Station, Stream
 
 __all__ = [
     "SoundsClient",
