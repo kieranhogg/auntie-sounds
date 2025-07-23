@@ -30,4 +30,4 @@ def image_from_recipe(image_recipe, size) -> str:
 
     :return the full image URL as a string
     """
-    return image_recipe.format(recipe=size)
+    return image_recipe.format(size=size)
