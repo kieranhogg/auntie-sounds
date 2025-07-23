@@ -1,7 +1,10 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime as dt
+from pydantic import BaseModel, ConfigDict, ValidationError
 from pprint import pformat
 from typing import List, Optional
+
+from pytz import BaseTzInfo
 
 
 @dataclass
@@ -33,10 +36,8 @@ class Stream:
     show_description: str
     station: "Station"
 
-    @property
-    def can_seek(self):
-        # For future development
-        return False
+    def __str__(self):
+        return pformat(self)
 
 
 @dataclass
@@ -68,6 +69,9 @@ class Segment:
     label: str
     now_playing: bool
 
+    def __str__(self):
+        return pformat(self)
+
 
 @dataclass
 class ScheduleItem:
@@ -82,7 +86,38 @@ class ScheduleItem:
     image_url: str
     primary_title: str
     secondary_title: str
-    tertiary_title: Optional[str] = None
+    tertiary_title: Optional[str]
+    episode_id: Optional[str] = None
+    container_id: Optional[str] = None
+    stream: Optional[str] = None
+
+    @property
+    def vpid(self):
+        try:
+            return self.urn.rsplit(":", 1)[1]
+        except KeyError:
+            return None
+
+    def is_live(self, timezone: BaseTzInfo):
+        return self.start >= dt.now(tz=timezone) < self.end
+
+    def has_already_aired(self, timezone: BaseTzInfo):
+        return dt.now(tz=timezone) > self.end
+
+    def __str__(self):
+        return pformat(self)
+
+
+@dataclass
+class Schedule:
+    date: dt
+    schedule_list: list[ScheduleItem]
+
+    def get_current_item(self):
+        pass
+
+    def __str__(self):
+        return pformat(self)
 
 
 @dataclass
@@ -108,3 +143,38 @@ class Station:
 
     def __str__(self):
         return pformat(self)
+
+
+@dataclass
+class Network:
+    id: str
+    key: str
+    short_title: str
+    logo_url: str
+
+
+@dataclass
+class PlayableItem:
+    id: str
+    urn: str
+    network: Network | None
+    duration: int | None
+    progress: int | None
+    synopses: dict
+    image_url: str
+    titles: dict
+    start: dt | None = None
+    end: dt | None = None
+
+
+@dataclass
+class MenuItem:
+    id: str
+    title: str
+    description: str
+    data: list[PlayableItem]
+
+
+@dataclass
+class Menu:
+    items: list[MenuItem]
