@@ -1,5 +1,6 @@
 aiohappyeyeballs==2.6.1
 aiohttp==3.12.13
+aiohttp[speedups]==3.12.13
 aiosignal==1.4.0
 attrs==25.3.0
 beautifulsoup4==4.13.4
@@ -8,6 +9,9 @@ frozenlist==1.7.0
 idna==3.10
 multidict==6.6.3
 propcache==0.3.2
+pydantic==2.11.7
+pytest==8.4.1
+pytest-asyncio==1.1.0
 pytz==2025.2
 soupsieve==2.7
 typing-extensions==4.14.1
