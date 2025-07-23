@@ -67,7 +67,7 @@ class StationService(Base):
         ]
         if include_streams:
             for station in stations:
-                station.stream = await self.streams.get_stream_info(station)
+                station.stream = await self.streams.get_live_stream(station)
 
         if include_schedules:
             for station in stations:
@@ -98,7 +98,7 @@ class StationService(Base):
             return None
 
         if include_stream:
-            station.stream = await self.streams.get_stream_info(station)
+            station.stream = await self.streams.get_live_stream(station)
         if include_schedule:
             station.schedule = await self.schedules.get_schedule(station.id)
         return station

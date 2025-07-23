@@ -9,13 +9,13 @@ from .utils import network_logo
 from .base import Base
 from .constants import URLs
 from .exceptions import APIResponseError
-from .models import Station, Stream
+from .models import ScheduleItem, Station, Stream
 from .utils import image_from_recipe
 
 
 class StreamingService(Base):
 
-    async def get_stream_info(
+    async def get_live_stream(
         self,
         station: Station,
         stream_format="hls",
@@ -57,7 +57,7 @@ class StreamingService(Base):
             data = await resp.json()
 
             try:
-                stream = self.get_best_stream(
+                stream = self._get_best_stream(
                     data["media"][0]["connection"], prefer_type=stream_format
                 )
                 self.logger.debug(f"Found stream: {stream}")
@@ -80,7 +80,7 @@ class StreamingService(Base):
         )
         return self.current_stream
 
-    def get_best_stream(self, streams: dict, prefer_type="hls") -> Optional[str]:
+    def _get_best_stream(self, streams: dict, prefer_type="hls") -> Optional[str]:
         """Looks for the first valid stream with the requested format."""
         self.logger.log(constants.VERBOSE_LOG_LEVEL, "Looking for best stream in:")
         self.logger.log(constants.VERBOSE_LOG_LEVEL, streams)
@@ -93,3 +93,30 @@ class StreamingService(Base):
             ),
             None,
         )
+
+    async def get_episode_stream(
+        self,
+        episode_id: str,
+        stream_format="hls",
+        logo_size=800,
+    ) -> str | None:
+        """
+        Gets the stream for a specified episode.
+
+        :param episode_id: str
+        :returns: Stream object of stream information
+        :rtype: str | None
+        """
+        url = URLs.EPISODE_MEDIASET.format(episode_id=episode_id)
+        json_resp = await self._get_json(url)
+
+        # jwt_token = await self.get_jwt_token(station.id)
+        stream = None
+        try:
+            stream = self._get_best_stream(
+                json_resp["media"][0]["connection"], prefer_type=stream_format
+            )
+            self.logger.debug(f"Found stream: {stream}")
+        except (StopIteration, KeyError):
+            raise RuntimeError("No valid stream found")
+        return stream
