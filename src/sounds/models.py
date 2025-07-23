@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from datetime import datetime as dt
-from pydantic import BaseModel, ConfigDict, ValidationError
 from pprint import pformat
 from typing import List, Optional
 
