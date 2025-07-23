@@ -16,3 +16,7 @@ class APIResponseError(SoundsException):
 
 class InvalidFormatError(SoundsException):
     pass
+
+
+class UnauthorisedError(SoundsException):
+    pass
