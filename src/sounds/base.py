@@ -4,7 +4,7 @@ from abc import ABC
 from typing import Optional
 
 from .constants import URLs
-from .exceptions import SoundsException
+from .exceptions import SoundsException, UnauthorisedError, APIResponseError
 
 
 class Base(ABC):
@@ -15,6 +15,7 @@ class Base(ABC):
         session: aiohttp.ClientSession,
         logger: logging.Logger | None = None,
         timeout: Optional[aiohttp.ClientTimeout] = None,
+        **kwargs,
     ):
         self._session = session
         if logger:
@@ -31,9 +32,9 @@ class Base(ABC):
             kwargs.setdefault("timeout", self._timeout)
             kwargs.setdefault("ssl", True)
             kwargs.setdefault("allow_redirects", True)
-            async with self._session.request(method, url, **kwargs) as resp:
-                resp.raise_for_status()
-                return resp
+            resp = await self._session.request(method, url, **kwargs)
+            resp.raise_for_status()
+            return resp
         except aiohttp.ClientError as e:
             self.logger.error(f"HTTP request failed: {method} {url} - {e}")
             raise SoundsException(f"Request failed: {e}")
@@ -47,6 +48,10 @@ class Base(ABC):
             async with self._session.request("GET", url, **kwargs) as resp:
                 resp.raise_for_status()
                 return await resp.json()
+        except aiohttp.ClientResponseError as e:
+            if e.status == 401:
+                raise UnauthorisedError(e)
+            raise APIResponseError(f"Request failed: {e}")
         except aiohttp.ClientError as e:
             self.logger.error(f"HTTP request failed: {url} - {e}")
             raise SoundsException(f"Request failed: {e}")
@@ -59,6 +64,10 @@ class Base(ABC):
             async with self._session.request(method, url, **kwargs) as resp:
                 resp.raise_for_status()
                 return await resp.text()
+        except aiohttp.ClientResponseError as e:
+            if e.status == 401:
+                raise UnauthorisedError(e)
+            raise APIResponseError(f"Request failed: {e}")
         except aiohttp.ClientError as e:
             self.logger.error(f"HTTP request failed: {method} {url} - {e}")
             raise SoundsException(f"Request failed: {e}")
