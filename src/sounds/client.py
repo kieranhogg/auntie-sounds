@@ -1,16 +1,16 @@
 import logging
-from collections.abc import Callable
-from colorlog import ColoredFormatter
-
 
 import aiohttp
+import pytz
+from colorlog import ColoredFormatter
 
 from . import constants
 from .auth import AuthService
+from .models import Segment, Station, Stream
+from .personal import PersonalService
 from .schedules import ScheduleService
 from .stations import StationService
 from .streaming import StreamingService
-from .models import Segment, Station, Stream
 
 
 class SoundsClient:
@@ -19,9 +19,10 @@ class SoundsClient:
     def __init__(
         self,
         session: aiohttp.ClientSession | None = None,
-        update_handler: Callable | None = None,
+        timezone: pytz.BaseTzInfo | None = None,
         logger: logging.Logger | None = None,
         log_level: str | None = None,
+        **kwargs,
     ) -> None:
         if logger:
             self.logger = logger
@@ -29,23 +30,32 @@ class SoundsClient:
             self.logger = logging.getLogger()
             self.setLogger(log_level)
             self.logger.log(constants.VERBOSE_LOG_LEVEL, "SoundsClient.__init__()")
-        self._update_handler = update_handler
+        if timezone:
+            self.timezone = timezone
+        else:
+            self.logger.warning(
+                "No timezone provided, assuming UTC so any time calculations for the schedules may be incorrect"
+            )
+            self.timezone = pytz.timezone("UTC")
         self.current_station: Station | None = None
         self.current_stream: Stream | None = None
         self.current_segment: Segment | None = None
         self.timeout = aiohttp.ClientTimeout(total=10)
 
+        self.cookie_jar = aiohttp.CookieJar(unsafe=True)
         if not session:
-            self._session = aiohttp.ClientSession()
+            self._session = aiohttp.ClientSession(cookie_jar=self.cookie_jar)
             self.managing_session = True
         else:
             self._session = session
+            self._session._cookie_jar = self.cookie_jar
             self.managing_session = False
 
         service_kwargs = {
             "session": self._session,
             "timeout": self.timeout,
             "logger": self.logger,
+            **kwargs,
         }
 
         self.auth = AuthService(**service_kwargs)
@@ -56,6 +66,7 @@ class SoundsClient:
             schedule_service=self.schedules,
             **service_kwargs,
         )
+        self.personal = PersonalService(**service_kwargs)
 
     def setLogger(self, log_level=None):
         logging.addLevelName(constants.VERBOSE_LOG_LEVEL, "VERBOSE")
@@ -94,6 +105,7 @@ class SoundsClient:
         return self
 
     async def __aexit__(self, *args):
-        if self._session:
+        if self.managing_session:
             self.logger.debug("Closed session")
-        await self.close()
+            await self.close()
+        self.auth.save_cookies_to_disk()
