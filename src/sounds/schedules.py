@@ -29,8 +29,8 @@ class ScheduleService(Base):
             ScheduleItem(
                 id=item["id"],
                 urn=item["urn"],
-                start=item["start"],
-                end=item["end"],
+                start=dt.fromisoformat(item["start"]),
+                end=dt.fromisoformat(item["end"]),
                 duration=item["duration"],
                 short_synopsis=item["synopses"]["short"],
                 medium_synopsis=item["synopses"]["medium"],
@@ -41,6 +41,9 @@ class ScheduleService(Base):
                 primary_title=item["titles"]["primary"],
                 secondary_title=item["titles"]["secondary"],
                 tertiary_title=item["titles"]["tertiary"],
+                episode_id=(
+                    item["playable_item"]["id"] if item["playable_item"] else None
+                ),
             )
             for item in schedule
         ]
