@@ -189,7 +189,7 @@ class AuthService(Base):
         self, html: str, stage: Literal["email"] | Literal["login"]
     ):
         """See if we can extract a meaningful error from the HTML."""
-        html_content = BeautifulSoup(html, features="html.parser").text
+        html_content = BeautifulSoup(html, features="html.parser").find("div").text
         if stage == "email":
             errors = EMAIL_ERRORS
         else:
