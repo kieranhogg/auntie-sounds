@@ -58,9 +58,9 @@ class StationService(Base):
         stations = [
             Station(
                 id=s["id"],
-                name=s["network"]["short_title"],
+                title=s["network"]["short_title"],
                 description=f"{s['titles']['secondary']} • {s['titles']['primary']}: {s['synopses']['short']}",
-                logo_url=network_logo(s["network"]["logo_url"]),
+                image_url=network_logo(s["network"]["logo_url"]),
                 local=s["local"],
             )
             for s in stations
@@ -80,6 +80,7 @@ class StationService(Base):
         station_id: str,
         include_stream: bool = False,
         include_schedule: bool = False,
+        date: str | None = None,
     ) -> Station | None:
         """
         Gets a station's details
@@ -100,5 +101,5 @@ class StationService(Base):
         if include_stream:
             station.stream = await self.streams.get_live_stream(station)
         if include_schedule:
-            station.schedule = await self.schedules.get_schedule(station.id)
+            station.schedule = await self.schedules.get_schedule(station.id, date=date)
         return station

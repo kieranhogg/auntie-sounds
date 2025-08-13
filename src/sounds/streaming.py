@@ -7,9 +7,16 @@ from typing import Optional
 from . import constants
 from .utils import network_logo
 from .base import Base
-from .constants import URLs
+from .constants import ContainerType, URLs
 from .exceptions import APIResponseError
-from .models import ScheduleItem, Station, Stream
+from .models import (
+    Container,
+    Network,
+    PlayableItem,
+    ScheduleItem,
+    Station,
+    Stream,
+)
 from .utils import image_from_recipe
 
 
@@ -120,3 +127,103 @@ class StreamingService(Base):
         except (StopIteration, KeyError):
             raise RuntimeError("No valid stream found")
         return stream
+
+    async def get_by_pid(self, pid):
+        json_resp = await self._get_json(URLs.PID_PLAYABLE.format(pid=pid))
+        return PlayableItem(
+            id=json_resp["id"],
+            urn=json_resp["urn"],
+            network=(
+                Network(
+                    id=json_resp["network"]["id"],
+                    key=json_resp["network"]["key"],
+                    short_title=json_resp["network"]["short_title"],
+                    logo_url=json_resp["network"]["logo_url"],
+                )
+                if json_resp.get("network") is not None
+                else None
+            ),
+            duration=(
+                json_resp["duration"]["value"]
+                if json_resp.get("duration") is not None
+                else None
+            ),
+            progress=(
+                json_resp["progress"]["value"]
+                if json_resp.get("progress") is not None
+                else None
+            ),
+            synopses=(
+                json_resp["synopses"] if json_resp.get("synopses") is not None else {}
+            ),
+            _image_url=json_resp["image_url"],
+            titles=(json_resp["titles"] if json_resp.get("titles") is not None else {}),
+            container=(
+                Container(
+                    type=ContainerType(json_resp["container"]["type"]),
+                    id=json_resp["container"]["id"],
+                    urn=json_resp["container"]["urn"],
+                    title=json_resp["container"]["title"],
+                    synopses=json_resp["container"]["synopses"],
+                )
+                if json_resp.get("container")
+                else None
+            ),
+        )
+
+    async def get_container(self, urn):
+        json_resp = await self._get_json(URLs.CONTAINER_URL.format(urn=urn))
+        container_data = json_resp["data"][0]["data"]
+        episode_data = json_resp["data"][1]["data"]
+
+        container = Container(
+            type=ContainerType(container_data["type"]),
+            id=container_data["id"],
+            urn=container_data["urn"],
+            title=container_data["titles"]["primary"],
+            synopses=container_data["synopses"],
+            network=(
+                Network(
+                    id=container_data["network"]["id"],
+                    key=container_data["network"]["key"],
+                    short_title=container_data["network"]["short_title"],
+                    logo_url=container_data["network"]["logo_url"],
+                )
+                if container_data.get("network") is not None
+                else None
+            ),
+        )
+        episodes = [
+            PlayableItem(
+                id=episode["id"],
+                urn=episode["urn"],
+                container=container,
+                network=(
+                    Network(
+                        id=episode["network"]["id"],
+                        key=episode["network"]["key"],
+                        short_title=episode["network"]["short_title"],
+                        logo_url=episode["network"]["logo_url"],
+                    )
+                    if episode.get("network") is not None
+                    else None
+                ),
+                duration=(
+                    episode["duration"]["value"]
+                    if episode.get("duration") is not None
+                    else None
+                ),
+                progress=(
+                    episode["progress"]["value"]
+                    if episode.get("progress") is not None
+                    else None
+                ),
+                synopses=(
+                    episode["synopses"] if episode.get("synopses") is not None else {}
+                ),
+                _image_url=episode["image_url"],
+                titles=(episode["titles"] if episode.get("titles") is not None else {}),
+            )
+            for episode in episode_data
+        ]
+        return container, episodes

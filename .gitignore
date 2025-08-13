@@ -1,4 +1,5 @@
 venv
+.venv
 dist
 *.egg-info
 *.pyc
@@ -11,3 +12,8 @@ docs/_build
 .python-version
 .DS_Store
 local
+.sounds_jar
+*.html
+*.patch
+.env
+.vscode/settings.json

@@ -22,7 +22,13 @@ def network_logo(
     )
 
 
-def image_from_recipe(image_recipe, size) -> str:
+def image_from_recipe(
+    image_recipe: str,
+    size: int,
+    height: int | None = None,
+    format="jpg",
+    img_type: ImageType | None = None,
+) -> str:
     """
     Formats an image from a recipe
 
@@ -30,4 +36,15 @@ def image_from_recipe(image_recipe, size) -> str:
 
     :return the full image URL as a string
     """
-    return image_recipe.format(size=size)
+    if height:
+        img_size = f"{size}x{height}"
+    else:
+        img_size = f"{size}x{size}"
+    image_recipe = image_recipe.format(recipe=img_size)
+
+    if format:
+        image_recipe = image_recipe.format(format=format)
+    if img_type:
+        image_recipe = image_recipe.format(type=img_type)
+
+    return image_recipe

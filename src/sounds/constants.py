@@ -1,5 +1,11 @@
 from enum import Enum
+import re
 from typing import Final
+
+# This is the ID of the cookie we use to check we have a valid session
+COOKIE_ID = "ckns_id"
+
+VERBOSE_LOG_LEVEL: Final[int] = 5
 
 
 class URLs:
@@ -60,10 +66,6 @@ class SignedInURLs:
     CONTINUE = "https://rms.api.bbc.co.uk/v2/my/programmes/plays/playable"
 
 
-# This is the ID of the cookie we use to check we have a valid session
-COOKIE_ID = "ckns_id"
-
-
 class ImageType(Enum):
     """An enum for valid image types for recipes"""
 
@@ -75,4 +77,93 @@ class ImageType(Enum):
     BLOCKS_COLOUR_WHITE = "blocks_colour_white"
 
 
-VERBOSE_LOG_LEVEL: Final[int] = 5
+class ItemURN(Enum):
+    EPISODE = "urn:bbc:radio:episode"
+    CLIP = "urn:bbc:radio:clip"
+    COLLECTION = "urn:bbc:radio:collection"
+    CATEGORY = "urn:bbc:radio:category"
+    SERIES = "urn:bbc:radio:series"
+    RADIO_SHOW_OR_PODCAST = "urn:bbc:radio:brand"
+    STATION = "urn:bbc:radio:network"
+    PROMO_ITEM = "bbc:radio:content:single_item_promo"
+
+
+class ItemURNRegex(Enum):
+    EPISODE = r"(urn\:bbc\:radio\:episode\:(.*))"
+    CLIP = r"(urn\:bbc\:radio\:clip)\:(.*)"
+    COLLECTION = r"(urn\:bbc\:radio\:collection)\:(.*)"
+    CATEGORY = r"(urn\:bbc\:radio\:category)\:(.*)"
+    SERIES = r"(urn\:bbc\:radio\:series)\:(.*)"
+    RADIO_SHOW_OR_PODCAST = r"(urn\:bbc\:radio\:brand)\:(.*)"
+    STATION = r"(urn\:bbc\:radio\:network)\:(.*)"
+    PROMO_ITEM = "bbc:radio:content:single_item_promo"
+
+    @staticmethod
+    def get(value):
+        for regex in ItemURN:
+            item_type = ItemURN(regex).name
+            pattern = ItemURN(regex).value
+            match = re.findall(pattern, value)
+            if match:
+                return item_type, match
+        return None
+
+
+class ItemObjectMap(Enum):
+    # Prevent circular import
+    from .models import (
+        Category,
+        Collection,
+        Podcast,
+        PodcastEpisode,
+        PromoItem,
+        PlayableItem,
+        RadioShow,
+        ScheduleItem,
+        Station,
+    )
+
+    EPISODE = [
+        (
+            PodcastEpisode,
+            lambda item: ContainerType(item.get("container").get("type"))
+            == ContainerType.SERIES,
+        ),
+        (
+            ScheduleItem,
+            lambda item: ContainerType(item.get("container").get("type"))
+            == ContainerType.BRAND,
+        ),
+    ]
+    CLIP = PlayableItem
+    COLLECTION = Collection
+    CATEGORY = Category
+    SERIES = Podcast  # These are time-based collections of radio shows, e.g.: Glastonbury Live Sets (2025)
+    RADIO_SHOW_OR_PODCAST = [
+        (RadioShow, lambda item: ItemType(item.get("type")) == ItemType.CONTAINER),
+        (
+            Podcast,
+            lambda item: item.get("container")
+            and item.get("container").get("network").get("id") == "bbc_sounds_podcasts",
+        ),
+    ]
+    STATION = Station
+    PROMO_ITEM = PromoItem
+
+
+class ItemType(Enum):
+    MODULE = "inline_display_module"
+    PLAYABLE_ITEM = "playable_item"
+    CONTAINER = "container_item"
+    DISPLAY_ITEM = "display_item"
+    BROADCAST_SUMMARY = "broadcast_summary"
+
+
+class ContainerType(Enum):
+    BRAND = "brand"
+    SERIES = "series"
+    ITEM = "container_item"
+
+
+class NetworkType(Enum):
+    MASTER = "master_brand"

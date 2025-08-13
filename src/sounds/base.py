@@ -1,7 +1,7 @@
 import aiohttp
 import logging
 from abc import ABC
-from typing import Optional
+from typing import Literal, Optional
 
 from .constants import URLs
 from .exceptions import SoundsException, UnauthorisedError, APIResponseError
@@ -25,7 +25,7 @@ class Base(ABC):
         self._timeout = timeout or aiohttp.ClientTimeout(total=10)
 
     async def _make_request(
-        self, method: str, url: str, **kwargs
+        self, method: Literal["GET"] | Literal["POST"], url: str, **kwargs
     ) -> aiohttp.ClientResponse:
         """Makes a HTTP request using the shared session and state"""
         try:
@@ -45,9 +45,10 @@ class Base(ABC):
         kwargs.setdefault("ssl", True)
         kwargs.setdefault("allow_redirects", True)
         try:
-            async with self._session.request("GET", url, **kwargs) as resp:
-                resp.raise_for_status()
-                return await resp.json()
+            resp = await self._session.request("GET", url, **kwargs)
+            json_resp = await resp.json()
+            # resp.raise_for_status()
+            return await resp.json()
         except aiohttp.ClientResponseError as e:
             if e.status == 401:
                 raise UnauthorisedError(e)
@@ -61,9 +62,9 @@ class Base(ABC):
         kwargs.setdefault("ssl", True)
         kwargs.setdefault("allow_redirects", True)
         try:
-            async with self._session.request(method, url, **kwargs) as resp:
-                resp.raise_for_status()
-                return await resp.text()
+            resp = await self._session.request(method, url, **kwargs)
+            resp.raise_for_status()
+            return await resp.text()
         except aiohttp.ClientResponseError as e:
             if e.status == 401:
                 raise UnauthorisedError(e)
@@ -73,8 +74,6 @@ class Base(ABC):
             raise SoundsException(f"Request failed: {e}")
 
     async def get_jwt_token(self, station_id):
-        async with self._session.get(
-            URLs.JWT_URL.format(station_id=station_id)
-        ) as resp:
-            json = await resp.json()
-            return json.get("token")
+        resp = self._session.get(URLs.JWT_URL.format(station_id=station_id))
+        json = await resp.json()
+        return json.get("token")

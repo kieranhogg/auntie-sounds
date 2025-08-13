@@ -1,3 +1,4 @@
+from http import cookiejar
 import logging
 
 import aiohttp
@@ -42,13 +43,14 @@ class SoundsClient:
         self.current_segment: Segment | None = None
         self.timeout = aiohttp.ClientTimeout(total=10)
 
-        self.cookie_jar = aiohttp.CookieJar(unsafe=True)
+        self._cookie_jar = aiohttp.CookieJar(unsafe=True)
+        # self.cookie_jar = cookiejar.FileCookieJar("cookies.txt")
         if not session:
-            self._session = aiohttp.ClientSession(cookie_jar=self.cookie_jar)
+            self._session = aiohttp.ClientSession(cookie_jar=self._cookie_jar)
             self.managing_session = True
         else:
             self._session = session
-            self._session._cookie_jar = self.cookie_jar
+            self._session._cookie_jar = self._cookie_jar
             self.managing_session = False
 
         service_kwargs = {
@@ -66,7 +68,7 @@ class SoundsClient:
             schedule_service=self.schedules,
             **service_kwargs,
         )
-        self.personal = PersonalService(**service_kwargs)
+        self.personal = PersonalService(auth_service=self.auth, **service_kwargs)
 
     def setLogger(self, log_level=None):
         logging.addLevelName(constants.VERBOSE_LOG_LEVEL, "VERBOSE")

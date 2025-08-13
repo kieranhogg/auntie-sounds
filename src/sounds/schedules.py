@@ -4,6 +4,7 @@ from . import constants
 from .base import Base
 from .constants import URLs
 from .exceptions import InvalidFormatError
+from .json import parse_menu
 from .models import ScheduleItem, Segment, Station
 from .utils import image_from_recipe
 
@@ -23,6 +24,8 @@ class ScheduleService(Base):
             url = f"{url}/{date}"
         json_resp = await self._get_json(url)
         schedule = json_resp["data"][0]["data"]
+        print(parse_menu(json_resp))
+        exit(0)
         self.logger.log(constants.VERBOSE_LOG_LEVEL, "Getting schedule for list...")
         self.logger.log(constants.VERBOSE_LOG_LEVEL, json_resp)
         return [
@@ -62,9 +65,7 @@ class ScheduleService(Base):
                 secondary_title=segment["titles"]["secondary"],
                 tertiary_title=segment["titles"]["tertiary"],
                 entity_title=segment["titles"]["entity_title"],
-                image_url=image_from_recipe(
-                    segment["image_url"], f"{image_size}x{image_size}"
-                ),
+                image_url=image_from_recipe(segment["image_url"], image_size),
                 start_seconds=segment["offset"]["start"],
                 end_seconds=segment["offset"]["start"],
                 label=segment["offset"]["label"],
