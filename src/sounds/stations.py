@@ -1,5 +1,7 @@
 import itertools
 
+from .json import parse_node
+
 from . import constants
 from .base import Base
 from .constants import URLs
@@ -33,7 +35,7 @@ class StationService(Base):
         :return: A list of Station objects
         :rtype: list[Station]
         """
-        json_resp = await self._get_json(URLs.STATIONS_URL)
+        json_resp = await self._get_json(url_template=URLs.STATIONS)
         self.logger.log(constants.VERBOSE_LOG_LEVEL, "Getting station list...")
         self.logger.log(constants.VERBOSE_LOG_LEVEL, json_resp)
 
@@ -75,7 +77,15 @@ class StationService(Base):
 
         return stations
 
-    async def get_station(
+    async def get_local_stations(self):
+        json_resp = await self._get_json(url_template=URLs.STATIONS)
+        self.logger.log(constants.VERBOSE_LOG_LEVEL, "Getting local station list...")
+        self.logger.log(constants.VERBOSE_LOG_LEVEL, json_resp)
+        local_stations = json_resp["data"][1]["data"]
+        stations = [parse_node(s) for s in local_stations]
+        return stations
+
+    async def get_station_schedule(
         self,
         station_id: str,
         include_stream: bool = False,
@@ -103,3 +113,33 @@ class StationService(Base):
         if include_schedule:
             station.schedule = await self.schedules.get_schedule(station.id, date=date)
         return station
+
+    async def get_station(
+        self,
+        station_id: str,
+        include_stream: bool = False,
+        include_schedule: bool = False,
+        date: str | None = None,
+    ) -> Station | None:
+        if date:
+            return await self.get_station_schedule(
+                station_id, include_stream, include_schedule, date
+            )
+        json_resp = await self._get_json(
+            url_template=URLs.LIVE_STATION_DETAILS, url_args={"station_id": station_id}
+        )
+        self.logger.log(constants.VERBOSE_LOG_LEVEL, "Getting station details...")
+        self.logger.log(constants.VERBOSE_LOG_LEVEL, json_resp)
+        if not json_resp["data"]:
+            return None
+        station = parse_node(json_resp["data"][0]["data"][0])
+        if include_stream:
+            station.stream = await self.streams.get_live_stream(station_id)
+        return station
+
+    async def get_broadcast(self, pid: str):
+        json_resp = await self._get_json(
+            url_template=URLs.BROADCAST, url_args={"pid": pid}
+        )
+        broadcast = parse_node(json_resp)
+        return broadcast
