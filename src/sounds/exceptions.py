@@ -20,3 +20,11 @@ class InvalidFormatError(SoundsException):
 
 class UnauthorisedError(SoundsException):
     pass
+
+
+class InvalidArgumentsError(SoundsException):
+    pass
+
+
+class NotFoundError(SoundsException):
+    pass
