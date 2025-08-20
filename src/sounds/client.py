@@ -23,6 +23,7 @@ class SoundsClient:
         timezone: pytz.BaseTzInfo | None = None,
         logger: logging.Logger | None = None,
         log_level: str | None = None,
+        mock_session: bool = False,
         **kwargs,
     ) -> None:
         if logger:
@@ -42,7 +43,7 @@ class SoundsClient:
         self.current_stream: Stream | None = None
         self.current_segment: Segment | None = None
         self.timeout = aiohttp.ClientTimeout(total=10)
-
+        self.mock_session = mock_session
         self._cookie_jar = aiohttp.CookieJar(unsafe=True)
         # self.cookie_jar = cookiejar.FileCookieJar("cookies.txt")
         if not session:
@@ -57,11 +58,12 @@ class SoundsClient:
             "session": self._session,
             "timeout": self.timeout,
             "logger": self.logger,
+            "mock_session": self.mock_session,
             **kwargs,
         }
 
         self.auth = AuthService(**service_kwargs)
-        self.streaming = StreamingService(**service_kwargs)
+        self.streaming = StreamingService(auth_service=self.auth, **service_kwargs)
         self.schedules = ScheduleService(**service_kwargs)
         self.stations = StationService(
             streaming_service=self.streaming,
