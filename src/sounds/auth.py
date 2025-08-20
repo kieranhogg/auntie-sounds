@@ -45,21 +45,21 @@ LOGIN_ERRORS = [
 
 
 def login_required(method):
+    """Use to catch expired sessions and reauthenticate before trying again"""
+
     @wraps(method)
     async def _impl(self, *method_args, **method_kwargs):
         self.logger.debug("@login_required")
-        # Currently a bit of a hack until I can work out why sessions are expiring before the cookies
-        if self.auth.is_logged_in:
-            self.logger.debug("Logged in")
-            try:
-                method_output = await method(self, *method_args, **method_kwargs)
-                self.logger.debug(f"Ran method {method}")
-            except UnauthorisedError:
-                self.logger.debug("Hit error")
-                self.renew_session()
-                self.authenticate(self.username, self.password)
-                method_output = await method(self, *method_args, **method_kwargs)
-                self.logger.debug("Rewned session and ran method")
+        try:
+            method_output = await method(self, *method_args, **method_kwargs)
+            self.logger.debug(f"Ran method {method}")
+        except UnauthorisedError:
+            self.logger.debug("Hit error")
+            await self.auth.renew_session()
+            # self.authenticate(self.username, self.password)
+            self.logger.debug(f"Logged in: {self.auth.is_logged_in}")
+            method_output = await method(self, *method_args, **method_kwargs)
+            self.logger.debug("Rewned session and ran method")
         return method_output
 
     return _impl
@@ -73,6 +73,9 @@ class AuthService(Base):
         self.debug_login = False
         if "debug_login" in kwargs:
             self.debug_login = kwargs.pop("debug_login")
+        if kwargs.get("mock_session"):
+            self.mock_session = True
+            return
         super().__init__(**kwargs)
 
         if self.debug_login:
@@ -88,8 +91,10 @@ class AuthService(Base):
     @property
     def is_logged_in(self) -> bool:
         """Checks if we have a valid session"""
+        if self.mock_session:
+            return True
         return COOKIE_ID in self._session._cookie_jar.filter_cookies(
-            URL(URLs.COOKIE_URL)
+            URL(URLs.COOKIE_BASE.value)
         )
 
     @property
@@ -112,7 +117,19 @@ class AuthService(Base):
         return base_headers
 
     async def authenticate(self, username: str, password: str) -> bool:
-        """Signs into BBC Sounds"""
+        """Signs into BBC Sounds.
+
+        :param username: The username or email address to sign in with
+        :param password: The password to sign in with
+        :return: True if successfully logged in, False otherwise
+        :rtype: bool
+        :raises LoginFailedError: If the login fails for any reason
+        :raises UnauthorisedError: If the login is not authorised
+        :raises RuntimeError: If the login form URL cannot be found
+        :raises APIResponseError: If the API response is invalid
+        """
+        if self.mock_session:
+            return True
         self.username = username
         self.password = password
         if self.is_logged_in:
@@ -218,13 +235,13 @@ class AuthService(Base):
 
     def save_cookies_to_disk(self):
         return self._session._cookie_jar.save(self.COOKIE_FILE)
-        # return open(self.COOKIE_FILE, "w").write(self._session.cookie_jar.filter_cookies(constants.COOKIE_ID))  # type: ignore
 
     def _check_for_login_errors(
         self, html: str, stage: Literal["email"] | Literal["login"]
     ):
         """See if we can extract a meaningful error from the HTML."""
         return None
+        # FIXME: was false positives
         html_content = BeautifulSoup(html, features="html.parser").find("div").text
         if stage == "email":
             errors = EMAIL_ERRORS
@@ -239,7 +256,8 @@ class AuthService(Base):
         return None
 
     async def renew_session(self):
-        await self._make_request("GET", constants.SignedInURLs.RENEW_SESSION)
+        url = self._build_url(url_template=constants.SignedInURLs.RENEW_SESSION)
+        await self._make_request("GET", url)
 
     def logout(self):
         try:
