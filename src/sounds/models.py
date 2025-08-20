@@ -1,11 +1,13 @@
 from dataclasses import dataclass, fields
 from datetime import datetime as dt
 from pprint import pformat
-from typing import TYPE_CHECKING, List, Optional
+from typing import TYPE_CHECKING, Any, List, Optional
 
-from pytz import BaseTzInfo
+import pytz
 
-from .utils import image_from_recipe
+from .constants import SoundsTypes, PlayableSoundsTypes
+
+from .utils import image_from_recipe, network_logo
 
 if TYPE_CHECKING:
     from .constants import ContainerType
@@ -21,6 +23,8 @@ class BaseObject:
     """Base class for all objects with common functionality."""
 
     type: Optional[str] = None
+    uris: Optional[dict] = None
+    recommendation: Optional[dict] = None
 
     def __str__(self):
         return pformat(self)
@@ -35,6 +39,9 @@ class Network:
     short_title: Optional[str] = None
     logo_url: Optional[str] = None
     network_type: str = "master_brand"
+
+    def __post_init__(self):
+        self.logo_url = network_logo(self.logo_url)
 
 
 @dataclass(kw_only=True)
@@ -58,20 +65,23 @@ class PlayableItem(BaseObject):
 
     id: str
     urn: str
-    duration: Optional[int] = None
-    progress: Optional[int] = None
+    pid: Optional[str] = None
+    type: Optional[str] = None
+    duration: Optional[dict] = None
+    progress: Optional[dict] = None
     image_url: Optional[str] = None
     titles: Optional[dict] = None
+    synopses: Optional[dict] = None
     network: Optional[Network] = None
     container: Optional[Container] = None
     start: Optional[dt] = None
     end: Optional[dt] = None
+    release: Optional[dict] = None
+    stream: Optional[str] = None
 
-    @property
-    def image(self):
-        if self.image_url:
-            return image_from_recipe(self.image_url, size=400)
-        return None
+    def __post_init__(self):
+        self.start = dt.fromisoformat(self.start) if self.start else None
+        self.end = dt.fromisoformat(self.end) if self.end else None
 
 
 @dataclass(kw_only=True)
@@ -91,25 +101,47 @@ class TimedContent:
 
 
 @dataclass(kw_only=True)
-class ScheduleItem(Container, TimedContent):
+class Broadcast:
+    """Represents a broadcast item."""
+
+    type: str
+    pid: str
+    start: dt
+    end: dt
+    service_id: str
+    duration: int
+    progress: int
+    live: bool
+    blanked: bool
+    repeat: bool
+    critical: bool
+    on_air: bool
+    programme: "RadioShow"
+
+    def __post_init__(self):
+        self.start = dt.fromisoformat(self.start)
+        self.end = dt.fromisoformat(self.end)
+
+
+@dataclass(kw_only=True)
+class ScheduleItem(PlayableItem):
     """Represents a scheduled program item."""
 
-    short_synopsis: str = ""
-    medium_synopsis: str = ""
-    long_synopsis: str = ""
-    primary_title: str = ""
-    secondary_title: str = ""
-    tertiary_title: Optional[str] = None
     episode_id: Optional[str] = None
     container_id: Optional[str] = None
     container: Optional[Container] = None
     stream: Optional[str] = None
 
-    @property
-    def vpid(self) -> Optional[str]:
-        if self.urn:
-            return self.urn.rsplit(":", 1)[-1]
-        return None
+    def __post_init__(self):
+        self.image_url = image_from_recipe(self.image_url, size=640)
+        if hasattr(self, "urn") and self.urn is not None:
+            self.pid = self.urn.rsplit(":", 1)[-1]
+
+    # @property
+    # def vpid(self) -> Optional[str]:
+    #     if self.urn:
+    #         return self.urn.rsplit(":", 1)[-1]
+    #     return None
 
     @property
     def longest_description(self) -> str:
@@ -123,6 +155,13 @@ class ScheduleItem(Container, TimedContent):
             or ""
         )
 
+    def is_live(self, timezone: ZoneInfo) -> bool:
+        now = dt.now(tz=timezone)
+        return self.start <= now < self.end
+
+    def has_already_aired(self, timezone: ZoneInfo) -> bool:
+        return dt.now(tz=timezone) > self.end
+
 
 @dataclass(kw_only=True)
 class Station(Container):
@@ -134,6 +173,32 @@ class Station(Container):
 
 
 @dataclass(kw_only=True)
+class StationSearchResult:
+    """Represents a search result showing a station. Keys are different enough to warrant a separate model"""
+
+    type: str
+    id: str
+    urn: str
+    service_id: str
+    episode_image_url: str
+    station_image_url: str
+    station_name: str
+    title: str
+    short_synopsis: str
+    progress: dict[int, str]
+    duration: dict[int, str]
+
+    def __post_init__(self):
+        self.station_image_url = network_logo(self.station_image_url)
+        self.episode_image_url = image_from_recipe(self.episode_image_url, size=640)
+
+
+@dataclass(kw_only=True)
+class LiveStation(PlayableItem):
+    pass
+
+
+@dataclass(kw_only=True)
 class Stream(TimedContent):
     """Represents a station stream."""
 
@@ -142,7 +207,10 @@ class Stream(TimedContent):
     image_url: str
     show_title: str
     show_description: str
-    station: Station
+    container: Any | None = None
+
+    def __post_init__(self):
+        self.image_url = network_logo(self.image_url)
 
     @property
     def can_seek(self) -> bool:
@@ -155,32 +223,31 @@ class Segment:
     """Represents a segment within a stream."""
 
     id: str
-    primary_title: str
-    secondary_title: str
+    segment_type: str
+    titles: dict
     image_url: str
-    start_seconds: int
-    end_seconds: int
-    label: str
-    now_playing: bool
-    tertiary_title: str = ""
-    entity_title: Optional[str] = None
+    offset: dict
 
     def __post_init__(self):
-        # Set entity_title to primary_title if not provided
-        if self.entity_title is None:
-            self.entity_title = self.primary_title
+        if self.image_url:
+            self.image_url = image_from_recipe(self.image_url, size=1280)
 
 
 @dataclass(kw_only=True)
-class Schedule(BaseObject):
+class Schedule(Container):
     """Represents a schedule for a given date."""
 
-    date: dt
-    schedule_list: List[ScheduleItem]
+    id: str
+    title: str  # the date of the schedule
+    description: str
+    # sub_items: Optional[List[ScheduleItem]] = None
 
-    def get_current_item(self, timezone: ZoneInfo) -> Optional[ScheduleItem]:
+    def get_current_item(
+        self,
+        timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo = pytz.timezone("UTC"),
+    ) -> Optional[ScheduleItem]:
         """Get the currently airing schedule item."""
-        for item in self.schedule_list:
+        for item in self.sub_items:
             if item.is_live(timezone):
                 return item
         return None
@@ -191,21 +258,40 @@ class Schedule(BaseObject):
 class RadioShow(PlayableItem, TimedContent):
     """Represents a playable radio show."""
 
-    titles: dict
+    def __post_init__(self):
+        super().__post_init__()
+        self.image_url = image_from_recipe(self.image_url, size=1280)
+        if hasattr(self, "urn") and self.urn is not None:
+            self.pid = self.urn.rsplit(":", 1)[-1]
+
+
+# Specific content types
+@dataclass(kw_only=True)
+class RadioClip(PlayableItem, TimedContent):
+    """Represents a playable radio clip."""
+
+    def __post_init__(self):
+        self.image_url = image_from_recipe(self.image_url, size=1280)
+        if hasattr(self, "urn") and self.urn is not None:
+            self.pid = self.urn.rsplit(":", 1)[-1]
 
 
 @dataclass(kw_only=True)
 class PodcastEpisode(PlayableItem):
     """Represents a playable podcast episode."""
 
-    pass
+    def __post_init__(self):
+        self.image_url = image_from_recipe(self.image_url, size=1280)
+        if hasattr(self, "urn") and self.urn is not None:
+            self.pid = self.urn.rsplit(":", 1)[-1]
 
 
 @dataclass(kw_only=True)
 class RadioSeries(Container):
     """Represents a radio series container (holds episodes)."""
 
-    pass
+    def __post_init__(self):
+        self.image_url = image_from_recipe(self.image_url, size=1280)
 
 
 @dataclass(kw_only=True)
@@ -224,14 +310,37 @@ class Collection(Container):
 
 @dataclass(kw_only=True)
 class Category(Container):
-    """Represents a content category container."""
+    """Represents a content category."""
 
     pass
 
 
 @dataclass(kw_only=True)
+class CategoryItemContainer:
+    """Represents a content category container."""
+
+    id: Optional[str] = None
+    total: int
+    limit: int
+    offset: int
+    sub_items: Optional[List["PlayableItem"]] = None
+
+
+@dataclass(kw_only=True)
+class CollectionItemContainer(CategoryItemContainer):
+    """Represents a content collection container."""
+
+
+@dataclass(kw_only=True)
 class MenuItem(Container):
     """Represents a menu item container."""
+
+    pass
+
+
+@dataclass(kw_only=True)
+class RecommendedMenuItem(MenuItem):
+    """Represents a recommended menu item."""
 
     pass
 
@@ -251,84 +360,186 @@ class Menu:
         return None
 
 
-DisplayItem = PlayableItem
-PromoItem = PlayableItem
+@dataclass(kw_only=True)
+class DisplayItem(Container):
+    item: PlayableItem | None = None
+
+
+@dataclass(kw_only=True)
+class PromoItem(Container):
+    item: PlayableItem
+
+
+@dataclass(kw_only=True)
+class SearchResults:
+    stations: List[LiveStation]
+    shows: List[Container]
+    episodes: List[PlayableItem]
 
 
 def model_factory(object):
-    from .constants import ContainerType, ItemType, ItemURN
+    from .constants import ContainerType, ItemType, ItemURN, IDType
 
-    container_keys = {f.name for f in fields(Container)}
-    playable_item_keys = {f.name for f in fields(PlayableItem)}
+    schema_type = None
+    new_type = None
 
-    object_type = object.get("type")
+    if "$schema" in object:
+        schema_type = object["$schema"].rsplit("/", 1)[1]
+
+    object_type = object.get("type", None)
+    if object_type is None:
+        object_type = schema_type
     urn = object.get("urn").rsplit(":", 1)[0] if object.get("urn") else None
-
-    if object.get("data"):
-        init_values = {k: v for k, v in object.items() if k in container_keys}
-    else:
-        init_values = {k: v for k, v in object.items() if k in playable_item_keys}
 
     if object_type in ItemType:
         match object_type:
-            case ItemType.MODULE.value:
-                return MenuItem(**init_values)
+            case ItemType.INLINE_DISPLAY_MODULE.value:
+                # Menu item, container or schedule
+                if object["id"] == IDType.SCHEDULE_ITEMS.value:
+                    # This is a container of schedule items
+                    new_type = Schedule
+                elif "container" in object.get("id"):
+                    new_type = Container
+                elif object["id"] == IDType.SINGLE_ITEM_PROMO.value:
+                    # This is the special promo item menu, ignoring for now
+                    pass
+                else:
+                    new_type = MenuItem
             case ItemType.PLAYABLE_ITEM.value:
                 match urn:
                     case ItemURN.EPISODE.value:
-                        return (
-                            RadioShow(**init_values)
-                            if object.get("container")
+                        if (
+                            object.get("container")
                             and ContainerType(object.get("container").get("type"))
                             == ContainerType.BRAND
-                            else PodcastEpisode(**init_values)
-                        )
+                            and object.get("network").get("id") != "bbc_sounds_podcasts"
+                        ) or not object.get("container"):
+                            new_type = RadioShow
+                        else:
+                            new_type = PodcastEpisode
                     case ItemURN.CLIP.value:
-                        return RadioShow(**init_values)
+                        new_type = RadioClip
                     case ItemURN.COLLECTION.value:
-                        return Collection(**init_values)
+                        new_type = Collection
                     case ItemURN.CATEGORY.value:
-                        return Category(**init_values)
+                        new_type = Category
                     case ItemURN.SERIES.value:
-                        return Podcast(**init_values)
+                        new_type = Podcast
                     case ItemURN.RADIO_SHOW_OR_PODCAST.value:
-                        return (
-                            PodcastEpisode(**init_values)
-                            if object.get("container").get("network").get("id")
-                            == "bbc_sounds_podcasts"
-                            else RadioShow(**init_values)
-                        )
+                        if object.get("container").get("network").get(
+                            "id"
+                        ) == "bbc_sounds_podcasts" or "brand" in object.get(
+                            "container"
+                        ).get(
+                            "urn"
+                        ):
+                            new_type = PodcastEpisode
+                        else:
+                            # This is a radio show
+                            new_type = RadioShow
                     case ItemURN.STATION.value:
-                        station_keys = {f.name for f in fields(Station)}
-                        init_values = {
-                            k: v for k, v in object.items() if k in station_keys
-                        }
-                        return Station(**init_values)
+                        if object.get("synopses") is not None:
+                            new_type = LiveStation
+                        else:
+                            new_type = Station
                     case ItemURN.PROMO_ITEM.value:
-                        return PromoItem(**init_values)
+                        new_type = PromoItem
                     case _:
                         print(f"No playableitem: {object} {type(object)}")
-            case ItemType.CONTAINER.value:
-                print(object.get("container"))
-                return RadioSeries(**init_values)
-                # if object.get("")
-                # match object.get("container").get("type"):
-                #     case ContainerType.BRAND.value:
-                #         return RadioShow(**init_values)
-                #     case ContainerType.SERIES.value:
-                #         return Podcast(**init_values)
-                #     case ContainerType.ITEM.value:
-                #         pass
-                #     case None:
-                #     case _:
-                #         raise Exception(f"Other containeritem {object}")
+            case ItemType.INLINE_HEADER_MODULE.value:
+                new_type = Podcast
             case ItemType.DISPLAY_ITEM.value:
-                return DisplayItem(**init_values)
-            case ItemType.BROADCAST_SUMMARY.value:
-                return ScheduleItem(**init_values)
+                new_type = DisplayItem
+                # new_type = object.item
+            case ItemType.BROADCAST_SUMMARY.value | ItemType.BROADCAST.value:
+                if urn == ItemURN.STATION:
+                    new_type = Station
+                if (
+                    object.get("progress")
+                    and object.get("progress").get("value") == 0
+                    or object.get("on_air")
+                ):
+                    # Live, or not yet aired
+                    new_type = ScheduleItem
+                elif object["playable_item"] is not None:
+                    new_type = RadioShow
+                elif hasattr(object, "live"):
+                    new_type = Broadcast
+                else:
+                    new_type = ScheduleItem
+            case ItemType.EPISODE.value:
+                new_type = RadioShow
+            case ItemType.BROADCAST.value:
+                raise Exception("Broadcast?")
+            case ItemType.RADIO_SEARCH.value:
+                new_type = StationSearchResult
+                # Search results embed the actual station details in a now key
+                object = object["now"]
+            case ItemType.SEGMENT_ITEM.value:
+                new_type = Segment
             case _:
                 print("No IT found")
-
+    elif object_type in ContainerType or object_type in SoundsTypes:
+        # This is a nested/parent container, work out which
+        if urn == ItemURN.COLLECTION.value:
+            new_type = Collection
+        elif urn == ItemURN.CATEGORY.value:
+            new_type = Category
+        elif object_type == ContainerType.BRAND.value:
+            new_type = RadioSeries
+            if (
+                hasattr(object, "network")
+                and object.get("network").get("id") == "bbc_sounds_podcasts"
+                or "brand" in object.get("urn")
+            ):
+                new_type = Podcast
+            else:
+                # This is a radio show
+                new_type = RadioSeries
+        elif object_type == SoundsTypes.PLAYABLE_ITEMS.value:
+            # Category of items
+            new_type = CategoryItemContainer
+        elif object_type == SoundsTypes.CONTAINER_ITEMS.value:
+            # Collection group of items
+            new_type = CollectionItemContainer
+        elif object_type == SoundsTypes.PROGRAMMES.value:
+            if object["total"] > 1:
+                raise NotImplementedError("Container has more than 1 programme!")
+            new_type = PodcastEpisode
+        # elif object["id"] == IDType.SHOW_SEARCH_CONTAINER.value:
+        #     new_type = Container
+        elif object_type == ContainerType.SERIES.value:
+            new_type = RadioSeries
+        elif urn == ItemURN.RADIO_SHOW_OR_PODCAST.value:
+            new_type = RadioSeries
+        else:
+            print(f"Unknown container type: {object_type}")
+            print(object)
+    elif object.get("network_type", None) is not None:
+        # This is a station or network
+        if object.get("network_type") == "master_brand":
+            new_type = Network
+        elif object.get("network_type") == "service":
+            # Local station, treat the same at present
+            new_type = Network
+        else:
+            raise Exception(f"Other network type: {object_type} {object}")
+    elif "key" in object:
+        # This is a weird nested network thing
+        new_type = Network
+    elif schema_type in PlayableSoundsTypes:
+        print(schema_type)
+        return None
     else:
-        print("Not in IT")
-    return object
+        print(f"Not in IT {object} {object_type} {schema_type}")
+        return None
+
+    try:
+        required_fields = {f.name for f in fields(new_type)}
+    except TypeError:
+        print(new_type)
+        return None
+    attrs = {k: v for k, v in object.items() if k in required_fields}
+
+    new_object = new_type(**attrs)
+    return new_object
