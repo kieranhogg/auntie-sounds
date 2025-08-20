@@ -1,0 +1,1483 @@
+{
+    "$schema": "https://rms.api.bbc.co.uk/docs/swagger.json#/definitions/ExperienceResponse",
+    "data": [
+        {
+            "type": "inline_display_module",
+            "id": "schedule_items",
+            "style": null,
+            "title": "2025-08-04",
+            "description": null,
+            "state": "ok",
+            "uris": null,
+            "controls": null,
+            "total": null,
+            "data": [
+                {
+                    "type": "broadcast_summary",
+                    "id": "p0lpf9d9",
+                    "urn": "urn:bbc:radio:episode:m002gh48",
+                    "start": "2025-08-03T23:00:00Z",
+                    "end": "2025-08-04T02:00:00Z",
+                    "service_id": "bbc_6music",
+                    "duration": 10800,
+                    "network": {
+                        "id": "bbc_6music",
+                        "key": "6music",
+                        "short_title": "Radio 6 Music",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Guy Garvey's Finest Hour",
+                        "secondary": "Femi Koleoso sits in",
+                        "tertiary": ""
+                    },
+                    "synopses": {
+                        "short": "Femi Koleoso brings his own unique taste to 6 Music.",
+                        "medium": "Femi Koleoso brings his own unique taste to 6 Music.",
+                        "long": null
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0bw6zhs.jpg",
+                    "container": {
+                        "type": "brand",
+                        "id": "b0072q60",
+                        "urn": "urn:bbc:radio:brand:b0072q60",
+                        "title": "Guy Garvey's Finest Hour",
+                        "activities": []
+                    },
+                    "playable_item": {
+                        "type": "playable_item",
+                        "id": "m002gh47",
+                        "urn": "urn:bbc:radio:episode:m002gh48",
+                        "network": {
+                            "id": "bbc_6music",
+                            "key": "6music",
+                            "short_title": "Radio 6 Music",
+                            "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                            "network_type": "master_brand"
+                        },
+                        "titles": {
+                            "primary": "Guy Garvey's Finest Hour",
+                            "secondary": "Femi Koleoso sits in",
+                            "tertiary": null,
+                            "entity_title": "Femi Koleoso sits in"
+                        },
+                        "synopses": {
+                            "short": "Femi Koleoso brings his own unique taste to 6 Music.",
+                            "medium": "Femi Koleoso brings his own unique taste to 6 Music.",
+                            "long": null
+                        },
+                        "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0bw6zhs.jpg",
+                        "duration": {
+                            "value": 10800,
+                            "label": "180 mins"
+                        },
+                        "progress": null,
+                        "container": {
+                            "type": "brand",
+                            "id": "b0072q60",
+                            "urn": "urn:bbc:radio:brand:b0072q60",
+                            "title": "Guy Garvey's Finest Hour",
+                            "synopses": {
+                                "short": "Elbow frontman Guy Garvey brings his own unique taste to 6 Music.",
+                                "medium": "Elbow frontman Guy Garvey brings his own unique taste to 6 Music.",
+                                "long": null
+                            },
+                            "activities": []
+                        },
+                        "download": {
+                            "type": "drm",
+                            "quality_variants": {
+                                "low": {
+                                    "bitrate": 96,
+                                    "file_url": null,
+                                    "file_size": 144000000,
+                                    "label": "144 MB"
+                                },
+                                "medium": {
+                                    "bitrate": 128,
+                                    "file_url": null,
+                                    "file_size": 192000000,
+                                    "label": "192 MB"
+                                },
+                                "high": {
+                                    "bitrate": 320,
+                                    "file_url": null,
+                                    "file_size": 477000000,
+                                    "label": "477 MB"
+                                }
+                            }
+                        },
+                        "availability": {
+                            "from": "2025-08-03T15:00:00Z",
+                            "to": "2025-09-02T15:00:00Z",
+                            "label": "Available for 28 days"
+                        },
+                        "release": {
+                            "date": "2025-08-03T00:00:00Z",
+                            "label": "03 Aug 2025"
+                        },
+                        "guidance": {
+                            "competition_warning": false,
+                            "warnings": null
+                        },
+                        "activities": [],
+                        "uris": [
+                            {
+                                "type": "latest",
+                                "id": null,
+                                "label": "Latest",
+                                "uri": "/v2/programmes/playable?container=b0072q60&sort=sequential&type=episode&experience=domestic"
+                            }
+                        ],
+                        "play_context": null,
+                        "recommendation": null
+                    }
+                },
+                {
+                    "type": "broadcast_summary",
+                    "id": "p0lpf9dc",
+                    "urn": "urn:bbc:radio:episode:m002g1vf",
+                    "start": "2025-08-04T02:00:00Z",
+                    "end": "2025-08-04T03:00:00Z",
+                    "service_id": "bbc_6music",
+                    "duration": 3600,
+                    "network": {
+                        "id": "bbc_6music",
+                        "key": "6music",
+                        "short_title": "Radio 6 Music",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "6 Music's Jukebox",
+                        "secondary": "Self Esteem, Elliott Smith, Wet Leg, and more!",
+                        "tertiary": ""
+                    },
+                    "synopses": {
+                        "short": "6 Music takes you through the early hours playing back to back music.",
+                        "medium": "6 Music takes you through the early hours playing back to back music.",
+                        "long": null
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lt30m5.jpg",
+                    "container": {
+                        "type": "brand",
+                        "id": "b00rz6v1",
+                        "urn": "urn:bbc:radio:brand:b00rz6v1",
+                        "title": "6 Music's Jukebox",
+                        "activities": []
+                    },
+                    "playable_item": {
+                        "type": "playable_item",
+                        "id": "m002g1vc",
+                        "urn": "urn:bbc:radio:episode:m002g1vf",
+                        "network": {
+                            "id": "bbc_6music",
+                            "key": "6music",
+                            "short_title": "Radio 6 Music",
+                            "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                            "network_type": "master_brand"
+                        },
+                        "titles": {
+                            "primary": "6 Music's Jukebox",
+                            "secondary": "Self Esteem, Elliott Smith, Wet Leg, and more!",
+                            "tertiary": null,
+                            "entity_title": "Self Esteem, Elliott Smith, Wet Leg, and more!"
+                        },
+                        "synopses": {
+                            "short": "6 Music takes you through the early hours playing back to back music.",
+                            "medium": "6 Music takes you through the early hours playing back to back music.",
+                            "long": null
+                        },
+                        "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lt30m5.jpg",
+                        "duration": {
+                            "value": 3600,
+                            "label": "60 mins"
+                        },
+                        "progress": null,
+                        "container": {
+                            "type": "brand",
+                            "id": "b00rz6v1",
+                            "urn": "urn:bbc:radio:brand:b00rz6v1",
+                            "title": "6 Music's Jukebox",
+                            "synopses": {
+                                "short": "Chris Hawkins presents back to back music without the chat, plus exclusive BBC sessions.",
+                                "medium": "Chris Hawkins takes you through the early hours playing back to back music without the interruptions of chat, plus exclusive BBC sessions and his Spotlight Act.",
+                                "long": null
+                            },
+                            "activities": []
+                        },
+                        "download": {
+                            "type": "drm",
+                            "quality_variants": {
+                                "low": {
+                                    "bitrate": 96,
+                                    "file_url": null,
+                                    "file_size": 49000000,
+                                    "label": "49 MB"
+                                },
+                                "medium": {
+                                    "bitrate": 128,
+                                    "file_url": null,
+                                    "file_size": 65000000,
+                                    "label": "65 MB"
+                                },
+                                "high": {
+                                    "bitrate": 320,
+                                    "file_url": null,
+                                    "file_size": 160000000,
+                                    "label": "160 MB"
+                                }
+                            }
+                        },
+                        "availability": {
+                            "from": "2025-07-31T04:00:00Z",
+                            "to": "2025-09-03T03:00:00Z",
+                            "label": "Available for 28 days"
+                        },
+                        "release": {
+                            "date": "2025-07-31T00:00:00Z",
+                            "label": "31 Jul 2025"
+                        },
+                        "guidance": {
+                            "competition_warning": false,
+                            "warnings": null
+                        },
+                        "activities": [],
+                        "uris": [
+                            {
+                                "type": "latest",
+                                "id": null,
+                                "label": "Latest",
+                                "uri": "/v2/programmes/playable?container=b00rz6v1&sort=sequential&type=episode&experience=domestic"
+                            }
+                        ],
+                        "play_context": null,
+                        "recommendation": null
+                    }
+                },
+                {
+                    "type": "broadcast_summary",
+                    "id": "p0lpf9df",
+                    "urn": "urn:bbc:radio:episode:m002gh4m",
+                    "start": "2025-08-04T03:00:00Z",
+                    "end": "2025-08-04T04:00:00Z",
+                    "service_id": "bbc_6music",
+                    "duration": 3600,
+                    "network": {
+                        "id": "bbc_6music",
+                        "key": "6music",
+                        "short_title": "Radio 6 Music",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "The BBC Introducing Mixtape",
+                        "secondary": "Cowboy Hunters, Cyn Cwsg, Tragic Sasha and more!",
+                        "tertiary": ""
+                    },
+                    "synopses": {
+                        "short": "Emily Pilbeam presents a mixtape of her personal selection of tracks from BBC Introducing.",
+                        "medium": "Emily Pilbeam presents a mixtape of her personal selection of tracks from BBC Introducing, including Cowboy Hunters, Cyn Cwsg, Tragic Sasha and more!",
+                        "long": "Emily Pilbeam presents a mixtape of her personal selection of tracks from BBC Introducing, including Junior Simba, The Youth Play, Opal Mag, Tragic Sasha, Fran Lusty, Big Old House, Cyn Cwsg, Luvcat, Nyah Grace, She’s In Parties, Holybones, Brógeal, Still Blank, Beefcake, Cowboy Hunters, Tarmac, Velvetine and a Track of the Week from Nightbus."
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lt4wjj.jpg",
+                    "container": {
+                        "type": "brand",
+                        "id": "b01ghtz0",
+                        "urn": "urn:bbc:radio:brand:b01ghtz0",
+                        "title": "The BBC Introducing Mixtape",
+                        "activities": []
+                    },
+                    "playable_item": {
+                        "type": "playable_item",
+                        "id": "m002gh4l",
+                        "urn": "urn:bbc:radio:episode:m002gh4m",
+                        "network": {
+                            "id": "bbc_6music",
+                            "key": "6music",
+                            "short_title": "Radio 6 Music",
+                            "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                            "network_type": "master_brand"
+                        },
+                        "titles": {
+                            "primary": "The BBC Introducing Mixtape",
+                            "secondary": "Cowboy Hunters, Cyn Cwsg, Tragic Sasha and more!",
+                            "tertiary": null,
+                            "entity_title": "Cowboy Hunters, Cyn Cwsg, Tragic Sasha and more!"
+                        },
+                        "synopses": {
+                            "short": "Emily Pilbeam presents a mixtape of her personal selection of tracks from BBC Introducing.",
+                            "medium": "Emily Pilbeam presents a mixtape of her personal selection of tracks from BBC Introducing, including Cowboy Hunters, Cyn Cwsg, Tragic Sasha and more!",
+                            "long": "Emily Pilbeam presents a mixtape of her personal selection of tracks from BBC Introducing, including Junior Simba, The Youth Play, Opal Mag, Tragic Sasha, Fran Lusty, Big Old House, Cyn Cwsg, Luvcat, Nyah Grace, She’s In Parties, Holybones, Brógeal, Still Blank, Beefcake, Cowboy Hunters, Tarmac, Velvetine and a Track of the Week from Nightbus."
+                        },
+                        "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lt4wjj.jpg",
+                        "duration": {
+                            "value": 3600,
+                            "label": "60 mins"
+                        },
+                        "progress": null,
+                        "container": {
+                            "type": "brand",
+                            "id": "b01ghtz0",
+                            "urn": "urn:bbc:radio:brand:b01ghtz0",
+                            "title": "The BBC Introducing Mixtape",
+                            "synopses": {
+                                "short": "Emily Pilbeam presents a mixtape of her personal selection of tracks from BBC Introducing.",
+                                "medium": "Emily Pilbeam presents a mixtape of her personal selection of tracks from BBC Introducing.",
+                                "long": null
+                            },
+                            "activities": []
+                        },
+                        "download": {
+                            "type": "drm",
+                            "quality_variants": {
+                                "low": {
+                                    "bitrate": 96,
+                                    "file_url": null,
+                                    "file_size": 49000000,
+                                    "label": "49 MB"
+                                },
+                                "medium": {
+                                    "bitrate": 128,
+                                    "file_url": null,
+                                    "file_size": 65000000,
+                                    "label": "65 MB"
+                                },
+                                "high": {
+                                    "bitrate": 320,
+                                    "file_url": null,
+                                    "file_size": 160000000,
+                                    "label": "160 MB"
+                                }
+                            }
+                        },
+                        "availability": {
+                            "from": "2025-08-04T04:00:00Z",
+                            "to": "2025-09-03T04:00:00Z",
+                            "label": "Available for 28 days"
+                        },
+                        "release": {
+                            "date": "2025-08-04T00:00:00Z",
+                            "label": "04 Aug 2025"
+                        },
+                        "guidance": {
+                            "competition_warning": false,
+                            "warnings": null
+                        },
+                        "activities": [],
+                        "uris": [
+                            {
+                                "type": "latest",
+                                "id": null,
+                                "label": "Latest",
+                                "uri": "/v2/programmes/playable?container=b01ghtz0&sort=sequential&type=episode&experience=domestic"
+                            }
+                        ],
+                        "play_context": null,
+                        "recommendation": null
+                    }
+                },
+                {
+                    "type": "broadcast_summary",
+                    "id": "p0lpf9dk",
+                    "urn": "urn:bbc:radio:episode:m002gh4p",
+                    "start": "2025-08-04T04:00:00Z",
+                    "end": "2025-08-04T06:00:00Z",
+                    "service_id": "bbc_6music",
+                    "duration": 7200,
+                    "network": {
+                        "id": "bbc_6music",
+                        "key": "6music",
+                        "short_title": "Radio 6 Music",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Chris Hawkins",
+                        "secondary": "Emily Pilbeam sits in",
+                        "tertiary": ""
+                    },
+                    "synopses": {
+                        "short": "Emily Pilbeam sits in with a stack of great tunes for your Monday morning.",
+                        "medium": "Emily Pilbeam sits in and is joined by an artist to tell us all about their favourite space. Plus there’s a brand new 5 Before 6 DJ.",
+                        "long": null
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0jb0xqq.jpg",
+                    "container": {
+                        "type": "brand",
+                        "id": "b0072l8y",
+                        "urn": "urn:bbc:radio:brand:b0072l8y",
+                        "title": "Chris Hawkins",
+                        "activities": []
+                    },
+                    "playable_item": {
+                        "type": "playable_item",
+                        "id": "m002gh4n",
+                        "urn": "urn:bbc:radio:episode:m002gh4p",
+                        "network": {
+                            "id": "bbc_6music",
+                            "key": "6music",
+                            "short_title": "Radio 6 Music",
+                            "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                            "network_type": "master_brand"
+                        },
+                        "titles": {
+                            "primary": "Chris Hawkins",
+                            "secondary": "Emily Pilbeam sits in",
+                            "tertiary": null,
+                            "entity_title": "Emily Pilbeam sits in"
+                        },
+                        "synopses": {
+                            "short": "Emily Pilbeam sits in with a stack of great tunes for your Monday morning.",
+                            "medium": "Emily Pilbeam sits in and is joined by an artist to tell us all about their favourite space. Plus there’s a brand new 5 Before 6 DJ.",
+                            "long": null
+                        },
+                        "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0jb0xqq.jpg",
+                        "duration": {
+                            "value": 7200,
+                            "label": "120 mins"
+                        },
+                        "progress": null,
+                        "container": {
+                            "type": "brand",
+                            "id": "b0072l8y",
+                            "urn": "urn:bbc:radio:brand:b0072l8y",
+                            "title": "Chris Hawkins",
+                            "synopses": {
+                                "short": "Chris Hawkins starts your day with new music, forgotten classics and session tracks.",
+                                "medium": "Chris Hawkins starts your day with a mix of the best new music, forgotten classics and session tracks from the BBC archive across the week.",
+                                "long": "Chris Hawkins starts your day with a mix of the best new music, forgotten classics and session tracks from the BBC archive across the week."
+                            },
+                            "activities": []
+                        },
+                        "download": {
+                            "type": "drm",
+                            "quality_variants": {
+                                "low": {
+                                    "bitrate": 96,
+                                    "file_url": null,
+                                    "file_size": 97000000,
+                                    "label": "97 MB"
+                                },
+                                "medium": {
+                                    "bitrate": 128,
+                                    "file_url": null,
+                                    "file_size": 128000000,
+                                    "label": "128 MB"
+                                },
+                                "high": {
+                                    "bitrate": 320,
+                                    "file_url": null,
+                                    "file_size": 318000000,
+                                    "label": "318 MB"
+                                }
+                            }
+                        },
+                        "availability": {
+                            "from": "2025-08-04T06:00:00Z",
+                            "to": "2025-09-03T06:00:00Z",
+                            "label": "Available for 28 days"
+                        },
+                        "release": {
+                            "date": "2025-08-04T00:00:00Z",
+                            "label": "04 Aug 2025"
+                        },
+                        "guidance": {
+                            "competition_warning": false,
+                            "warnings": null
+                        },
+                        "activities": [],
+                        "uris": [
+                            {
+                                "type": "latest",
+                                "id": null,
+                                "label": "Latest",
+                                "uri": "/v2/programmes/playable?container=b0072l8y&sort=sequential&type=episode&experience=domestic"
+                            }
+                        ],
+                        "play_context": null,
+                        "recommendation": null
+                    }
+                },
+                {
+                    "type": "broadcast_summary",
+                    "id": "p0lpfcmb",
+                    "urn": "urn:bbc:radio:episode:m002ghbc",
+                    "start": "2025-08-04T06:00:00Z",
+                    "end": "2025-08-04T09:00:00Z",
+                    "service_id": "bbc_6music",
+                    "duration": 10800,
+                    "network": {
+                        "id": "bbc_6music",
+                        "key": "6music",
+                        "short_title": "Radio 6 Music",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Nick Grimshaw",
+                        "secondary": "Guests, chat, and really good songs",
+                        "tertiary": ""
+                    },
+                    "synopses": {
+                        "short": "Wonderful music to start your day, including the Cloudbusting mix to banish the grey skies",
+                        "medium": "Wonderful music to start your day, including the Cloudbusting mix to banish the grey skies.",
+                        "long": "Wonderful music to start your day, including the Cloudbusting mix to banish the grey skies."
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0kpc2n5.jpg",
+                    "container": {
+                        "type": "brand",
+                        "id": "m002844t",
+                        "urn": "urn:bbc:radio:brand:m002844t",
+                        "title": "Nick Grimshaw",
+                        "activities": []
+                    },
+                    "playable_item": {
+                        "type": "playable_item",
+                        "id": "m002ghbb",
+                        "urn": "urn:bbc:radio:episode:m002ghbc",
+                        "network": {
+                            "id": "bbc_6music",
+                            "key": "6music",
+                            "short_title": "Radio 6 Music",
+                            "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                            "network_type": "master_brand"
+                        },
+                        "titles": {
+                            "primary": "Nick Grimshaw",
+                            "secondary": "Guests, chat, and really good songs",
+                            "tertiary": null,
+                            "entity_title": "Guests, chat, and really good songs"
+                        },
+                        "synopses": {
+                            "short": "Wonderful music to start your day, including the Cloudbusting mix to banish the grey skies",
+                            "medium": "Wonderful music to start your day, including the Cloudbusting mix to banish the grey skies.",
+                            "long": "Wonderful music to start your day, including the Cloudbusting mix to banish the grey skies."
+                        },
+                        "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0kpc2n5.jpg",
+                        "duration": {
+                            "value": 10740,
+                            "label": "179 mins"
+                        },
+                        "progress": null,
+                        "container": {
+                            "type": "brand",
+                            "id": "m002844t",
+                            "urn": "urn:bbc:radio:brand:m002844t",
+                            "title": "Nick Grimshaw",
+                            "synopses": {
+                                "short": "Nick's got your breakfast soundtrack sorted - with guests, chat, and really good songs",
+                                "medium": "Nick's got your breakfast soundtrack sorted - with guests, chat, and really good songs",
+                                "long": null
+                            },
+                            "activities": []
+                        },
+                        "download": {
+                            "type": "drm",
+                            "quality_variants": {
+                                "low": {
+                                    "bitrate": 96,
+                                    "file_url": null,
+                                    "file_size": 143000000,
+                                    "label": "143 MB"
+                                },
+                                "medium": {
+                                    "bitrate": 128,
+                                    "file_url": null,
+                                    "file_size": 191000000,
+                                    "label": "191 MB"
+                                },
+                                "high": {
+                                    "bitrate": 320,
+                                    "file_url": null,
+                                    "file_size": 474000000,
+                                    "label": "474 MB"
+                                }
+                            }
+                        },
+                        "availability": {
+                            "from": "2025-08-04T09:00:00Z",
+                            "to": "2025-09-03T09:00:00Z",
+                            "label": "Available for 29 days"
+                        },
+                        "release": {
+                            "date": "2025-08-04T00:00:00Z",
+                            "label": "04 Aug 2025"
+                        },
+                        "guidance": {
+                            "competition_warning": false,
+                            "warnings": null
+                        },
+                        "activities": [],
+                        "uris": [
+                            {
+                                "type": "latest",
+                                "id": null,
+                                "label": "Latest",
+                                "uri": "/v2/programmes/playable?container=m002844t&sort=sequential&type=episode&experience=domestic"
+                            }
+                        ],
+                        "play_context": null,
+                        "recommendation": null
+                    }
+                },
+                {
+                    "type": "broadcast_summary",
+                    "id": "p0lpfcmd",
+                    "urn": "urn:bbc:radio:episode:m002ghbf",
+                    "start": "2025-08-04T09:00:00Z",
+                    "end": "2025-08-04T12:00:00Z",
+                    "service_id": "bbc_6music",
+                    "duration": 10800,
+                    "network": {
+                        "id": "bbc_6music",
+                        "key": "6music",
+                        "short_title": "Radio 6 Music",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Lauren Laverne",
+                        "secondary": "04/08/2025",
+                        "tertiary": ""
+                    },
+                    "synopses": {
+                        "short": "Lauren welcomes you to a brand new week with uplifting tunes.",
+                        "medium": "Lauren welcomes you to a brand new week with uplifting tunes.",
+                        "long": "Lauren welcomes you to a brand new week with uplifting tunes in the daily 6 of the Best playlist, we take a moment to reflect something beautiful happening with our 6 Music listeners in the Beauty Spot, and look forward to the day ahead in A View From The Afternoon."
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0dpf41m.jpg",
+                    "container": {
+                        "type": "brand",
+                        "id": "b00c000j",
+                        "urn": "urn:bbc:radio:brand:b00c000j",
+                        "title": "Lauren Laverne",
+                        "activities": []
+                    },
+                    "playable_item": {
+                        "type": "playable_item",
+                        "id": "m002ghbd",
+                        "urn": "urn:bbc:radio:episode:m002ghbf",
+                        "network": {
+                            "id": "bbc_6music",
+                            "key": "6music",
+                            "short_title": "Radio 6 Music",
+                            "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                            "network_type": "master_brand"
+                        },
+                        "titles": {
+                            "primary": "Lauren Laverne",
+                            "secondary": "04/08/2025",
+                            "tertiary": null,
+                            "entity_title": "04/08/2025"
+                        },
+                        "synopses": {
+                            "short": "Lauren welcomes you to a brand new week with uplifting tunes.",
+                            "medium": "Lauren welcomes you to a brand new week with uplifting tunes.",
+                            "long": "Lauren welcomes you to a brand new week with uplifting tunes in the daily 6 of the Best playlist, we take a moment to reflect something beautiful happening with our 6 Music listeners in the Beauty Spot, and look forward to the day ahead in A View From The Afternoon."
+                        },
+                        "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0dpf41m.jpg",
+                        "duration": {
+                            "value": 10800,
+                            "label": "180 mins"
+                        },
+                        "progress": null,
+                        "container": {
+                            "type": "brand",
+                            "id": "b00c000j",
+                            "urn": "urn:bbc:radio:brand:b00c000j",
+                            "title": "Lauren Laverne",
+                            "synopses": {
+                                "short": "Music and chat with Lauren Laverne.",
+                                "medium": "Music and chat with Lauren Laverne.",
+                                "long": null
+                            },
+                            "activities": []
+                        },
+                        "download": {
+                            "type": "drm",
+                            "quality_variants": {
+                                "low": {
+                                    "bitrate": 96,
+                                    "file_url": null,
+                                    "file_size": 144000000,
+                                    "label": "144 MB"
+                                },
+                                "medium": {
+                                    "bitrate": 128,
+                                    "file_url": null,
+                                    "file_size": 192000000,
+                                    "label": "192 MB"
+                                },
+                                "high": {
+                                    "bitrate": 320,
+                                    "file_url": null,
+                                    "file_size": 477000000,
+                                    "label": "477 MB"
+                                }
+                            }
+                        },
+                        "availability": {
+                            "from": "2025-08-04T12:00:00Z",
+                            "to": "2025-09-03T12:00:00Z",
+                            "label": "Available for 29 days"
+                        },
+                        "release": {
+                            "date": "2025-08-04T00:00:00Z",
+                            "label": "04 Aug 2025"
+                        },
+                        "guidance": {
+                            "competition_warning": false,
+                            "warnings": null
+                        },
+                        "activities": [],
+                        "uris": [
+                            {
+                                "type": "latest",
+                                "id": null,
+                                "label": "Latest",
+                                "uri": "/v2/programmes/playable?container=b00c000j&sort=sequential&type=episode&experience=domestic"
+                            }
+                        ],
+                        "play_context": null,
+                        "recommendation": null
+                    }
+                },
+                {
+                    "type": "broadcast_summary",
+                    "id": "p0lpfcmg",
+                    "urn": "urn:bbc:radio:episode:m002ghbh",
+                    "start": "2025-08-04T12:00:00Z",
+                    "end": "2025-08-04T15:00:00Z",
+                    "service_id": "bbc_6music",
+                    "duration": 10800,
+                    "network": {
+                        "id": "bbc_6music",
+                        "key": "6music",
+                        "short_title": "Radio 6 Music",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Craig Charles",
+                        "secondary": "An uplifting mix of music and chat featuring Mac DeMarco",
+                        "tertiary": ""
+                    },
+                    "synopses": {
+                        "short": "Singer-songwriter Mac DeMarco chats to Craig about his upcoming album ‘Guitar’.",
+                        "medium": "Singer-songwriter Mac DeMarco chats to Craig about the process of writing, recording and producing his new record ‘Guitar’.",
+                        "long": "Singer-songwriter Mac DeMarco chats to Craig about the process of writing, recording and producing his new record ‘Guitar’.\n\nPlus more Original Pirated Material, we step into the Shoes of Blues, and YOU get to choose the final song of the show… but it’s got to be a banger!\n\nWant to get involved? Email craig@bbc.co.uk."
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0bw64pz.jpg",
+                    "container": {
+                        "type": "brand",
+                        "id": "m000h9wt",
+                        "urn": "urn:bbc:radio:brand:m000h9wt",
+                        "title": "Craig Charles",
+                        "activities": []
+                    },
+                    "playable_item": {
+                        "type": "playable_item",
+                        "id": "m002ghbg",
+                        "urn": "urn:bbc:radio:episode:m002ghbh",
+                        "network": {
+                            "id": "bbc_6music",
+                            "key": "6music",
+                            "short_title": "Radio 6 Music",
+                            "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                            "network_type": "master_brand"
+                        },
+                        "titles": {
+                            "primary": "Craig Charles",
+                            "secondary": "An uplifting mix of music and chat featuring Mac DeMarco",
+                            "tertiary": null,
+                            "entity_title": "An uplifting mix of music and chat featuring Mac DeMarco"
+                        },
+                        "synopses": {
+                            "short": "Singer-songwriter Mac DeMarco chats to Craig about his upcoming album ‘Guitar’.",
+                            "medium": "Singer-songwriter Mac DeMarco chats to Craig about the process of writing, recording and producing his new record ‘Guitar’.",
+                            "long": "Singer-songwriter Mac DeMarco chats to Craig about the process of writing, recording and producing his new record ‘Guitar’.\n\nPlus more Original Pirated Material, we step into the Shoes of Blues, and YOU get to choose the final song of the show… but it’s got to be a banger!\n\nWant to get involved? Email craig@bbc.co.uk."
+                        },
+                        "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0bw64pz.jpg",
+                        "duration": {
+                            "value": 10800,
+                            "label": "180 mins"
+                        },
+                        "progress": null,
+                        "container": {
+                            "type": "brand",
+                            "id": "m000h9wt",
+                            "urn": "urn:bbc:radio:brand:m000h9wt",
+                            "title": "Craig Charles",
+                            "synopses": {
+                                "short": "The afternoon party that everyone's invited to.",
+                                "medium": "The afternoon party that everyone's invited to.",
+                                "long": null
+                            },
+                            "activities": []
+                        },
+                        "download": {
+                            "type": "drm",
+                            "quality_variants": {
+                                "low": {
+                                    "bitrate": 96,
+                                    "file_url": null,
+                                    "file_size": 144000000,
+                                    "label": "144 MB"
+                                },
+                                "medium": {
+                                    "bitrate": 128,
+                                    "file_url": null,
+                                    "file_size": 192000000,
+                                    "label": "192 MB"
+                                },
+                                "high": {
+                                    "bitrate": 320,
+                                    "file_url": null,
+                                    "file_size": 477000000,
+                                    "label": "477 MB"
+                                }
+                            }
+                        },
+                        "availability": {
+                            "from": "2025-08-04T15:00:00Z",
+                            "to": "2025-09-03T15:00:00Z",
+                            "label": "Available for 29 days"
+                        },
+                        "release": {
+                            "date": "2025-08-04T00:00:00Z",
+                            "label": "04 Aug 2025"
+                        },
+                        "guidance": {
+                            "competition_warning": false,
+                            "warnings": null
+                        },
+                        "activities": [],
+                        "uris": [
+                            {
+                                "type": "latest",
+                                "id": null,
+                                "label": "Latest",
+                                "uri": "/v2/programmes/playable?container=m000h9wt&sort=sequential&type=episode&experience=domestic"
+                            }
+                        ],
+                        "play_context": null,
+                        "recommendation": null
+                    }
+                },
+                {
+                    "type": "broadcast_summary",
+                    "id": "p0lpfcmj",
+                    "urn": "urn:bbc:radio:episode:m002ghbk",
+                    "start": "2025-08-04T15:00:00Z",
+                    "end": "2025-08-04T18:00:00Z",
+                    "service_id": "bbc_6music",
+                    "duration": 10800,
+                    "network": {
+                        "id": "bbc_6music",
+                        "key": "6music",
+                        "short_title": "Radio 6 Music",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Steve Lamacq",
+                        "secondary": "Shame play live for Steve Lamacq",
+                        "tertiary": ""
+                    },
+                    "synopses": {
+                        "short": "Steve Lamacq welcomes Shame to the Maida Vale studios for a live session.",
+                        "medium": "Steve Lamacq welcomes Shame to the Maida Vale studios for a live session. Plus, Goldfrapp talk us through their track Ride a White Horse in What's The Story.",
+                        "long": "Steve Lamacq welcomes Shame to the Maida Vale studios for a live session. Plus, Goldfrapp talk us through their track Ride a White Horse in What's The Story and Steve has brilliant new music from Picture Parlour, The K's and Cowboy Hunters."
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0dpdj07.jpg",
+                    "container": {
+                        "type": "brand",
+                        "id": "b0072lb2",
+                        "urn": "urn:bbc:radio:brand:b0072lb2",
+                        "title": "Steve Lamacq",
+                        "activities": []
+                    },
+                    "playable_item": {
+                        "type": "playable_item",
+                        "id": "m002ghbj",
+                        "urn": "urn:bbc:radio:episode:m002ghbk",
+                        "network": {
+                            "id": "bbc_6music",
+                            "key": "6music",
+                            "short_title": "Radio 6 Music",
+                            "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                            "network_type": "master_brand"
+                        },
+                        "titles": {
+                            "primary": "Steve Lamacq",
+                            "secondary": "Shame play live for Steve Lamacq",
+                            "tertiary": null,
+                            "entity_title": "Shame play live for Steve Lamacq"
+                        },
+                        "synopses": {
+                            "short": "Steve Lamacq welcomes Shame to the Maida Vale studios for a live session.",
+                            "medium": "Steve Lamacq welcomes Shame to the Maida Vale studios for a live session. Plus, Goldfrapp talk us through their track Ride a White Horse in What's The Story.",
+                            "long": "Steve Lamacq welcomes Shame to the Maida Vale studios for a live session. Plus, Goldfrapp talk us through their track Ride a White Horse in What's The Story and Steve has brilliant new music from Picture Parlour, The K's and Cowboy Hunters."
+                        },
+                        "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0dpdj07.jpg",
+                        "duration": {
+                            "value": 10800,
+                            "label": "180 mins"
+                        },
+                        "progress": null,
+                        "container": {
+                            "type": "brand",
+                            "id": "b0072lb2",
+                            "urn": "urn:bbc:radio:brand:b0072lb2",
+                            "title": "Steve Lamacq",
+                            "synopses": {
+                                "short": "New and classic tracks from established artists, young groups and unsigned bands.",
+                                "medium": "New and classic tracks from established artists, young groups and unsigned bands.",
+                                "long": null
+                            },
+                            "activities": []
+                        },
+                        "download": {
+                            "type": "drm",
+                            "quality_variants": {
+                                "low": {
+                                    "bitrate": 96,
+                                    "file_url": null,
+                                    "file_size": 144000000,
+                                    "label": "144 MB"
+                                },
+                                "medium": {
+                                    "bitrate": 128,
+                                    "file_url": null,
+                                    "file_size": 192000000,
+                                    "label": "192 MB"
+                                },
+                                "high": {
+                                    "bitrate": 320,
+                                    "file_url": null,
+                                    "file_size": 477000000,
+                                    "label": "477 MB"
+                                }
+                            }
+                        },
+                        "availability": {
+                            "from": "2025-08-04T18:00:00Z",
+                            "to": "2025-09-03T18:00:00Z",
+                            "label": "Available for 29 days"
+                        },
+                        "release": {
+                            "date": "2025-08-04T00:00:00Z",
+                            "label": "04 Aug 2025"
+                        },
+                        "guidance": {
+                            "competition_warning": false,
+                            "warnings": null
+                        },
+                        "activities": [],
+                        "uris": [
+                            {
+                                "type": "latest",
+                                "id": null,
+                                "label": "Latest",
+                                "uri": "/v2/programmes/playable?container=b0072lb2&sort=sequential&type=episode&experience=domestic"
+                            }
+                        ],
+                        "play_context": null,
+                        "recommendation": null
+                    }
+                },
+                {
+                    "type": "broadcast_summary",
+                    "id": "p0lpfcmq",
+                    "urn": "urn:bbc:radio:episode:m002ghbm",
+                    "start": "2025-08-04T18:00:00Z",
+                    "end": "2025-08-04T20:00:00Z",
+                    "service_id": "bbc_6music",
+                    "duration": 7200,
+                    "network": {
+                        "id": "bbc_6music",
+                        "key": "6music",
+                        "short_title": "Radio 6 Music",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "New Music Fix",
+                        "secondary": "Breaking Artist: James K",
+                        "tertiary": ""
+                    },
+                    "synopses": {
+                        "short": "Nathan and Deb reveal this week’s Breaking Artist, James K. Plus, The Rundown.",
+                        "medium": "Nathan and Deb reveal this week’s Breaking Artist, New York-based experimental pop artist James K. Plus, The Rundown explores the best of New Americana music.",
+                        "long": "Nathan and Deb reveal this week’s Breaking Artist, New York-based experimental pop artist James K. Plus, The Rundown explores the best of New Americana music being released right now including Ethel Cain, Lana Del Rey, Big Thief, Clairo and more."
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lsyqqk.jpg",
+                    "container": {
+                        "type": "brand",
+                        "id": "b00rz79k",
+                        "urn": "urn:bbc:radio:brand:b00rz79k",
+                        "title": "New Music Fix",
+                        "activities": []
+                    },
+                    "playable_item": {
+                        "type": "playable_item",
+                        "id": "m002ghbl",
+                        "urn": "urn:bbc:radio:episode:m002ghbm",
+                        "network": {
+                            "id": "bbc_6music",
+                            "key": "6music",
+                            "short_title": "Radio 6 Music",
+                            "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                            "network_type": "master_brand"
+                        },
+                        "titles": {
+                            "primary": "New Music Fix",
+                            "secondary": "Breaking Artist: James K",
+                            "tertiary": null,
+                            "entity_title": "Breaking Artist: James K"
+                        },
+                        "synopses": {
+                            "short": "Nathan and Deb reveal this week’s Breaking Artist, James K. Plus, The Rundown.",
+                            "medium": "Nathan and Deb reveal this week’s Breaking Artist, New York-based experimental pop artist James K. Plus, The Rundown explores the best of New Americana music.",
+                            "long": "Nathan and Deb reveal this week’s Breaking Artist, New York-based experimental pop artist James K. Plus, The Rundown explores the best of New Americana music being released right now including Ethel Cain, Lana Del Rey, Big Thief, Clairo and more."
+                        },
+                        "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lsyqqk.jpg",
+                        "duration": {
+                            "value": 7200,
+                            "label": "120 mins"
+                        },
+                        "progress": null,
+                        "container": {
+                            "type": "brand",
+                            "id": "b00rz79k",
+                            "urn": "urn:bbc:radio:brand:b00rz79k",
+                            "title": "New Music Fix",
+                            "synopses": {
+                                "short": "Get your daily fix of new music with Deb Grant and Nathan Shepherd.",
+                                "medium": "Get your daily fix of new music with Deb Grant and Nathan Shepherd, plus a weekly roundup of the best new albums with Matt Everitt",
+                                "long": "Get your daily fix of new music with Deb Grant and Nathan Shepherd, plus a weekly roundup of the best new albums with Matt Everitt"
+                            },
+                            "activities": []
+                        },
+                        "download": {
+                            "type": "drm",
+                            "quality_variants": {
+                                "low": {
+                                    "bitrate": 96,
+                                    "file_url": null,
+                                    "file_size": 97000000,
+                                    "label": "97 MB"
+                                },
+                                "medium": {
+                                    "bitrate": 128,
+                                    "file_url": null,
+                                    "file_size": 128000000,
+                                    "label": "128 MB"
+                                },
+                                "high": {
+                                    "bitrate": 320,
+                                    "file_url": null,
+                                    "file_size": 318000000,
+                                    "label": "318 MB"
+                                }
+                            }
+                        },
+                        "availability": {
+                            "from": "2025-08-04T20:00:00Z",
+                            "to": "2025-09-03T20:00:00Z",
+                            "label": "Available for 29 days"
+                        },
+                        "release": {
+                            "date": "2025-08-04T00:00:00Z",
+                            "label": "04 Aug 2025"
+                        },
+                        "guidance": {
+                            "competition_warning": false,
+                            "warnings": null
+                        },
+                        "activities": [],
+                        "uris": [
+                            {
+                                "type": "latest",
+                                "id": null,
+                                "label": "Latest",
+                                "uri": "/v2/programmes/playable?container=b00rz79k&sort=sequential&type=episode&experience=domestic"
+                            }
+                        ],
+                        "play_context": null,
+                        "recommendation": null
+                    }
+                },
+                {
+                    "type": "broadcast_summary",
+                    "id": "p0lpfcmx",
+                    "urn": "urn:bbc:radio:episode:m002ghbp",
+                    "start": "2025-08-04T20:00:00Z",
+                    "end": "2025-08-04T22:00:00Z",
+                    "service_id": "bbc_6music",
+                    "duration": 7200,
+                    "network": {
+                        "id": "bbc_6music",
+                        "key": "6music",
+                        "short_title": "Radio 6 Music",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Riley & Coe",
+                        "secondary": "Part Chimp live In session",
+                        "tertiary": ""
+                    },
+                    "synopses": {
+                        "short": "Marc presents from Studio 3 in Salford and welcomes Part Chimp in for a live session.",
+                        "medium": "Marc presents from Studio 3 in Salford and welcomes Part Chimp in for a live session. Plus, an Anagram Sam winner reveal. Who has won the most coveted keyring in radio?",
+                        "long": "Marc presents from Studio 3 in Salford and welcomes Part Chimp in for a live session. Plus, an all singing, all dancing Anagram Sam announcement. Who has won the most coveted keyring in radio? All will be revealed!"
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0fpq0kc.jpg",
+                    "container": {
+                        "type": "brand",
+                        "id": "m001mf2c",
+                        "urn": "urn:bbc:radio:brand:m001mf2c",
+                        "title": "Riley & Coe",
+                        "activities": []
+                    },
+                    "playable_item": {
+                        "type": "playable_item",
+                        "id": "m002ghbn",
+                        "urn": "urn:bbc:radio:episode:m002ghbp",
+                        "network": {
+                            "id": "bbc_6music",
+                            "key": "6music",
+                            "short_title": "Radio 6 Music",
+                            "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                            "network_type": "master_brand"
+                        },
+                        "titles": {
+                            "primary": "Riley & Coe",
+                            "secondary": "Part Chimp live In session",
+                            "tertiary": null,
+                            "entity_title": "Part Chimp live In session"
+                        },
+                        "synopses": {
+                            "short": "Marc presents from Studio 3 in Salford and welcomes Part Chimp in for a live session.",
+                            "medium": "Marc presents from Studio 3 in Salford and welcomes Part Chimp in for a live session. Plus, an Anagram Sam winner reveal. Who has won the most coveted keyring in radio?",
+                            "long": "Marc presents from Studio 3 in Salford and welcomes Part Chimp in for a live session. Plus, an all singing, all dancing Anagram Sam announcement. Who has won the most coveted keyring in radio? All will be revealed!"
+                        },
+                        "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0fpq0kc.jpg",
+                        "duration": {
+                            "value": 7200,
+                            "label": "120 mins"
+                        },
+                        "progress": null,
+                        "container": {
+                            "type": "brand",
+                            "id": "m001mf2c",
+                            "urn": "urn:bbc:radio:brand:m001mf2c",
+                            "title": "Riley & Coe",
+                            "synopses": {
+                                "short": "Two great musical minds coming together to share records from every era and genre.",
+                                "medium": "Two great musical minds coming together to share records from every era and genre.",
+                                "long": null
+                            },
+                            "activities": []
+                        },
+                        "download": {
+                            "type": "drm",
+                            "quality_variants": {
+                                "low": {
+                                    "bitrate": 96,
+                                    "file_url": null,
+                                    "file_size": 97000000,
+                                    "label": "97 MB"
+                                },
+                                "medium": {
+                                    "bitrate": 128,
+                                    "file_url": null,
+                                    "file_size": 128000000,
+                                    "label": "128 MB"
+                                },
+                                "high": {
+                                    "bitrate": 320,
+                                    "file_url": null,
+                                    "file_size": 318000000,
+                                    "label": "318 MB"
+                                }
+                            }
+                        },
+                        "availability": {
+                            "from": "2025-08-04T22:00:00Z",
+                            "to": "2025-09-03T22:00:00Z",
+                            "label": "Available for 29 days"
+                        },
+                        "release": {
+                            "date": "2025-08-04T00:00:00Z",
+                            "label": "04 Aug 2025"
+                        },
+                        "guidance": {
+                            "competition_warning": false,
+                            "warnings": null
+                        },
+                        "activities": [],
+                        "uris": [
+                            {
+                                "type": "latest",
+                                "id": null,
+                                "label": "Latest",
+                                "uri": "/v2/programmes/playable?container=m001mf2c&sort=sequential&type=episode&experience=domestic"
+                            }
+                        ],
+                        "play_context": null,
+                        "recommendation": null
+                    }
+                },
+                {
+                    "type": "broadcast_summary",
+                    "id": "p0lqr7ty",
+                    "urn": "urn:bbc:radio:episode:m0020ydx",
+                    "start": "2025-08-04T22:00:00Z",
+                    "end": "2025-08-04T23:00:00Z",
+                    "service_id": "bbc_6music",
+                    "duration": 3600,
+                    "network": {
+                        "id": "bbc_6music",
+                        "key": "6music",
+                        "short_title": "Radio 6 Music",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "6 Music Artist in Residence",
+                        "secondary": "Floating Points",
+                        "tertiary": "Playlist #1: from Alice Coltrane to Miłosz Pękala..."
+                    },
+                    "synopses": {
+                        "short": "British producer and composer Sam Shepherd, aka Floating Points, takes over the residency.",
+                        "medium": "British producer and composer Sam Shepherd, aka Floating Points, curates a playlist featuring the tracks which inspired and shaped his forthcoming project ‘Cascade’.",
+                        "long": "British producer and composer Sam Shepherd, aka Floating Points, curates a playlist full of the tracks that inspired and shaped his forthcoming project ‘Cascade’ which lands in Autumn via Ninja Tune. In the first episode of the series, he has chosen music by the likes of Michael Gregory Jackson, Miłosz Pękala, Alice Coltrane and more!"
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0j9z3j4.jpg",
+                    "container": {
+                        "type": "brand",
+                        "id": "m000pj9w",
+                        "urn": "urn:bbc:radio:brand:m000pj9w",
+                        "title": "6 Music Artist in Residence",
+                        "activities": []
+                    },
+                    "playable_item": {
+                        "type": "playable_item",
+                        "id": "m0020ydw",
+                        "urn": "urn:bbc:radio:episode:m0020ydx",
+                        "network": {
+                            "id": "bbc_6music",
+                            "key": "6music",
+                            "short_title": "Radio 6 Music",
+                            "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                            "network_type": "master_brand"
+                        },
+                        "titles": {
+                            "primary": "6 Music Artist in Residence",
+                            "secondary": "Floating Points",
+                            "tertiary": "Playlist #1: from Alice Coltrane to Miłosz Pękala...",
+                            "entity_title": "Playlist #1: from Alice Coltrane to Miłosz Pękala..."
+                        },
+                        "synopses": {
+                            "short": "British producer and composer Sam Shepherd, aka Floating Points, takes over the residency.",
+                            "medium": "British producer and composer Sam Shepherd, aka Floating Points, curates a playlist featuring the tracks which inspired and shaped his forthcoming project ‘Cascade’.",
+                            "long": "British producer and composer Sam Shepherd, aka Floating Points, curates a playlist full of the tracks that inspired and shaped his forthcoming project ‘Cascade’ which lands in Autumn via Ninja Tune. In the first episode of the series, he has chosen music by the likes of Michael Gregory Jackson, Miłosz Pękala, Alice Coltrane and more!"
+                        },
+                        "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0j9z3j4.jpg",
+                        "duration": {
+                            "value": 3600,
+                            "label": "60 mins"
+                        },
+                        "progress": null,
+                        "container": {
+                            "type": "brand",
+                            "id": "m000pj9w",
+                            "urn": "urn:bbc:radio:brand:m000pj9w",
+                            "title": "6 Music Artist in Residence",
+                            "synopses": {
+                                "short": "6 Music's Artist In Residence is a journey into the musical soul of an artist.",
+                                "medium": "6 Music's Artist In Residence is a journey into the musical soul of an artist, based around a theme or mood.",
+                                "long": "6 Music's Artist In Residence will be a journey into the musical soul of an artist, based around a theme or mood. Each episode finds the host playing records that have informed specific periods of their life."
+                            },
+                            "activities": []
+                        },
+                        "download": {
+                            "type": "drm",
+                            "quality_variants": {
+                                "low": {
+                                    "bitrate": 96,
+                                    "file_url": null,
+                                    "file_size": 49000000,
+                                    "label": "49 MB"
+                                },
+                                "medium": {
+                                    "bitrate": 128,
+                                    "file_url": null,
+                                    "file_size": 65000000,
+                                    "label": "65 MB"
+                                },
+                                "high": {
+                                    "bitrate": 320,
+                                    "file_url": null,
+                                    "file_size": 160000000,
+                                    "label": "160 MB"
+                                }
+                            }
+                        },
+                        "availability": {
+                            "from": "2025-08-04T23:00:00Z",
+                            "to": "2025-09-03T23:00:00Z",
+                            "label": "Available for 29 days"
+                        },
+                        "release": {
+                            "date": "2024-07-15T00:00:00Z",
+                            "label": "15 Jul 2024"
+                        },
+                        "guidance": {
+                            "competition_warning": false,
+                            "warnings": null
+                        },
+                        "activities": [],
+                        "uris": [
+                            {
+                                "type": "latest",
+                                "id": null,
+                                "label": "Latest",
+                                "uri": "/v2/programmes/playable?container=m0021kn8&sort=sequential&type=episode&experience=domestic"
+                            }
+                        ],
+                        "play_context": null,
+                        "recommendation": null
+                    }
+                },
+                {
+                    "type": "broadcast_summary",
+                    "id": "p0lsq617",
+                    "urn": "urn:bbc:radio:episode:m002h2zg",
+                    "start": "2025-08-04T23:00:00Z",
+                    "end": "2025-08-05T01:00:00Z",
+                    "service_id": "bbc_6music",
+                    "duration": 7200,
+                    "network": {
+                        "id": "bbc_6music",
+                        "key": "6music",
+                        "short_title": "Radio 6 Music",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "6 Music Artist Collection",
+                        "secondary": "Orbital",
+                        "tertiary": "Orbital at the BBC"
+                    },
+                    "synopses": {
+                        "short": "Dive into Orbital at the BBC over the last 30 years.",
+                        "medium": "Dive into Orbital at the BBC over the last 30 years with a selection of their best sessions, mixes and interviews.",
+                        "long": "Dive into Orbital at the BBC over the last 30 years with a selection of their best sessions, mixes and interviews. Paul and Phil Hartnoll chat through their career with Chris Hawkins, Radcliffe & Maconie and Steve Lamacq. There’s a brilliant half hour mix recorded for Mary Anne-Hobbs in 2022 as well as selected tracks from exclusive sessions in 1993, 1994 and for Lauren Laverne in 2018."
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lsypch.jpg",
+                    "container": {
+                        "type": "brand",
+                        "id": "m000ppc6",
+                        "urn": "urn:bbc:radio:brand:m000ppc6",
+                        "title": "6 Music Artist Collection",
+                        "activities": []
+                    },
+                    "playable_item": {
+                        "type": "playable_item",
+                        "id": "m002h2zf",
+                        "urn": "urn:bbc:radio:episode:m002h2zg",
+                        "network": {
+                            "id": "bbc_6music",
+                            "key": "6music",
+                            "short_title": "Radio 6 Music",
+                            "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_6music/{type}_{size}.{format}",
+                            "network_type": "master_brand"
+                        },
+                        "titles": {
+                            "primary": "6 Music Artist Collection",
+                            "secondary": "Orbital",
+                            "tertiary": "Orbital at the BBC",
+                            "entity_title": "Orbital at the BBC"
+                        },
+                        "synopses": {
+                            "short": "Dive into Orbital at the BBC over the last 30 years.",
+                            "medium": "Dive into Orbital at the BBC over the last 30 years with a selection of their best sessions, mixes and interviews.",
+                            "long": "Dive into Orbital at the BBC over the last 30 years with a selection of their best sessions, mixes and interviews. Paul and Phil Hartnoll chat through their career with Chris Hawkins, Radcliffe & Maconie and Steve Lamacq. There’s a brilliant half hour mix recorded for Mary Anne-Hobbs in 2022 as well as selected tracks from exclusive sessions in 1993, 1994 and for Lauren Laverne in 2018."
+                        },
+                        "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lsypch.jpg",
+                        "duration": {
+                            "value": 7200,
+                            "label": "120 mins"
+                        },
+                        "progress": null,
+                        "container": {
+                            "type": "brand",
+                            "id": "m000ppc6",
+                            "urn": "urn:bbc:radio:brand:m000ppc6",
+                            "title": "6 Music Artist Collection",
+                            "synopses": {
+                                "short": "Celebrating the music and career of artists and exploring their influences.",
+                                "medium": "Celebrating the music and career of artists and exploring their influences and those they have in turn inspired.",
+                                "long": "Celebrating the music and career of artists and exploring their influences and those they have in turn inspired."
+                            },
+                            "activities": []
+                        },
+                        "download": {
+                            "type": "drm",
+                            "quality_variants": {
+                                "low": {
+                                    "bitrate": 96,
+                                    "file_url": null,
+                                    "file_size": 97000000,
+                                    "label": "97 MB"
+                                },
+                                "medium": {
+                                    "bitrate": 128,
+                                    "file_url": null,
+                                    "file_size": 128000000,
+                                    "label": "128 MB"
+                                },
+                                "high": {
+                                    "bitrate": 320,
+                                    "file_url": null,
+                                    "file_size": 318000000,
+                                    "label": "318 MB"
+                                }
+                            }
+                        },
+                        "availability": {
+                            "from": "2025-08-05T01:00:00Z",
+                            "to": "2025-09-04T01:00:00Z",
+                            "label": "Available for 29 days"
+                        },
+                        "release": {
+                            "date": "2025-08-05T00:00:00Z",
+                            "label": "05 Aug 2025"
+                        },
+                        "guidance": {
+                            "competition_warning": false,
+                            "warnings": null
+                        },
+                        "activities": [],
+                        "uris": [
+                            {
+                                "type": "latest",
+                                "id": null,
+                                "label": "Latest",
+                                "uri": "/v2/programmes/playable?container=m002h2zh&sort=sequential&type=episode&experience=domestic"
+                            }
+                        ],
+                        "play_context": null,
+                        "recommendation": null
+                    }
+                }
+            ],
+            "image_url": null
+        }
+    ]
+}

@@ -1,0 +1,2709 @@
+{
+    "$schema": "https://rms.api.bbc.co.uk/docs/swagger.json#/definitions/ExperienceResponse",
+    "data": [
+        {
+            "type": "inline_header_module",
+            "id": "container",
+            "style": null,
+            "title": "Newcastle United",
+            "description": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+            "data": {
+                "type": "container_item",
+                "id": "p07f4d9w",
+                "urn": "urn:bbc:radio:brand:p07f4d9w",
+                "tlec_urn": "urn:bbc:radio:brand:p07f4d9w",
+                "network": {
+                    "id": "bbc_radio_newcastle",
+                    "key": "bbcnewcastle",
+                    "short_title": "Radio Newcastle",
+                    "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                    "network_type": "master_brand"
+                },
+                "titles": {
+                    "primary": "Newcastle United",
+                    "secondary": null,
+                    "tertiary": null
+                },
+                "synopses": {
+                    "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                    "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                    "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                },
+                "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lq9tf9.jpg",
+                "activities": [],
+                "uris": [
+                    {
+                        "type": "latest",
+                        "id": null,
+                        "label": "Latest",
+                        "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                    }
+                ],
+                "playable_count": null,
+                "recommendation": null
+            }
+        },
+        {
+            "type": "inline_display_module",
+            "id": "container_list",
+            "style": null,
+            "title": "Latest Episodes from Newcastle United",
+            "description": null,
+            "state": "ok",
+            "uris": {
+                "pagination": {
+                    "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic&offset={offset}&limit={limit}",
+                    "offset": 0,
+                    "limit": 30,
+                    "total": 594
+                },
+                "polling": null
+            },
+            "controls": null,
+            "total": 594,
+            "data": [
+                {
+                    "type": "playable_item",
+                    "id": "p0ltpmyq",
+                    "urn": "urn:bbc:radio:episode:p0ltpmx7",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Newcastle reject bid from Liverpool for Alexander Isak",
+                        "tertiary": null,
+                        "entity_title": "Newcastle reject bid from Liverpool for Alexander Isak"
+                    },
+                    "synopses": {
+                        "short": "Matthew Raisbeck and John Anderson react to the latest instalment of the Isak saga.",
+                        "medium": null,
+                        "long": null
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0ltpnm3.jpg",
+                    "duration": {
+                        "value": 521,
+                        "label": "8 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 8000000,
+                                "label": "8 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 11000000,
+                                "label": "11 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 24000000,
+                                "label": "24 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-08-01T18:27:05Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-08-01T00:00:00Z",
+                        "label": "01 Aug 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0lsv2sj",
+                    "urn": "urn:bbc:radio:episode:p0lsv2qv",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Ando: 'Newcastle obviously want a new keeper'",
+                        "tertiary": null,
+                        "entity_title": "Ando: 'Newcastle obviously want a new keeper'"
+                    },
+                    "synopses": {
+                        "short": "John Anderson, Matthew Raisbeck and Simon Pryde discuss Newcastle's goalkeeper situation.",
+                        "medium": null,
+                        "long": "John Anderson, Matthew Raisbeck and Simon Pryde discuss Newcastle's goalkeeper situation following reports they are in talks with Southampton for Aaron Ramsdale after missing out on James Trafford to Manchester City despite praise for current goalie Nick Pope. \n\nPhoto Credit: Getty Images"
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lsv2vx.jpg",
+                    "duration": {
+                        "value": 329,
+                        "label": "5 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 6000000,
+                                "label": "6 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 7000000,
+                                "label": "7 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 16000000,
+                                "label": "16 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-07-28T21:34:22Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-07-28T00:00:00Z",
+                        "label": "28 Jul 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0ls4hm6",
+                    "urn": "urn:bbc:radio:episode:p0ls4hhj",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Isak wants to explore move away from Newcastle",
+                        "tertiary": null,
+                        "entity_title": "Isak wants to explore move away from Newcastle"
+                    },
+                    "synopses": {
+                        "short": "Simon Pryde, Matthew Raisbeck and Steve Howey react to striker Alexander Isak news.",
+                        "medium": null,
+                        "long": null
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0ls4k6y.jpg",
+                    "duration": {
+                        "value": 2665,
+                        "label": "44 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 37000000,
+                                "label": "37 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 48000000,
+                                "label": "48 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 119000000,
+                                "label": "119 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-07-24T18:22:36Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": null,
+                        "label": null
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0lrflm7",
+                    "urn": "urn:bbc:radio:episode:p0lrfl7y",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Howe 'expects' Isak to be on Asia tour",
+                        "tertiary": null,
+                        "entity_title": "Howe 'expects' Isak to be on Asia tour"
+                    },
+                    "synopses": {
+                        "short": "Eddie Howe talks about Alexander Isak's future after Celtic defeat.",
+                        "medium": null,
+                        "long": null
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lrflb0.jpg",
+                    "duration": {
+                        "value": 494,
+                        "label": "8 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 8000000,
+                                "label": "8 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 10000000,
+                                "label": "10 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 23000000,
+                                "label": "23 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-07-21T15:56:26Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-07-21T00:00:00Z",
+                        "label": "21 Jul 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0lqsq6v",
+                    "urn": "urn:bbc:radio:episode:p0lqsq19",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Elanga: Newcastle move a 'no brainer'",
+                        "tertiary": null,
+                        "entity_title": "Elanga: Newcastle move a 'no brainer'"
+                    },
+                    "synopses": {
+                        "short": "Anthony Elanga talks to BBC Radio Newcastle's Matthew Raisbeck",
+                        "medium": null,
+                        "long": null
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lqsq3k.jpg",
+                    "duration": {
+                        "value": 255,
+                        "label": "4 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 5000000,
+                                "label": "5 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 6000000,
+                                "label": "6 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 13000000,
+                                "label": "13 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-07-17T16:51:37Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-07-17T00:00:00Z",
+                        "label": "17 Jul 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0lqrzgt",
+                    "urn": "urn:bbc:radio:episode:p0lqrywf",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Moncur tribute to Wyn Davies",
+                        "tertiary": null,
+                        "entity_title": "Moncur tribute to Wyn Davies"
+                    },
+                    "synopses": {
+                        "short": "Bob Moncur tribute to Wyn Davies who has died aged 83.",
+                        "medium": null,
+                        "long": null
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lqrz0c.jpg",
+                    "duration": {
+                        "value": 315,
+                        "label": "5 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 6000000,
+                                "label": "6 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 7000000,
+                                "label": "7 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 15000000,
+                                "label": "15 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-07-17T15:40:18Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-07-17T00:00:00Z",
+                        "label": "17 Jul 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0lq21x3",
+                    "urn": "urn:bbc:radio:episode:p0lq21n5",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Top Five: Underrated players of the last 25 years",
+                        "tertiary": null,
+                        "entity_title": "Top Five: Underrated players of the last 25 years"
+                    },
+                    "synopses": {
+                        "short": "John Anderson shares his list of Newcastle's most underrated players since 2000.",
+                        "medium": null,
+                        "long": "John Anderson shares his list of Newcastle's most underrated players since 2000 with Harry Roy. \n\nPhoto Credit: Getty Images"
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lq27k2.jpg",
+                    "duration": {
+                        "value": 895,
+                        "label": "14 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 13000000,
+                                "label": "13 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 17000000,
+                                "label": "17 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 41000000,
+                                "label": "41 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-07-14T17:00:00Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-07-14T00:00:00Z",
+                        "label": "14 Jul 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0lpfhkz",
+                    "urn": "urn:bbc:radio:episode:p0lpfhk6",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Everything you need to know about Anthony Elanga",
+                        "tertiary": null,
+                        "entity_title": "Everything you need to know about Anthony Elanga"
+                    },
+                    "synopses": {
+                        "short": "Arun Verma explains what Newcastle fans can expect from the winger.",
+                        "medium": null,
+                        "long": null
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lpt2zz.jpg",
+                    "duration": {
+                        "value": 699,
+                        "label": "11 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 11000000,
+                                "label": "11 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 14000000,
+                                "label": "14 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 32000000,
+                                "label": "32 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-07-11T07:00:00Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-07-11T00:00:00Z",
+                        "label": "11 Jul 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0lpftzp",
+                    "urn": "urn:bbc:radio:episode:p0lpfty4",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Ando: Newcastle seem 'desperate' to get Trafford",
+                        "tertiary": null,
+                        "entity_title": "Ando: Newcastle seem 'desperate' to get Trafford"
+                    },
+                    "synopses": {
+                        "short": "John Anderson discusses the continued links of James Trafford to Newcastle.",
+                        "medium": null,
+                        "long": "John Anderson discusses the continued links of James Trafford to Newcastle.\n\nPhoto Credit: Getty Images"
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lpfv86.jpg",
+                    "duration": {
+                        "value": 300,
+                        "label": "5 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 6000000,
+                                "label": "6 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 7000000,
+                                "label": "7 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 15000000,
+                                "label": "15 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-07-10T19:31:19Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-07-10T00:00:00Z",
+                        "label": "10 Jul 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0lpfsd6",
+                    "urn": "urn:bbc:radio:episode:p0lpfsbn",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Ando: '£10m too low for Longstaff'",
+                        "tertiary": null,
+                        "entity_title": "Ando: '£10m too low for Longstaff'"
+                    },
+                    "synopses": {
+                        "short": "John Anderson reacts to reported rejected bids from Leeds for Sean Longstaff.",
+                        "medium": null,
+                        "long": "John Anderson reacts to reported rejected bids from Leeds for Sean Longstaff.\n\nPhoto Credit: Getty Images"
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lpfsky.jpg",
+                    "duration": {
+                        "value": 244,
+                        "label": "4 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 5000000,
+                                "label": "5 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 6000000,
+                                "label": "6 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 12000000,
+                                "label": "12 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-07-10T19:17:45Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-07-10T00:00:00Z",
+                        "label": "10 Jul 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0lpfp56",
+                    "urn": "urn:bbc:radio:episode:p0lpfnzz",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Ando: 'Howe would have liked to have kept Wilson'",
+                        "tertiary": null,
+                        "entity_title": "Ando: 'Howe would have liked to have kept Wilson'"
+                    },
+                    "synopses": {
+                        "short": "John Anderson assesses Callum Wilson's exit from Newcastle United.",
+                        "medium": null,
+                        "long": "John Anderson assesses Callum Wilson's exit from Newcastle United along with Toon fan Jonathan.\n\nPhoto Credit: Getty Images"
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lpfq6x.jpg",
+                    "duration": {
+                        "value": 121,
+                        "label": "2 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 3000000,
+                                "label": "3 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 4000000,
+                                "label": "4 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 7000000,
+                                "label": "7 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-07-10T19:00:38Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-07-10T00:00:00Z",
+                        "label": "10 Jul 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0lpbl5j",
+                    "urn": "urn:bbc:radio:episode:p0lpblh6",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Rachel Furness: Graft, goals and glory",
+                        "tertiary": null,
+                        "entity_title": "Rachel Furness: Graft, goals and glory"
+                    },
+                    "synopses": {
+                        "short": "Rachel Furness joins us just after announcing her retirement and she doesn’t hold back.",
+                        "medium": null,
+                        "long": "Rachel Furness joins us just after announcing her retirement and she doesn’t hold back. \n\nFrom growing up as a little girl listening to Newcastle games on the radio, to playing at St James’ Park, this is the full-circle story of a record-breaking player who never gave up. \n\nShe opens up about injuries, setbacks, Northern Ireland, Alan Shearer, Kevin Keegan, and what it’s really going to take for NUFC Women to close the gap."
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lq9tf9.jpg",
+                    "duration": {
+                        "value": 2629,
+                        "label": "43 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "non_drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 128,
+                                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0lpbl5j.mp3",
+                                "file_size": 43000000,
+                                "label": "43 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0lpbl5j.mp3",
+                                "file_size": 43000000,
+                                "label": "43 MB"
+                            },
+                            "high": {
+                                "bitrate": 128,
+                                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0lpbl5j.mp3",
+                                "file_size": 43000000,
+                                "label": "43 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-07-10T13:49:00Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-07-10T00:00:00Z",
+                        "label": "10 Jul 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0lp1nbx",
+                    "urn": "urn:bbc:radio:episode:p0lp1n7f",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Top Five: Best Newcastle managers ever",
+                        "tertiary": null,
+                        "entity_title": "Top Five: Best Newcastle managers ever"
+                    },
+                    "synopses": {
+                        "short": "Lee Clark shares his top five managers in Newcastle history with Colin White.",
+                        "medium": null,
+                        "long": "Lee Clark shares his top five managers in Newcastle history with Colin White.\n\nPhoto Credit: Getty Images"
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lp1p5v.jpg",
+                    "duration": {
+                        "value": 1218,
+                        "label": "20 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 18000000,
+                                "label": "18 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 23000000,
+                                "label": "23 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 55000000,
+                                "label": "55 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-07-09T12:20:52Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-07-09T00:00:00Z",
+                        "label": "09 Jul 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0ln2g8n",
+                    "urn": "urn:bbc:radio:episode:p0ln2gqg",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Behind the Decks and the Dugout: DJ Schak",
+                        "tertiary": null,
+                        "entity_title": "Behind the Decks and the Dugout: DJ Schak"
+                    },
+                    "synopses": {
+                        "short": "This week we’re joined by Northeast DJ and massive Newcastle United fan, Schak.",
+                        "medium": null,
+                        "long": "This week we’re joined by Northeast DJ and massive Newcastle United fan, Schak. From performing on the pitch at St James’ to acting alongside Sam Fender, we talk music, Magpies, and how far both his career and the club have come. A conversation that brings together football, music culture, and identity in the North East."
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lq9tf9.jpg",
+                    "duration": {
+                        "value": 2013,
+                        "label": "33 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "non_drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 128,
+                                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0ln2g8n.mp3",
+                                "file_size": 33000000,
+                                "label": "33 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0ln2g8n.mp3",
+                                "file_size": 33000000,
+                                "label": "33 MB"
+                            },
+                            "high": {
+                                "bitrate": 128,
+                                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0ln2g8n.mp3",
+                                "file_size": 33000000,
+                                "label": "33 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-07-03T21:47:00Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-07-03T00:00:00Z",
+                        "label": "03 Jul 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0ln1th3",
+                    "urn": "urn:bbc:radio:episode:p0ln1srg",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Pre Season for the modern footballer",
+                        "tertiary": null,
+                        "entity_title": "Pre Season for the modern footballer"
+                    },
+                    "synopses": {
+                        "short": "What does pre season look like for the modern day footballer.",
+                        "medium": "What does pre season look like for the modern day footballer. Colin White and former magpie Lee Clark discuss.",
+                        "long": null
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0ln1svf.jpg",
+                    "duration": {
+                        "value": 409,
+                        "label": "6 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 7000000,
+                                "label": "7 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 9000000,
+                                "label": "9 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 20000000,
+                                "label": "20 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-07-03T19:53:06Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-07-03T00:00:00Z",
+                        "label": "03 Jul 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0lmh3t8",
+                    "urn": "urn:bbc:radio:episode:p0lmh3k8",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Top Five: Best Newcastle United centre-backs ever",
+                        "tertiary": null,
+                        "entity_title": "Top Five: Best Newcastle United centre-backs ever"
+                    },
+                    "synopses": {
+                        "short": "Steve Howey and Simon Pryde discuss the best ever central defenders at Newcastle.",
+                        "medium": null,
+                        "long": "Steve Howey and Simon Pryde discuss the best ever central defenders at Newcastle.\n\nPhoto Credit: Getty Images"
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lmh4y7.jpg",
+                    "duration": {
+                        "value": 1495,
+                        "label": "24 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 21000000,
+                                "label": "21 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 28000000,
+                                "label": "28 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 67000000,
+                                "label": "67 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-07-01T14:04:18Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-07-01T00:00:00Z",
+                        "label": "01 Jul 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0llnc03",
+                    "urn": "urn:bbc:radio:episode:p0lln9w2",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Do players want to live in the North East?",
+                        "tertiary": null,
+                        "entity_title": "Do players want to live in the North East?"
+                    },
+                    "synopses": {
+                        "short": "Total Sports Simon Pryde and former Newcastle defender Steve Howey discuss.",
+                        "medium": null,
+                        "long": null
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0llnbj4.jpg",
+                    "duration": {
+                        "value": 329,
+                        "label": "5 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 6000000,
+                                "label": "6 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 7000000,
+                                "label": "7 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 16000000,
+                                "label": "16 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-06-26T18:19:00Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-06-26T00:00:00Z",
+                        "label": "26 Jun 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0ll035v",
+                    "urn": "urn:bbc:radio:episode:p0ll02r9",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Top Five: Newcastle United Hard Men",
+                        "tertiary": null,
+                        "entity_title": "Top Five: Newcastle United Hard Men"
+                    },
+                    "synopses": {
+                        "short": "John Anderson and Simon Pryde discuss their top five Newcastle United tough tacklers.",
+                        "medium": null,
+                        "long": null
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0ll05zm.jpg",
+                    "duration": {
+                        "value": 1244,
+                        "label": "20 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 18000000,
+                                "label": "18 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 23000000,
+                                "label": "23 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 56000000,
+                                "label": "56 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-06-23T18:30:00Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-06-23T00:00:00Z",
+                        "label": "23 Jun 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0lk9wrd",
+                    "urn": "urn:bbc:radio:episode:p0lk9wmb",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Livramento has been 'exceptional'",
+                        "tertiary": null,
+                        "entity_title": "Livramento has been 'exceptional'"
+                    },
+                    "synopses": {
+                        "short": "John Anderson thoughts on Tino Livramento",
+                        "medium": null,
+                        "long": null
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lk9wmn.jpg",
+                    "duration": {
+                        "value": 490,
+                        "label": "8 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 8000000,
+                                "label": "8 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 10000000,
+                                "label": "10 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 23000000,
+                                "label": "23 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-06-19T17:55:19Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-06-19T00:00:00Z",
+                        "label": "19 Jun 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0lk1shy",
+                    "urn": "urn:bbc:radio:episode:p0lk1xg8",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "The Tyne-Wear Derby: It's more than football",
+                        "tertiary": null,
+                        "entity_title": "The Tyne-Wear Derby: It's more than football"
+                    },
+                    "synopses": {
+                        "short": "A special episode looking back on more than a century of Newcastle-Sunderland rivalry.",
+                        "medium": null,
+                        "long": "The Premier League derbies are back! But it's a rivalry that dates back to the English Civil War and runs a lot deeper than football. Total Sport's Simon Pryde takes us through how the derby began, the moments that have gone down in history - and what the derby means to the players, fans and to the North East as a region."
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lk9pcb.jpg",
+                    "duration": {
+                        "value": 1511,
+                        "label": "25 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "non_drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 128,
+                                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0lk1shy.mp3",
+                                "file_size": 25000000,
+                                "label": "25 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0lk1shy.mp3",
+                                "file_size": 25000000,
+                                "label": "25 MB"
+                            },
+                            "high": {
+                                "bitrate": 128,
+                                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0lk1shy.mp3",
+                                "file_size": 25000000,
+                                "label": "25 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-06-18T17:53:00Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-06-18T00:00:00Z",
+                        "label": "18 Jun 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0ljxn5w",
+                    "urn": "urn:bbc:radio:episode:p0ljxn4x",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Newcastle's 2025-26 fixtures revealed!",
+                        "tertiary": null,
+                        "entity_title": "Newcastle's 2025-26 fixtures revealed!"
+                    },
+                    "synopses": {
+                        "short": "The Tyne-Wear derby is back!",
+                        "medium": null,
+                        "long": null
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0ljxn7f.jpg",
+                    "duration": {
+                        "value": 59,
+                        "label": "1 min"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 2000000,
+                                "label": "2 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 3000000,
+                                "label": "3 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 4000000,
+                                "label": "4 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-06-18T08:59:47Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-06-18T00:00:00Z",
+                        "label": "18 Jun 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0ljmw0n",
+                    "urn": "urn:bbc:radio:episode:p0ljmvsf",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Top Five: Best-ever St James' Park moments",
+                        "tertiary": null,
+                        "entity_title": "Top Five: Best-ever St James' Park moments"
+                    },
+                    "synopses": {
+                        "short": "John Anderson and Simon Pryde discuss their top five moments at St James' Park.",
+                        "medium": null,
+                        "long": null
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0ljn233.jpg",
+                    "duration": {
+                        "value": 1312,
+                        "label": "21 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 19000000,
+                                "label": "19 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 25000000,
+                                "label": "25 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 59000000,
+                                "label": "59 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-06-16T18:00:00Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-06-16T00:00:00Z",
+                        "label": "16 Jun 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0lj5tk3",
+                    "urn": "urn:bbc:radio:episode:p0lj5vpg",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Paul Ferris: Shearer, Sir Bobby & King Kev",
+                        "tertiary": null,
+                        "entity_title": "Paul Ferris: Shearer, Sir Bobby & King Kev"
+                    },
+                    "synopses": {
+                        "short": "Paul Ferris joins Raul for a brilliant chat about life inside Newcastle United.",
+                        "medium": null,
+                        "long": "Paul Ferris joins Raul Kohli for a brilliant chat about life inside Newcastle United. From his bond with Shearer to hilarious tales of Sir Bobby Robson and what it was really like playing under Keegan. Packed with great memories, moments that stay with you, and stories you won’t have heard before."
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lq9tf9.jpg",
+                    "duration": {
+                        "value": 3389,
+                        "label": "56 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "non_drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 128,
+                                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0lj5tk3.mp3",
+                                "file_size": 55000000,
+                                "label": "55 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0lj5tk3.mp3",
+                                "file_size": 55000000,
+                                "label": "55 MB"
+                            },
+                            "high": {
+                                "bitrate": 128,
+                                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0lj5tk3.mp3",
+                                "file_size": 55000000,
+                                "label": "55 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-06-13T16:19:00Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-06-13T00:00:00Z",
+                        "label": "13 Jun 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0lhzrf9",
+                    "urn": "urn:bbc:radio:episode:p0lhzr3p",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "'Sometimes you have to walk away'",
+                        "tertiary": null,
+                        "entity_title": "'Sometimes you have to walk away'"
+                    },
+                    "synopses": {
+                        "short": "John Anderson discuses Burnley's valuation of Burnley Goalkeeper James Trafford.",
+                        "medium": null,
+                        "long": null
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lhzr6x.jpg",
+                    "duration": {
+                        "value": 358,
+                        "label": "5 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 6000000,
+                                "label": "6 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 8000000,
+                                "label": "8 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 17000000,
+                                "label": "17 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-06-12T18:20:05Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-06-12T00:00:00Z",
+                        "label": "12 Jun 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0lh7r4h",
+                    "urn": "urn:bbc:radio:episode:p0lh7q1t",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Top Five: Newcastle's most skilful players ever",
+                        "tertiary": null,
+                        "entity_title": "Top Five: Newcastle's most skilful players ever"
+                    },
+                    "synopses": {
+                        "short": "Steve Howey and Simon Pryde discuss their top five Newcastle's skilful players lists.",
+                        "medium": null,
+                        "long": null
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lh7qb6.jpg",
+                    "duration": {
+                        "value": 1106,
+                        "label": "18 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 16000000,
+                                "label": "16 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 21000000,
+                                "label": "21 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 50000000,
+                                "label": "50 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-06-09T18:00:00Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-06-09T00:00:00Z",
+                        "label": "09 Jun 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0lg5xy8",
+                    "urn": "urn:bbc:radio:episode:p0lg5xp2",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Newcastle United 2024-25 Season Review",
+                        "tertiary": null,
+                        "entity_title": "Newcastle United 2024-25 Season Review"
+                    },
+                    "synopses": {
+                        "short": "Matthew Raisbeck takes a look back at what was a historic season for Newcastle United",
+                        "medium": null,
+                        "long": null
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lg5xt6.jpg",
+                    "duration": {
+                        "value": 2316,
+                        "label": "38 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 32000000,
+                                "label": "32 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 42000000,
+                                "label": "42 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 103000000,
+                                "label": "103 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-06-03T20:27:38Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-06-03T00:00:00Z",
+                        "label": "03 Jun 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0lfxdhq",
+                    "urn": "urn:bbc:radio:episode:p0lfxd94",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Big Dan Burn receives Freedom of Northumberland",
+                        "tertiary": null,
+                        "entity_title": "Big Dan Burn receives Freedom of Northumberland"
+                    },
+                    "synopses": {
+                        "short": "Newcastle United's Dan Burn has been hailed a \"Northumberland legend\".",
+                        "medium": "Newcastle United's Dan Burn has been hailed a \"Northumberland legend\".\n\nImage: LDRS",
+                        "long": null
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lhxxd7.jpg",
+                    "duration": {
+                        "value": 141,
+                        "label": "2 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 3000000,
+                                "label": "3 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 4000000,
+                                "label": "4 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 8000000,
+                                "label": "8 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-06-02T12:41:08Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-06-02T00:00:00Z",
+                        "label": "02 Jun 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0lfj438",
+                    "urn": "urn:bbc:radio:episode:p0lfj520",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "End of Season Wrap - Champions League & Derby Dreams",
+                        "tertiary": null,
+                        "entity_title": "End of Season Wrap - Champions League & Derby Dreams"
+                    },
+                    "synopses": {
+                        "short": "It’s the end-of-season NUFC special!",
+                        "medium": null,
+                        "long": "It’s the end-of-season NUFC special! We crown our unsung hero, pick the play of the year, and look back at a rollercoaster season. With Champions League football secured (cheers, Man U) and the Tyne-Wear derby back on the cards, we look ahead to summer signings and what’s next for the Toon."
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lq9tf9.jpg",
+                    "duration": {
+                        "value": 2481,
+                        "label": "41 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "non_drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 128,
+                                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0lfj438.mp3",
+                                "file_size": 40000000,
+                                "label": "40 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0lfj438.mp3",
+                                "file_size": 40000000,
+                                "label": "40 MB"
+                            },
+                            "high": {
+                                "bitrate": 128,
+                                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0lfj438.mp3",
+                                "file_size": 40000000,
+                                "label": "40 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-05-30T16:55:00Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-05-30T00:00:00Z",
+                        "label": "30 May 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0lf96ch",
+                    "urn": "urn:bbc:radio:episode:p0lf95xc",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Are Newcastle out of the race to sign Liam Delap?",
+                        "tertiary": null,
+                        "entity_title": "Are Newcastle out of the race to sign Liam Delap?"
+                    },
+                    "synopses": {
+                        "short": "Are Newcastle out of the race to sign Liam Delap?",
+                        "medium": null,
+                        "long": null
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lf962b.jpg",
+                    "duration": {
+                        "value": 165,
+                        "label": "2 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 4000000,
+                                "label": "4 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 4000000,
+                                "label": "4 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 9000000,
+                                "label": "9 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-05-29T18:25:42Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-05-29T00:00:00Z",
+                        "label": "29 May 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                },
+                {
+                    "type": "playable_item",
+                    "id": "p0ldt7pr",
+                    "urn": "urn:bbc:radio:episode:p0ldt5wp",
+                    "network": {
+                        "id": "bbc_radio_newcastle",
+                        "key": "bbcnewcastle",
+                        "short_title": "Radio Newcastle",
+                        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_radio_newcastle/{type}_{size}.{format}",
+                        "network_type": "master_brand"
+                    },
+                    "titles": {
+                        "primary": "Newcastle United",
+                        "secondary": "Everything we know about Paul Mitchell leaving",
+                        "tertiary": null,
+                        "entity_title": "Everything we know about Paul Mitchell leaving"
+                    },
+                    "synopses": {
+                        "short": "Paul Mitchell is set to depart Newcastle United as sporting director.",
+                        "medium": null,
+                        "long": null
+                    },
+                    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0ldt78x.jpg",
+                    "duration": {
+                        "value": 562,
+                        "label": "9 mins"
+                    },
+                    "progress": null,
+                    "container": {
+                        "type": "brand",
+                        "id": "p07f4d9w",
+                        "urn": "urn:bbc:radio:brand:p07f4d9w",
+                        "title": "Newcastle United",
+                        "synopses": {
+                            "short": "NUFC pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.",
+                            "medium": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck. \n\nUnited by a passion for the Toon. Geordie humour guaranteed.",
+                            "long": "Newcastle United pre and post-match interviews and discussion, with Raul Kohli and Matthew Raisbeck.\n\nUnited by a passion for the Toon, this is Black-and-White, through-and-through.\n\nGeordie humour guaranteed."
+                        },
+                        "activities": []
+                    },
+                    "download": {
+                        "type": "drm",
+                        "quality_variants": {
+                            "low": {
+                                "bitrate": 96,
+                                "file_url": null,
+                                "file_size": 9000000,
+                                "label": "9 MB"
+                            },
+                            "medium": {
+                                "bitrate": 128,
+                                "file_url": null,
+                                "file_size": 11000000,
+                                "label": "11 MB"
+                            },
+                            "high": {
+                                "bitrate": 320,
+                                "file_url": null,
+                                "file_size": 26000000,
+                                "label": "26 MB"
+                            }
+                        }
+                    },
+                    "availability": {
+                        "from": "2025-05-27T18:38:00Z",
+                        "to": null,
+                        "label": "Available for over a year"
+                    },
+                    "release": {
+                        "date": "2025-05-27T00:00:00Z",
+                        "label": "27 May 2025"
+                    },
+                    "guidance": {
+                        "competition_warning": false,
+                        "warnings": null
+                    },
+                    "activities": [],
+                    "uris": [
+                        {
+                            "type": "latest",
+                            "id": null,
+                            "label": "Latest",
+                            "uri": "/v2/programmes/playable?container=p07f4d9w&sort=sequential&type=episode&experience=domestic"
+                        }
+                    ],
+                    "play_context": null,
+                    "recommendation": null
+                }
+            ],
+            "image_url": null
+        }
+    ]
+}
