@@ -2,13 +2,17 @@ import json
 import logging
 import re
 from datetime import datetime as dt
-from typing import Optional
+from typing import Literal, Optional
+
+from .auth import AuthService
+
 
 from . import constants
 from .utils import network_logo
 from .base import Base
-from .constants import ContainerType, URLs
+from .constants import ContainerType, PlayStatus, SignedInURLs, URLs
 from .exceptions import APIResponseError
+from .json import parse_container, parse_node, parse_search
 from .models import (
     Container,
     Network,
@@ -22,9 +26,17 @@ from .utils import image_from_recipe
 
 class StreamingService(Base):
 
+    def __init__(
+        self,
+        auth_service: AuthService,
+        **kwargs,
+    ):
+        super().__init__(**kwargs)
+        self.auth_service = auth_service
+
     async def get_live_stream(
         self,
-        station: Station,
+        station_id: str,
         stream_format="hls",
         logo_size=800,
     ) -> Stream | None:
@@ -36,8 +48,9 @@ class StreamingService(Base):
         :returns: Stream object of stream information
         :rtype: Stream | None
         """
-        url = URLs.LIVE_STATION_URL.format(station_id=station.id)
-        html_resp = await self._get_html(url)
+        html_resp = await self._get_html(
+            url_template=URLs.LIVE_STATION, url_args={"station_id": station_id}
+        )
         match = re.search(
             r"window\.__PRELOADED_STATE__\s*=\s*(.*?);\s*</script>",
             html_resp,
@@ -51,25 +64,20 @@ class StreamingService(Base):
         self.logger.log(constants.VERBOSE_LOG_LEVEL, json_response)
 
         programme_details = json_response["programmes"]["current"]
-        jwt_token = await self.get_jwt_token(station.id)
+        jwt_token = await self.get_jwt_token(station_id)
 
-        async with self._session.get(
-            URLs.MEDIASET_URL.format(
-                station_id=station.id,
-                jwt_auth_token=jwt_token,
+        json_resp = await self._get_json(
+            url_template=URLs.MEDIASET,
+            url_args={"station_id": station_id, "jwt_auth_token": jwt_token},
+        )
+
+        try:
+            stream = self._get_best_stream(
+                json_resp["media"][0]["connection"], prefer_type=stream_format
             )
-        ) as resp:
-            if resp.status != 200:
-                raise RuntimeError("Failed to receive stream")
-            data = await resp.json()
-
-            try:
-                stream = self._get_best_stream(
-                    data["media"][0]["connection"], prefer_type=stream_format
-                )
-                self.logger.debug(f"Found stream: {stream}")
-            except (StopIteration, KeyError):
-                raise RuntimeError("No valid stream found")
+            self.logger.debug(f"Found stream: {stream}")
+        except (StopIteration, KeyError):
+            raise RuntimeError("No valid stream found")
         if not stream:
             return None
 
@@ -78,12 +86,9 @@ class StreamingService(Base):
             start=dt.fromisoformat(programme_details["start"]),
             end=dt.fromisoformat(programme_details["end"]),
             uri=stream,
-            image_url=image_from_recipe(
-                programme_details["image_url"], size=f"{logo_size}x{logo_size}"
-            ),
+            image_url=image_from_recipe(programme_details["image_url"], size=logo_size),
             show_title=programme_details["titles"]["primary"],
             show_description=programme_details["titles"]["secondary"],
-            station=station,
         )
         return self.current_stream
 
@@ -114,8 +119,9 @@ class StreamingService(Base):
         :returns: Stream object of stream information
         :rtype: str | None
         """
-        url = URLs.EPISODE_MEDIASET.format(episode_id=episode_id)
-        json_resp = await self._get_json(url)
+        json_resp = await self._get_json(
+            url_template=URLs.EPISODE_MEDIASET, url_args={"episode_id": episode_id}
+        )
 
         # jwt_token = await self.get_jwt_token(station.id)
         stream = None
@@ -128,102 +134,155 @@ class StreamingService(Base):
             raise RuntimeError("No valid stream found")
         return stream
 
-    async def get_by_pid(self, pid):
-        json_resp = await self._get_json(URLs.PID_PLAYABLE.format(pid=pid))
-        return PlayableItem(
-            id=json_resp["id"],
-            urn=json_resp["urn"],
-            network=(
-                Network(
-                    id=json_resp["network"]["id"],
-                    key=json_resp["network"]["key"],
-                    short_title=json_resp["network"]["short_title"],
-                    logo_url=json_resp["network"]["logo_url"],
-                )
-                if json_resp.get("network") is not None
-                else None
-            ),
-            duration=(
-                json_resp["duration"]["value"]
-                if json_resp.get("duration") is not None
-                else None
-            ),
-            progress=(
-                json_resp["progress"]["value"]
-                if json_resp.get("progress") is not None
-                else None
-            ),
-            synopses=(
-                json_resp["synopses"] if json_resp.get("synopses") is not None else {}
-            ),
-            _image_url=json_resp["image_url"],
-            titles=(json_resp["titles"] if json_resp.get("titles") is not None else {}),
-            container=(
-                Container(
-                    type=ContainerType(json_resp["container"]["type"]),
-                    id=json_resp["container"]["id"],
-                    urn=json_resp["container"]["urn"],
-                    title=json_resp["container"]["title"],
-                    synopses=json_resp["container"]["synopses"],
-                )
-                if json_resp.get("container")
-                else None
-            ),
+    async def get_by_pid(self, pid, include_stream=False):
+        self.logger.debug(f"Getting playable item with PID {pid}")
+        if self.auth_service.is_logged_in:
+            url_template = SignedInURLs.PID_PLAYABLE
+        else:
+            url_template = URLs.PID_PLAYABLE
+        json_resp = await self._get_json(
+            url_template=url_template, url_args={"pid": pid}
         )
+        self.logger.debug(json_resp)
+        if not json_resp or "id" not in json_resp:
+            self.logger.debug(json_resp)
+            raise APIResponseError(f"Couldn't get playable item with PID {pid}")
+        playable_item = parse_node(json_resp)
+        if include_stream:
+            playable_item.stream = await self.get_episode_stream(playable_item.id)
+        return playable_item
+
+    async def get_pid_container(self, pid):
+        json_resp = await self._get_json(
+            url_template=URLs.PID_CONTAINER, url_args={"pid": pid}
+        )
+        container = parse_container(json_resp)
+        return container
 
     async def get_container(self, urn):
-        json_resp = await self._get_json(URLs.CONTAINER_URL.format(urn=urn))
-        container_data = json_resp["data"][0]["data"]
-        episode_data = json_resp["data"][1]["data"]
-
-        container = Container(
-            type=ContainerType(container_data["type"]),
-            id=container_data["id"],
-            urn=container_data["urn"],
-            title=container_data["titles"]["primary"],
-            synopses=container_data["synopses"],
-            network=(
-                Network(
-                    id=container_data["network"]["id"],
-                    key=container_data["network"]["key"],
-                    short_title=container_data["network"]["short_title"],
-                    logo_url=container_data["network"]["logo_url"],
-                )
-                if container_data.get("network") is not None
-                else None
-            ),
+        json_resp = await self._get_json(
+            url_template=URLs.CONTAINER_URL, url_args={"urn": urn}
         )
-        episodes = [
-            PlayableItem(
-                id=episode["id"],
-                urn=episode["urn"],
-                container=container,
+        container = parse_container(json_resp)
+        return container
+        try:
+            container_data = json_resp["data"][0]["data"]
+            episode_data = json_resp["data"][1]["data"]
+
+            container = Container(
+                type=ContainerType(container_data["type"]).value,
+                id=container_data["id"],
+                urn=container_data["urn"],
+                title=container_data["titles"]["primary"],
+                synopses=container_data["synopses"],
                 network=(
                     Network(
-                        id=episode["network"]["id"],
-                        key=episode["network"]["key"],
-                        short_title=episode["network"]["short_title"],
-                        logo_url=episode["network"]["logo_url"],
+                        id=container_data["network"]["id"],
+                        key=container_data["network"]["key"],
+                        short_title=container_data["network"]["short_title"],
+                        logo_url=container_data["network"]["logo_url"],
                     )
-                    if episode.get("network") is not None
+                    if container_data.get("network") is not None
                     else None
                 ),
-                duration=(
-                    episode["duration"]["value"]
-                    if episode.get("duration") is not None
-                    else None
-                ),
-                progress=(
-                    episode["progress"]["value"]
-                    if episode.get("progress") is not None
-                    else None
-                ),
-                synopses=(
-                    episode["synopses"] if episode.get("synopses") is not None else {}
-                ),
-                _image_url=episode["image_url"],
-                titles=(episode["titles"] if episode.get("titles") is not None else {}),
             )
-            for episode in episode_data
-        ]
+            episodes = [
+                PlayableItem(
+                    id=episode["id"],
+                    urn=episode["urn"],
+                    container=container,
+                    network=(
+                        Network(
+                            id=episode["network"]["id"],
+                            key=episode["network"]["key"],
+                            short_title=episode["network"]["short_title"],
+                            logo_url=episode["network"]["logo_url"],
+                        )
+                        if episode.get("network") is not None
+                        else None
+                    ),
+                    duration=(
+                        episode["duration"]["value"]
+                        if episode.get("duration") is not None
+                        else None
+                    ),
+                    progress=(
+                        episode["progress"]["value"]
+                        if episode.get("progress") is not None
+                        else None
+                    ),
+                    synopses=(
+                        episode["synopses"]
+                        if episode.get("synopses") is not None
+                        else {}
+                    ),
+                    image_url=episode["image_url"],
+                    titles=(
+                        episode["titles"] if episode.get("titles") is not None else {}
+                    ),
+                )
+                for episode in episode_data
+            ]
+        except KeyError as e:
+            self.logger.error(f"Error parsing container data: {e}")
+            self.logger.error(json_resp)
+            raise APIResponseError(f"Invalid container data received: {e}")
         return container, episodes
+
+    async def get_heartbeat_details(self, pid):
+        json_resp = await self._get_json(
+            url_template=URLs.PLAYLIST, url_args={"pid": pid}
+        )
+        try:
+            vpid = json_resp["defaultAvailableVersion"]["smpConfig"]["items"][0]["vpid"]
+            item_type = json_resp["statsObject"]["parentPIDType"]
+        except (APIResponseError, KeyError):
+            vpid = None
+            item_type = None
+        return vpid, item_type
+
+    async def update_play_status(
+        self,
+        pid: str,
+        elapsed_time: int,
+        action: PlayStatus,
+    ):
+        vpid, resource_type = await self.get_heartbeat_details(pid)
+        data = {
+            "action": action,
+            "elapsed_time": elapsed_time,
+            "pid": pid,
+            "play_mode": "ondemand",
+            "resource_type": resource_type,
+            "version_pid": vpid,
+        }
+        resp = await self._make_request(
+            method="POST", url=SignedInURLs.PLAYS.value, json=data
+        )
+        if resp.status != 202:
+            raise APIResponseError(resp)
+        return True
+
+    async def get_category(self, category):
+        json_resp = await self._get_json(
+            url_template=URLs.CATEGORY_LATEST, url_args={"category": category}
+        )
+        return parse_node(json_resp)
+
+    async def get_collection(self, pid):
+        json_resp = await self._get_json(
+            url_template=URLs.COLLECTIONS, url_args={"pid": pid}
+        )
+        return parse_node(json_resp)
+
+    async def search(self, query):
+        json_resp = await self._get_json(
+            url_template=URLs.SEARCH_URL, url_args={"search": query}
+        )
+        return parse_search(json_resp)
+
+    async def get_show_segments(self, vpid):
+        json_resp = await self._get_json(
+            url_template=URLs.SEGMENTS, url_args={"vpid": vpid}
+        )
+        return parse_container(json_resp)
