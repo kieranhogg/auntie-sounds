@@ -1,24 +1,20 @@
 import json
-import logging
 import re
 from datetime import datetime as dt
-from typing import Literal, Optional
-
-from .auth import AuthService
-
+from typing import List, Optional, cast
 
 from . import constants
-from .utils import network_logo
+from .auth import AuthService
 from .base import Base
-from .constants import ContainerType, PlayStatus, SignedInURLs, URLs
-from .exceptions import APIResponseError
+from .constants import PlayStatus, SignedInURLs, URLs
+from .exceptions import APIResponseError, InvalidFormatError
 from .json import parse_container, parse_node, parse_search
 from .models import (
-    Container,
-    Network,
     PlayableItem,
-    ScheduleItem,
-    Station,
+    Podcast,
+    PodcastEpisode,
+    RadioSeries,
+    RadioShow,
     Stream,
 )
 from .utils import image_from_recipe
@@ -33,6 +29,73 @@ class StreamingService(Base):
     ):
         super().__init__(**kwargs)
         self.auth_service = auth_service
+
+    async def get_podcast(
+        self, urn=None, pid=None, include_episodes=True
+    ) -> Optional[Podcast]:
+        if not urn and not pid:
+            raise InvalidFormatError("Must be called with one of: urn, pid")
+        if urn:
+            # If we have the URN we can look up the podcast container
+            podcast_container = await self.get_container(urn)
+            if podcast_container and type(podcast_container) is list:
+                podcast = next(
+                    (
+                        podcast
+                        for podcast in podcast_container
+                        if type(podcast) is Podcast
+                    ),
+                    None,
+                )
+            else:
+                podcast = podcast_container
+
+            if podcast:
+                podcast = cast(Podcast, podcast)
+                if not include_episodes and getattr(podcast, "sub_items", None):
+                    podcast.sub_items = []
+            else:
+                podcast = None
+        elif pid:
+            # If we only have the PID, we can grab the episodes and parse out the podcast
+            podcast = None
+            podcast_episodes = await self.get_pid_container(pid)
+            if podcast_episodes and len(podcast_episodes) > 1:
+                podcast = podcast_episodes[0].container
+                return await self.get_podcast(urn=podcast.urn)
+
+        return podcast
+
+    async def get_podcast_episodes(self, pid) -> Optional[List[PodcastEpisode]]:
+        podcasts = []
+        podcast_container = await self.get_pid_container(pid)
+        if podcast_container and type(podcast_container) is list:
+            podcasts = [cast(PodcastEpisode, episode) for episode in podcast_container]
+
+        return podcasts
+
+    async def get_podcast_episode(self, pid, include_stream=False) -> PodcastEpisode:
+        show = await self.get_by_pid(pid=pid, include_stream=include_stream)
+        show = cast(PodcastEpisode, show)
+        return show
+
+    async def get_radio_series(
+        self, urn, include_episodes=True
+    ) -> Optional[RadioSeries]:
+        series_container = await self.get_container(urn)
+
+        if series_container:
+            series = cast(RadioSeries, series_container)
+            if not include_episodes and getattr(series, "sub_items", None):
+                series.sub_items = []
+        else:
+            series = None
+        return series
+
+    async def get_radio_show(self, pid, include_stream=False) -> RadioShow:
+        show = await self.get_by_pid(pid=pid, include_stream=include_stream)
+        show = cast(RadioShow, show)
+        return show
 
     async def get_live_stream(
         self,
@@ -152,9 +215,9 @@ class StreamingService(Base):
             playable_item.stream = await self.get_episode_stream(playable_item.id)
         return playable_item
 
-    async def get_pid_container(self, pid):
+    async def get_pid_container(self, pid) -> List[PlayableItem] | None:
         json_resp = await self._get_json(
-            url_template=URLs.PID_CONTAINER, url_args={"pid": pid}
+            url_template=URLs.PLAYABLE_ITEMS_CONTAINER, url_args={"pid": pid}
         )
         container = parse_container(json_resp)
         return container
@@ -164,70 +227,9 @@ class StreamingService(Base):
             url_template=URLs.CONTAINER_URL, url_args={"urn": urn}
         )
         container = parse_container(json_resp)
+        if type(container) is list and len(container) == 1:
+            container = container[0]
         return container
-        try:
-            container_data = json_resp["data"][0]["data"]
-            episode_data = json_resp["data"][1]["data"]
-
-            container = Container(
-                type=ContainerType(container_data["type"]).value,
-                id=container_data["id"],
-                urn=container_data["urn"],
-                title=container_data["titles"]["primary"],
-                synopses=container_data["synopses"],
-                network=(
-                    Network(
-                        id=container_data["network"]["id"],
-                        key=container_data["network"]["key"],
-                        short_title=container_data["network"]["short_title"],
-                        logo_url=container_data["network"]["logo_url"],
-                    )
-                    if container_data.get("network") is not None
-                    else None
-                ),
-            )
-            episodes = [
-                PlayableItem(
-                    id=episode["id"],
-                    urn=episode["urn"],
-                    container=container,
-                    network=(
-                        Network(
-                            id=episode["network"]["id"],
-                            key=episode["network"]["key"],
-                            short_title=episode["network"]["short_title"],
-                            logo_url=episode["network"]["logo_url"],
-                        )
-                        if episode.get("network") is not None
-                        else None
-                    ),
-                    duration=(
-                        episode["duration"]["value"]
-                        if episode.get("duration") is not None
-                        else None
-                    ),
-                    progress=(
-                        episode["progress"]["value"]
-                        if episode.get("progress") is not None
-                        else None
-                    ),
-                    synopses=(
-                        episode["synopses"]
-                        if episode.get("synopses") is not None
-                        else {}
-                    ),
-                    image_url=episode["image_url"],
-                    titles=(
-                        episode["titles"] if episode.get("titles") is not None else {}
-                    ),
-                )
-                for episode in episode_data
-            ]
-        except KeyError as e:
-            self.logger.error(f"Error parsing container data: {e}")
-            self.logger.error(json_resp)
-            raise APIResponseError(f"Invalid container data received: {e}")
-        return container, episodes
 
     async def get_heartbeat_details(self, pid):
         json_resp = await self._get_json(
