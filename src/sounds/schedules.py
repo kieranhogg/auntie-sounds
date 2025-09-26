@@ -1,11 +1,12 @@
 from datetime import datetime as dt
+from typing import Optional, cast
 
 from . import constants
 from .base import Base
 from .constants import URLs
 from .exceptions import InvalidFormatError
 from .json import parse_container, parse_menu, parse_node, parse_schedule
-from .models import Schedule, ScheduleItem, Segment, Station
+from .models import LiveProgramme, Schedule, ScheduleItem, Segment, Station
 from .utils import image_from_recipe
 
 
@@ -27,7 +28,7 @@ class ScheduleService(Base):
         )
         return parse_schedule(json_resp)
 
-    async def current_programme(self, station_id: str):
+    async def current_programme(self, station_id: str) -> Optional[LiveProgramme]:
         json_resp = await self._get_json(url_template=constants.URLs.STATIONS)
         listing = next(
             (
@@ -37,7 +38,9 @@ class ScheduleService(Base):
             ),
             None,
         )
-        return parse_node(listing)
+        if listing:
+            listing = cast(LiveProgramme, parse_node(listing))
+        return listing
 
     async def recently_played_items(
         self, station_id: str, image_size=450, results=10
@@ -48,21 +51,6 @@ class ScheduleService(Base):
             url_args={"station_id": station_id, "limit": results},
         )
         return parse_container(json_resp)
-        return [
-            Segment(
-                id=segment["id"],
-                primary_title=segment["titles"]["primary"],
-                secondary_title=segment["titles"]["secondary"],
-                tertiary_title=segment["titles"]["tertiary"],
-                entity_title=segment["titles"]["entity_title"],
-                image_url=image_from_recipe(segment["image_url"], image_size),
-                start_seconds=segment["offset"]["start"],
-                end_seconds=segment["offset"]["end"],
-                label=segment["offset"]["label"],
-                now_playing=segment["offset"]["now_playing"],
-            )
-            for segment in json["data"]
-        ]
 
     async def currently_playing_song(
         self, station_id, image_size=450
