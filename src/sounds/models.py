@@ -29,6 +29,9 @@ class BaseObject:
     def __str__(self):
         return pformat(self)
 
+    def __repr__(self):
+        return f"{self.__class__.__name__}({self.id})"
+
 
 @dataclass(kw_only=True)
 class Network:
@@ -38,10 +41,24 @@ class Network:
     key: Optional[str] = None
     short_title: Optional[str] = None
     logo_url: Optional[str] = None
-    network_type: str = "master_brand"
+    current_programme: Optional["LiveProgramme"] = None
+    sort: Optional[int] = None
+    group: Optional[str] = None
+    contacts: Optional[dict] = None
+    services: Optional[dict] = None
+    promoted_category_summaries: Optional[dict] = None
+    active: Optional[bool] = None
+    international: Optional[bool] = None
 
     def __post_init__(self):
         self.logo_url = network_logo(self.logo_url)
+
+    def __str__(self):
+        return pformat(self)
+
+    def __repr__(self):
+        # klass = str(type(self)).rsplit(".", 1)[-1].replace("'>", "")
+        return f"{type(self).__name__}({self.id})"
 
 
 @dataclass(kw_only=True)
@@ -83,6 +100,9 @@ class PlayableItem(BaseObject):
         self.start = dt.fromisoformat(self.start) if self.start else None
         self.end = dt.fromisoformat(self.end) if self.end else None
 
+    def __repr__(self):
+        return f"{self.__class__.__name__}({self.id})"
+
 
 @dataclass(kw_only=True)
 class TimedContent:
@@ -121,6 +141,12 @@ class Broadcast:
     def __post_init__(self):
         self.start = dt.fromisoformat(self.start)
         self.end = dt.fromisoformat(self.end)
+
+    def __str__(self):
+        return pformat(self)
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}({self.id})"
 
 
 @dataclass(kw_only=True)
@@ -194,8 +220,10 @@ class StationSearchResult:
 
 
 @dataclass(kw_only=True)
-class LiveStation(PlayableItem):
-    pass
+class LiveProgramme(PlayableItem):
+
+    def __post_init__(self):
+        self.episode_image_url = image_from_recipe(self.image_url, size=640)
 
 
 @dataclass(kw_only=True)
@@ -264,6 +292,12 @@ class RadioShow(PlayableItem, TimedContent):
         if hasattr(self, "urn") and self.urn is not None:
             self.pid = self.urn.rsplit(":", 1)[-1]
 
+    def __str__(self):
+        return pformat(self)
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}({self.id})"
+
 
 # Specific content types
 @dataclass(kw_only=True)
@@ -293,26 +327,41 @@ class RadioSeries(Container):
     def __post_init__(self):
         self.image_url = image_from_recipe(self.image_url, size=1280)
 
+    def __str__(self):
+        return pformat(self)
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}({self.id})"
+
 
 @dataclass(kw_only=True)
 class Podcast(Container):
     """Represents a podcast container (holds episodes)."""
 
-    pass
+    def __post_init__(self):
+        self.image_url = image_from_recipe(self.image_url, size=1280)
+
+    def __str__(self):
+        return pformat(self)
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}({self.id})"
 
 
 @dataclass(kw_only=True)
 class Collection(Container):
     """Represents a collection container."""
 
-    pass
+    def __post_init__(self):
+        self.image_url = image_from_recipe(self.image_url, size=1280)
 
 
 @dataclass(kw_only=True)
 class Category(Container):
     """Represents a content category."""
 
-    pass
+    def __post_init__(self):
+        self.image_url = image_from_recipe(self.image_url, size=1280)
 
 
 @dataclass(kw_only=True)
@@ -372,7 +421,7 @@ class PromoItem(Container):
 
 @dataclass(kw_only=True)
 class SearchResults:
-    stations: List[LiveStation]
+    stations: List[LiveProgramme]
     shows: List[Container]
     episodes: List[PlayableItem]
 
@@ -426,20 +475,20 @@ def model_factory(object):
                     case ItemURN.SERIES.value:
                         new_type = Podcast
                     case ItemURN.RADIO_SHOW_OR_PODCAST.value:
-                        if object.get("container").get("network").get(
-                            "id"
-                        ) == "bbc_sounds_podcasts" or "brand" in object.get(
-                            "container"
-                        ).get(
-                            "urn"
-                        ):
-                            new_type = PodcastEpisode
-                        else:
-                            # This is a radio show
-                            new_type = RadioShow
+                        # if object.get("container").get("network").get(
+                        #     "id"
+                        # ) == "bbc_sounds_podcasts" or "brand" in object.get(
+                        #     "container"
+                        # ).get(
+                        #     "urn"
+                        # ):
+                        #     new_type = PodcastEpisode
+                        # else:
+                        #     # This is a radio show
+                        new_type = RadioShow
                     case ItemURN.STATION.value:
                         if object.get("synopses") is not None:
-                            new_type = LiveStation
+                            new_type = LiveProgramme
                         else:
                             new_type = Station
                     case ItemURN.PROMO_ITEM.value:
@@ -512,6 +561,9 @@ def model_factory(object):
             new_type = RadioSeries
         elif urn == ItemURN.RADIO_SHOW_OR_PODCAST.value:
             new_type = RadioSeries
+        elif object_type == ContainerType.ITEM.value:
+            # Default to podcast
+            new_type = Podcast
         else:
             print(f"Unknown container type: {object_type}")
             print(object)
