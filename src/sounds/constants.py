@@ -34,6 +34,16 @@ class SignedInURLs(Enum):
 
 
 class URLs(Enum):
+    # Not yet used
+    """
+            /v2/networks - Provides the list of all the v2 networks
+            /v2/networks/playable - Provides the list of all the playable networks
+            /v2/networks/{id}/playable - Provides the network playable item by network ID. <span>🎶</span> Green Day
+            /radio/networks.json - All iPlayer Radio networks - contains business logic for masterbrand and service relationships
+    /v2/services/{sid}/tracks/latest/playable - Retrieve list of tracks as playable items for a service <span>🎶</span> Deftones
+
+    """
+
     # Auth URLs
     LOGIN_START = "https://session.bbc.co.uk/session?ptrt=https%3A%2F%2Fwww.bbc.co.uk%2Fsounds&context=iplayerradio&userOrigin=sounds"
     LOGIN_BASE = "https://account.bbc.com"
@@ -47,9 +57,14 @@ class URLs(Enum):
     EPISODE_MEDIASET = "https://open.live.bbc.co.uk/mediaselector/6/select/version/2.0/mediaset/pc/vpid/{episode_id}"
 
     # Station URLs
+    NETWORKS_LIST = "https://rms.api.bbc.co.uk/radio/networks.json"
     STATIONS = "https://rms.api.bbc.co.uk/v2/experience/inline/stations"
     LIVE_STATION_DETAILS = (
         "https://rms.api.bbc.co.uk/v2/experience/inline/play/{station_id}"
+    )
+    STATION_DETAILS = "https://rms.api.bbc.co.uk/v2/networks/{station_id}"
+    STATION_PLAYABLE_DETAILS = (
+        "https://rms.api.bbc.co.uk/v2/networks/{station_id}/playable"
     )
     LIVE_STATION = "https://www.bbc.co.uk/sounds/play/live:{station_id}"
     NOW_PLAYING = "https://rms.api.bbc.co.uk/v2/services/{station_id}/segments/latest?limit={limit}"
@@ -60,7 +75,9 @@ class URLs(Enum):
     SEGMENTS = "https://rms.api.bbc.co.uk/v2/versions/{vpid}/segments"
 
     # Episodes, programmes, series etc.
-    PID_CONTAINER = "https://rms.api.bbc.co.uk/v2/programmes/playable?container={pid}"
+    PLAYABLE_ITEMS_CONTAINER = (
+        "https://rms.api.bbc.co.uk/v2/programmes/playable?container={pid}"
+    )
     CATEGORY_LATEST = "https://rms.api.bbc.co.uk/v2/programmes/playable?category={category}&sort=-release_date&experience=domestic"
     CATEGORY_POPULAR = "https://rms.api.bbc.co.uk/v2/programmes/playable?category={category}&sort=popular&experience=domestic"
     BROADCAST = "https://rms.api.bbc.co.uk/v2/broadcasts/{pid}"
@@ -70,8 +87,6 @@ class URLs(Enum):
     PLAYLIST = "https://www.bbc.co.uk/programmes/{pid}/playlist.json"
     COLLECTIONS_FULL = "https://rms.api.bbc.co.uk/v2/collections/{pid}/members/container?experience=domestic&offset={offset}&limit={limit}"
     COLLECTIONS = "https://rms.api.bbc.co.uk/v2/collections/{pid}/members/container?experience=domestic"
-
-    PODCAST_EPISODES = "/v2/podcasts/{pid}/episodes/playable"
 
     # Menu, search, etc.
     EXPERIENCE_MENU = "https://rms.api.bbc.co.uk/v2/my/experience/inline/listen"
