@@ -1,21 +1,20 @@
 from dataclasses import fields
+from typing import List
 
 from .utils import network_logo
-from .constants import ItemType
 from .models import (
     Container,
-    LiveStation,
     Menu,
     MenuItem,
     Network,
     PlayableItem,
-    PromoItem,
     RadioShow,
     RecommendedMenuItem,
     SearchResults,
-    # model_factory,
+    model_factory,
 )
-from .parsing import model_factory
+
+# from .parsing import model_factory
 
 from collections import namedtuple
 
@@ -46,34 +45,18 @@ def parse_node(node):
         except (ValueError, AttributeError):
             raise
         return container
-    # elif "item" in node:
-    #     container = model_factory(node)
-    #     try:
-    #         container.item = parse_node(node["item"])
-    #     except ValueError:
-    #         pass
-    #     return container
-    elif node.get("type") != ItemType.INLINE_DISPLAY_MODULE:
+
+    else:
         playable_item = model_factory(node)
         for nested_object in nested_objects:
             try:
                 if nested_object.source_key not in ignored_objects and getattr(
                     playable_item, nested_object.source_key, None
                 ):
-                    # original_dict = getattr(playable_item, nested_object.source_key)
-                    # new_nested_object = model_factory(original_dict)
-                    # setattr(
-                    #     playable_item,
-                    #     nested_object.source_key,
-                    #     new_nested_object,
-                    # )
-                    # attrs_to_move = {
-                    #     k: v
-                    #     for k, v in original_dict.items()
-                    #     if k not in ignored_objects
-                    # }
                     source_dict = getattr(playable_item, nested_object.source_key)
                     out_object = model_factory(source_dict)
+                    if type(out_object) in [dict, None]:
+                        raise Exception("Failed to parse object: {source_dict}")
                     setattr(
                         playable_item,
                         nested_object.source_key,
@@ -93,14 +76,7 @@ def parse_node(node):
             playable_item.network.logo_url = network_logo(
                 playable_item.network.logo_url
             )
-        # elif playable_item and getattr(playable_item, "station_image_url", None):
-        #     playable_item.station_image_url = network_logo(
-        #         playable_item.station_image_url
-        #     )
         return playable_item
-    else:
-        # fallback for unknown types
-        raise Exception(node)
 
 
 def parse_menu(json_data):
@@ -129,8 +105,6 @@ def parse_menu(json_data):
 
                 new_sub_menu.append(RecommendedMenuItem(**data))
                 continue
-        # elif type(menu_item) is PromoItem:
-        #     new_sub_menu.append(menu_item.sub_items[0].item)
         new_sub_menu.append(menu_item)
     menu.sub_items = new_sub_menu
     return menu
@@ -141,8 +115,22 @@ def parse_schedule(json_data):
     return schedule
 
 
-def parse_container(json_data):
-    container = parse_node(json_data["data"])
+def parse_container(json_data) -> List[PlayableItem] | None:
+    if "data" in json_data:
+        if (
+            len(json_data["data"]) == 2
+            and json_data["data"][0]["type"] == "inline_header_module"
+            and json_data["data"][1]["type"] == "inline_display_module"
+        ):
+            item = json_data["data"][0]["data"]
+            item["data"] = json_data["data"][1]["data"]
+            container = parse_node(item)
+        else:
+            container = parse_node(json_data["data"])
+    elif "results" in json_data:
+        container = parse_node(json_data["results"])
+    else:
+        container = None
     return container
 
 
