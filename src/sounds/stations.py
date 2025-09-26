@@ -1,11 +1,12 @@
 import itertools
+from typing import List, Optional
 
-from .json import parse_node
+from .json import parse_container, parse_node
 
 from . import constants
 from .base import Base
 from .constants import URLs
-from .models import Station
+from .models import Network, Station
 from .schedules import ScheduleService
 from .streaming import StreamingService
 from .utils import network_logo
@@ -22,6 +23,11 @@ class StationService(Base):
         super().__init__(**kwargs)
         self.streams = streaming_service
         self.schedules = schedule_service
+
+    async def get_stations_detailed(self) -> Optional[List[Network]]:
+        json_resp = await self._get_json(url_template=URLs.NETWORKS_LIST)
+        stations = parse_container(json_resp)
+        return stations
 
     async def get_stations(
         self,
@@ -125,15 +131,15 @@ class StationService(Base):
             return await self.get_station_schedule(
                 station_id, include_stream, include_schedule, date
             )
-        json_resp = await self._get_json(
-            url_template=URLs.LIVE_STATION_DETAILS, url_args={"station_id": station_id}
+        station = next(
+            (
+                station
+                for station in await self.get_stations()
+                if station.id == station_id
+            ),
+            None,
         )
-        self.logger.log(constants.VERBOSE_LOG_LEVEL, "Getting station details...")
-        self.logger.log(constants.VERBOSE_LOG_LEVEL, json_resp)
-        if not json_resp["data"]:
-            return None
-        station = parse_node(json_resp["data"][0]["data"][0])
-        if include_stream:
+        if station and include_stream:
             station.stream = await self.streams.get_live_stream(station_id)
         return station
 
