@@ -5,9 +5,8 @@ from . import constants
 from .base import Base
 from .constants import URLs
 from .exceptions import InvalidFormatError
-from .json import parse_container, parse_menu, parse_node, parse_schedule
-from .models import LiveProgramme, Schedule, ScheduleItem, Segment, Station
-from .utils import image_from_recipe
+from .json import parse_container, parse_node, parse_schedule
+from .models import LiveProgramme, Schedule, Segment
 
 
 class ScheduleService(Base):
