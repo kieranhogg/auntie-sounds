@@ -1,3 +1,5 @@
+"""Not used, just some documentation on the possible types available from the API"""
+
 sounds_types = {
     "DisplayItem": {
         "type": "object",
