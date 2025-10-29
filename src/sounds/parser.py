@@ -10,11 +10,11 @@ from .models import (
     PlayableItem,
     RadioShow,
     RecommendedMenuItem,
+    Schedule,
     SearchResults,
+    Segment,
     model_factory,
 )
-
-# from .parsing import model_factory
 
 from collections import namedtuple
 
@@ -82,30 +82,32 @@ def parse_node(node):
 def parse_menu(json_data):
     menu = Menu(sub_items=[])
     if "data" in json_data:
-        parsed_items = parse_node(json_data["data"])
-        menu.sub_items = [item for item in parsed_items if item is not None]
+        menu.sub_items = [
+            parse_node(item) for item in json_data["data"] if item is not None
+        ]
 
     # Post-process any menu items containing recommendations to make them recommendations
     # FIXME bad, bad, bad
     new_sub_menu = []
-    for menu_item in menu.sub_items:
-        # If a menu item contains objects which are recommended, convert it to a recommended folder
-        if (
-            hasattr(menu_item, "sub_items")
-            and menu_item.sub_items
-            and len(menu_item.sub_items) > 0
-        ):
+    if menu and menu.sub_items:
+        for menu_item in menu.sub_items:
+            # If a menu item contains objects which are recommended, convert it to a recommended folder
             if (
-                menu_item.sub_items[0]
-                and menu_item.sub_items[0].recommendation is not None
+                hasattr(menu_item, "sub_items")
+                and menu_item.sub_items
+                and len(menu_item.sub_items) > 0
             ):
-                data = {}
-                for field in fields(MenuItem):
-                    data[field.name] = getattr(menu_item, field.name)
+                if (
+                    menu_item.sub_items[0]
+                    and menu_item.sub_items[0].recommendation is not None
+                ):
+                    data = {}
+                    for field in fields(MenuItem):
+                        data[field.name] = getattr(menu_item, field.name)
 
-                new_sub_menu.append(RecommendedMenuItem(**data))
-                continue
-        new_sub_menu.append(menu_item)
+                    new_sub_menu.append(RecommendedMenuItem(**data))
+                    continue
+            new_sub_menu.append(menu_item)
     menu.sub_items = new_sub_menu
     return menu
 
@@ -115,7 +117,7 @@ def parse_schedule(json_data):
     return schedule
 
 
-def parse_container(json_data) -> List[PlayableItem] | None:
+def parse_container(json_data) -> List[PlayableItem] | List[Segment] | None:
     if "data" in json_data:
         if (
             len(json_data["data"]) == 2

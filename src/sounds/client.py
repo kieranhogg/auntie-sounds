@@ -1,4 +1,4 @@
-from http import cookiejar
+from datetime import tzinfo
 import logging
 
 import aiohttp
@@ -20,7 +20,7 @@ class SoundsClient:
     def __init__(
         self,
         session: aiohttp.ClientSession | None = None,
-        timezone: pytz.BaseTzInfo | None = None,
+        timezone: tzinfo | None = None,
         logger: logging.Logger | None = None,
         log_level: str | None = None,
         mock_session: bool = False,
@@ -63,8 +63,11 @@ class SoundsClient:
         }
 
         self.auth = AuthService(**service_kwargs)
-        self.streaming = StreamingService(auth_service=self.auth, **service_kwargs)
         self.schedules = ScheduleService(**service_kwargs)
+
+        self.streaming = StreamingService(
+            auth_service=self.auth, schedule_service=self.schedules, **service_kwargs
+        )
         self.stations = StationService(
             streaming_service=self.streaming,
             schedule_service=self.schedules,

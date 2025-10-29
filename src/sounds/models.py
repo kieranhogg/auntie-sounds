@@ -1,22 +1,38 @@
 from dataclasses import dataclass, fields
 from datetime import datetime as dt
 from pprint import pformat
-from typing import TYPE_CHECKING, Any, List, Optional
+from typing import TYPE_CHECKING, Any, List, Optional, Sequence
+from zoneinfo import ZoneInfo
 
 import pytz
 
-from .constants import SoundsTypes, PlayableSoundsTypes
-
+from . import models
+from .constants import BaseSoundsTypes
 from .utils import image_from_recipe, network_logo
 
 if TYPE_CHECKING:
-    from .constants import ContainerType
+    from .constants import PlayableSoundsTypes
 
-from dataclasses import dataclass
-from datetime import datetime as dt
-from typing import Optional, List, Union
-from zoneinfo import ZoneInfo
 
+type SoundsTypes = (
+    models.Category
+    | models.Collection
+    | models.LiveStation
+    | models.MenuItem
+    | models.Podcast
+    | models.PodcastEpisode
+    | models.RadioClip
+    | models.RadioSeries
+    | models.RadioShow
+    | models.RecommendedMenuItem
+    | models.Schedule
+    | models.ScheduleItem
+    | models.Station
+    | models.StationSearchResult
+)
+
+def _parse_datetime(value):
+    return dt.fromisoformat(value) if isinstance(value, str) else value
 
 @dataclass(kw_only=True)
 class BaseObject:
@@ -51,7 +67,8 @@ class Network:
     international: Optional[bool] = None
 
     def __post_init__(self):
-        self.logo_url = network_logo(self.logo_url)
+        if self.logo_url:
+            self.logo_url = network_logo(self.logo_url)
 
     def __str__(self):
         return pformat(self)
@@ -73,7 +90,14 @@ class Container(BaseObject):
     titles: Optional[dict] = None
     urn: Optional[str] = None
     network: Optional[Network] = None
-    sub_items: Optional[List[Union["Container", "PlayableItem"]]] = None
+    sub_items: Optional[List[SoundsTypes]] = None
+
+    @property
+    def item_id(self):
+        if self.urn is not None:
+            return self.urn.rsplit(":", 1)[1]
+        else:
+            return self.id
 
 
 @dataclass(kw_only=True)
@@ -81,7 +105,7 @@ class PlayableItem(BaseObject):
     """Base class for actual playable content."""
 
     id: str
-    urn: str
+    urn: Optional[str] = None
     pid: Optional[str] = None
     type: Optional[str] = None
     duration: Optional[dict] = None
@@ -94,30 +118,35 @@ class PlayableItem(BaseObject):
     start: Optional[dt] = None
     end: Optional[dt] = None
     release: Optional[dict] = None
+    availability: Optional[dict] = None
     stream: Optional[str] = None
-
-    def __post_init__(self):
-        self.start = dt.fromisoformat(self.start) if self.start else None
-        self.end = dt.fromisoformat(self.end) if self.end else None
 
     def __repr__(self):
         return f"{self.__class__.__name__}({self.id})"
 
+    def __post_init__(self):
+        self.start = _parse_datetime(self.start)
+        self.end = _parse_datetime(self.end)
+       
+
+    @property
+    def item_id(self):
+        if self.urn is not None:
+            return self.urn.rsplit(":", 1)[1]
+        else:
+            return self.pid
+  
 
 @dataclass(kw_only=True)
 class TimedContent:
     """Mixin for content with timing information."""
 
-    start: dt
-    end: dt
-    duration: Optional[int] = None
-
-    def is_live(self, timezone: ZoneInfo) -> bool:
+    def is_live(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo) -> bool:
         now = dt.now(tz=timezone)
-        return self.start <= now < self.end
+        return self.start <= now < self.end # type: ignore
 
-    def has_already_aired(self, timezone: ZoneInfo) -> bool:
-        return dt.now(tz=timezone) > self.end
+    def has_already_aired(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo ) -> bool:
+        return dt.now(tz=timezone) > self.end # type: ignore
 
 
 @dataclass(kw_only=True)
@@ -139,54 +168,42 @@ class Broadcast:
     programme: "RadioShow"
 
     def __post_init__(self):
-        self.start = dt.fromisoformat(self.start)
-        self.end = dt.fromisoformat(self.end)
+        self.start = _parse_datetime(self.start)
+        self.end = _parse_datetime(self.end)
 
     def __str__(self):
         return pformat(self)
 
     def __repr__(self):
-        return f"{self.__class__.__name__}({self.id})"
+        return f"{self.__class__.__name__}({self.pid})"
 
 
 @dataclass(kw_only=True)
 class ScheduleItem(PlayableItem):
     """Represents a scheduled program item."""
 
-    episode_id: Optional[str] = None
-    container_id: Optional[str] = None
     container: Optional[Container] = None
     stream: Optional[str] = None
 
     def __post_init__(self):
-        self.image_url = image_from_recipe(self.image_url, size=640)
+        if self.image_url:
+            self.image_url = image_from_recipe(self.image_url, size=640)
         if hasattr(self, "urn") and self.urn is not None:
             self.pid = self.urn.rsplit(":", 1)[-1]
+        self.start = _parse_datetime(self.start)
+        self.end = _parse_datetime(self.end)
 
-    # @property
-    # def vpid(self) -> Optional[str]:
-    #     if self.urn:
-    #         return self.urn.rsplit(":", 1)[-1]
-    #     return None
 
-    @property
-    def longest_description(self) -> str:
-        """Returns the longest available description."""
-        return (
-            self.long_synopsis
-            or self.medium_synopsis
-            or self.short_synopsis
-            or self.secondary_title
-            or self.primary_title
-            or ""
-        )
+    def is_live(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo) -> bool:
+        if self.start and self.end:
+            now = dt.now(tz=timezone)
+            return self.start <= now < self.end
+        return False
 
-    def is_live(self, timezone: ZoneInfo) -> bool:
-        now = dt.now(tz=timezone)
-        return self.start <= now < self.end
-
-    def has_already_aired(self, timezone: ZoneInfo) -> bool:
-        return dt.now(tz=timezone) > self.end
+    def has_already_aired(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo ) -> bool:
+        if self.end:
+            return dt.now(tz=timezone) > self.end
+        return True
 
 
 @dataclass(kw_only=True)
@@ -195,19 +212,18 @@ class Station(Container):
 
     local: bool = False
     stream: Optional["Stream"] = None
-    schedule: Optional[List[ScheduleItem]] = None
+    schedule: Optional["Schedule"] = None
 
 
 @dataclass(kw_only=True)
 class StationSearchResult:
     """Represents a search result showing a station. Keys are different enough to warrant a separate model"""
-
-    type: str
     id: str
+    type: str
     urn: str
     service_id: str
-    episode_image_url: str
-    station_image_url: str
+    episode_image_url: str | None
+    station_image_url: str | None
     station_name: str
     title: str
     short_synopsis: str
@@ -215,15 +231,42 @@ class StationSearchResult:
     duration: dict[int, str]
 
     def __post_init__(self):
-        self.station_image_url = network_logo(self.station_image_url)
-        self.episode_image_url = image_from_recipe(self.episode_image_url, size=640)
+        if self.station_image_url:
+            self.station_image_url = network_logo(self.station_image_url)
+        if self.episode_image_url:
+            self.episode_image_url = image_from_recipe(self.episode_image_url, size=640)
 
+    @property
+    def item_id(self):
+        if self.urn is not None:
+            return self.urn.rsplit(":", 1)[1]
+        else:
+            return self.id
 
 @dataclass(kw_only=True)
 class LiveProgramme(PlayableItem):
 
     def __post_init__(self):
-        self.episode_image_url = image_from_recipe(self.image_url, size=640)
+        if self.image_url:
+            self.image_url = image_from_recipe(self.image_url, size=640)
+
+
+@dataclass(kw_only=True)
+class LiveStation(PlayableItem):
+    local: bool = False
+    schedule: Optional["Schedule"] = None
+
+    def __post_init__(self):
+        if self.image_url:
+            self.image_url = image_from_recipe(self.image_url, size=640)
+       
+
+    @property
+    def item_id(self):
+        if self.urn is not None:
+            return self.urn.rsplit(":", 1)[1]
+        else:
+            return self.pid
 
 
 @dataclass(kw_only=True)
@@ -232,18 +275,20 @@ class Stream(TimedContent):
 
     id: str
     uri: str
-    image_url: str
+    image_url: str | None
     show_title: str
     show_description: str
     container: Any | None = None
 
     def __post_init__(self):
-        self.image_url = network_logo(self.image_url)
+        if self.image_url:
+            self.image_url = network_logo(self.image_url)
 
     @property
     def can_seek(self) -> bool:
         """Indicates if the stream supports seeking."""
         return False  # Always False for now
+
 
 
 @dataclass(kw_only=True)
@@ -253,7 +298,7 @@ class Segment:
     id: str
     segment_type: str
     titles: dict
-    image_url: str
+    image_url: str | None
     offset: dict
 
     def __post_init__(self):
@@ -266,8 +311,7 @@ class Schedule(Container):
     """Represents a schedule for a given date."""
 
     id: str
-    title: str  # the date of the schedule
-    description: str
+    # title is the date of the schedule
     # sub_items: Optional[List[ScheduleItem]] = None
 
     def get_current_item(
@@ -275,9 +319,11 @@ class Schedule(Container):
         timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo = pytz.timezone("UTC"),
     ) -> Optional[ScheduleItem]:
         """Get the currently airing schedule item."""
-        for item in self.sub_items:
-            if item.is_live(timezone):
-                return item
+        if self.sub_items and isinstance(self.sub_items, list):
+            for item in self.sub_items:
+                if isinstance(item, ScheduleItem):
+                    if item.is_live(timezone):
+                        return item
         return None
 
 
@@ -288,15 +334,17 @@ class RadioShow(PlayableItem, TimedContent):
 
     def __post_init__(self):
         super().__post_init__()
-        self.image_url = image_from_recipe(self.image_url, size=1280)
+        if self.image_url:
+            self.image_url = image_from_recipe(self.image_url, size=1280)
         if hasattr(self, "urn") and self.urn is not None:
             self.pid = self.urn.rsplit(":", 1)[-1]
 
     def __str__(self):
         return pformat(self)
-
-    def __repr__(self):
-        return f"{self.__class__.__name__}({self.id})"
+    
+    @property
+    def item_id(self):
+        return self.pid
 
 
 # Specific content types
@@ -305,7 +353,8 @@ class RadioClip(PlayableItem, TimedContent):
     """Represents a playable radio clip."""
 
     def __post_init__(self):
-        self.image_url = image_from_recipe(self.image_url, size=1280)
+        if self.image_url:
+            self.image_url = image_from_recipe(self.image_url, size=1280)
         if hasattr(self, "urn") and self.urn is not None:
             self.pid = self.urn.rsplit(":", 1)[-1]
 
@@ -315,17 +364,19 @@ class PodcastEpisode(PlayableItem):
     """Represents a playable podcast episode."""
 
     def __post_init__(self):
-        self.image_url = image_from_recipe(self.image_url, size=1280)
+        if self.image_url:
+            self.image_url = image_from_recipe(self.image_url, size=1280)
         if hasattr(self, "urn") and self.urn is not None:
             self.pid = self.urn.rsplit(":", 1)[-1]
 
 
 @dataclass(kw_only=True)
-class RadioSeries(Container):
-    """Represents a radio series container (holds episodes)."""
+class Podcast(Container):
+    """Represents a podcast container (holds episodes)."""
 
     def __post_init__(self):
-        self.image_url = image_from_recipe(self.image_url, size=1280)
+        if self.image_url:
+            self.image_url = image_from_recipe(self.image_url, size=1280)
 
     def __str__(self):
         return pformat(self)
@@ -335,11 +386,12 @@ class RadioSeries(Container):
 
 
 @dataclass(kw_only=True)
-class Podcast(Container):
-    """Represents a podcast container (holds episodes)."""
+class RadioSeries(Podcast):
+    """Represents a radio series container (holds episodes)."""
 
     def __post_init__(self):
-        self.image_url = image_from_recipe(self.image_url, size=1280)
+        if self.image_url:
+            self.image_url = image_from_recipe(self.image_url, size=1280)
 
     def __str__(self):
         return pformat(self)
@@ -353,7 +405,8 @@ class Collection(Container):
     """Represents a collection container."""
 
     def __post_init__(self):
-        self.image_url = image_from_recipe(self.image_url, size=1280)
+        if self.image_url:
+            self.image_url = image_from_recipe(self.image_url, size=1280)
 
 
 @dataclass(kw_only=True)
@@ -361,7 +414,8 @@ class Category(Container):
     """Represents a content category."""
 
     def __post_init__(self):
-        self.image_url = image_from_recipe(self.image_url, size=1280)
+        if self.image_url:
+            self.image_url = image_from_recipe(self.image_url, size=1280)
 
 
 @dataclass(kw_only=True)
@@ -372,7 +426,7 @@ class CategoryItemContainer:
     total: int
     limit: int
     offset: int
-    sub_items: Optional[List["PlayableItem"]] = None
+    sub_items: Optional[List[SoundsTypes]] = None
 
 
 @dataclass(kw_only=True)
@@ -398,9 +452,9 @@ class RecommendedMenuItem(MenuItem):
 class Menu:
     """Represents a menu container with items."""
 
-    sub_items: Optional[list[BaseObject]]
+    sub_items: List[MenuItem] | Sequence[MenuItem] | None
 
-    def get(self, key: str) -> Optional[Union[Container, PlayableItem]]:
+    def get(self, key: str) -> Optional[MenuItem | RecommendedMenuItem]:
         """Get a menu item by ID."""
         if self.sub_items:
             for item in self.sub_items:
@@ -421,9 +475,9 @@ class PromoItem(Container):
 
 @dataclass(kw_only=True)
 class SearchResults:
-    stations: List[LiveProgramme]
-    shows: List[Container]
-    episodes: List[PlayableItem]
+    stations: List[LiveStation]
+    shows: List[Podcast | RadioShow]
+    episodes: List[PodcastEpisode | RadioClip | RadioShow]
 
 
 def model_factory(object):
@@ -467,7 +521,15 @@ def model_factory(object):
                         else:
                             new_type = PodcastEpisode
                     case ItemURN.CLIP.value:
-                        new_type = RadioClip
+                        # Sometimes these can appear in podcast episodes listings
+                        if (
+                            object.get("container")
+                            and ContainerType(object.get("container").get("type"))
+                            == ContainerType.BRAND
+                        ):
+                            new_type = PodcastEpisode
+                        else:
+                            new_type = RadioClip
                     case ItemURN.COLLECTION.value:
                         new_type = Collection
                     case ItemURN.CATEGORY.value:
@@ -475,20 +537,10 @@ def model_factory(object):
                     case ItemURN.SERIES.value:
                         new_type = Podcast
                     case ItemURN.RADIO_SHOW_OR_PODCAST.value:
-                        # if object.get("container").get("network").get(
-                        #     "id"
-                        # ) == "bbc_sounds_podcasts" or "brand" in object.get(
-                        #     "container"
-                        # ).get(
-                        #     "urn"
-                        # ):
-                        #     new_type = PodcastEpisode
-                        # else:
-                        #     # This is a radio show
                         new_type = RadioShow
                     case ItemURN.STATION.value:
                         if object.get("synopses") is not None:
-                            new_type = LiveProgramme
+                            new_type = LiveStation
                         else:
                             new_type = Station
                     case ItemURN.PROMO_ITEM.value:
@@ -504,10 +556,8 @@ def model_factory(object):
                 if urn == ItemURN.STATION:
                     new_type = Station
                 if (
-                    object.get("progress")
-                    and object.get("progress").get("value") == 0
-                    or object.get("on_air")
-                ):
+                    object.get("progress") and object.get("progress").get("value") == 0
+                ) or object.get("on_air"):
                     # Live, or not yet aired
                     new_type = ScheduleItem
                 elif object["playable_item"] is not None:
@@ -528,7 +578,7 @@ def model_factory(object):
                 new_type = Segment
             case _:
                 print("No IT found")
-    elif object_type in ContainerType or object_type in SoundsTypes:
+    elif object_type in ContainerType or object_type in BaseSoundsTypes:
         # This is a nested/parent container, work out which
         if urn == ItemURN.COLLECTION.value:
             new_type = Collection
@@ -545,13 +595,13 @@ def model_factory(object):
             else:
                 # This is a radio show
                 new_type = RadioSeries
-        elif object_type == SoundsTypes.PLAYABLE_ITEMS.value:
+        elif object_type == BaseSoundsTypes.PLAYABLE_ITEMS.value:
             # Category of items
             new_type = CategoryItemContainer
-        elif object_type == SoundsTypes.CONTAINER_ITEMS.value:
+        elif object_type == BaseSoundsTypes.CONTAINER_ITEMS.value:
             # Collection group of items
             new_type = CollectionItemContainer
-        elif object_type == SoundsTypes.PROGRAMMES.value:
+        elif object_type == BaseSoundsTypes.PROGRAMMES.value:
             if object["total"] > 1:
                 raise NotImplementedError("Container has more than 1 programme!")
             new_type = PodcastEpisode
@@ -589,7 +639,6 @@ def model_factory(object):
     try:
         required_fields = {f.name for f in fields(new_type)}
     except TypeError:
-        print(new_type)
         return None
     attrs = {k: v for k, v in object.items() if k in required_fields}
 

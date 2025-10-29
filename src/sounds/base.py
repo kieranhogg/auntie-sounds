@@ -6,7 +6,7 @@ import logging
 from abc import ABC
 from typing import Literal, Optional
 
-from .constants import FIXTURES_FOLDER, Fixtures, URLs
+from .constants import FIXTURES_FOLDER, Fixtures, SignedInURLs, URLs
 from .exceptions import (
     InvalidArgumentsError,
     NetworkError,
@@ -65,23 +65,25 @@ class Base(ABC):
 
     def _build_url(
         self,
-        url: Optional[URLs] = None,
-        url_template: Optional[URLs] = None,
+        url: Optional[URLs | SignedInURLs | str] = None,
+        url_template: Optional[URLs | SignedInURLs] = None,
         url_args=None,
-    ):
-        if url:
+    ) -> str:
+        if isinstance(url, str):
+            return url
+        elif url:
             return url.value
         if url_template and url_args:
             return url_template.value.format(**url_args)
         elif url_template:
             return url_template.value
-        else:
-            raise InvalidArgumentsError("One of url or url_template must be set")
+        
+        raise InvalidArgumentsError("One of url or url_template must be set")
 
     async def _get_json(
         self,
-        url: str | None = None,
-        url_template: Enum | None = None,
+        url: URLs | SignedInURLs | str | None = None,
+        url_template: URLs | SignedInURLs | None = None,
         url_args: dict | None = None,
         **kwargs,
     ) -> dict:
@@ -102,7 +104,8 @@ class Base(ABC):
                 raise InvalidArgumentsError(f"No matching fixture for {url_template}")
 
         try:
-            resp = await self._session.request("GET", url, **kwargs)
+            self.logger.debug(f"Requesting URL {url}")
+            resp = await self._session.request(method="GET", url=url, **kwargs)
             json_resp = await resp.json()
             # Check if we got any errors in the API response
             if "errors" in json_resp.keys():
@@ -126,7 +129,7 @@ class Base(ABC):
     async def _get_html(
         self,
         url: str | None = None,
-        url_template: Enum | None = None,
+        url_template: Optional[URLs | SignedInURLs] = None,
         url_args: dict | None = None,
         method: str = "GET",
         **kwargs,

@@ -5,7 +5,7 @@ from . import constants
 from .base import Base
 from .constants import URLs
 from .exceptions import InvalidFormatError
-from .json import parse_container, parse_node, parse_schedule
+from .parser import parse_container, parse_node, parse_schedule
 from .models import LiveProgramme, Schedule, Segment
 
 

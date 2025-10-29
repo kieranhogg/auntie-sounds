@@ -1,6 +1,5 @@
 from enum import Enum
-import re
-from typing import Final
+from typing import TYPE_CHECKING, Final
 
 # This is the ID of the cookie we use to check we have a valid session
 COOKIE_ID = "ckns_id"
@@ -76,7 +75,7 @@ class URLs(Enum):
 
     # Episodes, programmes, series etc.
     PLAYABLE_ITEMS_CONTAINER = (
-        "https://rms.api.bbc.co.uk/v2/programmes/playable?container={pid}"
+        "https://rms.api.bbc.co.uk/v2/programmes/playable?container={pid}&sort=sequential"
     )
     CATEGORY_LATEST = "https://rms.api.bbc.co.uk/v2/programmes/playable?category={category}&sort=-release_date&experience=domestic"
     CATEGORY_POPULAR = "https://rms.api.bbc.co.uk/v2/programmes/playable?category={category}&sort=popular&experience=domestic"
@@ -106,7 +105,7 @@ class URLs(Enum):
 # URLs = GenericURLs. SignedInURLs
 
 
-class SoundsTypes(Enum):
+class BaseSoundsTypes(Enum):
     """Types as defined in the JSON schema"""
 
     PROGRAMMES = "Programmes"
