@@ -1,3 +1,4 @@
+from typing import TYPE_CHECKING
 from .client import SoundsClient
 from .constants import URLs, ImageType, ContainerType, PlayStatus
 from .exceptions import (
@@ -17,9 +18,22 @@ from .models import (
     PlayableItem,
     PromoItem,
     RadioClip,
+    Container,
+    LiveStation,
+    Category,
+    Collection,
+    Podcast,
+    PodcastEpisode,
+    RadioSeries,
+    RadioShow,
+    RecommendedMenuItem,
+    Schedule,
+    StationSearchResult,
 )
 from .personal import MenuRecommendationOptions
 
+if TYPE_CHECKING:
+    from .constants import SoundsTypes
 
 __all__ = [
     "SoundsClient",
@@ -42,4 +56,7 @@ __all__ = [
     "MenuRecommendationOptions",
     "PlayStatus",
     "NotFoundError",
+    "Container",
+    "LiveStation",
+    "SoundsTypes",
 ]
