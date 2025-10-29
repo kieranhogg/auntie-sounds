@@ -1,6 +1,6 @@
 [project]
 name = "auntie-sounds"
-version = "1.0.0-beta4"
+version = "1.0.0"
 description = "A library for interacting with BBC Radio stations and streams"
 readme = "README.md"
 requires-python = ">=3.11"
