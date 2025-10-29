@@ -183,7 +183,7 @@ class AuthService(Base):
         self.logger.debug(f"Found username form target: {username_form_action}")
         if not username_form_action:
             raise RuntimeError("Could not find BBC sign-in form URL")
-        url = f"{URLs.LOGIN_BASE.value}{username_form_action}"
+        url = f"{URLs.LOGIN_BASE.value}/{username_form_action}"
         return url
 
     async def _submit_username(self, url: str, username: str) -> str:
@@ -205,7 +205,7 @@ class AuthService(Base):
         password_form_action = await self._get_form_action(html_contents)
         if not password_form_action:
             raise LoginFailedError("Could not find BBC password form URL")
-        password_url = f"{URLs.LOGIN_BASE.value}{password_form_action}"
+        password_url = f"{URLs.LOGIN_BASE.value}/{password_form_action}"
         self.logger.debug(f"Found password form target: {password_url}")
 
         return password_url
