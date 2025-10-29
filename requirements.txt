@@ -1,3 +1,4 @@
+appdirs=1.4.4
 aiohappyeyeballs==2.6.1
 aiohttp==3.12.13
 aiohttp[speedups]==3.12.13
