@@ -1,15 +1,18 @@
-from functools import wraps
+from enum import Enum
 import os
+from functools import wraps
+from pathlib import Path
 from typing import Literal, Optional
-from aiohttp import ClientResponse
-from bs4 import BeautifulSoup
 
+from appdirs import AppDirs
+from bs4 import BeautifulSoup
 from yarl import URL
 
 from . import constants
 from .base import Base
 from .constants import COOKIE_ID, VERBOSE_LOG_LEVEL, URLs
 from .exceptions import LoginFailedError, UnauthorisedError
+
 
 # Some common auth errors to check for
 GENERIC_ERRORS = [
@@ -43,6 +46,12 @@ LOGIN_ERRORS = [
     "An unknown error has occurred.",
 ] + GENERIC_ERRORS
 
+def _get_data_dir():
+    dir = AppDirs(appname="auntie-sounds", version="1").user_data_dir
+    Path(dir).mkdir(parents=True, exist_ok=True)
+    return dir
+
+COOKIE_FILE = Path(_get_data_dir(), "sounds_jar")
 
 def login_required(method):
     """Use to catch expired sessions and reauthenticate before trying again"""
@@ -55,19 +64,20 @@ def login_required(method):
             self.logger.debug(f"Ran method {method}")
         except UnauthorisedError:
             self.logger.debug("Hit error")
-            await self.auth.renew_session()
-            # self.authenticate(self.username, self.password)
-            self.logger.debug(f"Logged in: {self.auth.is_logged_in}")
-            method_output = await method(self, *method_args, **method_kwargs)
-            self.logger.debug("Rewned session and ran method")
+            if Path.exists(COOKIE_FILE):
+                # We have a session, so renew
+                await self.auth.renew_session()
+                self.logger.debug(f"Logged in: {self.auth.is_logged_in}")
+                method_output = await method(self, *method_args, **method_kwargs)
+                self.logger.debug("Rewned session and ran method")
+            else:
+                raise
         return method_output
 
     return _impl
 
 
 class AuthService(Base):
-    COOKIE_FILE = "./.sounds_jar"
-
     def __init__(self, *args, **kwargs):
         self.user_info = None
         self.debug_login = False
@@ -83,8 +93,7 @@ class AuthService(Base):
             self.logger.info("Saving login pages to file as requested")
 
         try:
-            self._session._cookie_jar.load(self.COOKIE_FILE)  # type: ignore
-            # self._session.cookie_jar.update_cookies(open(self.COOKIE_FILE, "r").read())
+            self._session._cookie_jar.load(COOKIE_FILE)  # type: ignore
         except FileNotFoundError:
             pass
 
@@ -100,7 +109,7 @@ class AuthService(Base):
     @property
     async def is_uk_listener(self):
         if not self.user_info:
-            self.user_info = await self._get_json(URLs.USER_INFO)
+            self.user_info = await self._get_json(url_template=URLs.USER_INFO)
         return self.user_info["X-Ip_is_uk_combined"] == "yes"
 
     async def _build_headers(self, referer: Optional[str] = None) -> dict:
@@ -108,7 +117,7 @@ class AuthService(Base):
         base_headers = {
             "Accept-Language": "en-GB,en;q=0.9",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
-            "Origin": URLs.LOGIN_BASE,
+            "Origin": URLs.LOGIN_BASE.value,
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
             "Cache-Control": "max-age=0",
         }
@@ -164,8 +173,8 @@ class AuthService(Base):
 
         # Get the initial login page form target
         html_contents = await self._get_html(
-            URLs.LOGIN_START,
-            "GET",
+            url_template=URLs.LOGIN_START,
+            method="GET",
             headers=await self._build_headers(),
         )
         self._save_file_if_needed(html_contents, "login_form.html")
@@ -174,7 +183,7 @@ class AuthService(Base):
         self.logger.debug(f"Found username form target: {username_form_action}")
         if not username_form_action:
             raise RuntimeError("Could not find BBC sign-in form URL")
-        url = f"{URLs.LOGIN_BASE}{username_form_action}"
+        url = f"{URLs.LOGIN_BASE.value}{username_form_action}"
         return url
 
     async def _submit_username(self, url: str, username: str) -> str:
@@ -182,10 +191,10 @@ class AuthService(Base):
 
         """Post username to get to the next login step"""
         html_contents = await self._get_html(
-            url,
-            "POST",
+            url=url,
+            method="POST",
             data={"username": username},
-            headers=await self._build_headers(referer=URLs.LOGIN_START),
+            headers=await self._build_headers(referer=URLs.LOGIN_START.value),
         )
         self._save_file_if_needed(html_contents, "password_form.html")
         found_error = self._check_for_login_errors(html_contents, stage="login")
@@ -196,7 +205,7 @@ class AuthService(Base):
         password_form_action = await self._get_form_action(html_contents)
         if not password_form_action:
             raise LoginFailedError("Could not find BBC password form URL")
-        password_url = f"{URLs.LOGIN_BASE}{password_form_action}"
+        password_url = f"{URLs.LOGIN_BASE.value}{password_form_action}"
         self.logger.debug(f"Found password form target: {password_url}")
 
         return password_url
@@ -207,8 +216,8 @@ class AuthService(Base):
         self.logger.log(VERBOSE_LOG_LEVEL, "_do_login()")
         """Send both username and password to authenticate."""
         resp = await self._make_request(
-            "POST",
-            url,
+            method="POST",
+            url=url,
             data={"username": username, "password": password},
             headers=await self._build_headers(referer=referrer_url),
             allow_redirects=True,
@@ -229,12 +238,12 @@ class AuthService(Base):
 
     def _save_file_if_needed(self, html: str | bytes, filename: str):
         if self.debug_login:
-            with open(filename, "w") as page:
+            with open(Path(_get_data_dir(), filename), "w") as page:
                 html = BeautifulSoup(html, features="html.parser").prettify()
                 page.write(str(html))
 
     def save_cookies_to_disk(self):
-        return self._session._cookie_jar.save(self.COOKIE_FILE)
+        return self._session._cookie_jar.save(COOKIE_FILE) # pyright: ignore[reportAttributeAccessIssue]
 
     def _check_for_login_errors(
         self, html: str, stage: Literal["email"] | Literal["login"]
@@ -261,7 +270,7 @@ class AuthService(Base):
 
     def logout(self):
         try:
-            os.remove(self.COOKIE_FILE)
+            os.remove(COOKIE_FILE)
             self._session._cookie_jar.clear()
         except Exception:
             pass
