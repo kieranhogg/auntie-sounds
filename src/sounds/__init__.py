@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING
+
 from .client import SoundsClient
-from .constants import URLs, ImageType, ContainerType, PlayStatus
+from .constants import ContainerType, ImageType, PlayStatus, URLs
 from .exceptions import (
     APIResponseError,
     InvalidFormatError,
@@ -9,33 +10,38 @@ from .exceptions import (
     NotFoundError,
 )
 from .models import (
-    ScheduleItem,
-    Segment,
-    Station,
-    Stream,
+    Category,
+    Collection,
+    Container,
+    LiveStation,
     Menu,
     MenuItem,
     PlayableItem,
-    PromoItem,
-    RadioClip,
-    Container,
-    LiveStation,
-    Category,
-    Collection,
     Podcast,
     PodcastEpisode,
+    PromoItem,
+    RadioClip,
     RadioSeries,
     RadioShow,
     RecommendedMenuItem,
     Schedule,
+    ScheduleItem,
+    Segment,
+    Station,
     StationSearchResult,
+    Stream,
 )
 from .personal import MenuRecommendationOptions
 
 if TYPE_CHECKING:
-    from .constants import SoundsTypes
+    from .models import SoundsTypes
 
 __all__ = [
+    "Category",
+    "Container",
+    "Collection",
+    "Podcast",
+    "PodcastEpisode",
     "SoundsClient",
     "URLs",
     "ImageType",
@@ -59,4 +65,9 @@ __all__ = [
     "Container",
     "LiveStation",
     "SoundsTypes",
+    "RadioSeries",
+    "RadioShow",
+    "RecommendedMenuItem",
+    "Schedule",
+    "StationSearchResult",
 ]
