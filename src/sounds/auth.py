@@ -1,4 +1,3 @@
-from enum import Enum
 import os
 from functools import wraps
 from pathlib import Path
@@ -12,7 +11,6 @@ from . import constants
 from .base import Base
 from .constants import COOKIE_ID, VERBOSE_LOG_LEVEL, URLs
 from .exceptions import LoginFailedError, UnauthorisedError
-
 
 # Some common auth errors to check for
 GENERIC_ERRORS = [
@@ -46,12 +44,15 @@ LOGIN_ERRORS = [
     "An unknown error has occurred.",
 ] + GENERIC_ERRORS
 
+
 def _get_data_dir():
     dir = AppDirs(appname="auntie-sounds", version="1").user_data_dir
     Path(dir).mkdir(parents=True, exist_ok=True)
     return dir
 
+
 COOKIE_FILE = Path(_get_data_dir(), "sounds_jar")
+
 
 def login_required(method):
     """Use to catch expired sessions and reauthenticate before trying again"""
@@ -243,7 +244,7 @@ class AuthService(Base):
                 page.write(str(html))
 
     def save_cookies_to_disk(self):
-        return self._session._cookie_jar.save(COOKIE_FILE) # pyright: ignore[reportAttributeAccessIssue]
+        return self._session._cookie_jar.save(COOKIE_FILE)  # pyright: ignore[reportAttributeAccessIssue]
 
     def _check_for_login_errors(
         self, html: str, stage: Literal["email"] | Literal["login"]
