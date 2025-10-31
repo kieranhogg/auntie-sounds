@@ -1,19 +1,19 @@
-from enum import Enum
 import json
-import os
-import aiohttp
 import logging
+import os
 from abc import ABC
 from typing import Literal, Optional
 
+import aiohttp
+
 from .constants import FIXTURES_FOLDER, Fixtures, SignedInURLs, URLs
 from .exceptions import (
+    APIResponseError,
     InvalidArgumentsError,
     NetworkError,
     NotFoundError,
     SoundsException,
     UnauthorisedError,
-    APIResponseError,
 )
 
 
@@ -77,7 +77,7 @@ class Base(ABC):
             return url_template.value.format(**url_args)
         elif url_template:
             return url_template.value
-        
+
         raise InvalidArgumentsError("One of url or url_template must be set")
 
     async def _get_json(

@@ -74,9 +74,7 @@ class URLs(Enum):
     SEGMENTS = "https://rms.api.bbc.co.uk/v2/versions/{vpid}/segments"
 
     # Episodes, programmes, series etc.
-    PLAYABLE_ITEMS_CONTAINER = (
-        "https://rms.api.bbc.co.uk/v2/programmes/playable?container={pid}&sort=sequential"
-    )
+    PLAYABLE_ITEMS_CONTAINER = "https://rms.api.bbc.co.uk/v2/programmes/playable?container={pid}&sort=sequential"
     CATEGORY_LATEST = "https://rms.api.bbc.co.uk/v2/programmes/playable?category={category}&sort=-release_date&experience=domestic"
     CATEGORY_POPULAR = "https://rms.api.bbc.co.uk/v2/programmes/playable?category={category}&sort=popular&experience=domestic"
     BROADCAST = "https://rms.api.bbc.co.uk/v2/broadcasts/{pid}"
