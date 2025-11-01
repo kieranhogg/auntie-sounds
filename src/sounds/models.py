@@ -15,24 +15,31 @@ if TYPE_CHECKING:
 
 
 type SoundsTypes = (
-    models.Category
+    models.Broadcast
+    | models.Category
+    | models.CategoryItemContainer
+    | models.Container
     | models.Collection
     | models.LiveStation
     | models.MenuItem
+    | models.Network
     | models.Podcast
     | models.PodcastEpisode
     | models.RadioClip
     | models.RadioSeries
     | models.RadioShow
     | models.RecommendedMenuItem
+    | models.Segment
     | models.Schedule
     | models.ScheduleItem
     | models.Station
     | models.StationSearchResult
 )
 
+
 def _parse_datetime(value):
     return dt.fromisoformat(value) if isinstance(value, str) else value
+
 
 @dataclass(kw_only=True)
 class BaseObject:
@@ -127,7 +134,6 @@ class PlayableItem(BaseObject):
     def __post_init__(self):
         self.start = _parse_datetime(self.start)
         self.end = _parse_datetime(self.end)
-       
 
     @property
     def item_id(self):
@@ -135,7 +141,7 @@ class PlayableItem(BaseObject):
             return self.urn.rsplit(":", 1)[1]
         else:
             return self.pid
-  
+
 
 @dataclass(kw_only=True)
 class TimedContent:
@@ -143,10 +149,10 @@ class TimedContent:
 
     def is_live(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo) -> bool:
         now = dt.now(tz=timezone)
-        return self.start <= now < self.end # type: ignore
+        return self.start <= now < self.end  # type: ignore
 
-    def has_already_aired(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo ) -> bool:
-        return dt.now(tz=timezone) > self.end # type: ignore
+    def has_already_aired(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo) -> bool:
+        return dt.now(tz=timezone) > self.end  # type: ignore
 
 
 @dataclass(kw_only=True)
@@ -193,14 +199,13 @@ class ScheduleItem(PlayableItem):
         self.start = _parse_datetime(self.start)
         self.end = _parse_datetime(self.end)
 
-
     def is_live(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo) -> bool:
         if self.start and self.end:
             now = dt.now(tz=timezone)
             return self.start <= now < self.end
         return False
 
-    def has_already_aired(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo ) -> bool:
+    def has_already_aired(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo) -> bool:
         if self.end:
             return dt.now(tz=timezone) > self.end
         return True
@@ -218,6 +223,7 @@ class Station(Container):
 @dataclass(kw_only=True)
 class StationSearchResult:
     """Represents a search result showing a station. Keys are different enough to warrant a separate model"""
+
     id: str
     type: str
     urn: str
@@ -243,9 +249,9 @@ class StationSearchResult:
         else:
             return self.id
 
+
 @dataclass(kw_only=True)
 class LiveProgramme(PlayableItem):
-
     def __post_init__(self):
         if self.image_url:
             self.image_url = image_from_recipe(self.image_url, size=640)
@@ -259,7 +265,6 @@ class LiveStation(PlayableItem):
     def __post_init__(self):
         if self.image_url:
             self.image_url = image_from_recipe(self.image_url, size=640)
-       
 
     @property
     def item_id(self):
@@ -288,7 +293,6 @@ class Stream(TimedContent):
     def can_seek(self) -> bool:
         """Indicates if the stream supports seeking."""
         return False  # Always False for now
-
 
 
 @dataclass(kw_only=True)
@@ -341,7 +345,7 @@ class RadioShow(PlayableItem, TimedContent):
 
     def __str__(self):
         return pformat(self)
-    
+
     @property
     def item_id(self):
         return self.pid
@@ -475,13 +479,13 @@ class PromoItem(Container):
 
 @dataclass(kw_only=True)
 class SearchResults:
-    stations: List[LiveStation]
+    stations: List[LiveStation | StationSearchResult]
     shows: List[Podcast | RadioShow]
     episodes: List[PodcastEpisode | RadioClip | RadioShow]
 
 
 def model_factory(object):
-    from .constants import ContainerType, ItemType, ItemURN, IDType
+    from .constants import ContainerType, IDType, ItemType, ItemURN
 
     schema_type = None
     new_type = None
