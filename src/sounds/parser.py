@@ -1,26 +1,36 @@
+from collections import namedtuple
 from dataclasses import fields
-from typing import List
+from typing import List, Sequence, Union
 
-from .utils import network_logo
 from .models import (
+    CategoryItemContainer,
     Container,
+    LiveStation,
     Menu,
     MenuItem,
     Network,
     PlayableItem,
+    Podcast,
+    PodcastEpisode,
+    RadioClip,
     RadioShow,
     RecommendedMenuItem,
-    Schedule,
     SearchResults,
-    Segment,
+    SoundsTypes,
+    StationSearchResult,
     model_factory,
 )
+from .utils import network_logo
 
-from collections import namedtuple
+ParseResult = Union[SoundsTypes, Sequence["ParseResult"], None]
 
 
-def parse_node(node):
-    NestedObject = namedtuple("NestedObjects", ["source_key", "replacement_model"])
+def parse_node(node) -> SoundsTypes | List[SoundsTypes] | None:
+    """
+    Recursively parses a node. A node with a 'data' key is a container; otherwise, it's a playable item.
+    """
+
+    NestedObject = namedtuple("NestedObject", ["source_key", "replacement_model"])
     nested_objects = [
         NestedObject("network", Network),
         NestedObject("container", Container),
@@ -29,21 +39,30 @@ def parse_node(node):
         NestedObject("now", Network),
     ]
     ignored_objects = ["activities"]
-    """
-    Recursively parses a node. A node with a 'data' key is a container; otherwise, it's a playable item.
-    """
+
     if isinstance(node, list):
-        return [parse_node(item) for item in node]
+        # While we can have list of nodes and nodes within nodes,
+        # we don't have lists of lists (or if we do we handle them in other functions)
+        results = []
+        for item in node:
+            if item is not None:
+                parsed = parse_node(item)
+                if isinstance(parsed, list):
+                    results.extend(parsed)
+                elif parsed is not None:
+                    results.append(parsed)
+        return results if results else None
 
     if "data" in node:
         container = model_factory(node)
         if not container:
-            print("Warning, no container for node")
-            return
-        try:
-            container.sub_items = parse_node(node["data"])
-        except (ValueError, AttributeError):
-            raise
+            return None
+
+        if isinstance(container, (Container, CategoryItemContainer, Menu)):
+            sub_items = parse_node(node["data"])
+            if isinstance(sub_items, list):
+                container.sub_items = sub_items
+
         return container
 
     else:
@@ -65,25 +84,23 @@ def parse_node(node):
             except AttributeError:
                 raise
         # Post-processing
-        if (
-            playable_item
-            and hasattr(playable_item, "urn")
-            and hasattr(playable_item, "pid")
-            and (playable_item.urn is not None and playable_item.pid is None)
-        ):
-            playable_item.pid = playable_item.urn.split(":")[-1]
-        if playable_item and getattr(playable_item, "network", None):
-            playable_item.network.logo_url = network_logo(
-                playable_item.network.logo_url
-            )
+        if isinstance(playable_item, PlayableItem):
+            if playable_item is not None and (playable_item.urn and playable_item.pid):
+                playable_item.pid = playable_item.urn.split(":")[-1]
+
+            if playable_item.network and playable_item.network.logo_url:
+                playable_item.network.logo_url = network_logo(
+                    playable_item.network.logo_url
+                )
         return playable_item
 
 
-def parse_menu(json_data):
+def parse_menu(json_data) -> Menu:
     menu = Menu(sub_items=[])
     if "data" in json_data:
+        items = [parse_node(item) for item in json_data["data"] if item is not None]
         menu.sub_items = [
-            parse_node(item) for item in json_data["data"] if item is not None
+            sub_menu for sub_menu in items if isinstance(sub_menu, MenuItem)
         ]
 
     # Post-process any menu items containing recommendations to make them recommendations
@@ -99,6 +116,7 @@ def parse_menu(json_data):
             ):
                 if (
                     menu_item.sub_items[0]
+                    and hasattr(menu_item.sub_items[0], "recommendation")
                     and menu_item.sub_items[0].recommendation is not None
                 ):
                     data = {}
@@ -107,7 +125,8 @@ def parse_menu(json_data):
 
                     new_sub_menu.append(RecommendedMenuItem(**data))
                     continue
-            new_sub_menu.append(menu_item)
+            if isinstance(menu_item, RecommendedMenuItem):
+                new_sub_menu.append(menu_item)
     menu.sub_items = new_sub_menu
     return menu
 
@@ -117,7 +136,9 @@ def parse_schedule(json_data):
     return schedule
 
 
-def parse_container(json_data) -> List[PlayableItem] | List[Segment] | None:
+def parse_container(
+    json_data,
+) -> SoundsTypes | List[SoundsTypes] | None:
     if "data" in json_data:
         if (
             len(json_data["data"]) == 2
@@ -136,16 +157,39 @@ def parse_container(json_data) -> List[PlayableItem] | List[Segment] | None:
     return container
 
 
-def parse_search(json_data):
-    stations = []
-    shows = []
-    episodes = []
+def parse_search(json_data) -> SearchResults:
+    stations: List[LiveStation | StationSearchResult] = []
+    shows: List[Podcast | RadioShow] = []
+    episodes: List[PodcastEpisode | RadioShow | RadioClip] = []
     for results_set in json_data["data"]:
         if results_set["id"] == "live_search":
-            stations = parse_container(results_set)
+            station_results = parse_container(results_set)
+            if isinstance(station_results, list):
+                stations = [
+                    station
+                    for station in station_results
+                    if station
+                    if isinstance(station, (LiveStation, StationSearchResult))
+                ]
+            else:
+                stations = []
         elif results_set["id"] == "container_search":
-            shows = parse_container(results_set)
+            show_results = parse_container(results_set)
+            if isinstance(show_results, list):
+                shows = [
+                    show
+                    for show in show_results
+                    if isinstance(show, (Podcast, RadioShow))
+                ]
         elif results_set["id"] == "playable_search":
-            episodes = parse_container(results_set)
+            episode_results = parse_container(results_set)
+            if isinstance(episode_results, list):
+                episodes = [
+                    episode
+                    for episode in episode_results
+                    if isinstance(episode, (PodcastEpisode, RadioShow, RadioClip))
+                ]
+            else:
+                episodes = []
     results = SearchResults(stations=stations, shows=shows, episodes=episodes)
     return results
