@@ -1,19 +1,16 @@
 import itertools
-from typing import List, Optional
-
-from .parser import parse_container, parse_node
+from typing import List, Literal, Optional
 
 from . import constants
 from .base import Base
 from .constants import URLs
-from .models import LiveStation, Network, Station, Stream
+from .models import LiveStation, Network
+from .parser import parse_container, parse_node
 from .schedules import ScheduleService
 from .streaming import StreamingService
-from .utils import network_logo
 
 
 class StationService(Base):
-
     def __init__(
         self,
         streaming_service: StreamingService,
@@ -27,14 +24,18 @@ class StationService(Base):
     async def get_stations_detailed(self) -> Optional[List[Network]]:
         json_resp = await self._get_json(url_template=URLs.NETWORKS_LIST)
         stations = parse_container(json_resp)
-        return stations
+        if isinstance(stations, list):
+            station_list: List[Network] = [
+                station for station in stations if isinstance(station, Network)
+            ]
+            return station_list
+        return []
 
     async def get_stations(
         self,
         include_local: bool = False,
         include_streams: bool = False,
         include_schedules: bool = False,
-        use_station_logo: bool = True
     ) -> list[LiveStation]:
         """
         Gets the list of all stations
@@ -64,27 +65,35 @@ class StationService(Base):
         else:
             # Just get the national data list
             stations = json_resp["data"][0]["data"]
-        all_stations = parse_node(stations)
+        stations_list = parse_node(stations)
 
-        if include_streams:
-            for station in all_stations:
-                station.stream = await self.streams.get_live_stream(station)
+        if isinstance(stations_list, list):
+            all_stations: List[LiveStation] = [
+                station for station in stations_list if isinstance(station, LiveStation)
+            ]
 
-        if include_schedules:
-            for station in all_stations:
-                station.schedule = await self.schedules.get_schedule(station.id)
+            if include_streams and isinstance(stations_list, list):
+                for station in all_stations:
+                    station.stream = await self.streams.get_live_stream(station.id)
 
-        return all_stations
+            if include_schedules and isinstance(stations_list, list):
+                for station in all_stations:
+                    station.schedule = await self.schedules.get_schedule(station.id)
+            return all_stations
+        return []
 
     async def get_local_stations(self) -> List[LiveStation]:
         json_resp = await self._get_json(url_template=URLs.STATIONS)
         self.logger.log(constants.VERBOSE_LOG_LEVEL, "Getting local station list...")
         self.logger.log(constants.VERBOSE_LOG_LEVEL, json_resp)
-        local_stations = json_resp["data"][1]["data"]
-        stations = [
-            parse_node(s) for s in local_stations if s and isinstance(s, LiveStation)
+        station_data = json_resp["data"][1]["data"]
+        station_list = [parse_node(s) for s in station_data]
+        local_stations: List[LiveStation] = [
+            station
+            for station in station_list
+            if station is not None and isinstance(station, LiveStation)
         ]
-        return stations
+        return local_stations
 
     async def get_station_schedule(
         self,
@@ -119,20 +128,22 @@ class StationService(Base):
         self,
         station_id: str,
         include_stream: bool = False,
+        stream_format: Literal["hls"] | Literal["dash"] = "hls",
         include_schedule: bool = False,
         date: str | None = None,
     ) -> LiveStation | None:
-
         stations = await self.get_stations()
         # station id is almost always the same as pid but not quite, e.g. bbc_radio_fourfm and bbc_radio_four
         station = next(
             (s for s in stations if s.item_id == station_id),
             None,
         )
-        
+
         if station:
             if include_stream:
-                stream = await self.streams.get_live_stream(station_id)
+                stream = await self.streams.get_live_stream(
+                    station_id=station_id, stream_format=stream_format
+                )
                 if stream:
                     station.stream = stream
 
