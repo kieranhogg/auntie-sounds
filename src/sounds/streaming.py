@@ -1,19 +1,13 @@
-import json
-import re
-from datetime import datetime as dt, timedelta
-from typing import TYPE_CHECKING, List, Optional, cast
-
+from typing import TYPE_CHECKING, List, Literal, Optional, cast
 
 from . import constants
 from .auth import AuthService
 from .base import Base
 from .constants import PlayStatus, SignedInURLs, URLs
 from .exceptions import APIResponseError, InvalidFormatError, NotFoundError
-from .parser import parse_container, parse_menu, parse_node, parse_search
 from .models import (
     Category,
     Collection,
-    LiveProgramme,
     PlayableItem,
     Podcast,
     PodcastEpisode,
@@ -22,17 +16,15 @@ from .models import (
     RadioShow,
     SearchResults,
     Segment,
-    Stream,
 )
+from .parser import parse_container, parse_menu, parse_node, parse_search
 from .schedules import ScheduleService
-from .utils import image_from_recipe
 
 if TYPE_CHECKING:
-    from .constants import SoundsTypes
+    from .models import SoundsTypes
 
 
 class StreamingService(Base):
-
     def __init__(
         self,
         auth_service: AuthService,
@@ -92,10 +84,16 @@ class StreamingService(Base):
             raise NotFoundError(f"Couldn't get podcast - urn: {urn}, pid: {pid}")
         return podcast
 
-    async def get_podcast_episodes(self, pid) -> Optional[List[PodcastEpisode | RadioShow | RadioClip]]:
+    async def get_podcast_episodes(
+        self, pid
+    ) -> Optional[List[PodcastEpisode | RadioShow | RadioClip]]:
         podcast_container = await self.get_pid_container(pid)
         if podcast_container and type(podcast_container) is list:
-            return [episode for episode in podcast_container if isinstance(episode, (PodcastEpisode, RadioShow, RadioClip))]
+            return [
+                episode
+                for episode in podcast_container
+                if isinstance(episode, (PodcastEpisode, RadioShow, RadioClip))
+            ]
         return []
 
     async def get_podcast_episode(self, pid, include_stream=False) -> PodcastEpisode:
@@ -116,10 +114,12 @@ class StreamingService(Base):
 
     async def get_radio_show(self, pid, include_stream=False) -> RadioShow:
         show = await self.get_by_pid(pid=pid, include_stream=include_stream)
+        if not isinstance(show, RadioShow):
+            raise APIResponseError(f"Item requested not a radio show! {str(show)}")
         return show
 
     async def get_live_stream(
-        self, station_id: str, stream_format="hls"
+        self, station_id: str, stream_format: Literal["hls"] | Literal["dash"] = "hls"
     ) -> Optional[str]:
         jwt_token = await self.get_jwt_token(station_id)
 
@@ -127,11 +127,12 @@ class StreamingService(Base):
             url_template=URLs.MEDIASET,
             url_args={"station_id": station_id, "jwt_auth_token": jwt_token},
         )
-
+        stream = None
         try:
-            stream = self._get_best_stream(
-                json_resp["media"][0]["connection"], prefer_type=stream_format
-            )
+            streams = json_resp["media"][0]["connection"]
+            self.logger.debug("Found streams:")
+            self.logger.debug(str(streams))
+            stream = self.get_best_stream(streams, prefer_type=stream_format)
             self.logger.debug(f"Found stream: {stream}")
         except (StopIteration, KeyError):
             raise RuntimeError("No valid stream found")
@@ -140,50 +141,9 @@ class StreamingService(Base):
 
         return stream
 
-    # async def get_live_stream(
-    #     self, station_id: str, stream_format="hls", logo_size=800
-    # ) -> Optional[Stream]:
-    #     jwt_token = await self.get_jwt_token(station_id)
-
-    #     json_resp = await self._get_json(
-    #         url_template=URLs.MEDIASET,
-    #         url_args={"station_id": station_id, "jwt_auth_token": jwt_token},
-    #     )
-
-    #     try:
-    #         stream = self._get_best_stream(
-    #             json_resp["media"][0]["connection"], prefer_type=stream_format
-    #         )
-    #         self.logger.debug(f"Found stream: {stream}")
-    #     except (StopIteration, KeyError):
-    #         raise RuntimeError("No valid stream found")
-    #     if not stream:
-    #         return None
-
-    #     programme_details = await self.schedule_service.get_schedule(station_id)
-
-    #     if not programme_details:
-    #         return None
-
-    #     # now = dt.now()
-    #     # start = now - timedelta(seconds=programme_details.progress.get("value"))
-    #     # end = start + timedelta(seconds=programme_details.duration.get("value"))
-    #     # print(now)
-    #     # print(start)
-    #     # print(end)
-
-    #     return Stream(
-    #         id=programme_details.id,
-    #         start=programme_details.start,
-    #         end=programme_details.end,
-    #         duration=programme_details.duration.get("value"),
-    #         uri=stream,
-    #         image_url=programme_details.image_url,
-    #         show_title=programme_details.titles["primary"],
-    #         show_description=programme_details.titles["secondary"],
-    #     )
-
-    def _get_best_stream(self, streams: dict, prefer_type="hls") -> Optional[str]:
+    def get_best_stream(
+        self, streams: dict, prefer_type: Literal["hls"] | Literal["dash"] = "hls"
+    ) -> Optional[str]:
         """Looks for the first valid stream with the requested format."""
         self.logger.log(constants.VERBOSE_LOG_LEVEL, "Looking for best stream in:")
         self.logger.log(constants.VERBOSE_LOG_LEVEL, streams)
@@ -200,8 +160,7 @@ class StreamingService(Base):
     async def get_episode_stream(
         self,
         episode_id: str,
-        stream_format="hls",
-        logo_size=800,
+        stream_format: Literal["hls"] | Literal["dash"] = "hls",
     ) -> str | None:
         """
         Gets the stream for a specified episode.
@@ -214,33 +173,45 @@ class StreamingService(Base):
             url_template=URLs.EPISODE_MEDIASET, url_args={"episode_id": episode_id}
         )
 
-        # jwt_token = await self.get_jwt_token(station.id)
         stream = None
         try:
-            stream = self._get_best_stream(
-                json_resp["media"][0]["connection"], prefer_type=stream_format
-            )
+            streams = json_resp["media"][0]["connection"]
+            self.logger.debug("Found streams:")
+            self.logger.debug(str(streams))
+            stream = self.get_best_stream(streams, prefer_type=stream_format)
             self.logger.debug(f"Found stream: {stream}")
         except (StopIteration, KeyError):
             raise RuntimeError("No valid stream found")
         return stream
 
-    async def get_by_pid(self, pid, include_stream=False) -> "SoundsTypes":
+    async def get_by_pid(
+        self,
+        pid,
+        include_stream=False,
+        stream_format: Literal["hls"] | Literal["dash"] = "hls",
+    ) -> "SoundsTypes":
         self.logger.debug(f"Getting playable item with PID {pid}")
         if self.auth_service.is_logged_in:
-            url_template = SignedInURLs.PID_PLAYABLE
+            json_resp = await self._get_json(
+                url_template=SignedInURLs.PID_PLAYABLE, url_args={"pid": pid}
+            )
         else:
-            url_template = URLs.PID_PLAYABLE
-        json_resp = await self._get_json(
-            url_template=url_template, url_args={"pid": pid}
-        )
+            json_resp = await self._get_json(
+                url_template=URLs.PID_PLAYABLE, url_args={"pid": pid}
+            )
+
         self.logger.debug(json_resp)
         if not json_resp or "id" not in json_resp:
             self.logger.debug(json_resp)
             raise APIResponseError(f"Couldn't get playable item with PID {pid}")
         playable_item = parse_node(json_resp)
+        if not isinstance(playable_item, PlayableItem):
+            raise APIResponseError(f"Couldn't get playable item with PID {pid}")
+
         if include_stream:
-            playable_item.stream = await self.get_episode_stream(playable_item.id)
+            playable_item.stream = await self.get_episode_stream(
+                episode_id=playable_item.id, stream_format=stream_format
+            )
         return playable_item
 
     async def get_pid_container(self, pid) -> List[PlayableItem] | None:
@@ -248,7 +219,12 @@ class StreamingService(Base):
             url_template=URLs.PLAYABLE_ITEMS_CONTAINER, url_args={"pid": pid}
         )
         container = parse_container(json_resp)
-        return container
+        if isinstance(container, list):
+            playable_container: List[PlayableItem] = [
+                item for item in container if isinstance(item, PlayableItem)
+            ]
+            return playable_container
+        return None
 
     async def get_container(self, urn):
         json_resp = await self._get_json(
