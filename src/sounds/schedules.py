@@ -5,14 +5,14 @@ from . import constants
 from .base import Base
 from .constants import URLs
 from .exceptions import InvalidFormatError
-from .parser import parse_container, parse_node, parse_schedule
 from .models import LiveProgramme, Schedule, Segment
+from .parser import parse_container, parse_node, parse_schedule
 
 
 class ScheduleService(Base):
     async def get_schedule(
-        self, station_id: str, date: str | None = None, image_size=320
-    ) -> Schedule:
+        self, station_id: str, date: str | None = None
+    ) -> Schedule | None:
         url_template = URLs.SCHEDULE
         if date:
             url_template = URLs.SCHEDULE_DATE
@@ -25,7 +25,8 @@ class ScheduleService(Base):
         json_resp = await self._get_json(
             url_template=url_template, url_args={"station_id": station_id, "date": date}
         )
-        return parse_schedule(json_resp)
+        schedule = parse_schedule(json_resp)
+        return schedule if isinstance(schedule, Schedule) else None
 
     async def current_programme(self, station_id: str) -> Optional[LiveProgramme]:
         json_resp = await self._get_json(url_template=constants.URLs.STATIONS)
@@ -49,7 +50,10 @@ class ScheduleService(Base):
             url_template=URLs.NOW_PLAYING,
             url_args={"station_id": station_id, "limit": results},
         )
-        return parse_container(json_resp)
+        segments = parse_container(json_resp)
+        if isinstance(segments, list):
+            return [segment for segment in segments if isinstance(segment, Segment)]
+        return []
 
     async def currently_playing_song(
         self, station_id, image_size=450
