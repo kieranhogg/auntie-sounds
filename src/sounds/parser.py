@@ -125,8 +125,8 @@ def parse_menu(json_data) -> Menu:
 
                     new_sub_menu.append(RecommendedMenuItem(**data))
                     continue
-            if isinstance(menu_item, RecommendedMenuItem):
-                new_sub_menu.append(menu_item)
+                if isinstance(menu_item, MenuItem):
+                    new_sub_menu.append(menu_item)
     menu.sub_items = new_sub_menu
     return menu
 
