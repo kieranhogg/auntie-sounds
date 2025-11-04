@@ -1,11 +1,11 @@
 from enum import Enum
 
-from .models import Menu, RecommendedMenuItem
-from .parser import parse_menu, parse_container
 from .auth import AuthService, login_required
 from .base import Base
-from .constants import URLs, SignedInURLs
-from .exceptions import APIResponseError, UnauthorisedError
+from .constants import SignedInURLs, URLs
+from .exceptions import APIResponseError
+from .models import Menu, RecommendedMenuItem
+from .parser import parse_container, parse_menu
 
 
 class MenuRecommendationOptions(Enum):
@@ -31,7 +31,7 @@ class PersonalService(Base):
         """Gets the main Sounds menu."""
         json_resp = await self._get_json(url_template=URLs.EXPERIENCE_MENU)
         menu = parse_menu(json_resp)
-        if not isinstance(menu, Menu) or not menu or not menu.sub_items:
+        if not isinstance(menu, Menu) or not menu or len(menu.sub_items) == 0:
             raise APIResponseError("Menu not converted correctly")
         if recommendations == MenuRecommendationOptions.EXCLUDE:
             filtered_menu = [
