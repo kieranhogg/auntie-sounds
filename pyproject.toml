@@ -29,3 +29,19 @@ package-dir = "src"
 namespace = true
 module-name = "sounds"
 
+[tool.pytest.ini_options]
+addopts = "--maxfail=1 --cov=sounds"
+pythonpath = [
+  "src"
+]
+
+[dependency-groups]
+dev = [
+    "pytest-cov>=7.0.0",
+    "pytest>=9.0.1",
+]
+
+[tool.coverage.run]
+omit = [
+    "src/sounds/sounds_types.py",
+    ]
