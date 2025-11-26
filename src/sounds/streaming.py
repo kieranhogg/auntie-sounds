@@ -239,12 +239,12 @@ class StreamingService(Base):
         json_resp = await self._get_json(
             url_template=URLs.PLAYLIST, url_args={"pid": pid}
         )
+        self.logger.debug(f"Heartbeat details response: {json_resp}")
         try:
             vpid = json_resp["defaultAvailableVersion"]["smpConfig"]["items"][0]["vpid"]
             item_type = json_resp["statsObject"]["parentPIDType"]
-        except (APIResponseError, KeyError):
-            vpid = None
-            item_type = None
+        except (APIResponseError, KeyError, TypeError):
+            raise APIResponseError(f"Couldn't get heartbeat details for PID {pid}")
         return vpid, item_type
 
     async def update_play_status(
