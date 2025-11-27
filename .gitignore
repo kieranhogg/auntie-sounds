@@ -17,3 +17,4 @@ local
 *.patch
 .env
 .vscode/settings.json
+.idea
