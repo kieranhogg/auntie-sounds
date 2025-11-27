@@ -1,3 +1,7 @@
+v1.1.4
+
+* Fix: Radio 4 uses two different IDs, use the correct one
+
 v1.1.3
 
 * Fix: The API response in `StreamingService.get_heartbeat_details()` could raise an uncaught TypeError
