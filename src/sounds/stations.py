@@ -135,7 +135,7 @@ class StationService(Base):
         stations = await self.get_stations()
         # station id is almost always the same as pid but not quite, e.g. bbc_radio_fourfm and bbc_radio_four
         station = next(
-            (s for s in stations if s.item_id == station_id),
+            (s for s in stations if s.id == station_id),
             None,
         )
 
