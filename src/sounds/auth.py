@@ -9,7 +9,7 @@ from yarl import URL
 
 from . import constants
 from .base import Base
-from .constants import COOKIE_ID, VERBOSE_LOG_LEVEL, URLs
+from .constants import COOKIE_ID, URLs
 from .exceptions import LoginFailedError, UnauthorisedError
 
 # Some common auth errors to check for
@@ -55,7 +55,7 @@ COOKIE_FILE = Path(_get_data_dir(), "sounds_jar")
 
 
 def login_required(method):
-    """Use to catch expired sessions and reauthenticate before trying again"""
+    """Use to catch expired sessions and reauthenticate before trying again."""
 
     @wraps(method)
     async def _impl(self, *method_args, **method_kwargs):
@@ -98,6 +98,11 @@ class AuthService(Base):
         except FileNotFoundError:
             pass
 
+    async def get_user_profile(self) -> dict:
+        if not self.user_info:
+            self.user_info = await self._get_json(url_template=URLs.USER_INFO)
+        return self.user_info
+
     @property
     def is_logged_in(self) -> bool:
         """Checks if we have a valid session"""
@@ -108,10 +113,23 @@ class AuthService(Base):
         )
 
     @property
-    async def is_uk_listener(self):
-        if not self.user_info:
-            self.user_info = await self._get_json(url_template=URLs.USER_INFO)
-        return self.user_info["X-Ip_is_uk_combined"] == "yes"
+    async def listener_country(self) -> Optional[str]:
+        """Return the listener's current country."""
+        if self.user_info:
+            return self.user_info.get("X-Country")
+        return None
+
+    @property
+    async def is_in_uk(self) -> bool:
+        """Listener is in the UK."""
+        return await self.listener_country == "gb"
+
+    @property
+    async def is_uk_listener(self) -> bool:
+        """Listener has a UK-based account and is in the UK."""
+        if self.user_info:
+            return self.user_info["X-Ip_is_uk_combined"] == "yes"
+        return False
 
     async def _build_headers(self, referer: Optional[str] = None) -> dict:
         """Builds the standard headers to send when logging in"""
@@ -135,8 +153,6 @@ class AuthService(Base):
         :rtype: bool
         :raises LoginFailedError: If the login fails for any reason
         :raises UnauthorisedError: If the login is not authorised
-        :raises RuntimeError: If the login form URL cannot be found
-        :raises APIResponseError: If the API response is invalid
         """
         if self.mock_session:
             return True
@@ -155,42 +171,60 @@ class AuthService(Base):
             password=password,
             referrer_url=username_url,
         )
+        self.user_info = await self._get_json(url_template=URLs.USER_INFO)
         return self.is_logged_in
 
     async def _get_form_action(self, html: str) -> Optional[str]:
-        self.logger.log(VERBOSE_LOG_LEVEL, "_get_form_action()")
-
         """Finds the target of a form action from HTML markup"""
         soup = BeautifulSoup(html, "html.parser")
+        forms = soup.find_all("form")
+        if len(forms) > 1:
+            self.logger.debug(
+                f"Found {len(forms)} forms on page, returning the first one"
+            )
         form = soup.find("form")
         if form:
-            self.logger.debug("Found form successfully")
             return str(form.get("action"))  # type: ignore
         else:
             return None
 
     async def _get_login_form(self) -> str:
-        self.logger.log(VERBOSE_LOG_LEVEL, "_get_login_form()")
-
         # Get the initial login page form target
-        html_contents = await self._get_html(
-            url_template=URLs.LOGIN_START,
-            method="GET",
-            headers=await self._build_headers(),
+        url = URLs.LOGIN_START.value
+        self.logger.debug(f"Getting initial login page: {url}")
+        request = await self._make_request(
+            method="GET", url=url, headers=await self._build_headers()
         )
+        if not request.ok:
+            error = f"Failed to get initial login page {url}"
+            self.logger.error(error)
+            raise LoginFailedError(error)
+
+        html_contents = await request.text()
+
+        if len(request.history) > 0:
+            history = ", ".join([str(h.url) for h in request.history])
+            self.logger.debug(f"Login page request was redirected: {history}")
+            url = str(request.history[-1].url)
+            # Ensure we don't get the magic link signin page
+            if "/identifier/signin/" in url:
+                url = url.replace("/identifier/signin/", "")
+
         self._save_file_if_needed(html_contents, "login_form.html")
 
         username_form_action = await self._get_form_action(html_contents)
+        if username_form_action is None:
+            error = f"Didn't get the username form successfully from {url}"
+            self.logger.error(error)
+            raise LoginFailedError(error)
+
         self.logger.debug(f"Found username form target: {username_form_action}")
-        if not username_form_action:
-            raise RuntimeError("Could not find BBC sign-in form URL")
-        url = f"{URLs.LOGIN_BASE.value}/{username_form_action}"
-        return url
+        return f"{URLs.LOGIN_BASE.value}/{username_form_action}"
 
     async def _submit_username(self, url: str, username: str) -> str:
-        self.logger.log(VERBOSE_LOG_LEVEL, "_submit_username()")
-
         """Post username to get to the next login step"""
+        self.logger.debug("Submitting username")
+
         html_contents = await self._get_html(
             url=url,
             method="POST",
@@ -204,18 +238,17 @@ class AuthService(Base):
 
         # Grab the form target for the password page
         password_form_action = await self._get_form_action(html_contents)
-        if not password_form_action:
+        if password_form_action is None:
             raise LoginFailedError("Could not find BBC password form URL")
-        password_url = f"{URLs.LOGIN_BASE.value}/{password_form_action}"
+        password_url = URLs.LOGIN_BASE.value + password_form_action
         self.logger.debug(f"Found password form target: {password_url}")
-
         return password_url
 
     async def _do_login(
         self, url: str, username: str, password: str, referrer_url: str
     ) -> None:
-        self.logger.log(VERBOSE_LOG_LEVEL, "_do_login()")
         """Send both username and password to authenticate."""
+        self.logger.debug("Logging in...")
         resp = await self._make_request(
             method="POST",
             url=url,
@@ -226,7 +259,7 @@ class AuthService(Base):
         response_text = await resp.text()
         self._save_file_if_needed(response_text, "login_response.html")
 
-        if resp.status != 200 or not self.is_logged_in:
+        if not resp.ok or not self.is_logged_in:
             found_error = self._check_for_login_errors(await resp.text(), stage="login")
             error_string = f"BBC sign-in failed: {resp.status}"
             if found_error:
@@ -244,6 +277,7 @@ class AuthService(Base):
                 page.write(str(html))
 
     def save_cookies_to_disk(self):
+        """Saved the cookie jar to disk to persist a session."""
         return self._session._cookie_jar.save(COOKIE_FILE)  # pyright: ignore[reportAttributeAccessIssue]
 
     def _check_for_login_errors(
@@ -266,12 +300,13 @@ class AuthService(Base):
         return None
 
     async def renew_session(self):
+        """Renew a session which has expired, but user is logged in."""
         url = self._build_url(url_template=constants.SignedInURLs.RENEW_SESSION)
         await self._make_request("GET", url)
 
-    def logout(self):
+    async def logout(self):
         try:
             os.remove(COOKIE_FILE)
-            self._session._cookie_jar.clear()
-        except Exception:
+        except FileNotFoundError:
             pass
+        self._session._cookie_jar.clear()
