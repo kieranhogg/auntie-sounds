@@ -1,15 +1,12 @@
-# Read the Docs configuration file
-# See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
-
-# Required
 version: 2
 
-# Set the OS, Python version, and other tools you might need
 build:
-  os: ubuntu-24.04
+  os: "ubuntu-24.04"
   tools:
-    python: "3.13"
+    python: "3.12"
+  commands:
+    - pip install uv
+    - uv run python -m sphinx docs $READTHEDOCS_OUTPUT/html -b html -W
 
-# Build documentation in the "docs/" directory with Sphinx
 sphinx:
-   configuration: docs/conf.py
+  configuration: docs/conf.py
