@@ -7,6 +7,22 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.intersphinx",
+    "sphinx.ext.apidoc",
+]
+apidoc_modules = [
+    {
+        "path": "src/sounds/",
+        "destination": "source/",
+        "exclude_patterns": ["**/test*"],
+        "max_depth": 4,
+        "follow_links": False,
+        "separate_modules": False,
+        "include_private": False,
+        "no_headings": False,
+        "module_first": False,
+        "implicit_namespaces": False,
+        "automodule_options": {"members", "show-inheritance", "undoc-members"},
+    },
 ]
 intersphinx_mapping = {
     "rtd": ("https://docs.readthedocs.io/en/stable/", None),
