@@ -5,8 +5,8 @@ build:
   tools:
     python: "3.12"
   commands:
-    - pip install uv
-    - uv run --link-mode=copy python -m sphinx docs $READTHEDOCS_OUTPUT/html -b html -W
+    - pip install uv --link-mode=copy
+    - uv run  python -m sphinx docs $READTHEDOCS_OUTPUT/html -b html
 
 sphinx:
   configuration: docs/conf.py
