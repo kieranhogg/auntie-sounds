@@ -40,25 +40,46 @@ class Base(ABC):
         self, method: Literal["GET"] | Literal["POST"], url: str, **kwargs
     ) -> aiohttp.ClientResponse:
         """Makes a HTTP request using the shared session and state"""
+        self.logger.debug(f"Making HTTP {method} request to {url}")
+        self.logger.debug(str(kwargs))
         try:
             kwargs.setdefault("timeout", self._timeout)
             kwargs.setdefault("ssl", True)
             kwargs.setdefault("allow_redirects", True)
+            for cookie in self._session.cookie_jar:
+                self.logger.debug(
+                    f"Cookie before: {cookie.key}={cookie.value} (domain={cookie['domain']})"
+                )
             resp = await self._session.request(method, url, **kwargs)
-            if resp.status not in [200, 202]:
+            for cookie in self._session.cookie_jar:
+                self.logger.debug(
+                    f"Cookie after: {cookie.key}={cookie.value} (domain={cookie['domain']})"
+                )
+
+            self.logger.debug(f"Response headers: {resp.headers}")
+            self.logger.debug(f"Response content type: {resp.content_type}")
+            self.logger.debug(f"Response status: {resp.status}")
+            self.logger.debug(f"Response url: {resp.url}")
+            self.logger.debug(resp)
+            self.logger.debug(f"HTTP {method} {url} - Status {resp.status}")
+            if not (200 <= resp.status < 400):  # Allow 2xx and 3xx
                 # Check if we got any errors in the API response
-                json_resp = await resp.json()
-                if "errors" in json_resp.keys():
-                    code = json_resp["errors"][0]["status"]
-                    message = json_resp["errors"][0]["message"]
-                    if code == 401:
-                        raise UnauthorisedError(message)
-                    else:
-                        raise APIResponseError(message)
+                if resp.content_type == "application/json":
+                    json_resp = await resp.json()
+                    if "errors" in json_resp.keys():
+                        code = json_resp["errors"][0]["status"]
+                        message = json_resp["errors"][0]["message"]
+                        if code == 401:
+                            raise UnauthorisedError(message)
+                        else:
+                            raise APIResponseError(message)
             return resp
         except aiohttp.ClientConnectorDNSError as e:
             self.logger.error(f"HTTP request failed: {method} {url} - {e}")
             raise NetworkError(f"Connection failed: {e}")
+        except aiohttp.ContentTypeError as e:
+            self.logger.error(f"HTTP request failed: {method} {url} - {e}")
+            raise SoundsException(f"Invalid response type: {e}")
         except aiohttp.ClientError as e:
             self.logger.error(f"HTTP request failed: {method} {url} - {e}")
             raise SoundsException(f"Request failed: {e}")
@@ -105,7 +126,15 @@ class Base(ABC):
 
         try:
             self.logger.debug(f"Requesting URL {url}")
+            for cookie in self._session.cookie_jar:
+                self.logger.debug(
+                    f"Cookie before: {cookie.key}={cookie.value} (domain={cookie['domain']})"
+                )
             resp = await self._session.request(method="GET", url=url, **kwargs)
+            for cookie in self._session.cookie_jar:
+                self.logger.debug(
+                    f"Cookie after: {cookie.key}={cookie.value} (domain={cookie['domain']})"
+                )
             json_resp = await resp.json()
             # Check if we got any errors in the API response
             if "errors" in json_resp.keys():
@@ -138,10 +167,21 @@ class Base(ABC):
         kwargs.setdefault("ssl", True)
         kwargs.setdefault("allow_redirects", True)
         url = self._build_url(url=url, url_template=url_template, url_args=url_args)
+        self.logger.debug(f"Making HTTP {method} request to {url}")
+        for cookie in self._session.cookie_jar:
+            self.logger.debug(
+                f"Cookie before: {cookie.key}={cookie.value} (domain={cookie['domain']})"
+            )
 
         try:
             resp = await self._session.request(method, url, **kwargs)
+            self.logger.debug(f"Response status: {resp.status}")
+            self.logger.debug(f"Response headers: {resp.headers}")
             resp.raise_for_status()
+            for cookie in self._session.cookie_jar:
+                self.logger.debug(
+                    f"Cookie after: {cookie.key}={cookie.value} (domain={cookie['domain']})"
+                )
             return await resp.text()
         except aiohttp.ClientResponseError as e:
             if e.status == 401:

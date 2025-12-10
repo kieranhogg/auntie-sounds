@@ -10,7 +10,7 @@ from yarl import URL
 from . import constants
 from .base import Base
 from .constants import COOKIE_ID, URLs
-from .exceptions import LoginFailedError, UnauthorisedError
+from .exceptions import LoginFailedError, NotFoundError, UnauthorisedError
 
 # Some common auth errors to check for
 GENERIC_ERRORS = [
@@ -98,34 +98,40 @@ class AuthService(Base):
         except FileNotFoundError:
             pass
 
-    async def get_user_profile(self) -> dict:
-        if not self.user_info:
-            self.user_info = await self._get_json(url_template=URLs.USER_INFO)
-        return self.user_info
+    async def set_user_info(self) -> None:
+        self.user_info = await self._get_json(url_template=URLs.USER_INFO)
 
     @property
     def is_logged_in(self) -> bool:
         """Checks if we have a valid session"""
         if self.mock_session:
             return True
-        return COOKIE_ID in self._session._cookie_jar.filter_cookies(
-            URL(URLs.COOKIE_BASE.value)
+        return (
+            COOKIE_ID
+            in self._session._cookie_jar.filter_cookies(URL(URLs.COOKIE_BASE.value))
+        ) or (
+            COOKIE_ID
+            in self._session._cookie_jar.filter_cookies(
+                URL(URLs.COOKIE_BASE_I18N.value)
+            )
         )
 
     @property
-    async def listener_country(self) -> Optional[str]:
+    def listener_country(self) -> Optional[str]:
         """Return the listener's current country."""
         if self.user_info:
             return self.user_info.get("X-Country")
         return None
 
     @property
-    async def is_in_uk(self) -> bool:
+    def is_in_uk(self) -> bool:
         """Listener is in the UK."""
-        return await self.listener_country == "gb"
+        if self.user_info:
+            return self.user_info.get("X-Country") == "gb"
+        return False
 
     @property
-    async def is_uk_listener(self) -> bool:
+    def is_uk_listener(self) -> bool:
         """Listener has a UK-based account and is in the UK."""
         if self.user_info:
             return self.user_info["X-Ip_is_uk_combined"] == "yes"
@@ -137,7 +143,7 @@ class AuthService(Base):
             "Accept-Language": "en-GB,en;q=0.9",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
             "Origin": URLs.LOGIN_BASE.value,
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+            # "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
             "Cache-Control": "max-age=0",
         }
         if referer:
@@ -156,22 +162,43 @@ class AuthService(Base):
         """
         if self.mock_session:
             return True
+
+        await self.set_user_info()
         self.username = username
         self.password = password
+
         if self.is_logged_in:
             self.logger.info("Existing session found, reusing")
             await self.renew_session()
             return True
 
-        username_url = await self._get_login_form()
-        password_url = await self._submit_username(url=username_url, username=username)
-        await self._do_login(
-            url=password_url,
-            username=username,
-            password=password,
-            referrer_url=username_url,
-        )
-        self.user_info = await self._get_json(url_template=URLs.USER_INFO)
+        if not self.is_uk_listener:
+            self.logger.debug("Using international login flow")
+            # initial_url = self._build_url(url_template=URLs.LOGIN_START_I18N)
+            # initial_url = self._build_url(url_template=URLs.LOGIN_START_I18N)
+            # self.logger.debug(f"Accessing international login start URL: {initial_url}")
+            username_url = await self._get_login_form()
+            password_url = await self._submit_username(
+                url=username_url, username=username
+            )
+            await self._do_login(
+                url=password_url,
+                username=username,
+                password=password,
+                referrer_url=username_url,
+            )
+        else:
+            username_url = await self._get_login_form()
+            password_url = await self._submit_username(
+                url=username_url, username=username
+            )
+            await self._do_login(
+                url=password_url,
+                username=username,
+                password=password,
+                referrer_url=username_url,
+            )
+
         return self.is_logged_in
 
     async def _get_form_action(self, html: str) -> Optional[str]:
@@ -183,18 +210,58 @@ class AuthService(Base):
                 f"Found {len(forms)} forms on page, returning the first one"
             )
         form = soup.find("form")
-        if form:
-            return str(form.get("action"))  # type: ignore
-        else:
-            return None
+        if form is not None:
+            form_action = form.get("action", None)
+            if form_action is not None:
+                return str(form_action)
+        error = "Couldn't get form action"
+        self.logger.error(error)
+        self.logger.debug(forms)
+        raise NotFoundError(error)
 
-    async def _get_login_form(self) -> str:
+    async def _get_login_form(self, url=URLs.LOGIN_START.value) -> str:
         # Get the initial login page form target
-        url = URLs.LOGIN_START.value
         self.logger.debug(f"Getting initial login page: {url}")
         request = await self._make_request(
-            method="GET", url=url, headers=await self._build_headers()
+            method="GET",
+            url=url,
+            headers=await self._build_headers(),
+            allow_redirects=False,
         )
+
+        while request.status in (301, 302, 303, 307, 308):
+            self.logger.debug(
+                f"Redirected with status {request.status} to {request.headers.get('Location')}"
+            )
+            location = request.headers.get("Location")
+            if not location:
+                break
+
+            # Ensure we don't get the magic link signin page
+            if "/identifier/signin?" in location:
+                self.logger.debug("Redirected to magic link signin page, removing")
+                location = location.replace("/identifier/signin?", "?")
+
+            request = await self._make_request(
+                "GET",
+                url=location,
+                headers=await self._build_headers(),
+                allow_redirects=False,
+            )
+
+        self.logger.debug("Response cookies from server:")
+        for cookie in request.cookies.values():
+            self.logger.debug(
+                f"  Set-Cookie: {cookie.key}={cookie.value} (domain={cookie['domain']})"
+            )
+
+        # Log what's actually stored in the jar
+        self.logger.debug("\nCookies in jar after GET:")
+        for cookie in self._session.cookie_jar:
+            self.logger.debug(
+                f"  Stored: {cookie.key}={cookie.value} (domain={cookie['domain']})"
+            )
+
         if not request.ok:
             error = f"Failed to get initial login page {url}"
             self.logger.error(error)
@@ -202,13 +269,10 @@ class AuthService(Base):
 
         html_contents = await request.text()
 
-        if len(request.history) > 0:
-            history = ", ".join([str(h.url) for h in request.history])
-            self.logger.debug(f"Login page request was redirected: {history}")
-            url = str(request.history[-1].url)
-            # Ensure we don't get the magic link signin page
-            if "/identifier/signin/" in url:
-                url = url.replace("/identifier/signin/", "")
+        # if len(request.history) > 0:
+        #     history = ", ".join([str(h.url) for h in request.history])
+        #     self.logger.debug(f"Login page request was redirected: {history}")
+        #     url = str(request.history[-1].url)
 
         self._save_file_if_needed(html_contents, "login_form.html")
 
@@ -219,16 +283,26 @@ class AuthService(Base):
             raise LoginFailedError(error)
 
         self.logger.debug(f"Found username form target: {username_form_action}")
-        return f"{URLs.LOGIN_BASE.value}/{username_form_action}"
+        return f"{URLs.LOGIN_BASE.value}{username_form_action}"
 
-    async def _submit_username(self, url: str, username: str) -> str:
+    async def _submit_username(
+        self, url: str, username: Optional[str] = None, email: Optional[str] = None
+    ) -> str:
         """Post username to get to the next login step"""
         self.logger.debug("Submitting username")
+        if not (username or email):
+            raise LoginFailedError("No username or email provided for login")
 
+        if username:
+            self.logger.debug(f"Using username: {username}")
+            data = {"username": username}
+        if email:
+            self.logger.debug(f"Using email: {email}")
+            data = {"email": email}
         html_contents = await self._get_html(
             url=url,
             method="POST",
-            data={"username": username},
+            data=data,
             headers=await self._build_headers(referer=URLs.LOGIN_START.value),
         )
         self._save_file_if_needed(html_contents, "password_form.html")
@@ -245,16 +319,23 @@ class AuthService(Base):
         return password_url
 
     async def _do_login(
-        self, url: str, username: str, password: str, referrer_url: str
+        self,
+        url: str,
+        username: str,
+        password: str,
+        referrer_url: str,
     ) -> None:
         """Send both username and password to authenticate."""
         self.logger.debug("Logging in...")
+        headers = await self._build_headers(referer=referrer_url)
+
+        data = {"username": username, "password": password, "hasPassword": ""}
         resp = await self._make_request(
             method="POST",
             url=url,
-            data={"username": username, "password": password},
-            headers=await self._build_headers(referer=referrer_url),
+            data=data,
             allow_redirects=True,
+            headers=headers,
         )
         response_text = await resp.text()
         self._save_file_if_needed(response_text, "login_response.html")
