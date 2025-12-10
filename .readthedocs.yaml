@@ -6,7 +6,7 @@ build:
     python: "3.12"
   commands:
     - pip install uv
-    - uv run python -m sphinx docs $READTHEDOCS_OUTPUT/html -b html -W
+    - uv run --link-mode=copy python -m sphinx docs $READTHEDOCS_OUTPUT/html -b html -W
 
 sphinx:
   configuration: docs/conf.py
