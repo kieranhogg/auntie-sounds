@@ -1,3 +1,7 @@
+v1.1.5
+
+* Fix: non-UK logins not logging in correctly
+
 v1.1.4
 
 * Fix: Radio 4 uses two different IDs, use the correct one

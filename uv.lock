@@ -129,7 +129,7 @@ wheels = [
 
 [[package]]
 name = "auntie-sounds"
-version = "1.1.3"
+version = "1.1.5"
 source = { editable = "." }
 dependencies = [
     { name = "aiohappyeyeballs" },
