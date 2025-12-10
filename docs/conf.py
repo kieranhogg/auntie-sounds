@@ -8,7 +8,19 @@ extensions = [
     "sphinx.ext.autosummary",
     "sphinx.ext.intersphinx",
     "sphinx.ext.apidoc",
+    "autoapi.extension",
 ]
+autoapi_dirs = ["../src/sounds"]
+autoapi_type = "python"
+autoapi_template_dir = "_templates/autoapi"
+autoapi_options = [
+    "members",
+    "undoc-members",
+    "show-inheritance",
+    "show-module-summary",
+    "imported-members",
+]
+
 apidoc_modules = [
     {
         "path": "src/sounds/",
