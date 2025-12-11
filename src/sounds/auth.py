@@ -148,6 +148,10 @@ class AuthService(Base):
 
         username_url = await self._get_login_form()
         password_url = await self._submit_username(url=username_url, username=username)
+        if password_url == username_url:
+            error = "Login did not succeed to stage 2 successfully"
+            self.logger.error(error)
+            raise LoginFailedError(error)
         await self._do_login(
             url=password_url,
             username=username,
