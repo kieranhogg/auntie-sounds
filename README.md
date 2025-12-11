@@ -1,3 +1,5 @@
+<img src="assets/logo.png" height="200">
+
 # Auntie Sounds
 
 A library for interacting with BBC radio stations via an interface to BBC Sounds. It was written to be used for the BBC Sounds provider for [Music Assistant](https://music-assistant.io/) but exists as a standalone library.
@@ -43,3 +45,4 @@ async def main():
 
 asyncio.run(main())
 ```
+
