@@ -1,3 +1,7 @@
+v1.1.6
+
+* Fix: get_by_pid() can fail with stale sessions
+
 v1.1.5
 
 * Fix: non-UK logins not logging in correctly
