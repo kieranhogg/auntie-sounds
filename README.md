@@ -46,3 +46,6 @@ async def main():
 asyncio.run(main())
 ```
 
+### Documentation
+
+Further documentation can be found in the documentation, the current stable branch is v1.1.x: https://auntie-sounds.readthedocs.io/en/v1.1/
