@@ -17,7 +17,6 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v4
         with:
-          enable-cache: true
           version-file: "pyproject.toml"
       - name: Test with pytest
         run: uv run pytest tests --cov=src
