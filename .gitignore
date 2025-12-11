@@ -17,9 +17,5 @@ local
 *.patch
 .env
 .vscode/settings.json
-.idea/.gitignore
-.idea/auntie-sounds.iml
-.idea/misc.xml
-.idea/modules.xml
-.idea/vcs.xml
-.idea/inspectionProfiles/profiles_settings.xml
+.idea/*
+uv.lock
