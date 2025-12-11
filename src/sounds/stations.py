@@ -13,13 +13,13 @@ from .streaming import StreamingService
 class StationService(Base):
     def __init__(
         self,
-        streaming_service: StreamingService,
-        schedule_service: ScheduleService,
+        streaming: StreamingService,
+        schedules: ScheduleService,
         **kwargs,
     ):
         super().__init__(**kwargs)
-        self.streams = streaming_service
-        self.schedules = schedule_service
+        self.streams = streaming
+        self.schedules = schedules
 
     async def get_stations_detailed(self) -> Optional[List[Network]]:
         json_resp = await self._get_json(url_template=URLs.NETWORKS_LIST)

@@ -18,8 +18,8 @@ class TestStreamingService:
         service = StreamingService(
             session=mock_session,
             logger=mock_logger,
-            auth_service=mock_auth,
-            schedule_service=mock_schedule,
+            auth=mock_auth,
+            schedules=mock_schedule,
         )
 
         streams = [
@@ -39,8 +39,8 @@ class TestStreamingService:
         service = StreamingService(
             session=mock_session,
             logger=mock_logger,
-            auth_service=mock_auth,
-            schedule_service=mock_schedule,
+            auth=mock_auth,
+            schedules=mock_schedule,
         )
 
         streams = [
@@ -74,8 +74,8 @@ class TestStreamingService:
         service = StreamingService(
             session=mock_session,
             logger=mock_logger,
-            auth_service=mock_auth,
-            schedule_service=mock_schedule,
+            auth=mock_auth,
+            schedules=mock_schedule,
         )
 
         with pytest.raises(APIResponseError):

@@ -1,5 +1,5 @@
-from datetime import tzinfo
 import logging
+from datetime import tzinfo
 
 import aiohttp
 import pytz
@@ -66,14 +66,14 @@ class SoundsClient:
         self.schedules = ScheduleService(**service_kwargs)
 
         self.streaming = StreamingService(
-            auth_service=self.auth, schedule_service=self.schedules, **service_kwargs
+            auth=self.auth, schedules=self.schedules, **service_kwargs
         )
         self.stations = StationService(
-            streaming_service=self.streaming,
-            schedule_service=self.schedules,
+            streaming=self.streaming,
+            schedules=self.schedules,
             **service_kwargs,
         )
-        self.personal = PersonalService(auth_service=self.auth, **service_kwargs)
+        self.personal = PersonalService(auth=self.auth, **service_kwargs)
 
     def setLogger(self, log_level=None):
         logging.addLevelName(constants.VERBOSE_LOG_LEVEL, "VERBOSE")
