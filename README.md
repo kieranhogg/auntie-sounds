@@ -8,11 +8,12 @@ A library for interacting with BBC radio stations via an interface to BBC Sounds
 ✅ Listing current station programming<br />
 ✅ Obtaining a stream to listen to a station<br />
 ✅ Getting the current and previous segments (typically songs) on a station
+✅ Displaying and listening to previous shows
 
 ### Not implemented
 
 ❌ Pausing or rewinding live radio<br />
-❌ Displaying and listening to previous shows
+
 
 ## Notes
 - It is written as an async library
@@ -27,12 +28,12 @@ from sounds.client import SoundsClient
 
 async def main():
     try:
-        async with SoundsClient() as client:
-            if await client.auth.authenticate(username, password):
-                stations = await client.stations.get_stations()
-                bbc_6music = await client.stations.get_station("bbc_6music", include_stream=True)
-                stream = bbc_6music.stream.uri
-                schedule = bbc_6music.schedule
+        client = SoundsClient()
+        if await client.auth.authenticate(username, password):
+            stations = await client.stations.get_stations()
+            schedule = await client.schedules.get_schedule("bbc_6music", date="2025-10-26")
+            bbc_6music = await client.stations.get_station("bbc_6music", include_stream=True)
+            
     except exceptions.LoginFailedError:
         ...
     except exceptions.APIResponseError:

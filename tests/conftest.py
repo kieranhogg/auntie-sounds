@@ -1,13 +1,13 @@
 import json
-from unittest.mock import AsyncMock, Mock, patch
+from unittest.mock import AsyncMock, Mock
 
 import aiohttp
 import pytest
 import pytz
 
 from sounds.auth import AuthService
-
 from sounds.client import SoundsClient
+
 
 @pytest.fixture
 def mock_session():
@@ -83,6 +83,11 @@ def sample_schedule_item_data():
 @pytest.fixture
 def sample_podcast_episode_data():
     return json.loads(open("tests/json/podcast.json").read())
+
+
+@pytest.fixture
+def sample_playable_item():
+    return json.loads(open("tests/json/pid_playable.json").read())
 
 
 @pytest.fixture

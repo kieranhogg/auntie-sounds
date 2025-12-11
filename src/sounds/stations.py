@@ -132,10 +132,22 @@ class StationService(Base):
         include_schedule: bool = False,
         date: str | None = None,
     ) -> LiveStation | None:
+        """Get a live radio station
+
+        Args:
+            station_id (str): ID of the station, e.g. bbc_radio_four
+            include_stream (bool, optional): Set LiveStation.stream to the stream URL. Defaults to False.
+            stream_format (Literal["hls"] | Literal["dash"], optional): Stream format preference. Defaults to "hls".
+            include_schedule (bool, optional): Set LiveStation.schedule to the station schedule. Defaults to False.
+            date (str | None, optional): The date of the schedule, if `include_schedule` is True. Defaults to None.
+
+        Returns:
+            LiveStation | None: A LiveStation object if station_id is found
+        """
         stations = await self.get_stations()
         # station id is almost always the same as pid but not quite, e.g. bbc_radio_fourfm and bbc_radio_four
         station = next(
-            (s for s in stations if s.item_id == station_id),
+            (s for s in stations if s.id == station_id),
             None,
         )
 

@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import TYPE_CHECKING, Final
+from typing import Final
 
 # This is the ID of the cookie we use to check we have a valid session
 COOKIE_ID = "ckns_id"
@@ -45,8 +45,10 @@ class URLs(Enum):
 
     # Auth URLs
     LOGIN_START = "https://session.bbc.co.uk/session?ptrt=https%3A%2F%2Fwww.bbc.co.uk%2Fsounds&context=iplayerradio&userOrigin=sounds"
+    LOGIN_START_I18N = "https://account.bbc.com/auth?realm=%2F&clientId=Account&ptrt=https%3A%2F%2Fwww.bbc.com%2F&userOrigin=BBCS_BBC&purpose=free&isCasso=false&action=sign-in&redirectUri=https%3A%2F%2Fsession.bbc.com%2Fsession%2Fcallback%3Frealm%3D%2F&service=IdSignInService"
     LOGIN_BASE = "https://account.bbc.com"
     COOKIE_BASE = "https://www.bbc.co.uk"
+    COOKIE_BASE_I18N = "https://www.bbc.com"
     JWT = "https://rms.api.bbc.co.uk/v2/sign/token/{station_id}"
     INTL_JWT = "https://web-cdn.api.bbci.co.uk/xd/media-token?{id_type}={id}"
     USER_INFO = "https://www.bbc.co.uk/userinfo"
