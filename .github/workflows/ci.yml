@@ -27,6 +27,8 @@ jobs:
         with:
           enable-cache: true
           version-file: "pyproject.toml"
+      - name: Create uv lock file
+        run: uv lock
       - name: Install dependencies
         run: uv sync --all-extras --dev --frozen
       - name: Test with pytest
