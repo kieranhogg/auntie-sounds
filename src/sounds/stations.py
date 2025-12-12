@@ -144,7 +144,7 @@ class StationService(Base):
         Returns:
             LiveStation | None: A LiveStation object if station_id is found
         """
-        stations = await self.get_stations()
+        stations = await self.get_stations(include_local=True)
         # station id is almost always the same as pid but not quite, e.g. bbc_radio_fourfm and bbc_radio_four
         station = next(
             (s for s in stations if s.id == station_id),
