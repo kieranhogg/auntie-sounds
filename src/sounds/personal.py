@@ -17,11 +17,11 @@ class MenuRecommendationOptions(Enum):
 class PersonalService(Base):
     def __init__(
         self,
-        auth_service: AuthService,
+        auth: AuthService,
         **kwargs,
     ):
         super().__init__(**kwargs)
-        self.auth = auth_service
+        self.auth = auth
 
     @login_required
     async def get_experience_menu(

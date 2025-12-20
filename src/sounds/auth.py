@@ -87,22 +87,28 @@ class AuthService(Base):
         )
 
     @property
-    def listener_country(self) -> Optional[str]:
+    async def listener_country(self) -> Optional[str]:
         """Return the listener's current country."""
+        if not self.user_info:
+            await self.set_user_info()
         if self.user_info:
             return self.user_info.get("X-Country")
         return None
 
     @property
-    def is_in_uk(self) -> bool:
+    async def is_in_uk(self) -> bool:
         """Listener is in the UK."""
+        if not self.user_info:
+            await self.set_user_info()
         if self.user_info:
             return self.user_info.get("X-Country") == "gb"
         return False
 
     @property
-    def is_uk_listener(self) -> bool:
+    async def is_uk_listener(self) -> bool:
         """Listener has a UK-based account and is in the UK."""
+        if not self.user_info:
+            await self.set_user_info()
         if self.user_info:
             return self.user_info["X-Ip_is_uk_combined"] == "yes"
         return False
@@ -141,7 +147,7 @@ class AuthService(Base):
             await self.renew_session()
             return True
 
-        if not self.is_uk_listener:
+        if not await self.is_uk_listener:
             self.logger.debug("International user")
         else:
             self.logger.debug("UK user")
@@ -291,6 +297,7 @@ class AuthService(Base):
         """Renew a session which has expired, but user is logged in."""
         url = self._build_url(url_template=constants.SignedInURLs.RENEW_SESSION)
         await self._make_request("GET", url)
+        await self.set_user_info()
 
     async def logout(self):
         try:

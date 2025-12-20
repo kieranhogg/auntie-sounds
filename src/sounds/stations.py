@@ -13,13 +13,13 @@ from .streaming import StreamingService
 class StationService(Base):
     def __init__(
         self,
-        streaming_service: StreamingService,
-        schedule_service: ScheduleService,
+        streaming: StreamingService,
+        schedules: ScheduleService,
         **kwargs,
     ):
         super().__init__(**kwargs)
-        self.streams = streaming_service
-        self.schedules = schedule_service
+        self.streams = streaming
+        self.schedules = schedules
 
     async def get_stations_detailed(self) -> Optional[List[Network]]:
         json_resp = await self._get_json(url_template=URLs.NETWORKS_LIST)
@@ -144,7 +144,7 @@ class StationService(Base):
         Returns:
             LiveStation | None: A LiveStation object if station_id is found
         """
-        stations = await self.get_stations()
+        stations = await self.get_stations(include_local=True)
         # station id is almost always the same as pid but not quite, e.g. bbc_radio_fourfm and bbc_radio_four
         station = next(
             (s for s in stations if s.id == station_id),

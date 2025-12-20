@@ -1,3 +1,12 @@
+v1.1.7
+
+* Fix: Always get local stations when finding a station with `Stations.get_station()`
+* Fix: `Auth.user_info()` wouldn't be set if renewing a session
+
+v1.1.6
+
+* Fix: `Streaming.get_by_pid()` can fail with stale sessions
+
 v1.1.5
 
 * Fix: non-UK logins not logging in correctly

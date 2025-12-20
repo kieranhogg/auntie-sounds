@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING, List, Literal, Optional, cast
 
 from . import constants
-from .auth import AuthService
+from .auth import AuthService, login_required
 from .base import Base
 from .constants import PlayStatus, SignedInURLs, URLs
 from .exceptions import APIResponseError, InvalidFormatError, NotFoundError
@@ -27,13 +27,13 @@ if TYPE_CHECKING:
 class StreamingService(Base):
     def __init__(
         self,
-        auth_service: AuthService,
-        schedule_service: ScheduleService,
+        auth: AuthService,
+        schedules: ScheduleService,
         **kwargs,
     ):
         super().__init__(**kwargs)
-        self.auth_service = auth_service
-        self.schedule_service = schedule_service
+        self.auth = auth
+        self.schedules = schedules
 
     async def get_postcasts(self):
         podcasts = parse_menu(
@@ -184,6 +184,7 @@ class StreamingService(Base):
             raise RuntimeError("No valid stream found")
         return stream
 
+    @login_required
     async def get_by_pid(
         self,
         pid,
@@ -191,7 +192,7 @@ class StreamingService(Base):
         stream_format: Literal["hls"] | Literal["dash"] = "hls",
     ) -> "SoundsTypes":
         self.logger.debug(f"Getting playable item with PID {pid}")
-        if self.auth_service.is_logged_in:
+        if self.auth.is_logged_in:
             json_resp = await self._get_json(
                 url_template=SignedInURLs.PID_PLAYABLE, url_args={"pid": pid}
             )
