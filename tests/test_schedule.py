@@ -1,38 +1,10 @@
-import json
-from datetime import datetime as dt
-from unittest.mock import AsyncMock, Mock, patch
+from unittest.mock import AsyncMock
 
-import aiohttp
 import pytest
-import pytz
 
-from sounds.auth import AuthService
+from sounds.exceptions import InvalidFormatError
+from sounds.schedule import ScheduleService
 
-from sounds.client import SoundsClient
-from sounds.constants import ImageType
-from sounds.exceptions import (
-    APIResponseError,
-    InvalidFormatError,
-    LoginFailedError,
-    NetworkError,
-    NotFoundError,
-)
-from sounds.models import (
-    Container,
-    Menu,
-    MenuItem,
-    PlayableItem,
-    Podcast,
-    PodcastEpisode,
-    ScheduleItem,
-    SearchResults,
-)
-from sounds.parser import parse_menu, parse_node, parse_search
-from sounds.personal import PersonalService
-from sounds.schedules import ScheduleService
-from sounds.stations import StationService
-from sounds.streaming import StreamingService
-from sounds.utils import image_from_recipe, network_logo
 
 class TestScheduleService:
     """Tests for schedule service"""
