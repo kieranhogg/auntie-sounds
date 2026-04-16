@@ -1,15 +1,15 @@
 from typing import TYPE_CHECKING
 
-from .client import SoundsClient
-from .constants import ContainerType, ImageType, PlayStatus, URLs
-from .exceptions import (
+from sounds.client import SoundsClient
+from sounds.constants import ContainerType, ImageType, PlayStatus, URLs
+from sounds.exceptions import (
     APIResponseError,
     InvalidFormatError,
     LoginFailedError,
     NetworkError,
     NotFoundError,
 )
-from .models import (
+from sounds.models import (
     Category,
     Collection,
     Container,
@@ -31,7 +31,7 @@ from .models import (
     StationSearchResult,
     Stream,
 )
-from .personal import MenuRecommendationOptions
+from sounds.personal import MenuRecommendationOptions
 
 if TYPE_CHECKING:
     from .models import SoundsTypes

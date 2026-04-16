@@ -5,13 +5,13 @@ import aiohttp
 import pytz
 from colorlog import ColoredFormatter
 
-from . import constants
-from .auth import AuthService
-from .models import Segment, Station, Stream
-from .personal import PersonalService
-from .schedules import ScheduleService
-from .stations import StationService
-from .streaming import StreamingService
+from sounds import constants
+from sounds.auth import AuthService
+from sounds.models import Segment, Station, Stream
+from sounds.personal import PersonalService
+from sounds.schedule import ScheduleService
+from sounds.stations import StationService
+from sounds.streaming import StreamingService
 
 
 class SoundsClient:
