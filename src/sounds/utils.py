@@ -1,3 +1,5 @@
+from aiohttp import request
+
 from .constants import ImageType
 
 
@@ -53,3 +55,12 @@ def image_from_recipe(
         image_recipe = image_recipe.format(recipe=img_size)
 
     return image_recipe
+
+
+async def image_from_spotify(url: str) -> str | None:
+    spotify_url = "https://open.spotify.com/oembed?url={url}"
+    async with request("GET", spotify_url.format(url=url)) as resp:
+        json_resp = await resp.json()
+        if json_resp.get("thumbnail_url"):
+            return json_resp.get("thumbnail_url")
+    return None
