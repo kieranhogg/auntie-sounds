@@ -12,7 +12,8 @@ FIXTURES_FOLDER = "tests/json/"
 class Fixtures(Enum):
     EXPERIENCE_MENU = "menu.json"
     SCHEDULE_DATE_URL = "schedule.json"
-    SCHEDULE_URL = "schedule.json"
+    SCHEDULE = "schedule.json"
+    STATIONS = "stations.json"
 
 
 class SignedInURLs(Enum):
