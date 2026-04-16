@@ -52,3 +52,13 @@ class PersonalService(Base):
     async def get_subscriptions(self):
         json_resp = await self._get_json(url_template=SignedInURLs.SUBSCRIBED)
         return parse_container(json_resp)
+
+    @login_required
+    async def get_bookmarks(self):
+        json_resp = await self._get_json(url_template=SignedInURLs.BOOKMARKS)
+        return parse_container(json_resp)
+
+    @login_required
+    async def continue_listening(self):
+        json_resp = await self._get_json(url_template=SignedInURLs.CONTINUE)
+        return parse_container(json_resp)
