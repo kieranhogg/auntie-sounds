@@ -1,4 +1,4 @@
-from dataclasses import dataclass, fields
+from dataclasses import asdict, dataclass, fields
 from datetime import datetime as dt
 from pprint import pformat
 from typing import TYPE_CHECKING, Any, List, Optional, Sequence
@@ -39,6 +39,11 @@ type SoundsTypes = (
 
 def _parse_datetime(value):
     return dt.fromisoformat(value) if isinstance(value, str) else value
+
+
+class SerializableMixin:
+    def to_dict(self):
+        return asdict(self)
 
 
 @dataclass(kw_only=True)
@@ -258,7 +263,7 @@ class LiveProgramme(PlayableItem):
 
 
 @dataclass(kw_only=True)
-class LiveStation(PlayableItem):
+class LiveStation(PlayableItem, SerializableMixin):
     local: bool = False
     schedule: Optional["Schedule"] = None
 
@@ -296,7 +301,7 @@ class Stream(TimedContent):
 
 
 @dataclass(kw_only=True)
-class Segment:
+class Segment(SerializableMixin):
     """Represents a segment within a stream."""
 
     id: str
@@ -304,10 +309,20 @@ class Segment:
     titles: dict
     image_url: str | None
     offset: dict
+    uris: list[dict[str, str]]
 
     def __post_init__(self):
         if self.image_url:
             self.image_url = image_from_recipe(self.image_url, size=1280)
+
+    @property
+    def spotify_url(self):
+        spotify = next(
+            (uri for uri in self.uris if uri.get("label") == "Spotify"), None
+        )
+        if spotify:
+            return spotify.get("uri")
+        return None
 
 
 @dataclass(kw_only=True)
