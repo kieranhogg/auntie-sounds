@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING, List, Literal, Optional, cast
 
+from sounds.utils import image_from_spotify
+
 from . import constants
 from .auth import AuthService, login_required
 from .base import Base
@@ -18,7 +20,7 @@ from .models import (
     Segment,
 )
 from .parser import parse_container, parse_menu, parse_node, parse_search
-from .schedules import ScheduleService
+from .schedule import ScheduleService
 
 if TYPE_CHECKING:
     from .models import SoundsTypes
@@ -288,8 +290,21 @@ class StreamingService(Base):
         )
         return parse_search(json_resp)
 
-    async def get_show_segments(self, vpid) -> List[Segment]:
+    async def get_show_segments(
+        self, vpid, fetch_missing_images: bool = False
+    ) -> List[Segment]:
         json_resp = await self._get_json(
             url_template=URLs.SEGMENTS, url_args={"vpid": vpid}
         )
-        return cast("List[Segment]", parse_container(json_resp))
+        parsed_segments = parse_container(json_resp)
+        if isinstance(parsed_segments, List):
+            segments = [item for item in parsed_segments if isinstance(item, Segment)]
+            for segment in segments:
+                if (
+                    not segment.image_url
+                    and fetch_missing_images
+                    and segment.spotify_url
+                ):
+                    segment.image_url = await image_from_spotify(segment.spotify_url)
+            return segments
+        return []
