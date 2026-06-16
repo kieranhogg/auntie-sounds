@@ -1,6 +1,6 @@
 from aiohttp import request
 
-from .constants import ImageType
+from sounds.constants import ImageType
 
 
 def network_logo(

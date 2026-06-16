@@ -1,13 +1,13 @@
 import itertools
 from typing import List, Literal, Optional
 
-from . import constants
-from .base import Base
-from .constants import URLs
-from .models import LiveStation, Network
-from .parser import parse_container, parse_node
-from .schedules import ScheduleService
-from .streaming import StreamingService
+from sounds import constants
+from sounds.base import Base
+from sounds.constants import URLs
+from sounds.models import LiveStation, Network
+from sounds.parser import parse_container, parse_node
+from sounds.schedule import ScheduleService
+from sounds.streaming import StreamingService
 
 
 class StationService(Base):

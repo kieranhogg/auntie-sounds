@@ -1,11 +1,11 @@
 from enum import Enum
 
-from .auth import AuthService, login_required
-from .base import Base
-from .constants import SignedInURLs, URLs
-from .exceptions import APIResponseError
-from .models import Menu, RecommendedMenuItem
-from .parser import parse_container, parse_menu
+from sounds.auth import AuthService, login_required
+from sounds.base import Base
+from sounds.constants import SignedInURLs, URLs
+from sounds.exceptions import APIResponseError
+from sounds.models import Menu, RecommendedMenuItem
+from sounds.parser import parse_container, parse_menu
 
 
 class MenuRecommendationOptions(Enum):

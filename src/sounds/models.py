@@ -7,13 +7,9 @@ from zoneinfo import ZoneInfo
 
 import pytz
 
-from . import models
-from .constants import BaseSoundsTypes
-from .utils import image_from_recipe, network_logo
-
-if TYPE_CHECKING:
-    from .constants import PlayableSoundsTypes
-
+from sounds import models
+from sounds.constants import BaseSoundsTypes, PlayableSoundsTypes
+from sounds.utils import image_from_recipe, network_logo
 
 type SoundsTypes = (
     models.Broadcast

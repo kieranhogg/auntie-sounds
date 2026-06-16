@@ -2,7 +2,7 @@ from collections import namedtuple
 from dataclasses import fields
 from typing import List, Sequence, Union
 
-from .models import (
+from sounds.models import (
     CategoryItemContainer,
     Container,
     LiveStation,
@@ -20,7 +20,7 @@ from .models import (
     StationSearchResult,
     model_factory,
 )
-from .utils import network_logo
+from sounds.utils import network_logo
 
 ParseResult = Union[SoundsTypes, Sequence["ParseResult"], None]
 

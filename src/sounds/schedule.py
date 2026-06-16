@@ -1,12 +1,12 @@
 from datetime import datetime as dt
 from typing import Optional, cast
 
-from . import constants
-from .base import Base
-from .constants import URLs
-from .exceptions import InvalidFormatError
-from .models import LiveProgramme, Schedule, Segment
-from .parser import parse_container, parse_node, parse_schedule
+from sounds import constants
+from sounds.base import Base
+from sounds.constants import URLs
+from sounds.exceptions import InvalidFormatError
+from sounds.models import LiveProgramme, Schedule, Segment
+from sounds.parser import parse_container, parse_node, parse_schedule
 
 
 class ScheduleService(Base):

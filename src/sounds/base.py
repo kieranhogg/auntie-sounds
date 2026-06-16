@@ -6,8 +6,8 @@ from typing import Literal, Optional
 
 import aiohttp
 
-from .constants import FIXTURES_FOLDER, Fixtures, SignedInURLs, URLs
-from .exceptions import (
+from sounds.constants import FIXTURES_FOLDER, Fixtures, SignedInURLs, URLs
+from sounds.exceptions import (
     APIResponseError,
     InvalidArgumentsError,
     NetworkError,

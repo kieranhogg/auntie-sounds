@@ -34,7 +34,7 @@ from sounds.models import (
 from sounds.personal import MenuRecommendationOptions
 
 if TYPE_CHECKING:
-    from .models import SoundsTypes
+    from sounds.models import SoundsTypes
 
 __all__: list[str] = [
     "Category",

@@ -8,10 +8,10 @@ from appdirs import AppDirs
 from bs4 import BeautifulSoup
 from yarl import URL
 
-from . import constants
-from .base import Base
-from .constants import COOKIE_ID, URLs
-from .exceptions import LoginFailedError, NotFoundError, UnauthorisedError
+from sounds import constants
+from sounds.base import Base
+from sounds.constants import COOKIE_ID, URLs
+from sounds.exceptions import LoginFailedError, NotFoundError, UnauthorisedError
 
 
 def _get_data_dir():

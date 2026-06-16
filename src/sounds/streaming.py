@@ -1,13 +1,11 @@
 from typing import TYPE_CHECKING, List, Literal, Optional, cast
 
-from sounds.utils import image_from_spotify
-
-from . import constants
-from .auth import AuthService, login_required
-from .base import Base
-from .constants import PlayStatus, SignedInURLs, URLs
-from .exceptions import APIResponseError, InvalidFormatError, NotFoundError
-from .models import (
+from sounds import constants
+from sounds.auth import AuthService, login_required
+from sounds.base import Base
+from sounds.constants import PlayStatus, SignedInURLs, URLs
+from sounds.exceptions import APIResponseError, InvalidFormatError, NotFoundError
+from sounds.models import (
     Category,
     Collection,
     PlayableItem,
@@ -19,11 +17,13 @@ from .models import (
     SearchResults,
     Segment,
 )
-from .parser import parse_container, parse_menu, parse_node, parse_search
+from sounds.parser import parse_container, parse_menu, parse_node, parse_search
+from sounds.utils import image_from_spotify
+
 from .schedule import ScheduleService
 
 if TYPE_CHECKING:
-    from .models import SoundsTypes
+    from sounds.models import SoundsTypes
 
 
 class StreamingService(Base):
@@ -136,7 +136,7 @@ class StreamingService(Base):
             self.logger.debug(str(streams))
             stream = self.get_best_stream(streams, prefer_type=stream_format)
             self.logger.debug(f"Found stream: {stream}")
-        except (StopIteration, KeyError):
+        except StopIteration, KeyError:
             raise RuntimeError("No valid stream found")
         if not stream:
             return None
@@ -182,7 +182,7 @@ class StreamingService(Base):
             self.logger.debug(str(streams))
             stream = self.get_best_stream(streams, prefer_type=stream_format)
             self.logger.debug(f"Found stream: {stream}")
-        except (StopIteration, KeyError):
+        except StopIteration, KeyError:
             raise RuntimeError("No valid stream found")
         return stream
 
@@ -246,7 +246,7 @@ class StreamingService(Base):
         try:
             vpid = json_resp["defaultAvailableVersion"]["smpConfig"]["items"][0]["vpid"]
             item_type = json_resp["statsObject"]["parentPIDType"]
-        except (APIResponseError, KeyError, TypeError):
+        except APIResponseError, KeyError, TypeError:
             raise APIResponseError(f"Couldn't get heartbeat details for PID {pid}")
         return vpid, item_type
 
