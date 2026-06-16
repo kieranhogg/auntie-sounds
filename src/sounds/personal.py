@@ -49,6 +49,11 @@ class PersonalService(Base):
         return menu
 
     @login_required
+    async def get_latest(self):
+        json_resp = await self._get_json(url_template=SignedInURLs.LATEST)
+        return parse_container(json_resp)
+
+    @login_required
     async def get_subscriptions(self):
         json_resp = await self._get_json(url_template=SignedInURLs.SUBSCRIBED)
         return parse_container(json_resp)
