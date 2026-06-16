@@ -1,5 +1,6 @@
 import os
 from functools import wraps
+from http.cookies import CookieError
 from pathlib import Path
 from typing import Optional
 
@@ -65,7 +66,7 @@ class AuthService(Base):
 
         try:
             self._session._cookie_jar.load(COOKIE_FILE)  # type: ignore
-        except FileNotFoundError:
+        except (CookieError, FileNotFoundError):
             pass
 
     async def set_user_info(self) -> None:
