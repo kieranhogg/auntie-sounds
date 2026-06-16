@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Optional
 
 from appdirs import AppDirs
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 from yarl import URL
 
 from sounds import constants
@@ -177,7 +177,7 @@ class AuthService(Base):
                 f"Found {len(forms)} forms on page, returning the first one"
             )
         form = soup.find("form")
-        if form is not None:
+        if form is not None and isinstance(form, Tag):
             form_action = form.get("action", None)
             if form_action is not None:
                 return str(form_action)
