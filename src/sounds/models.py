@@ -2,6 +2,7 @@ from dataclasses import asdict, dataclass, fields
 from datetime import datetime as dt
 from pprint import pformat
 from typing import TYPE_CHECKING, Any, List, Optional, Sequence
+from warnings import deprecated
 from zoneinfo import ZoneInfo
 
 import pytz
@@ -22,7 +23,6 @@ type SoundsTypes = (
     | models.Collection
     | models.LiveStation
     | models.MenuItem
-    | models.Network
     | models.Podcast
     | models.PodcastEpisode
     | models.RadioClip
@@ -161,6 +161,7 @@ class TimedContent:
 
 
 @dataclass(kw_only=True)
+@deprecated("Broadcast has been deprecated in favour of LiveStation and ScheduleItem")
 class Broadcast:
     """Represents a broadcast item."""
 
