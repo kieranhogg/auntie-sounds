@@ -1,33 +1,27 @@
 [project]
 name = "auntie-sounds"
-version = "1.1.7"
+version = "2.0"
 description = "A library for interacting with BBC Radio stations and streams"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
-    "aiohappyeyeballs>=2.6.1",
-    "aiohttp>=3.12.13",
-    "aiosignal>=1.4.0",
-    "appdirs>=1.4.4",
-    "attrs>=25.3.0",
-    "beautifulsoup4>=4.13.4",
-    "colorlog>=6.9.0",
-    "frozenlist>=1.7.0",
-    "idna>=3.10",
-    "multidict>=6.6.3",
-    "propcache>=0.3.2",
-    "pytz>=2025.2",
-    "soupsieve>=2.7",
-    "typing-extensions>=4.14.1",
-    "yarl>=1.20.1",
+    "aiohttp==3.14.1",
+    "appdirs==1.4.4",
+    "beautifulsoup4==4.15.0",
+    "colorlog==6.10.1",
+    "pytz==2026.2",
+    "typing-extensions==4.15.0",
 ]
 
 [build-system]
-requires = ["uv_build>=0.7.19,<0.8"]
+requires = ["uv_build>=0.11.21,<0.12"]
 build-backend = "uv_build"
 
+[tool.ty.environment]
+root = ["./src"]
+
 [tool.uv]
-required-version = ">=0.5.0"
+required-version = ">=0.11.21,<0.12"
 
 [tool.uv.build-backend]
 package-dir = "src"
