@@ -1,12 +1,11 @@
 from enum import Enum
+from pathlib import Path
 from typing import Final
 
 # This is the ID of the cookie we use to check we have a valid session
 COOKIE_ID = "ckns_id"
-
 VERBOSE_LOG_LEVEL: Final[int] = 5
-
-FIXTURES_FOLDER = "tests/json/"
+FIXTURES_FOLDER = Path("tests", "json")
 
 
 class Fixtures(Enum):
