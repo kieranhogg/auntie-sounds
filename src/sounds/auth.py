@@ -1,26 +1,14 @@
-import os
 from functools import wraps
-from http.cookies import CookieError
 from pathlib import Path
 from typing import Optional
 
-from appdirs import AppDirs
 from bs4 import BeautifulSoup, Tag
-from yarl import URL
 
 from sounds import constants
 from sounds.base import Base
-from sounds.constants import COOKIE_ID, URLs
+from sounds.constants import URLs
 from sounds.exceptions import LoginFailedError, NotFoundError, UnauthorisedError
-
-
-def _get_data_dir():
-    dir = AppDirs(appname="auntie-sounds", version="1").user_data_dir
-    Path(dir).mkdir(parents=True, exist_ok=True)
-    return dir
-
-
-COOKIE_FILE = Path(_get_data_dir(), "sounds_jar")
+from sounds.utils import _get_data_dir
 
 
 def login_required(method):
@@ -50,9 +38,10 @@ def login_required(method):
 class AuthService(Base):
     """Service to handle authentication with BBC Sounds."""
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, on_login_success=None, *args, **kwargs):
         self.user_info = None
         self.debug_login = False
+        self._on_login_success = on_login_success
         if "debug_login" in kwargs:
             self.debug_login = kwargs.pop("debug_login")
         if kwargs.get("mock_session"):
@@ -63,56 +52,6 @@ class AuthService(Base):
         if self.debug_login:
             # Can't move this to the above conditional as self.logger not initialised yet
             self.logger.info("Saving login pages to file as requested")
-
-        try:
-            self._session._cookie_jar.load(COOKIE_FILE)  # type: ignore
-        except (CookieError, FileNotFoundError):
-            pass
-
-    async def set_user_info(self) -> None:
-        self.user_info = await self._get_json(url_template=URLs.USER_INFO)
-
-    @property
-    def is_logged_in(self) -> bool:
-        """Check if we have a valid session."""
-        if self.mock_session:
-            return True
-        return (
-            COOKIE_ID
-            in self._session._cookie_jar.filter_cookies(URL(URLs.COOKIE_BASE.value))
-        ) or (
-            COOKIE_ID
-            in self._session._cookie_jar.filter_cookies(
-                URL(URLs.COOKIE_BASE_I18N.value)
-            )
-        )
-
-    @property
-    async def listener_country(self) -> Optional[str]:
-        """Return the listener's current country."""
-        if not self.user_info:
-            await self.set_user_info()
-        if self.user_info:
-            return self.user_info.get("X-Country")
-        return None
-
-    @property
-    async def is_in_uk(self) -> bool:
-        """Listener is in the UK."""
-        if not self.user_info:
-            await self.set_user_info()
-        if self.user_info:
-            return self.user_info.get("X-Country") == "gb"
-        return False
-
-    @property
-    async def is_uk_listener(self) -> bool:
-        """Listener has a UK-based account and is in the UK."""
-        if not self.user_info:
-            await self.set_user_info()
-        if self.user_info:
-            return self.user_info["X-Ip_is_uk_combined"] == "yes"
-        return False
 
     async def _build_headers(self, referer: Optional[str] = None) -> dict:
         """Builds the standard headers to send when logging in"""
@@ -126,28 +65,7 @@ class AuthService(Base):
             base_headers["Referer"] = referer
         return base_headers
 
-    async def authenticate(self, username: str, password: str) -> bool:
-        """Signs into BBC Sounds.
-
-        :param username: The username or email address to sign in with
-        :param password: The password to sign in with
-        :return: True if successfully logged in, False otherwise
-        :rtype: bool
-        :raises LoginFailedError: If the login fails for any reason
-        :raises UnauthorisedError: If the login is not authorised
-        """
-        if self.mock_session:
-            return True
-
-        await self.set_user_info()
-        self.username = username
-        self.password = password
-
-        if self.is_logged_in:
-            self.logger.info("Existing session found, reusing")
-            await self.renew_session()
-            return True
-
+    async def login(self, username: str, password: str) -> bool:
         if not await self.is_uk_listener:
             self.logger.debug("International user")
         else:
@@ -159,14 +77,13 @@ class AuthService(Base):
             error = "Login did not succeed to stage 2 successfully"
             self.logger.error(error)
             raise LoginFailedError(error)
-        await self._do_login(
+        ok = await self._do_login(
             url=password_url,
             username=username,
             password=password,
             referrer_url=username_url,
         )
-
-        return self.is_logged_in
+        return ok
 
     async def _get_form_action(self, html: str) -> Optional[str]:
         """Finds the target of a form action from HTML markup"""
@@ -261,7 +178,7 @@ class AuthService(Base):
         username: str,
         password: str,
         referrer_url: str,
-    ) -> None:
+    ) -> bool:
         """Send both username and password to authenticate."""
         self.logger.debug("Logging in...")
         headers = await self._build_headers(referer=referrer_url)
@@ -276,13 +193,15 @@ class AuthService(Base):
         response_text = await resp.text()
         self._save_file_if_needed(response_text, "login_response.html")
 
-        if not resp.ok or not self.is_logged_in:
+        if not resp.ok:
             error_string = f"BBC sign-in failed: {resp.status}"
             self.logger.error(error_string)
             raise LoginFailedError(error_string)
         else:
-            self.save_cookies_to_disk()
+            if self._on_login_success:
+                self._on_login_success()
             self.logger.debug("Authenticated succesfully")
+            return True
 
     def _save_file_if_needed(self, html: str | bytes, filename: str):
         if self.debug_login:
@@ -290,19 +209,8 @@ class AuthService(Base):
                 html = BeautifulSoup(html, features="html.parser").prettify()
                 page.write(str(html))
 
-    def save_cookies_to_disk(self):
-        """Saved the cookie jar to disk to persist a session."""
-        return self._session._cookie_jar.save(COOKIE_FILE)  # pyright: ignore[reportAttributeAccessIssue]
-
     async def renew_session(self):
         """Renew a session which has expired, but user is logged in."""
         url = self._build_url(url_template=constants.SignedInURLs.RENEW_SESSION)
         await self._make_request("GET", url)
         await self.set_user_info()
-
-    async def logout(self):
-        try:
-            os.remove(COOKIE_FILE)
-        except FileNotFoundError:
-            pass
-        self._session._cookie_jar.clear()

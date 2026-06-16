@@ -1,4 +1,7 @@
+from pathlib import Path
+
 from aiohttp import request
+from appdirs import AppDirs
 
 from sounds.constants import ImageType
 
@@ -64,3 +67,9 @@ async def image_from_spotify(url: str) -> str | None:
         if json_resp.get("thumbnail_url"):
             return json_resp.get("thumbnail_url")
     return None
+
+
+def _get_data_dir():
+    dir = AppDirs(appname="auntie-sounds", version="1").user_data_dir
+    Path(dir).mkdir(parents=True, exist_ok=True)
+    return dir
