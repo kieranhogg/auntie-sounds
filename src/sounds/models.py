@@ -1,7 +1,7 @@
-from dataclasses import asdict, dataclass, fields
+from dataclasses import asdict, dataclass, field, fields
 from datetime import datetime as dt
 from pprint import pformat
-from typing import TYPE_CHECKING, Any, List, Optional, Sequence
+from typing import Any, List, Optional, Sequence
 from warnings import deprecated
 from zoneinfo import ZoneInfo
 
@@ -12,8 +12,7 @@ from sounds.constants import BaseSoundsTypes, PlayableSoundsTypes
 from sounds.utils import image_from_recipe, network_logo
 
 type SoundsTypes = (
-    models.Broadcast
-    | models.Category
+    models.Category
     | models.CategoryItemContainer
     | models.Container
     | models.Collection
@@ -41,24 +40,50 @@ class SerializableMixin:
     def to_dict(self):
         return asdict(self)
 
-
-@dataclass(kw_only=True)
-class BaseObject:
-    """Base class for all objects with common functionality."""
-
-    type: Optional[str] = None
-    uris: Optional[dict] = None
-    recommendation: Optional[dict] = None
-
     def __str__(self):
         return pformat(self)
 
     def __repr__(self):
-        return f"{self.__class__.__name__}({self.id})"
+        if hasattr(self, "id"):
+            return f"{type(self).__name__}({self.id})"
+        return super().__repr__()
+
+
+class IdentifiableMixin:
+    urn: str | None
+
+    @property
+    def item_id(self):
+        if self.urn:
+            return self.urn.rsplit(":", 1)[-1]
+        return getattr(self, "pid", None) or getattr(self, "id", None)
+
+
+class ImageMixin:
+    IMAGE_SIZE = 1280
+
+    def process_image(self):
+        if self.image_url:
+            self.image_url = image_from_recipe(
+                self.image_url,
+                size=self.IMAGE_SIZE,
+            )
 
 
 @dataclass(kw_only=True)
-class Network:
+class BaseObject(SerializableMixin):
+    """Base class for all objects with common functionality."""
+
+    type: Optional[str] = None
+    uris: dict = field(default_factory=dict)
+    recommendation: Optional[dict] = None
+
+    def __post_init__(self):
+        pass
+
+
+@dataclass(kw_only=True)
+class Network(SerializableMixin):
     """Represents a network/brand with basic metadata."""
 
     id: str
@@ -78,38 +103,40 @@ class Network:
         if self.logo_url:
             self.logo_url = network_logo(self.logo_url)
 
-    def __str__(self):
-        return pformat(self)
-
     def __repr__(self):
         # klass = str(type(self)).rsplit(".", 1)[-1].replace("'>", "")
         return f"{type(self).__name__}({self.id})"
 
 
 @dataclass(kw_only=True)
-class Container(BaseObject):
+class Container(BaseObject, IdentifiableMixin):
     """Base container for organizing content - not directly playable."""
 
     id: str
     title: Optional[str] = None
     description: Optional[str] = None
     image_url: Optional[str] = None
-    synopses: Optional[dict] = None
-    titles: Optional[dict] = None
+    synopses: dict = field(default_factory=dict)
+    titles: dict = field(default_factory=dict)
     urn: Optional[str] = None
     network: Optional[Network] = None
     sub_items: Optional[List[SoundsTypes]] = None
 
-    @property
-    def item_id(self):
-        if self.urn is not None:
-            return self.urn.rsplit(":", 1)[1]
-        else:
-            return self.id
-
 
 @dataclass(kw_only=True)
-class PlayableItem(BaseObject):
+class ImageContainer(Container):
+    IMAGE_SIZE = 1280
+
+    def __post_init__(self):
+        if self.image_url:
+            self.image_url = image_from_recipe(
+                self.image_url,
+                size=self.IMAGE_SIZE,
+            )
+
+
+@dataclass(kw_only=True, slots=True)
+class PlayableItem(BaseObject, IdentifiableMixin):
     """Base class for actual playable content."""
 
     id: str
@@ -119,8 +146,8 @@ class PlayableItem(BaseObject):
     duration: Optional[dict] = None
     progress: Optional[dict] = None
     image_url: Optional[str] = None
-    titles: Optional[dict] = None
-    synopses: Optional[dict] = None
+    titles: dict = field(default_factory=dict)
+    synopses: dict = field(default_factory=dict)
     network: Optional[Network] = None
     container: Optional[Container] = None
     start: Optional[dt] = None
@@ -129,22 +156,24 @@ class PlayableItem(BaseObject):
     availability: Optional[dict] = None
     stream: Optional[str] = None
 
-    def __repr__(self):
-        return f"{self.__class__.__name__}({self.id})"
-
     def __post_init__(self):
         self.start = _parse_datetime(self.start)
         self.end = _parse_datetime(self.end)
+        if self.urn:
+            self.pid = self.urn.rsplit(":", 1)[-1]
 
-    @property
-    def item_id(self):
-        if self.urn is not None:
-            return self.urn.rsplit(":", 1)[1]
-        else:
-            return self.pid
+    def is_live(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo) -> bool:
+        if self.start and self.end:
+            now = dt.now(tz=timezone)
+            return self.start <= now < self.end
+        return False
+
+    def has_already_aired(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo) -> bool:
+        if self.end:
+            return dt.now(tz=timezone) > self.end
+        return True
 
 
-@dataclass(kw_only=True)
 class TimedContent:
     """Mixin for content with timing information."""
 
@@ -179,38 +208,17 @@ class Broadcast:
         self.start = _parse_datetime(self.start)
         self.end = _parse_datetime(self.end)
 
-    def __str__(self):
-        return pformat(self)
-
     def __repr__(self):
         return f"{self.__class__.__name__}({self.pid})"
 
 
 @dataclass(kw_only=True)
-class ScheduleItem(PlayableItem):
+class ScheduleItem(ImageMixin, PlayableItem):
     """Represents a scheduled program item."""
 
-    container: Optional[Container] = None
-    stream: Optional[str] = None
-
     def __post_init__(self):
-        if self.image_url:
-            self.image_url = image_from_recipe(self.image_url, size=640)
-        if hasattr(self, "urn") and self.urn is not None:
-            self.pid = self.urn.rsplit(":", 1)[-1]
-        self.start = _parse_datetime(self.start)
-        self.end = _parse_datetime(self.end)
-
-    def is_live(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo) -> bool:
-        if self.start and self.end:
-            now = dt.now(tz=timezone)
-            return self.start <= now < self.end
-        return False
-
-    def has_already_aired(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo) -> bool:
-        if self.end:
-            return dt.now(tz=timezone) > self.end
-        return True
+        super().__post_init__()
+        self.process_image()
 
 
 @dataclass(kw_only=True)
@@ -223,7 +231,7 @@ class Station(Container):
 
 
 @dataclass(kw_only=True)
-class StationSearchResult:
+class StationSearchResult(SerializableMixin, IdentifiableMixin):
     """Represents a search result showing a station. Keys are different enough to warrant a separate model"""
 
     id: str
@@ -244,40 +252,26 @@ class StationSearchResult:
         if self.episode_image_url:
             self.episode_image_url = image_from_recipe(self.episode_image_url, size=640)
 
-    @property
-    def item_id(self):
-        if self.urn is not None:
-            return self.urn.rsplit(":", 1)[1]
-        else:
-            return self.id
-
 
 @dataclass(kw_only=True)
-class LiveProgramme(PlayableItem):
+class LiveProgramme(PlayableItem, ImageMixin):
     def __post_init__(self):
-        if self.image_url:
-            self.image_url = image_from_recipe(self.image_url, size=640)
+        super().__post_init__()
+        self.process_image()
 
 
 @dataclass(kw_only=True)
-class LiveStation(PlayableItem, SerializableMixin):
+class LiveStation(PlayableItem, IdentifiableMixin, ImageMixin):
     local: bool = False
     schedule: Optional["Schedule"] = None
 
     def __post_init__(self):
-        if self.image_url:
-            self.image_url = image_from_recipe(self.image_url, size=640)
-
-    @property
-    def item_id(self):
-        if self.urn is not None:
-            return self.urn.rsplit(":", 1)[1]
-        else:
-            return self.pid
+        super().__post_init__()
+        self.process_image()
 
 
 @dataclass(kw_only=True)
-class Stream(TimedContent):
+class Stream(TimedContent, SerializableMixin, ImageMixin):
     """Represents a station stream."""
 
     id: str
@@ -287,18 +281,18 @@ class Stream(TimedContent):
     show_description: str
     container: Any | None = None
 
-    def __post_init__(self):
-        if self.image_url:
-            self.image_url = network_logo(self.image_url)
-
     @property
     def can_seek(self) -> bool:
         """Indicates if the stream supports seeking."""
         return False  # Always False for now
 
+    def __post_init__(self):
+        super().__post_init__()
+        self.process_image()
+
 
 @dataclass(kw_only=True)
-class Segment(SerializableMixin):
+class Segment(SerializableMixin, ImageMixin):
     """Represents a segment within a stream."""
 
     id: str
@@ -307,10 +301,6 @@ class Segment(SerializableMixin):
     image_url: str | None
     offset: dict
     uris: list[dict[str, str]]
-
-    def __post_init__(self):
-        if self.image_url:
-            self.image_url = image_from_recipe(self.image_url, size=1280)
 
     @property
     def spotify_url(self):
@@ -345,97 +335,67 @@ class Schedule(Container):
 
 # Specific content types
 @dataclass(kw_only=True)
-class RadioShow(PlayableItem, TimedContent):
+class RadioShow(PlayableItem, TimedContent, ImageMixin, IdentifiableMixin):
     """Represents a playable radio show."""
-
-    def __post_init__(self):
-        super().__post_init__()
-        if self.image_url:
-            self.image_url = image_from_recipe(self.image_url, size=1280)
-        if hasattr(self, "urn") and self.urn is not None:
-            self.pid = self.urn.rsplit(":", 1)[-1]
-
-    def __str__(self):
-        return pformat(self)
 
     @property
     def item_id(self):
         return self.pid
 
+    def __post_init__(self):
+        super().__post_init__()
+        self.process_image()
+
 
 # Specific content types
 @dataclass(kw_only=True)
-class RadioClip(PlayableItem, TimedContent):
+class RadioClip(PlayableItem, TimedContent, ImageMixin, IdentifiableMixin):
     """Represents a playable radio clip."""
 
     def __post_init__(self):
-        if self.image_url:
-            self.image_url = image_from_recipe(self.image_url, size=1280)
-        if hasattr(self, "urn") and self.urn is not None:
-            self.pid = self.urn.rsplit(":", 1)[-1]
+        super().__post_init__()
+        self.process_image()
 
 
 @dataclass(kw_only=True)
-class PodcastEpisode(PlayableItem):
+class PodcastEpisode(PlayableItem, ImageMixin, IdentifiableMixin):
     """Represents a playable podcast episode."""
 
     def __post_init__(self):
-        if self.image_url:
-            self.image_url = image_from_recipe(self.image_url, size=1280)
-        if hasattr(self, "urn") and self.urn is not None:
-            self.pid = self.urn.rsplit(":", 1)[-1]
+        super().__post_init__()
+        self.process_image()
 
 
 @dataclass(kw_only=True)
-class Podcast(Container):
+class Podcast(ImageContainer):
     """Represents a podcast container (holds episodes)."""
 
-    def __post_init__(self):
-        if self.image_url:
-            self.image_url = image_from_recipe(self.image_url, size=1280)
-
-    def __str__(self):
-        return pformat(self)
-
-    def __repr__(self):
-        return f"{self.__class__.__name__}({self.id})"
+    pass
 
 
 @dataclass(kw_only=True)
-class RadioSeries(Podcast):
+class RadioSeries(ImageContainer):
     """Represents a radio series container (holds episodes)."""
 
-    def __post_init__(self):
-        if self.image_url:
-            self.image_url = image_from_recipe(self.image_url, size=1280)
-
-    def __str__(self):
-        return pformat(self)
-
-    def __repr__(self):
-        return f"{self.__class__.__name__}({self.id})"
+    pass
 
 
 @dataclass(kw_only=True)
-class Collection(Container):
+class Collection(ImageContainer):
     """Represents a collection container."""
 
-    def __post_init__(self):
-        if self.image_url:
-            self.image_url = image_from_recipe(self.image_url, size=1280)
+    pass
 
 
 @dataclass(kw_only=True)
-class Category(Container):
+class Category(ImageContainer):
     """Represents a content category."""
 
-    def __post_init__(self):
-        if self.image_url:
-            self.image_url = image_from_recipe(self.image_url, size=1280)
+    pass
 
 
 @dataclass(kw_only=True)
-class CategoryItemContainer:
+class CategoryItemContainer(SerializableMixin):
     """Represents a content category container."""
 
     id: Optional[str] = None
@@ -465,7 +425,7 @@ class RecommendedMenuItem(MenuItem):
 
 
 @dataclass(kw_only=True)
-class Menu:
+class Menu(SerializableMixin):
     """Represents a menu container with items."""
 
     sub_items: List[MenuItem] | Sequence[MenuItem] | None
@@ -490,14 +450,14 @@ class PromoItem(Container):
 
 
 @dataclass(kw_only=True)
-class SearchResults:
+class SearchResults(SerializableMixin):
     stations: List[LiveStation | StationSearchResult]
     shows: List[Podcast | RadioShow]
     episodes: List[PodcastEpisode | RadioClip | RadioShow]
 
 
 def model_factory(object):
-    from .constants import ContainerType, IDType, ItemType, ItemURN
+    from sounds.constants import ContainerType, IDType, ItemType, ItemURN
 
     schema_type = None
     new_type = None
