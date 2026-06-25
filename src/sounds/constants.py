@@ -35,12 +35,11 @@ class SignedInURLs(Enum):
 class URLs(Enum):
     # Not yet used
     """
-            /v2/networks - Provides the list of all the v2 networks
-            /v2/networks/playable - Provides the list of all the playable networks
-            /v2/networks/{id}/playable - Provides the network playable item by network ID. <span>🎶</span> Green Day
-            /radio/networks.json - All iPlayer Radio networks - contains business logic for masterbrand and service relationships
+    /v2/networks - Provides the list of all the v2 networks
+    /v2/networks/playable - Provides the list of all the playable networks
+    /v2/networks/{id}/playable - Provides the network playable item by network ID. <span>🎶</span> Green Day
+    /radio/networks.json - All iPlayer Radio networks - contains business logic for masterbrand and service relationships
     /v2/services/{sid}/tracks/latest/playable - Retrieve list of tracks as playable items for a service <span>🎶</span> Deftones
-
     """
 
     # Auth URLs
@@ -86,6 +85,7 @@ class URLs(Enum):
     PLAYLIST = "https://www.bbc.co.uk/programmes/{pid}/playlist.json"
     COLLECTIONS_FULL = "https://rms.api.bbc.co.uk/v2/collections/{pid}/members/container?experience=domestic&offset={offset}&limit={limit}"
     COLLECTIONS = "https://rms.api.bbc.co.uk/v2/collections/{pid}/members/container?experience=domestic"
+    CURATIONS = "https://rms.api.bbc.co.uk/v2/curations/{pid}/members/playable?experience=domestic"
 
     # Menu, search, etc.
     EXPERIENCE_MENU = "https://rms.api.bbc.co.uk/v2/my/experience/inline/listen"
