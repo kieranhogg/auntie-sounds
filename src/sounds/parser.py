@@ -97,38 +97,29 @@ def parse_node(node) -> SoundsTypes | List[SoundsTypes] | None:
 
 def parse_menu(json_data) -> Menu:
     menu = Menu(sub_items=[])
-    if "data" in json_data:
-        items = [parse_node(item) for item in json_data["data"] if item is not None]
-        menu.sub_items = [
-            sub_menu for sub_menu in items if isinstance(sub_menu, MenuItem)
-        ]
 
-    # Post-process any menu items containing recommendations to make them recommendations
-    # FIXME bad, bad, bad
-    new_sub_menu = []
-    if menu and menu.sub_items:
-        for menu_item in menu.sub_items:
-            # If a menu item contains objects which are recommended, convert it to a recommended folder
-            if (
-                hasattr(menu_item, "sub_items")
-                and menu_item.sub_items
-                and len(menu_item.sub_items) > 0
-            ):
-                if (
-                    menu_item.sub_items[0]
-                    and hasattr(menu_item.sub_items[0], "recommendation")
-                    and menu_item.sub_items[0].recommendation is not None
-                ):
-                    data = {}
-                    for field in fields(MenuItem):
-                        data[field.name] = getattr(menu_item, field.name)
+    if "data" not in json_data:
+        return menu
 
-                    new_sub_menu.append(RecommendedMenuItem(**data))
-                    continue
-                if isinstance(menu_item, MenuItem):
-                    new_sub_menu.append(menu_item)
-    menu.sub_items = new_sub_menu
+    nodes = (parse_node(item) for item in json_data["data"] if item is not None)
+    menu_items = [node for node in nodes if isinstance(node, MenuItem)]
+
+    # Promote any menu item to a "recommended" variant if its first child is a recommendation
+    menu.sub_items = [
+        _promote_if_recommended(item) for item in menu_items if item.sub_items
+    ]
     return menu
+
+
+def _promote_if_recommended(menu_item: MenuItem) -> MenuItem:
+    """Convert menu_item to RecommendedMenuItem if its first sub-item is a recommendation."""
+    first_child = menu_item.sub_items[0]
+    if getattr(first_child, "recommendation", None) is not None:
+        data = {
+            field.name: getattr(menu_item, field.name) for field in fields(MenuItem)
+        }
+        return RecommendedMenuItem(**data)
+    return menu_item
 
 
 def parse_schedule(json_data):
@@ -139,6 +130,8 @@ def parse_schedule(json_data):
 def parse_container(
     json_data,
 ) -> SoundsTypes | List[SoundsTypes] | None:
+    if not json_data:
+        return None
     if "data" in json_data:
         if (
             len(json_data["data"]) == 2
