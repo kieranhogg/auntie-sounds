@@ -43,11 +43,6 @@ class AuthService(Base):
         return base_headers
 
     async def login(self, username: str, password: str) -> bool:
-        if not await self.is_uk_listener:
-            self.logger.debug("International user")
-        else:
-            self.logger.debug("UK user")
-
         username_url = await self._get_login_form()
         password_url = await self._submit_username(url=username_url, username=username)
         if password_url == username_url:
