@@ -221,6 +221,8 @@ class ScheduleItem(ImageMixin, PlayableItem):
 
     def __post_init__(self):
         super().__post_init__()
+        self.start = _parse_datetime(self.start)
+        self.end = _parse_datetime(self.end)
         self.process_image()
 
 
