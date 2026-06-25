@@ -33,7 +33,7 @@ class Base(ABC):
             self.logger = logger
         else:
             self.logger = logging.getLogger(__name__)
-        self._timeout = timeout or aiohttp.ClientTimeout(total=10)
+        self._timeout = timeout or self.DEFAULT_TIMEOUT
         self.mock_session = mock_session
 
     async def _make_request(
@@ -42,7 +42,7 @@ class Base(ABC):
         """Makes a HTTP request using the shared session and state"""
         self.logger.debug(f"Making HTTP {method} request to {url}")
         try:
-            kwargs.setdefault("timeout", self._timeout)
+            kwargs.setdefault("timeout", self._timeout or self.DEFAULT_TIMEOUT)
             kwargs.setdefault("ssl", True)
             kwargs.setdefault("allow_redirects", True)
 
