@@ -586,7 +586,9 @@ def model_factory(object):
                 print("No IT found")
     elif object_type in ContainerType or object_type in BaseSoundsTypes:
         # This is a nested/parent container, work out which
-        if urn == ItemURN.COLLECTION.value:
+        if object_type == ContainerType.ITEM.value:
+            new_type = Playlist
+        elif urn == ItemURN.COLLECTION.value:
             new_type = Collection
         elif urn == ItemURN.CATEGORY.value:
             new_type = Category
