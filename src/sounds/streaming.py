@@ -1,13 +1,16 @@
+from functools import partial
 from typing import TYPE_CHECKING, List, Literal, Optional, cast
 
 from sounds import constants
-from sounds.auth import AuthService, login_required
+from sounds.auth import AuthService
 from sounds.base import Base
 from sounds.constants import PlayStatus, SignedInURLs, URLs
 from sounds.exceptions import APIResponseError, InvalidFormatError, NotFoundError
 from sounds.models import (
     Category,
     Collection,
+    Container,
+    Menu,
     PlayableItem,
     Podcast,
     PodcastEpisode,
@@ -18,6 +21,8 @@ from sounds.models import (
     Segment,
 )
 from sounds.parser import parse_container, parse_menu, parse_node, parse_search
+from sounds.requests import RequestManager
+from sounds.user import UserService
 from sounds.utils import image_from_spotify
 
 from .schedule import ScheduleService
@@ -31,13 +36,29 @@ class StreamingService(Base):
         self,
         auth: AuthService,
         schedules: ScheduleService,
+        user: UserService,
+        requests: RequestManager,
+        *args,
         **kwargs,
     ):
-        super().__init__(**kwargs)
+        super().__init__(*args, **kwargs)
         self.auth = auth
         self.schedules = schedules
+        self.user = user
+        self.requests: RequestManager = requests
 
-    async def get_postcasts(self):
+    async def get_stream_jwt_token(self, station_id):
+        """Requests a JWT token for a given station.
+
+        For now, this also works for non-UK listeners, returning a non-UK stream when used."""
+        json = await self._get_json(
+            url_template=URLs.JWT, url_args={"station_id": station_id}
+        )
+        if "token" not in json:
+            raise APIResponseError(f"Couldn't get JWT token: {json}")
+        return json.get("token")
+
+    async def get_postcasts(self) -> Menu:
         podcasts = parse_menu(
             await self._get_json(url_template=constants.URLs.PODCASTS)
         )
@@ -51,13 +72,13 @@ class StreamingService(Base):
             raise InvalidFormatError("Must be called with one of: urn, pid")
         if urn:
             # If we have the URN we can look up the podcast container
-            podcast_container = await self.get_container(urn)
+            podcast_container = self.requests.run(partial(self.get_container, urn))
             if podcast_container and type(podcast_container) is list:
                 podcast = next(
                     (
                         podcast
                         for podcast in podcast_container
-                        if type(podcast) is Podcast
+                        if isinstance(podcast, (Podcast, RadioSeries))
                     ),
                     None,
                 )
@@ -65,7 +86,7 @@ class StreamingService(Base):
                 podcast = podcast_container
 
             if podcast:
-                podcast = cast(Podcast, podcast)
+                # podcast = cast(Podcast, podcast)
                 if not include_episodes and getattr(podcast, "sub_items", None):
                     podcast.sub_items = []
         elif pid:
@@ -82,7 +103,7 @@ class StreamingService(Base):
                             urn=podcast_episodes[0].container.urn
                         )
 
-        if not podcast or not isinstance(podcast, Podcast):
+        if not podcast or not isinstance(podcast, (Podcast, RadioSeries)):
             raise NotFoundError(f"Couldn't get podcast - urn: {urn}, pid: {pid}")
         return podcast
 
@@ -123,11 +144,12 @@ class StreamingService(Base):
     async def get_live_stream(
         self, station_id: str, stream_format: Literal["hls"] | Literal["dash"] = "hls"
     ) -> Optional[str]:
-        jwt_token = await self.get_jwt_token(station_id)
+        jwt_token = await self.get_stream_jwt_token(station_id)
 
         json_resp = await self._get_json(
             url_template=URLs.MEDIASET,
             url_args={"station_id": station_id, "jwt_auth_token": jwt_token},
+            headers={"Bearer": jwt_token},
         )
         stream = None
         try:
@@ -137,6 +159,8 @@ class StreamingService(Base):
             stream = self.get_best_stream(streams, prefer_type=stream_format)
             self.logger.debug(f"Found stream: {stream}")
         except StopIteration, KeyError:
+            self.logger.error("No valid stream found")
+            self.logger.debug(json_resp)
             raise RuntimeError("No valid stream found")
         if not stream:
             return None
@@ -186,7 +210,6 @@ class StreamingService(Base):
             raise RuntimeError("No valid stream found")
         return stream
 
-    @login_required
     async def get_by_pid(
         self,
         pid,
@@ -194,7 +217,8 @@ class StreamingService(Base):
         stream_format: Literal["hls"] | Literal["dash"] = "hls",
     ) -> "SoundsTypes":
         self.logger.debug(f"Getting playable item with PID {pid}")
-        if self.auth.is_logged_in:
+
+        if await self.user.is_uk_listener() and self.user.login_details_provided:
             json_resp = await self._get_json(
                 url_template=SignedInURLs.PID_PLAYABLE, url_args={"pid": pid}
             )
@@ -229,7 +253,7 @@ class StreamingService(Base):
             return playable_container
         return None
 
-    async def get_container(self, urn):
+    async def get_container(self, urn) -> list[SoundsTypes] | SoundsTypes | Container:
         json_resp = await self._get_json(
             url_template=URLs.CONTAINER_URL, url_args={"urn": urn}
         )
@@ -283,6 +307,13 @@ class StreamingService(Base):
             url_template=URLs.COLLECTIONS, url_args={"pid": pid}
         )
         return cast("Collection", parse_node(json_resp))
+
+    async def get_playlist_contents(self, pid) -> list[SoundsTypes]:
+        """Gets a curation/playlist."""
+        json_resp = await self._get_json(
+            url_template=URLs.CURATIONS, url_args={"pid": pid}
+        )
+        return parse_container(json_resp) if json_resp else []
 
     async def search(self, query) -> SearchResults:
         json_resp = await self._get_json(
