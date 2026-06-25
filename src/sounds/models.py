@@ -426,7 +426,26 @@ class CollectionItemContainer(CategoryItemContainer):
 class MenuItem(Container):
     """Represents a menu item container."""
 
-    pass
+    def get(
+        self, key: str
+    ) -> (
+        CategoryItemContainer
+        | Container
+        | LiveStation
+        | PodcastEpisode
+        | RadioClip
+        | RadioShow
+        | Segment
+        | ScheduleItem
+        | StationSearchResult
+        | None
+    ):
+        """Get a sub-menu item by ID."""
+        if self.sub_items:
+            for item in self.sub_items:
+                if hasattr(item, "id") and item.id == key:
+                    return item
+        return None
 
 
 @dataclass(kw_only=True)
