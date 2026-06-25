@@ -20,6 +20,8 @@ from sounds.exceptions import (
 class Base(ABC):
     """Base class for other classes to inherit shared session and state"""
 
+    DEFAULT_TIMEOUT = aiohttp.ClientTimeout(total=10)
+
     def __init__(
         self,
         session: aiohttp.ClientSession,
