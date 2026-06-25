@@ -62,6 +62,9 @@ class IdentifiableMixin:
 class ImageMixin:
     IMAGE_SIZE = 1280
 
+    def __post_init__(self):
+        self.process_image()
+
     def process_image(self):
         if self.image_url:
             self.image_url = image_from_recipe(
