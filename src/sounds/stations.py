@@ -1,13 +1,16 @@
 import itertools
+from datetime import datetime as dt
+from datetime import timedelta
 from typing import List, Literal, Optional
 
 from sounds import constants
 from sounds.base import Base
 from sounds.constants import URLs
-from sounds.models import LiveStation, Network
+from sounds.models import LiveStation, MenuItem, Network
 from sounds.parser import parse_container, parse_node
 from sounds.schedule import ScheduleService
 from sounds.streaming import StreamingService
+from sounds.utils import _date_with_ordinal
 
 
 class StationService(Base):
@@ -15,11 +18,15 @@ class StationService(Base):
         self,
         streaming: StreamingService,
         schedules: ScheduleService,
+        *args,
         **kwargs,
     ):
-        super().__init__(**kwargs)
+        super().__init__(*args, **kwargs)
         self.streams = streaming
         self.schedules = schedules
+
+        # Simple cache to prevent fetching all stations each time
+        self.stations: list[LiveStation] = []
 
     async def get_stations_detailed(self) -> Optional[List[Network]]:
         json_resp = await self._get_json(url_template=URLs.NETWORKS_LIST)
@@ -43,29 +50,33 @@ class StationService(Base):
         :return: A list of Station objects
         :rtype: list[Station]
         """
-        json_resp = await self._get_json(url_template=URLs.STATIONS)
-        self.logger.log(constants.VERBOSE_LOG_LEVEL, "Getting station list...")
-        self.logger.log(constants.VERBOSE_LOG_LEVEL, json_resp)
-
-        # Append a key to assign if they are local stations or not
-        for station in json_resp["data"][0]["data"]:
-            station["local"] = False
-
-        for station in json_resp["data"][1]["data"]:
-            station["local"] = True
-
-        if include_local:
-            # Flatten the national and local stations sublists
-            stations = list(
-                itertools.chain(
-                    json_resp["data"][0]["data"], json_resp["data"][1]["data"]
-                )
-            )
-
+        if self.stations:
+            stations_list = self.stations
         else:
-            # Just get the national data list
-            stations = json_resp["data"][0]["data"]
-        stations_list = parse_node(stations)
+            json_resp = await self._get_json(url_template=URLs.STATIONS)
+            self.logger.log(constants.VERBOSE_LOG_LEVEL, "Getting station list...")
+            self.logger.log(constants.VERBOSE_LOG_LEVEL, json_resp)
+
+            # Append a key to assign if they are local stations or not
+            for station in json_resp["data"][0]["data"]:
+                station["local"] = False
+
+            for station in json_resp["data"][1]["data"]:
+                station["local"] = True
+
+            if include_local:
+                # Flatten the national and local stations sublists
+                stations = list(
+                    itertools.chain(
+                        json_resp["data"][0]["data"], json_resp["data"][1]["data"]
+                    )
+                )
+
+            else:
+                # Just get the national data list
+                stations = json_resp["data"][0]["data"]
+            stations_list = parse_node(stations)
+            self.stations = stations_list
 
         if isinstance(stations_list, list):
             all_stations: List[LiveStation] = [
@@ -74,11 +85,13 @@ class StationService(Base):
 
             if include_streams and isinstance(stations_list, list):
                 for station in all_stations:
-                    station.stream = await self.streams.get_live_stream(station.id)
+                    if not station.stream:
+                        station.stream = await self.streams.get_live_stream(station.id)
 
             if include_schedules and isinstance(stations_list, list):
                 for station in all_stations:
-                    station.schedule = await self.schedules.get_schedule(station.id)
+                    if not station.schedule:
+                        station.schedule = await self.schedules.get_schedule(station.id)
             return all_stations
         return []
 
@@ -171,3 +184,50 @@ class StationService(Base):
         )
         broadcast = parse_node(json_resp)
         return broadcast
+
+    async def get_station_schedule_menu(self, inclue_local: bool = False):
+
+        return MenuItem(
+            id="stations",
+            title="Station & Schedules",
+            sub_items=[
+                await self.get_station_menu(station.id)
+                for station in await self.get_stations(include_local=inclue_local)
+            ],
+        )
+
+    async def get_station_menu(self, station_id: str) -> MenuItem:
+        station = await self.get_station(station_id)
+        if station and isinstance(station, LiveStation):
+            schedule = [
+                MenuItem(id=dt.now().strftime("%Y-%m-%d"), title="Today", sub_items=[]),
+                MenuItem(
+                    id=(dt.now() - timedelta(days=1)).strftime("%Y-%m-%d"),
+                    title="Yesterday",
+                    sub_items=[],
+                ),
+            ]
+            # Maximum is 30 days prior
+            for diff in range(28):
+                this_date = dt.now() - timedelta(days=2 + diff)
+                schedule.extend(
+                    [
+                        MenuItem(
+                            id=this_date.strftime("%Y-%m-%d"),
+                            title=_date_with_ordinal(this_date),
+                            sub_items=[],
+                        )
+                    ]
+                )
+            return MenuItem(
+                id=station_id,
+                title=station.network.short_title
+                if station.network
+                else "Unknown Station",
+                image_url=station.network.logo_url if station.network else None,
+                sub_items=schedule,
+            )
+        return None
+        return MenuItem(
+            id=f"station-{station_id}",
+        )
