@@ -1,3 +1,4 @@
+from datetime import datetime
 from pathlib import Path
 
 from aiohttp import request
@@ -69,7 +70,17 @@ async def image_from_spotify(url: str) -> str | None:
     return None
 
 
-def _get_data_dir():
+def _get_data_dir() -> Path:
     dir = AppDirs(appname="auntie-sounds", version="1").user_data_dir
     Path(dir).mkdir(parents=True, exist_ok=True)
     return dir
+
+
+def _date_with_ordinal(date_obj: datetime, format_string: str = "%A %-d$ %B") -> str:
+    date_formatted = date_obj.strftime(format_string)
+    if 4 <= date_obj.day <= 20 or 24 <= date_obj.day <= 30:
+        ordinal = "th"
+    else:
+        ordinal = ["st", "nd", "rd"][date_obj.day % 10 - 1]
+
+    return date_formatted.replace("$", ordinal)
