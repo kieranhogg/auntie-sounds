@@ -38,7 +38,11 @@ def _parse_datetime(value):
 
 class SerializableMixin:
     def to_dict(self):
-        return asdict(self)
+        return asdict(self)  # ty:ignore[invalid-argument-type]
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "Segment":
+        return cls(**data)  # ty:ignore[invalid-return-type]
 
     def __str__(self):
         return pformat(self)
