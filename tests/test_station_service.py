@@ -4,11 +4,12 @@ import pytest
 
 from sounds.stations import StationService
 
+pytestmark = pytest.mark.anyio
+
 
 class TestStationService:
     """Tests for station service"""
 
-    @pytest.mark.asyncio
     async def test_get_stations_exclude_local(self, mock_session, mock_logger):
         """Test getting stations excluding local stations"""
         mock_streaming = AsyncMock()
@@ -21,7 +22,6 @@ class TestStationService:
             schedules=mock_schedule,
         )
 
-        # Mock the API response
         mock_response = AsyncMock()
         mock_response.json = AsyncMock(
             return_value={
@@ -49,7 +49,5 @@ class TestStationService:
         )
         mock_session.request = AsyncMock(return_value=mock_response)
 
-        # The actual test would need proper mock data structure
-        # This is a simplified version
         result = await service.get_stations(include_local=False)
         assert isinstance(result, list)

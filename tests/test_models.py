@@ -1,8 +1,12 @@
 from datetime import datetime as dt
 
+import pytest
 import pytz
+from pytest import MarkDecorator
 
 from sounds.models import Container, Menu, MenuItem, PlayableItem, ScheduleItem
+
+pytestmark: MarkDecorator = pytest.mark.anyio
 
 
 class TestModels:

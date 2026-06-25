@@ -5,11 +5,12 @@ import pytest
 from sounds.exceptions import InvalidFormatError
 from sounds.schedule import ScheduleService
 
+pytestmark = pytest.mark.anyio
+
 
 class TestScheduleService:
     """Tests for schedule service"""
 
-    @pytest.mark.asyncio
     async def test_get_schedule_invalid_date_format(self, mock_session, mock_logger):
         """Test get_schedule with invalid date format"""
         service = ScheduleService(session=mock_session, logger=mock_logger)
@@ -17,7 +18,6 @@ class TestScheduleService:
         with pytest.raises(InvalidFormatError):
             await service.get_schedule("bbc_radio_one", date="2025/01/15")
 
-    @pytest.mark.asyncio
     async def test_get_schedule_valid_date_format(self, mock_session, mock_logger):
         """Test get_schedule with valid date format"""
         mock_session.request = AsyncMock()
@@ -37,7 +37,6 @@ class TestScheduleService:
 
         service = ScheduleService(session=mock_session, logger=mock_logger)
 
-        # This should not raise an exception
         try:
             await service.get_schedule("bbc_radio_one", date="2025-01-15")
         except InvalidFormatError:

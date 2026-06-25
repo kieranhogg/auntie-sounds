@@ -3,11 +3,12 @@ import pytz
 
 from sounds.client import SoundsClient
 
+pytestmark: MarkDecorator = pytest.mark.anyio
+
 
 class TestIntegration:
     """Integration tests for the client"""
 
-    @pytest.mark.asyncio
     async def test_client_initialization(self):
         """Test SoundsClient initialization"""
         client = SoundsClient(timezone=pytz.UTC)
@@ -19,7 +20,6 @@ class TestIntegration:
         assert client.personal is not None
         await client.close()
 
-    @pytest.mark.asyncio
     async def test_client_context_manager(self):
         """Test SoundsClient as context manager"""
         async with SoundsClient(timezone=pytz.UTC) as client:
