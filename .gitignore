@@ -18,4 +18,3 @@ local
 .env
 .vscode/settings.json
 .idea
-uv.lock
