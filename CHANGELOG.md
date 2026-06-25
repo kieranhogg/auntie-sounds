@@ -1,3 +1,13 @@
+v2.0
+
+API Changes
+* `SoundsClient.authenticate()` has been removed, username and password are passed directly to `SoundsClient()`
+* The `Broadcast` model has been deprecated
+
+v1.1.8
+
+* Fix: Fix NameError when running in Music Assistant
+
 v1.1.7
 
 * Fix: Always get local stations when finding a station with `Stations.get_station()`
