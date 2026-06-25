@@ -11,30 +11,6 @@ from sounds.exceptions import LoginFailedError, NotFoundError, UnauthorisedError
 from sounds.utils import _get_data_dir
 
 
-def login_required(method):
-    """Decorator to catch expired sessions and reauthenticate before trying again."""
-
-    @wraps(method)
-    async def _impl(self, *method_args, **method_kwargs):
-        self.logger.debug("@login_required")
-        try:
-            method_output = await method(self, *method_args, **method_kwargs)
-            self.logger.debug(f"Ran method {method}")
-        except UnauthorisedError:
-            self.logger.debug("Hit error")
-            if Path.exists(COOKIE_FILE):
-                # We have a session, so renew
-                await self.auth.renew_session()
-                self.logger.debug(f"Logged in: {self.auth.is_logged_in}")
-                method_output = await method(self, *method_args, **method_kwargs)
-                self.logger.debug("Rewned session and ran method")
-            else:
-                raise
-        return method_output
-
-    return _impl
-
-
 class AuthService(Base):
     """Service to handle authentication with BBC Sounds."""
 
