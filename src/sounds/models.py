@@ -554,8 +554,7 @@ def model_factory(object):
                         new_type = PromoItem
                     case _:
                         print(f"No playableitem: {object} {type(object)}")
-            case ItemType.INLINE_HEADER_MODULE.value:
-                new_type = Podcast
+
             case ItemType.DISPLAY_ITEM.value:
                 new_type = DisplayItem
                 # new_type = object.item
