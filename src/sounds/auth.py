@@ -1,4 +1,3 @@
-from functools import wraps
 from pathlib import Path
 from typing import Optional
 
@@ -7,7 +6,8 @@ from bs4 import BeautifulSoup, Tag
 from sounds import constants
 from sounds.base import Base
 from sounds.constants import URLs
-from sounds.exceptions import LoginFailedError, NotFoundError, UnauthorisedError
+from sounds.exceptions import LoginFailedError, NotFoundError
+from sounds.session import Session
 from sounds.utils import _get_data_dir
 
 
