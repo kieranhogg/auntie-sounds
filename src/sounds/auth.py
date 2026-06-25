@@ -14,7 +14,8 @@ from sounds.utils import _get_data_dir
 class AuthService(Base):
     """Service to handle authentication with BBC Sounds."""
 
-    def __init__(self, on_login_success=None, *args, **kwargs):
+    def __init__(self, state: Session, on_login_success=None, *args, **kwargs):
+        super().__init__(state=state, *args, **kwargs)
         self.user_info = None
         self.debug_login = False
         self._on_login_success = on_login_success
