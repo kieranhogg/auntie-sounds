@@ -24,7 +24,6 @@ class AuthService(Base):
         if kwargs.get("mock_session"):
             self.mock_session = True
             return
-        super().__init__(**kwargs)
 
         if self.debug_login:
             # Can't move this to the above conditional as self.logger not initialised yet
