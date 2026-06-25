@@ -6,13 +6,13 @@ from pathlib import Path
 import aiohttp
 import pytz
 from colorlog import ColoredFormatter
-from yarl import URL
 
 from sounds import constants
 from sounds.auth import AuthService
 from sounds.exceptions import InvalidArgumentsError
-from sounds.models import Segment, Station, Stream
-from sounds.personal import PersonalService
+from sounds.models import Menu, MenuItem, Segment, Station, Stream
+from sounds.personal import MenuRecommendationOptions, PersonalService
+from sounds.requests import RequestManager
 from sounds.schedule import ScheduleService
 from sounds.session import Session
 from sounds.stations import StationService
@@ -54,8 +54,9 @@ class SoundsClient:
         self.current_segment: Segment | None = None
         self.timeout = aiohttp.ClientTimeout(total=10)
         self.mock_session = mock_session
-        self.state = Session(cookie_file)
-
+        self.state = Session(
+            cookie_file=cookie_file, logger=self.logger, mock_session=mock_session
+        )
         if timezone:
             self.timezone = timezone
         else:
@@ -82,19 +83,40 @@ class SoundsClient:
             **kwargs,
         }
 
-        self.auth = AuthService(on_login_success=self.save_cookies, **service_kwargs)
-        self.schedules = ScheduleService(**service_kwargs)
-        self.user = UserService()
+        self.auth = AuthService(
+            state=self.state, on_login_success=self.save_cookies, **service_kwargs
+        )
+        self.schedules = ScheduleService(state=self.state, **service_kwargs)
+        self.user = UserService(
+            state=self.state,
+            login_details_provided=(
+                self.username is not None and self.password is not None
+            ),
+            **service_kwargs,
+        )
 
+        self.requests = RequestManager(
+            auth=self.auth,
+            state=self.state,
+            logger=self.logger,
+            username=self.username,
+            password=self.password,
+        )
         self.streaming = StreamingService(
-            auth=self.auth, schedules=self.schedules, **service_kwargs
+            auth=self.auth,
+            requests=self.requests,
+            schedules=self.schedules,
+            user=self.user,
+            **service_kwargs,
         )
         self.stations = StationService(
             streaming=self.streaming,
             schedules=self.schedules,
             **service_kwargs,
         )
-        self.personal = PersonalService(auth=self.auth, **service_kwargs)
+        self.personal = PersonalService(
+            auth=self.auth, requests=self.requests, **service_kwargs
+        )
 
     def setLogger(self, log_level=None):
         logging.addLevelName(constants.VERBOSE_LOG_LEVEL, "VERBOSE")
@@ -125,7 +147,7 @@ class SoundsClient:
         else:
             self.logger.setLevel(constants.VERBOSE_LOG_LEVEL)
 
-    async def authenticate(self) -> bool:
+    async def login(self) -> bool:
         """Signs into BBC Sounds.
 
         :param username: The username or email address to sign in with
@@ -143,7 +165,7 @@ class SoundsClient:
                 "Can't authenticate without username and password set"
             )
 
-        if self.state.is_logged_in:
+        if self.has_session_cookie:
             self.logger.info("Existing session found, reusing")
             ok = await self.auth.renew_session()
             return ok
@@ -152,6 +174,7 @@ class SoundsClient:
 
         if ok:
             self.state.save()
+            await self.user.refresh()
 
         return ok
 
@@ -163,26 +186,37 @@ class SoundsClient:
 
     @property
     def has_session_cookie(self) -> bool:
-        """Check if we have a valid session."""
-        self.logger.debug("Checking if we are logged in...")
-        if self.mock_session:
-            self.logger.debug("mock_session=True")
+        """Check if we have a cookie present."""
+        return self.state.has_session_cookie
 
-            return True
-
-        jar = self._session.cookie_jar
-        existing_cookie = (
-            constants.COOKIE_ID
-            in jar.filter_cookies(URL(constants.URLs.COOKIE_BASE.value))
-        ) or (
-            constants.COOKIE_ID
-            in jar.filter_cookies(URL(constants.URLs.COOKIE_BASE_I18N.value))
+    async def get_menu(
+        self,
+        include_local_stations: bool = False,
+        recommendations: MenuRecommendationOptions = MenuRecommendationOptions.INCLUDE,
+    ):
+        """Get the main Sounds menu."""
+        explore_all = await self.personal.get_explore_all()
+        stations = await self.stations.get_stations(
+            include_local=include_local_stations
         )
-        if existing_cookie:
-            self.logger.debug("Existing cookie found.")
+        listen_live = MenuItem(
+            title="Listen Live", id="listen_live", sub_items=stations
+        )
+        schedule = await self.stations.get_station_schedule_menu()
+        if await self.user.is_uk_listener() and self.username and self.password:
+            # UK listener, logged in, get menu from Sounds API
+            menu = await self.personal.get_uk_menu(recommendations=recommendations)
+            menu.sub_items.pop(0)
+            menu.sub_items.insert(0, listen_live)
+            menu.sub_items.insert(1, schedule)
+            menu.sub_items.insert(len(menu.sub_items), explore_all)
+        elif await self.user.is_uk_listener():
+            # UK listener, not logged in, construct UK menu
+            menu = Menu(sub_items=[listen_live, schedule, explore_all])
         else:
-            self.logger.debug("No cookies found.")
-        return existing_cookie
+            # Construct internaional menu
+            menu = Menu(sub_items=[listen_live, explore_all])
+        return menu
 
     async def logout(self):
         self.logger.debug("Logging out...")
