@@ -411,6 +411,13 @@ class CategoryItemContainer(SerializableMixin):
 
 
 @dataclass(kw_only=True)
+class Playlist(ImageContainer):
+    """Represents a playlist container."""
+
+    pass
+
+
+@dataclass(kw_only=True)
 class CollectionItemContainer(CategoryItemContainer):
     """Represents a content collection container."""
 
