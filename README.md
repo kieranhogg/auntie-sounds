@@ -30,8 +30,8 @@ from sounds.client import SoundsClient
 
 async def main():
     try:
-        client = SoundsClient()
-        if await client.auth.authenticate(username, password):
+        client = SoundsClient(username="username", password="password")
+        if await client.login():
             stations = await client.stations.get_stations()
             schedule = await client.schedules.get_schedule("bbc_6music", date="2025-10-26")
             bbc_6music = await client.stations.get_station("bbc_6music", include_stream=True)
@@ -48,4 +48,4 @@ asyncio.run(main())
 
 ### Documentation
 
-Further documentation can be found in the documentation, the current stable branch is v1.1.x: https://auntie-sounds.readthedocs.io/en/v1.1/
+Further documentation can be found in the documentation, the current stable branch is v2.0.x: https://auntie-sounds.readthedocs.io/en/v2.0/
