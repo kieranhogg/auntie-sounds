@@ -14,14 +14,14 @@ dependencies = [
 ]
 
 [build-system]
-requires = ["uv_build>=0.11.21,<0.12"]
+requires = ["uv_build>=0.11.8,<0.12"]
 build-backend = "uv_build"
 
 [tool.ty.environment]
 root = ["./src"]
 
 [tool.uv]
-required-version = ">=0.11.21,<0.12"
+required-version = ">=0.11.8,<0.12"
 
 [tool.uv.build-backend]
 package-dir = "src"
