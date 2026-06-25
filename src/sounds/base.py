@@ -26,6 +26,7 @@ class Base(ABC):
         logger: logging.Logger | None = None,
         timeout: Optional[aiohttp.ClientTimeout] = None,
         mock_session: bool = False,
+        *args,
         **kwargs,
     ):
         self._session = session
