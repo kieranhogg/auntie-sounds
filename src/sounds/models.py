@@ -323,7 +323,7 @@ class Schedule(Container):
 
     id: str
     # title is the date of the schedule
-    # sub_items: Optional[List[ScheduleItem]] = None
+    sub_items: Optional[List[ScheduleItem]]
 
     def get_current_item(
         self,
