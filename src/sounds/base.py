@@ -164,11 +164,3 @@ class Base(ABC):
         except aiohttp.ClientError as e:
             self.logger.error(f"HTTP request failed: {method} {url} - {e}")
             raise SoundsException(f"Request failed: {e}")
-
-    async def get_jwt_token(self, station_id):
-        json = await self._get_json(
-            url_template=URLs.JWT, url_args={"station_id": station_id}
-        )
-        if "token" not in json:
-            raise APIResponseError(f"Couldn't get JWT token: {json}")
-        return json.get("token")
