@@ -180,8 +180,8 @@ class AuthService(Base):
                 html = BeautifulSoup(html, features="html.parser").prettify()
                 page.write(str(html))
 
-    async def renew_session(self):
+    async def renew_session(self) -> bool:
         """Renew a session which has expired, but user is logged in."""
         url = self._build_url(url_template=constants.SignedInURLs.RENEW_SESSION)
         await self._make_request("GET", url)
-        await self.set_user_info()
+        return True
