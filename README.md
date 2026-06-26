@@ -48,4 +48,4 @@ asyncio.run(main())
 
 ### Documentation
 
-Further documentation can be found in the documentation, the current stable branch is v2.0.x: https://auntie-sounds.readthedocs.io/en/
+Further documentation can be found in the documentation: https://auntie-sounds.readthedocs.io/en/latest/
