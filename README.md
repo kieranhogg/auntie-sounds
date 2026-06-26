@@ -48,4 +48,4 @@ asyncio.run(main())
 
 ### Documentation
 
-Further documentation can be found in the documentation: https://auntie-sounds.readthedocs.io/en/latest/
+Further documentation can be found in the documentation: https://auntie-sounds.readthedocs.io/en/stable/
