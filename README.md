@@ -9,7 +9,7 @@ A library for interacting with BBC radio stations via an interface to BBC Sounds
 ✅ Signing into a BBC Sounds account<br />
 ✅ Listing current station programming<br />
 ✅ Obtaining a stream to listen to a station<br />
-✅ Getting the current and previous segments (typically songs) on a station
+✅ Getting the current and previous segments (typically songs) on a station<br />
 ✅ Displaying and listening to previous shows
 
 ### Not implemented
@@ -48,4 +48,4 @@ asyncio.run(main())
 
 ### Documentation
 
-Further documentation can be found in the documentation, the current stable branch is v2.0.x: https://auntie-sounds.readthedocs.io/en/v2.0/
+Further documentation can be found in the documentation, the current stable branch is v2.0.x: https://auntie-sounds.readthedocs.io/en/
