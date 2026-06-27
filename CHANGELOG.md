@@ -1,3 +1,6 @@
+v2.0.1
+* Fix: errors with email and password stages were not being detected
+
 v2.0
 
 API Changes

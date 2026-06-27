@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup, Tag
 
 from sounds import constants
 from sounds.base import Base
-from sounds.constants import URLs
+from sounds.constants import VERBOSE_LOG_LEVEL, URLs
 from sounds.exceptions import LoginFailedError, NotFoundError
 from sounds.session import Session
 from sounds.utils import _get_data_dir
@@ -13,6 +13,15 @@ from sounds.utils import _get_data_dir
 
 class AuthService(Base):
     """Service to handle authentication with BBC Sounds."""
+
+    ERROR_CLASS = "sb-form-message--error"
+    EMAIL_ERROR_MSG = "We don’t recognise that email or username. You can try again or register for an account"
+    PASSWORD_ERROR_MSG = (
+        "That password isn’t right. You can try again or reset your password"
+    )
+    PASSWORD_LENGTH_MSG = (
+        "Sorry, that password is too short. It needs to be eight characters or more."
+    )
 
     def __init__(self, state: Session, on_login_success=None, *args, **kwargs):
         super().__init__(state=state, *args, **kwargs)
@@ -133,6 +142,11 @@ class AuthService(Base):
             data=data,
             headers=await self._build_headers(referer=URLs.LOGIN_START.value),
         )
+        soup = BeautifulSoup(html_contents, "html.parser")
+        error_el = soup.select_one(f".{self.ERROR_CLASS}")
+        if error_el:
+            self.logger.error(f"Login failed: {error_el.text}")
+            raise LoginFailedError(error_el.text)
         self._save_file_if_needed(html_contents, "password_form.html")
 
         # Grab the form target for the password page
@@ -162,6 +176,12 @@ class AuthService(Base):
             headers=headers,
         )
         response_text = await resp.text()
+        self.logger.log(VERBOSE_LOG_LEVEL, response_text)
+        soup = BeautifulSoup(response_text, "html.parser")
+        error = soup.find("div", attrs={"class": "sb-form-message--error"})
+        if error:
+            self.logger.error(f"Login failed: {error.text}")
+            raise LoginFailedError(error.text)
         self._save_file_if_needed(response_text, "login_response.html")
 
         if not resp.ok:
