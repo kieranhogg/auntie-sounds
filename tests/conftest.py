@@ -1,17 +1,20 @@
 import json
 from logging import DEBUG, Logger
-from unittest.mock import AsyncMock, MagicMock, Mock
+from pathlib import Path
+from unittest.mock import AsyncMock, Mock
 
 import aiohttp
 import pytest
 import pytz
-from aiohttp import CookieJar
+from yarl import URL
 
+from sounds import URLs
 from sounds.auth import AuthService
 from sounds.client import SoundsClient
+from sounds.constants import COOKIE_ID
+from sounds.cookies import CookieStore
 from sounds.requests import RequestManager
 from sounds.schedule import ScheduleService
-from sounds.session import Session
 from sounds.streaming import StreamingService
 from sounds.user import UserService
 
@@ -24,16 +27,19 @@ def anyio_backend():
 
 
 @pytest.fixture
-def mock_session():
+async def cookie_jar():
+    jar = aiohttp.CookieJar()
+    jar.update_cookies(
+        {COOKIE_ID: "test"}, response_url=URL(URLs.COOKIE_BASE_I18N.value)
+    )
+    return jar
+
+
+@pytest.fixture
+def mock_session(cookie_jar):
     session = Mock(spec=aiohttp.ClientSession)
 
-    cookie_jar = Mock()
-    cookie_jar.filter_cookies = Mock(return_value={})
-    cookie_jar.load = Mock()
-    cookie_jar.save = Mock()
-    cookie_jar.clear = Mock()
-
-    session._cookie_jar = cookie_jar
+    session.cookie_jar = cookie_jar
 
     session.request = AsyncMock()
     session.close = AsyncMock()
@@ -54,13 +60,19 @@ def mock_logger():
 
 
 @pytest.fixture
-def state(mock_logger, mock_session, monkeypatch):
-    return Session(
-        cookie_file="mock/location",
-        logger=mock_logger,
-        session=mock_session,
-        jar=MagicMock(spec=CookieJar),
+def mock_cookie_store(mock_session, mock_logger):
+    return CookieStore(
+        session=mock_session, logger=mock_logger, cookie_file_location=Path()
     )
+
+
+# @pytest.fixture
+# def state(mock_logger, mock_session, monkeypatch):
+#     return CookieStore(
+#         cookie_file="mock/location",
+#         logger=mock_logger,
+#         session=mock_session,
+#     )
 
 
 @pytest.fixture
@@ -72,16 +84,17 @@ def mock_schedule(mock_logger, mock_session):
 
 
 @pytest.fixture
-def mock_auth_service(state, mock_session, mock_logger):
-    mock_session._cookie_jar.load.side_effect = FileNotFoundError()
-    return AuthService(state, session=mock_session, logger=mock_logger)
+def mock_auth_service(mock_session, mock_logger, mock_cookie_store):
+    return AuthService(
+        cookie_store=mock_cookie_store, session=mock_session, logger=mock_logger
+    )
 
 
 @pytest.fixture
-def mock_requests(mock_logger, mock_auth_service, state):
+def mock_requests(mock_logger, mock_auth_service, mock_cookie_store):
     return RequestManager(
         auth=mock_auth_service,
-        state=state,
+        cookie_store=mock_cookie_store,
         logger=mock_logger,
         username="user",
         password="password",
@@ -89,10 +102,9 @@ def mock_requests(mock_logger, mock_auth_service, state):
 
 
 @pytest.fixture
-def mock_user(state, mock_session, mock_logger, monkeypatch):
+def mock_user(mock_session, mock_logger, monkeypatch):
     user = UserService(
         login_details_provided=True,
-        state=state,
         session=mock_session,
         logger=mock_logger,
     )
