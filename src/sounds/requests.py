@@ -1,22 +1,22 @@
 from logging import Logger
 
 from sounds.auth import AuthService
+from sounds.cookies import CookieStore
 from sounds.exceptions import UnauthorisedError
-from sounds.session import Session
 
 
 class RequestManager:
     def __init__(
         self,
         auth: AuthService,
-        state: Session,
+        cookie_store: CookieStore,
         logger: Logger,
         username: str | None,
         password: str | None,
     ):
         self.logger = logger
         self.auth = auth
-        self.state = state
+        self.cookies = cookie_store
         self.username = username
         self.password = password
 
@@ -28,7 +28,7 @@ class RequestManager:
         except UnauthorisedError:
             self.logger.debug("Unauthorised when accessing an authenticated endpoint.")
 
-            if self.state.has_session_cookie:
+            if self.cookies.has_session_cookie:
                 self.logger.debug("Cookie present, renewing session...")
                 try:
                     await self.auth.renew_session()

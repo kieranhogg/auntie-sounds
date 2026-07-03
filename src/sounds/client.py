@@ -1,6 +1,6 @@
 import logging
-import os
 from datetime import tzinfo
+from http.cookiejar import CookieJar as HttpCookieJar
 from pathlib import Path
 
 import aiohttp
@@ -9,12 +9,12 @@ from colorlog import ColoredFormatter
 
 from sounds import constants
 from sounds.auth import AuthService
+from sounds.cookies import CookieStore
 from sounds.exceptions import InvalidArgumentsError
 from sounds.models import Menu, MenuItem, Segment, Station, Stream
 from sounds.personal import MenuRecommendationOptions, PersonalService
 from sounds.requests import RequestManager
 from sounds.schedule import ScheduleService
-from sounds.session import Session
 from sounds.stations import StationService
 from sounds.streaming import StreamingService
 from sounds.user import UserService
@@ -31,7 +31,7 @@ class SoundsClient:
         username: str | None = None,
         password: str | None = None,
         session: aiohttp.ClientSession | None = None,
-        cookie_file: str | Path = COOKIE_FILE,
+        cookie_file_location: str | Path = COOKIE_FILE,
         timezone: tzinfo | None = None,
         logger: logging.Logger | None = None,
         log_level: int | None = None,
@@ -49,14 +49,12 @@ class SoundsClient:
 
         self.username = username
         self.password = password
+        self.login_details_provided = bool(self.username and self.password)
         self.current_station: Station | None = None
         self.current_stream: Stream | None = None
         self.current_segment: Segment | None = None
         self.timeout = aiohttp.ClientTimeout(total=10)
         self.mock_session = mock_session
-        self.state = Session(
-            cookie_file=cookie_file, logger=self.logger, mock_session=mock_session
-        )
         if timezone:
             self.timezone = timezone
         else:
@@ -65,15 +63,18 @@ class SoundsClient:
             )
             self.timezone = pytz.timezone("UTC")
 
-        if not session:
-            self.logger.debug("No provided session, creating a new one.")
-            self._session = aiohttp.ClientSession(cookie_jar=self.state.jar)
-            self.managing_session = True
-        else:
-            self.logger.debug("Reusing provided session.")
+        if session:
+            self.logger.debug("Reusing provided aiohttp session.")
             self._session = session
-            self.managing_session = False
-        self.state.load()
+        else:
+            self.logger.debug("No provided aiohttp session, creating a new one.")
+            self._session = aiohttp.ClientSession()
+        self.managing_session = session is None
+
+        if not isinstance(self._session.cookie_jar, (HttpCookieJar, aiohttp.CookieJar)):
+            raise TypeError(
+                "SoundsClient requires aiohttp.CookieJar for cookie persistence"
+            )
 
         service_kwargs = {
             "session": self._session,
@@ -82,22 +83,36 @@ class SoundsClient:
             "mock_session": self.mock_session,
             **kwargs,
         }
+        self.cookie_store = CookieStore(
+            **service_kwargs, cookie_file_location=cookie_file_location
+        )
+
+        self.cookie_store.load()
+        if self.cookie_store.has_session_cookie and not self.login_details_provided:
+            # Handle the edge case of a session going from logged in to anonymous
+            self.logger.info(
+                "Login credentials not provided, so clearing persisted session."
+            )
+            self.cookie_store.clear()
+            self.cookie_store.save()
 
         self.auth = AuthService(
-            state=self.state, on_login_success=self.save_cookies, **service_kwargs
+            cookie_store=self.cookie_store,
+            on_login_success=self.save_cookies,
+            **service_kwargs,
         )
-        self.schedules = ScheduleService(state=self.state, **service_kwargs)
+        self.schedules = ScheduleService(
+            cookie_store=self.cookie_store, **service_kwargs
+        )
         self.user = UserService(
-            state=self.state,
-            login_details_provided=(
-                self.username is not None and self.password is not None
-            ),
+            cookie_store=self.cookie_store,
+            login_details_provided=self.login_details_provided,
             **service_kwargs,
         )
 
         self.requests = RequestManager(
             auth=self.auth,
-            state=self.state,
+            cookie_store=self.cookie_store,
             logger=self.logger,
             username=self.username,
             password=self.password,
@@ -166,28 +181,28 @@ class SoundsClient:
             )
 
         if self.has_session_cookie:
-            self.logger.info("Existing session found, reusing")
+            self.logger.info("Existing session cookie found, reusing")
             ok = await self.auth.renew_session()
             return ok
 
         ok = await self.auth.login(self.username, self.password)
 
         if ok:
-            self.state.save()
+            self.cookie_store.save()
             await self.user.refresh()
 
         return ok
 
     def save_cookies(self):
-        self.state.save()
+        self.cookie_store.save()
 
     def load_cookies(self):
-        self.state.load()
+        self.cookie_store.load()
 
     @property
     def has_session_cookie(self) -> bool:
         """Check if we have a cookie present."""
-        return self.state.has_session_cookie
+        return self.cookie_store.has_session_cookie
 
     async def get_menu(
         self,
@@ -220,17 +235,15 @@ class SoundsClient:
 
     async def logout(self):
         self.logger.debug("Logging out...")
-        try:
-            os.remove(COOKIE_FILE)
-            self.logger.debug("Cookie file deleted.")
-        except FileNotFoundError:
-            pass
-        self.state.clear()
+        self.cookie_store.clear()
+        self.cookie_store.save()
         self.logger.debug("Logged out.")
 
     async def close(self):
+        self.logger.debug("Session close explicitly requested.")
         if self._session and self.managing_session:
             await self._session.close()
+        self.cookie_store.save()
 
     async def __aenter__(self):
         return self

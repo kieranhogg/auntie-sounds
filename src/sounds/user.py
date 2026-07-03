@@ -1,13 +1,10 @@
 from sounds.base import Base
 from sounds.constants import URLs
-from sounds.session import Session
 
 
 class UserService(Base):
-    def __init__(
-        self, state: Session, login_details_provided: bool, *args, **kwargs
-    ) -> None:
-        super().__init__(state=state, *args, **kwargs)
+    def __init__(self, login_details_provided: bool, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
         self._user_info: dict[str, str] = dict()
         self.login_details_provided = login_details_provided
 

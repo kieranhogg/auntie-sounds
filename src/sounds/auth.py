@@ -6,8 +6,8 @@ from bs4 import BeautifulSoup, Tag
 from sounds import constants
 from sounds.base import Base
 from sounds.constants import VERBOSE_LOG_LEVEL, URLs
+from sounds.cookies import CookieStore
 from sounds.exceptions import LoginFailedError, NotFoundError
-from sounds.session import Session
 from sounds.utils import _get_data_dir
 
 
@@ -23,8 +23,10 @@ class AuthService(Base):
         "Sorry, that password is too short. It needs to be eight characters or more."
     )
 
-    def __init__(self, state: Session, on_login_success=None, *args, **kwargs):
-        super().__init__(state=state, *args, **kwargs)
+    def __init__(
+        self, cookie_store: CookieStore, on_login_success=None, *args, **kwargs
+    ):
+        super().__init__(cookie_store=cookie_store, *args, **kwargs)
         self.user_info = None
         self.debug_login = False
         self._on_login_success = on_login_success
