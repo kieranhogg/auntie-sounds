@@ -1,3 +1,7 @@
+v2.0.2
+* Fix: fix discrepency between session-provided cookie jars, new session jars and saving to disk
+* Fix: handle edge-case when a previous session is present when a new anonymous client is created 
+
 v2.0.1
 * Fix: errors with email and password stages were not being detected
 
