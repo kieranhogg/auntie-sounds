@@ -3,7 +3,7 @@ from datetime import datetime as dt
 from datetime import timedelta
 from typing import List, Literal, Optional
 
-from sounds import constants
+from sounds import NotFoundError, constants
 from sounds.base import Base
 from sounds.constants import URLs
 from sounds.models import LiveStation, MenuItem, Network
@@ -198,36 +198,32 @@ class StationService(Base):
 
     async def get_station_menu(self, station_id: str) -> MenuItem:
         station = await self.get_station(station_id)
-        if station and isinstance(station, LiveStation):
-            schedule = [
-                MenuItem(id=dt.now().strftime("%Y-%m-%d"), title="Today", sub_items=[]),
-                MenuItem(
-                    id=(dt.now() - timedelta(days=1)).strftime("%Y-%m-%d"),
-                    title="Yesterday",
-                    sub_items=[],
-                ),
-            ]
-            # Maximum is 30 days prior
-            for diff in range(28):
-                this_date = dt.now() - timedelta(days=2 + diff)
-                schedule.extend(
-                    [
-                        MenuItem(
-                            id=this_date.strftime("%Y-%m-%d"),
-                            title=_date_with_ordinal(this_date),
-                            sub_items=[],
-                        )
-                    ]
-                )
-            return MenuItem(
-                id=station_id,
-                title=station.network.short_title
-                if station.network
-                else "Unknown Station",
-                image_url=station.network.logo_url if station.network else None,
-                sub_items=schedule,
+        if not station or not isinstance(station, LiveStation):
+            raise NotFoundError(f"Couldn't get station with id {station_id}")
+
+        schedule = [
+            MenuItem(id=dt.now().strftime("%Y-%m-%d"), title="Today", sub_items=[]),
+            MenuItem(
+                id=(dt.now() - timedelta(days=1)).strftime("%Y-%m-%d"),
+                title="Yesterday",
+                sub_items=[],
+            ),
+        ]
+        # Maximum is 30 days prior
+        for diff in range(28):
+            this_date = dt.now() - timedelta(days=2 + diff)
+            schedule.extend(
+                [
+                    MenuItem(
+                        id=this_date.strftime("%Y-%m-%d"),
+                        title=_date_with_ordinal(this_date),
+                        sub_items=[],
+                    )
+                ]
             )
-        return None
         return MenuItem(
-            id=f"station-{station_id}",
+            id=station_id,
+            title=station.network.short_title if station.network else "Unknown Station",
+            image_url=station.network.logo_url if station.network else None,
+            sub_items=schedule,
         )
