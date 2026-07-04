@@ -51,9 +51,9 @@ def image_from_recipe(
     else:
         img_size = f"{size}x{size}"
 
-    if "format" in image_recipe and format:
+    if "{format}" in image_recipe and format:
         image_recipe = image_recipe.format(format=format, recipe=img_size)
-    elif "type" in image_recipe and img_type:
+    elif "{type}" in image_recipe and img_type:
         image_recipe = image_recipe.format(type=img_type, recipe=img_size)
     else:
         image_recipe = image_recipe.format(recipe=img_size)
