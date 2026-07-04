@@ -2,9 +2,7 @@ from logging import Logger
 from pathlib import Path
 
 import aiohttp
-from yarl import URL
 
-from sounds import constants
 from sounds.constants import COOKIE_ID
 
 
@@ -41,19 +39,6 @@ class CookieStore:
     def save(self) -> None:
         self.logger.debug("Saving cookies to disk...")
         self.session.cookie_jar.save(self.path)  # ty:ignore[unresolved-attribute]
-
-    def get_filtered_cookies(self):
-        return list(
-            self.session.cookie_jar.filter_cookies(
-                URL(constants.URLs.COOKIE_BASE.value)
-            )
-        ).extend(
-            list(
-                self.session.cookie_jar.filter_cookies(
-                    URL(constants.URLs.COOKIE_BASE_I18N.value)
-                )
-            )
-        )
 
     @property
     def has_session_cookie(self) -> bool:
