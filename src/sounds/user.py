@@ -13,6 +13,12 @@ class UserService(Base):
 
     async def _ensure_loaded(self):
         if not self._user_info:
+            # Set conservative default as a safeguard
+            self._user_info = {
+                "X-Country": "us",
+                "X-Ip_is_uk_combined": "no",
+                "X-Ip_is_advertise_combined": "yes",
+            }
             await self.refresh()
 
     async def listener_country(self) -> str | None:
