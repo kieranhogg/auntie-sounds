@@ -252,4 +252,4 @@ class SoundsClient:
         if self.managing_session:
             self.logger.debug("Closed session")
             await self.close()
-        self.state.save()
+        self.cookie_store.save()
