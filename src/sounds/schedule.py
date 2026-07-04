@@ -42,9 +42,7 @@ class ScheduleService(Base):
             listing = cast(LiveProgramme, parse_node(listing))
         return listing
 
-    async def recently_played_items(
-        self, station_id: str, image_size=450, results=10
-    ) -> list[Segment]:
+    async def recently_played_items(self, station_id: str, results=10) -> list[Segment]:
         """Gets the recent playing items on this station"""
         json_resp = await self._get_json(
             url_template=URLs.NOW_PLAYING,
@@ -55,11 +53,9 @@ class ScheduleService(Base):
             return [segment for segment in segments if isinstance(segment, Segment)]
         return []
 
-    async def currently_playing_song(
-        self, station_id, image_size=450
-    ) -> Segment | None:
+    async def currently_playing_song(self, station_id) -> Segment | None:
         """Gets the currently playing song, if one is playing."""
-        recently_played = await self.recently_played_items(station_id, image_size)
+        recently_played = await self.recently_played_items(station_id)
         try:
             if recently_played[0].offset["now_playing"]:
                 return recently_played[0]
