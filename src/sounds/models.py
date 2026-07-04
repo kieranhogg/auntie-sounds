@@ -561,6 +561,8 @@ def model_factory(object):
                             new_type = Station
                     case ItemURN.PROMO_ITEM.value:
                         new_type = PromoItem
+                    case ItemURN.PLAYLIST.value:
+                        new_type = Playlist
                     case _:
                         print(f"No playableitem: {object} {type(object)}")
 
