@@ -28,4 +28,4 @@ class UserService(Base):
     async def is_uk_listener(self) -> bool:
         """Listener has a UK-based account and is in the UK."""
         await self._ensure_loaded()
-        return self._user_info["X-Ip_is_uk_combined"] == "yes"
+        return self._user_info.get("X-Ip_is_uk_combined") == "yes"
