@@ -68,21 +68,18 @@ def parse_node(node) -> SoundsTypes | List[SoundsTypes] | None:
     else:
         playable_item = model_factory(node)
         for nested_object in nested_objects:
-            try:
-                if nested_object.source_key not in ignored_objects and getattr(
-                    playable_item, nested_object.source_key, None
-                ):
-                    source_dict = getattr(playable_item, nested_object.source_key)
-                    out_object = model_factory(source_dict)
-                    if type(out_object) in [dict, None]:
-                        raise Exception("Failed to parse object: {source_dict}")
-                    setattr(
-                        playable_item,
-                        nested_object.source_key,
-                        out_object,
-                    )
-            except AttributeError:
-                raise
+            if nested_object.source_key not in ignored_objects and getattr(
+                playable_item, nested_object.source_key, None
+            ):
+                source_dict = getattr(playable_item, nested_object.source_key)
+                out_object = model_factory(source_dict)
+                if type(out_object) in [dict, None]:
+                    raise Exception("Failed to parse object: {source_dict}")
+                setattr(
+                    playable_item,
+                    nested_object.source_key,
+                    out_object,
+                )
         # Post-processing
         if isinstance(playable_item, PlayableItem):
             if playable_item is not None and (playable_item.urn and playable_item.pid):
