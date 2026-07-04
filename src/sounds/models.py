@@ -585,26 +585,23 @@ def model_factory(object):
                     new_type = ScheduleItem
             case ItemType.EPISODE.value:
                 new_type = RadioShow
-            case ItemType.BROADCAST.value:
-                raise Exception("Broadcast?")
             case ItemType.RADIO_SEARCH.value:
                 new_type = StationSearchResult
                 # Search results embed the actual station details in a now key
                 object = object["now"]
             case ItemType.SEGMENT_ITEM.value:
                 new_type = Segment
+            case ItemType.INLINE_HEADER_MODULE.value:
+                new_type = Header
             case _:
                 print("No IT found")
     elif object_type in ContainerType or object_type in BaseSoundsTypes:
         # This is a nested/parent container, work out which
-        if object_type == ContainerType.ITEM.value:
-            new_type = Playlist
-        elif urn == ItemURN.COLLECTION.value:
+        if urn == ItemURN.COLLECTION.value:
             new_type = Collection
         elif urn == ItemURN.CATEGORY.value:
             new_type = Category
         elif object_type == ContainerType.BRAND.value:
-            new_type = RadioSeries
             if (
                 hasattr(object, "network")
                 and object.get("network").get("id") == "bbc_sounds_podcasts"
@@ -624,14 +621,11 @@ def model_factory(object):
             if object["total"] > 1:
                 raise NotImplementedError("Container has more than 1 programme!")
             new_type = PodcastEpisode
-        # elif object["id"] == IDType.SHOW_SEARCH_CONTAINER.value:
-        #     new_type = Container
         elif object_type == ContainerType.SERIES.value:
             new_type = RadioSeries
         elif urn == ItemURN.RADIO_SHOW_OR_PODCAST.value:
             new_type = RadioSeries
         elif object_type == ContainerType.ITEM.value:
-            # Default to podcast
             new_type = Podcast
         else:
             print(f"Unknown container type: {object_type}")
