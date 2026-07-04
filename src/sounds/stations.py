@@ -3,9 +3,10 @@ from datetime import datetime as dt
 from datetime import timedelta
 from typing import List, Literal, Optional
 
-from sounds import NotFoundError, constants
+from sounds import constants
 from sounds.base import Base
 from sounds.constants import URLs
+from sounds.exceptions import NotFoundError
 from sounds.models import LiveStation, MenuItem, Network
 from sounds.parser import parse_container, parse_node
 from sounds.schedule import ScheduleService
