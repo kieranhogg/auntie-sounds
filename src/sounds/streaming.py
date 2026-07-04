@@ -58,7 +58,7 @@ class StreamingService(Base):
             raise APIResponseError(f"Couldn't get JWT token: {json}")
         return json.get("token")
 
-    async def get_postcasts(self) -> Menu:
+    async def get_podcasts(self) -> Menu:
         podcasts = parse_menu(
             await self._get_json(url_template=constants.URLs.PODCASTS)
         )
