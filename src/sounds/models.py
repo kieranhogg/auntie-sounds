@@ -491,6 +491,11 @@ class SearchResults(SerializableMixin):
     episodes: List[PodcastEpisode | RadioClip | RadioShow]
 
 
+@dataclass(kw_only=True)
+class Header(BaseObject):
+    pass
+
+
 def model_factory(object):
     from sounds.constants import ContainerType, IDType, ItemType, ItemURN
 
