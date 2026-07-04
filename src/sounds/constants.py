@@ -148,6 +148,7 @@ class ItemURN(Enum):
     STATION = "urn:bbc:radio:network"
     PROMO_ITEM = "urn:bbc:radio:content:single_item_promo"
     SEGMENT_ITEM = "urn:bbc:radio:segment:music"
+    PLAYLIST = "urn:bbc:radio:curation"
 
 
 class ItemType(Enum):
