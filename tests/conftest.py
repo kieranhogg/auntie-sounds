@@ -66,15 +66,6 @@ def mock_cookie_store(mock_session, mock_logger):
     )
 
 
-# @pytest.fixture
-# def state(mock_logger, mock_session, monkeypatch):
-#     return CookieStore(
-#         cookie_file="mock/location",
-#         logger=mock_logger,
-#         session=mock_session,
-#     )
-
-
 @pytest.fixture
 def mock_schedule(mock_logger, mock_session):
     return ScheduleService(

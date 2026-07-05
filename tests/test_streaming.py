@@ -8,10 +8,10 @@ pytestmark = pytest.mark.anyio
 
 
 class TestStreamingService:
-    """Tests for streaming service"""
+    """Tests for streaming service."""
 
     async def test_get_best_stream_hls(self, mock_streaming_service):
-        """Test getting best HLS stream"""
+        """Test getting best HLS stream."""
 
         streams = [
             {"transferFormat": "dash", "href": "https://example.com/dash"},
@@ -22,7 +22,7 @@ class TestStreamingService:
         assert result == "https://example.com/hls"
 
     async def test_get_best_stream_not_found(self, mock_streaming_service):
-        """Test getting best stream when format not found"""
+        """Test getting best stream when format not found."""
 
         streams = [
             {"transferFormat": "dash", "href": "https://example.com/dash"},
@@ -34,7 +34,7 @@ class TestStreamingService:
     async def test_invalid_pid(
         self, mock_user, mock_logger, mock_session, mock_streaming_service
     ):
-        """Test get_pid with an invalid PID"""
+        """Test get_pid with an invalid PID."""
         mock_session.request = AsyncMock()
         mock_session.logger = mock_logger
         mock_response = AsyncMock()

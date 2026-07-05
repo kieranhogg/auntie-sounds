@@ -5,22 +5,6 @@ from sounds.parser import parse_menu, parse_node, parse_search
 class TestParser:
     """Tests for parser functions"""
 
-    # def test_parse_node_with_network(self, sample_network_data):
-    #     """Test parsing a network node"""
-    #     result = parse_node(sample_network_data)
-    #     assert isinstance(result, Network)
-    #     assert result.id == "bbc_radio_one"
-
-    # def test_parse_node_with_list(self, sample_network_data):
-    #     """Test parsing a list of nodes"""
-    #     data = [sample_network_data, sample_network_data.copy()]
-    #     data[1]["id"] = "bbc_radio_two"
-
-    #     result = parse_node(data)
-    #     assert isinstance(result, list)
-    #     assert len(result) == 2
-    #     assert all(isinstance(item, Network) for item in result)
-
     def test_parse_menu(self, sample_menu_data):
         """Test parsing menu data"""
         result = parse_menu(sample_menu_data)
