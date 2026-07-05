@@ -1,4 +1,5 @@
 from datetime import datetime as dt
+from datetime import timedelta
 
 import pytest
 import pytz
@@ -10,10 +11,10 @@ pytestmark: MarkDecorator = pytest.mark.anyio
 
 
 class TestModels:
-    """Tests for model classes"""
+    """Tests for model classes."""
 
     def test_schedule_item_datetime_parsing(self):
-        """Test ScheduleItem datetime parsing"""
+        """Test ScheduleItem datetime parsing."""
         data = {
             "id": "m001234",
             "start": "2025-01-15T10:00:00Z",
@@ -24,44 +25,64 @@ class TestModels:
         assert isinstance(item.end, dt)
 
     def test_schedule_item_is_live(self):
-        """Test ScheduleItem.is_live() method"""
+        """Test ScheduleItem.is_live() method."""
         now = dt.now(tz=pytz.UTC)
         item = ScheduleItem(
             id="test",
-            start=now.replace(hour=now.hour - 1),
-            end=now.replace(hour=now.hour + 1),
+            start=now - timedelta(hours=1),
+            end=now + timedelta(hours=1),
         )
         assert item.is_live(pytz.UTC) is True
 
-    def test_schedule_item_has_aired(self):
-        """Test ScheduleItem.has_already_aired() method"""
+    def test_schedule_item_is_not_live_before_start(self):
+        """Test ScheduleItem.is_live() returns False before the item starts."""
         now = dt.now(tz=pytz.UTC)
         item = ScheduleItem(
             id="test",
-            start=now.replace(hour=now.hour - 2),
-            end=now.replace(hour=now.hour - 1),
+            start=now + timedelta(hours=1),
+            end=now + timedelta(hours=2),
+        )
+        assert item.is_live(pytz.UTC) is False
+
+    def test_schedule_item_has_aired(self):
+        """Test ScheduleItem.has_already_aired() method."""
+        now = dt.now(tz=pytz.UTC)
+        item = ScheduleItem(
+            id="test",
+            start=now - timedelta(hours=2),
+            end=now - timedelta(hours=1),
         )
         assert item.has_already_aired(pytz.UTC) is True
 
+    def test_schedule_item_has_not_aired(self):
+        """Test ScheduleItem.has_already_aired() returns False for a future item."""
+        now = dt.now(tz=pytz.UTC)
+        item = ScheduleItem(
+            id="test",
+            start=now + timedelta(hours=1),
+            end=now + timedelta(hours=2),
+        )
+        assert item.has_already_aired(pytz.UTC) is False
+
     def test_playable_item_id_from_urn(self):
-        """Test PlayableItem.item_id property with URN"""
+        """Test PlayableItem.item_id property with URN."""
         item = PlayableItem(
             id="test123", urn="urn:bbc:radio:episode:m001234", pid="p001234"
         )
         assert item.item_id == "m001234"
 
     def test_playable_item_id_fallback_to_pid(self):
-        """Test PlayableItem.item_id property fallback to PID"""
+        """Test PlayableItem.item_id property fallback to PID."""
         item = PlayableItem(id="test123", pid="p001234")
         assert item.item_id == "p001234"
 
     def test_container_item_id(self):
-        """Test Container.item_id property"""
+        """Test Container.item_id property."""
         container = Container(id="test123", urn="urn:bbc:radio:brand:b006wkqb")
         assert container.item_id == "b006wkqb"
 
     def test_menu_get_item(self):
-        """Test Menu.get() method"""
+        """Test Menu.get() method."""
         item1 = MenuItem(id="item1", title="Item 1")
         item2 = MenuItem(id="item2", title="Item 2")
         menu = Menu(sub_items=[item1, item2])
@@ -71,7 +92,7 @@ class TestModels:
         assert result.title == "Item 1"
 
     def test_menu_get_nonexistent(self):
-        """Test Menu.get() with non-existent item"""
+        """Test Menu.get() with non-existent item."""
         menu = Menu(sub_items=[MenuItem(id="item1", title="Item 1")])
         result = menu.get("nonexistent")
         assert result is None
