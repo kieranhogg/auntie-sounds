@@ -427,7 +427,7 @@ class CollectionItemContainer(CategoryItemContainer):
 
 
 @dataclass(kw_only=True)
-class MenuItem(Container):
+class MenuItem(ImageContainer):
     """Represents a menu item container."""
 
     def get(
