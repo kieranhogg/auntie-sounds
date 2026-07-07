@@ -10,7 +10,7 @@ dependencies = [
     "beautifulsoup4==4.15.0",
     "colorlog==6.10.1",
     "pytz==2026.2",
-    "typing-extensions==4.15.0",
+    "typing-extensions==4.16.0",
 ]
 
 [build-system]
