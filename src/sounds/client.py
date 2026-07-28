@@ -208,8 +208,9 @@ class SoundsClient:
         self,
         include_local_stations: bool = False,
         recommendations: MenuRecommendationOptions = MenuRecommendationOptions.INCLUDE,
-    ):
+    ) -> Menu:
         """Get the main Sounds menu."""
+        menu = Menu(sub_items=[])
         explore_all = await self.personal.get_explore_all()
         stations = await self.stations.get_stations(
             include_local=include_local_stations
@@ -221,15 +222,19 @@ class SoundsClient:
         if await self.user.is_uk_listener() and self.username and self.password:
             # UK listener, logged in, get menu from Sounds API
             menu = await self.personal.get_uk_menu(recommendations=recommendations)
-            menu.sub_items.pop(0)
-            menu.sub_items.insert(0, listen_live)
-            menu.sub_items.insert(1, schedule)
-            menu.sub_items.insert(len(menu.sub_items), explore_all)
-        elif await self.user.is_uk_listener():
+            if recommendations != MenuRecommendationOptions.ONLY:
+                menu.sub_items.pop(0)
+                menu.sub_items.insert(0, listen_live)
+                menu.sub_items.insert(1, schedule)
+                menu.sub_items.insert(len(menu.sub_items), explore_all)
+        elif (
+            await self.user.is_uk_listener()
+            and recommendations != MenuRecommendationOptions.ONLY
+        ):
             # UK listener, not logged in, construct UK menu
             menu = Menu(sub_items=[listen_live, schedule, explore_all])
-        else:
-            # Construct internaional menu
+        elif recommendations != MenuRecommendationOptions.ONLY:
+            # Construct international menu
             menu = Menu(sub_items=[listen_live, explore_all])
         return menu
 
