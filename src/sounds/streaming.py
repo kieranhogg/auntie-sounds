@@ -22,10 +22,9 @@ from sounds.models import (
 )
 from sounds.parser import parse_container, parse_menu, parse_node, parse_search
 from sounds.requests import RequestManager
+from sounds.schedule import ScheduleService
 from sounds.user import UserService
 from sounds.utils import image_from_spotify
-
-from .schedule import ScheduleService
 
 if TYPE_CHECKING:
     from sounds.models import SoundsTypes
