@@ -22,10 +22,9 @@ from sounds.models import (
 )
 from sounds.parser import parse_container, parse_menu, parse_node, parse_search
 from sounds.requests import RequestManager
+from sounds.schedule import ScheduleService
 from sounds.user import UserService
 from sounds.utils import image_from_spotify
-
-from .schedule import ScheduleService
 
 if TYPE_CHECKING:
     from sounds.models import SoundsTypes
@@ -72,7 +71,7 @@ class StreamingService(Base):
             raise InvalidFormatError("Must be called with one of: urn, pid")
         if urn:
             # If we have the URN we can look up the podcast container
-            podcast_container = self.requests.run(partial(self.get_container, urn))
+            podcast_container = await self.get_container(urn=urn)
             if podcast_container and type(podcast_container) is list:
                 podcast = next(
                     (
@@ -85,23 +84,28 @@ class StreamingService(Base):
             else:
                 podcast = podcast_container
 
-            if podcast:
-                # podcast = cast(Podcast, podcast)
-                if not include_episodes and getattr(podcast, "sub_items", None):
-                    podcast.sub_items = []
+            if podcast and not include_episodes and getattr(podcast, "sub_items", None):
+                podcast.sub_items = []
         elif pid:
             # If we only have the PID, we can grab the episodes and parse out the podcast or radio series
-            podcast_episodes = await self.get_pid_container(pid)
-            if podcast_episodes and len(podcast_episodes) > 1:
-                if podcast_episodes[0].container:
-                    if type(podcast_episodes[0].container) is Podcast:
-                        return await self.get_podcast(
-                            urn=podcast_episodes[0].container.urn
-                        )
-                    elif type(podcast_episodes[0].container) is RadioSeries:
-                        return await self.get_radio_series(
-                            urn=podcast_episodes[0].container.urn
-                        )
+            podcast_episodes = await self.get_pid_container(pid=pid)
+            self.logger.debug(f"Received {len(podcast_episodes)} episodes for podcast")
+            if (
+                podcast_episodes
+                and len(podcast_episodes) > 1
+                and podcast_episodes[0].container
+            ):
+                inferred_type = type(podcast_episodes[0].container)
+                self.logger.debug(f"Inferred type of podcast is {inferred_type}")
+                if inferred_type is Podcast:
+                    return await self.get_podcast(urn=podcast_episodes[0].container.urn)
+                elif inferred_type is RadioSeries:
+                    return await self.get_radio_series(
+                        urn=podcast_episodes[0].container.urn
+                    )
+                raise NotFoundError(
+                    "Incorrect type found for podcast - urn: {urn}, pid: {pid}"
+                )
 
         if not podcast or not isinstance(podcast, (Podcast, RadioSeries)):
             raise NotFoundError(f"Couldn't get podcast - urn: {urn}, pid: {pid}")

@@ -1,3 +1,6 @@
+v2.0.3
+* Fix: recommendation folder options were not being passed to `Client.get_menu()`
+
 v2.0.2
 * Fix: fix discrepency between session-provided cookie jars, new session jars and saving to disk
 * Fix: handle edge-case when a previous session is present when a new anonymous client is created 
