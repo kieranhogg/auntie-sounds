@@ -1,3 +1,6 @@
+v2.0.4
+* Relax remaining dependencies to >= to prevent upstream being blocked
+
 v2.0.3
 * Fix: recommendation folder options were not being passed to `Client.get_menu()`
 * Relax aiohttp dependency to >= 3.14.1​ to prevent upstream being blocked
