@@ -5,6 +5,7 @@ turned into typed models.
 
 import pytest
 
+from sounds.model_factory import ModelFactory
 from sounds.models import (
     Category,
     Collection,
@@ -15,9 +16,8 @@ from sounds.models import (
     RadioShow,
     Segment,
     Station,
-    model_factory,
 )
-from sounds.parser import parse_node
+from sounds.parser import Parser
 
 pytestmark = pytest.mark.anyio
 
@@ -25,17 +25,17 @@ pytestmark = pytest.mark.anyio
 class TestModelFactoryBasicTypes:
     """Basic factory usage."""
 
-    def test_network_node(self):
+    def test_network_node(self, logger):
         node = {
             "network_type": "master_brand",
             "id": "bbc_radio_one",
             "short_title": "Radio 1",
         }
-        result = model_factory(node)
+        result = ModelFactory(logger).parse_object(node)
         assert isinstance(result, Network)
         assert result.id == "bbc_radio_one"
 
-    def test_list_of_nodes_via_parse_node(self):
+    def test_list_of_nodes_via_parse_node(self, logger):
         nodes = [
             {
                 "type": "playable_item",
@@ -48,12 +48,12 @@ class TestModelFactoryBasicTypes:
                 "urn": "urn:bbc:radio:episode:m2",
             },
         ]
-        result = parse_node(nodes)
+        result = Parser(logger).parse_node(nodes)
         assert isinstance(result, list)
         assert len(result) == 2
         assert all(isinstance(item, RadioShow) for item in result)
 
-    def test_segment_item(self):
+    def test_segment_item(self, logger):
         node = {
             "type": "segment_item",
             "id": "seg1",
@@ -63,26 +63,26 @@ class TestModelFactoryBasicTypes:
             "offset": {"start": 0},
             "uris": [],
         }
-        result = model_factory(node)
+        result = Parser(logger).parse_node(node)
         assert isinstance(result, Segment)
         assert result.id == "seg1"
 
-    def test_collection_urn(self):
+    def test_collection_urn(self, logger):
         node = {
             "type": "playable_item",
             "id": "coll1",
             "urn": "urn:bbc:radio:collection:coll1",
         }
-        result = model_factory(node)
+        result = Parser(logger).parse_node(node)
         assert isinstance(result, Collection)
 
-    def test_category_urn(self):
+    def test_category_urn(self, logger):
         node = {
             "type": "playable_item",
             "id": "cat1",
             "urn": "urn:bbc:radio:category:cat1",
         }
-        result = model_factory(node)
+        result = Parser(logger).parse_node(node)
         assert isinstance(result, Category)
 
 
@@ -91,56 +91,56 @@ class TestEpisodeVsPodcastClassification:
     container, or when the container isn't a bbc_sounds_podcasts brand -
     otherwise it's a PodcastEpisode."""
 
-    def test_episode_with_no_container_is_radio_show(self):
+    def test_episode_with_no_container_is_radio_show(self, logger):
         node = {
             "type": "playable_item",
             "id": "m001",
             "urn": "urn:bbc:radio:episode:m001",
         }
-        result = model_factory(node)
+        result = Parser(logger).parse_node(node)
         assert isinstance(result, RadioShow)
 
-    def test_episode_in_podcast_brand_container_is_podcast_episode(self):
+    def test_episode_in_podcast_brand_container_is_podcast_episode(self, logger):
         node = {
             "type": "playable_item",
             "id": "m002",
             "urn": "urn:bbc:radio:episode:m002",
-            "container": {"type": "brand"},
+            "container": {"id": "brand", "type": "brand"},
             "network": {"id": "bbc_sounds_podcasts"},
         }
-        result = model_factory(node)
+        result = Parser(logger).parse_node(node)
         assert isinstance(result, PodcastEpisode)
 
-    def test_episode_in_non_podcast_brand_container_is_radio_show(self):
+    def test_episode_in_non_podcast_brand_container_is_radio_show(self, logger):
         node = {
             "type": "playable_item",
             "id": "m003",
             "urn": "urn:bbc:radio:episode:m003",
-            "container": {"type": "brand"},
+            "container": {"id": "brand", "type": "brand"},
             "network": {"id": "bbc_radio_one"},
         }
-        result = model_factory(node)
+        result = Parser(logger).parse_node(node)
         assert isinstance(result, RadioShow)
 
 
 class TestClipVsPodcastClassification:
-    def test_clip_with_no_brand_container_is_radio_clip(self):
+    def test_clip_with_no_brand_container_is_radio_clip(self, logger):
         node = {
             "type": "playable_item",
             "id": "m010",
             "urn": "urn:bbc:radio:clip:m010",
         }
-        result = model_factory(node)
+        result = Parser(logger).parse_node(node)
         assert isinstance(result, RadioClip)
 
-    def test_clip_in_brand_container_is_podcast_episode(self):
+    def test_clip_in_brand_container_is_podcast_episode(self, logger):
         node = {
             "type": "playable_item",
             "id": "m011",
             "urn": "urn:bbc:radio:clip:m011",
-            "container": {"type": "brand"},
+            "container": {"id": "brand", "type": "brand"},
         }
-        result = model_factory(node)
+        result = Parser(logger).parse_node(node)
         assert isinstance(result, PodcastEpisode)
 
 
@@ -148,22 +148,22 @@ class TestStationClassification:
     """LiveStation vs. plain Station depends entirely on whether
     'synopses' is present."""
 
-    def test_station_with_synopses_is_live_station(self):
+    def test_station_with_synopses_is_live_station(self, logger):
         node = {
             "type": "playable_item",
             "id": "radio1",
             "urn": "urn:bbc:radio:network:radio1",
             "synopses": {"short": "BBC Radio 1"},
         }
-        result = model_factory(node)
+        result = Parser(logger).parse_node(node)
         assert isinstance(result, LiveStation)
 
-    def test_station_without_synopses_is_plain_station(self):
+    def test_station_without_synopses_is_plain_station(self, logger):
         node = {
             "type": "playable_item",
             "id": "radio1",
             "urn": "urn:bbc:radio:network:radio1",
         }
-        result = model_factory(node)
+        result = Parser(logger).parse_node(node)
         assert isinstance(result, Station)
         assert not isinstance(result, LiveStation)

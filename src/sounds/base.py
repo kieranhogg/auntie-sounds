@@ -2,9 +2,10 @@ import json
 import logging
 import os
 from abc import ABC
-from typing import Literal, Optional
+from typing import Literal
 
 import aiohttp
+from pytz import tzinfo
 
 from sounds.constants import FIXTURES_FOLDER, Fixtures, SignedInURLs, URLs
 from sounds.exceptions import (
@@ -26,7 +27,8 @@ class Base(ABC):
         self,
         session: aiohttp.ClientSession,
         logger: logging.Logger | None = None,
-        timeout: Optional[aiohttp.ClientTimeout] = None,
+        timezone: tzinfo | None = None,
+        timeout: aiohttp.ClientTimeout | None = None,
         mock_session: bool = False,
         *args,
         **kwargs,
@@ -36,11 +38,12 @@ class Base(ABC):
             self.logger = logger
         else:
             self.logger = logging.getLogger(__name__)
+        self.timezone = timezone
         self._timeout = timeout or self.DEFAULT_TIMEOUT
         self.mock_session = mock_session
 
     async def _make_request(
-        self, method: Literal["GET"] | Literal["POST"], url: str, **kwargs
+        self, method: Literal["GET", "POST"], url: str, **kwargs
     ) -> aiohttp.ClientResponse:
         """Makes a HTTP request using the shared session and state"""
         self.logger.debug(f"Making HTTP {method} request to {url}")
@@ -55,17 +58,19 @@ class Base(ABC):
             self.logger.debug(f"Response status: {resp.status}")
             self.logger.debug(f"Response url: {resp.url}")
             self.logger.debug(f"HTTP {method} {url} - Status {resp.status}")
-            if not (200 <= resp.status < 400):  # Allow 2xx and 3xx
+            if (
+                not (200 <= resp.status < 400)  # Allow 2xx and 3xx
+                and resp.content_type == "application/json"
+            ):
                 # Check if we got any errors in the API response
-                if resp.content_type == "application/json":
-                    json_resp = await resp.json()
-                    if "errors" in json_resp.keys():
-                        code = json_resp["errors"][0]["status"]
-                        message = json_resp["errors"][0]["message"]
-                        if code == 401:
-                            raise UnauthorisedError(message)
-                        else:
-                            raise APIResponseError(message)
+                json_resp = await resp.json()
+                if "errors" in json_resp:
+                    code = json_resp["errors"][0]["status"]
+                    message = json_resp["errors"][0]["message"]
+                    if code == 401:
+                        raise UnauthorisedError(message)
+                    else:
+                        raise APIResponseError(message)
             return resp
         except aiohttp.ClientConnectorDNSError as e:
             self.logger.error(f"HTTP request failed: {method} {url} - {e}")
@@ -79,8 +84,8 @@ class Base(ABC):
 
     def _build_url(
         self,
-        url: Optional[URLs | SignedInURLs | str] = None,
-        url_template: Optional[URLs | SignedInURLs] = None,
+        url: URLs | SignedInURLs | str | None = None,
+        url_template: URLs | SignedInURLs | None = None,
         url_args=None,
     ) -> str:
         if isinstance(url, str):
@@ -123,7 +128,7 @@ class Base(ABC):
             json_resp = await resp.json()
 
             # Check if we got any errors in the API response
-            if "errors" in json_resp.keys():
+            if "errors" in json_resp:
                 code = json_resp["errors"][0]["status"]
                 message = json_resp["errors"][0]["message"]
                 if code == 401:
@@ -144,7 +149,7 @@ class Base(ABC):
     async def _get_html(
         self,
         url: str | None = None,
-        url_template: Optional[URLs | SignedInURLs] = None,
+        url_template: URLs | SignedInURLs | None = None,
         url_args: dict | None = None,
         method: str = "GET",
         **kwargs,

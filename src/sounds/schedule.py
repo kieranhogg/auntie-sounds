@@ -1,12 +1,12 @@
 from datetime import datetime as dt
-from typing import Optional, cast
+from typing import cast
 
 from sounds import constants
 from sounds.base import Base
 from sounds.constants import URLs
 from sounds.exceptions import InvalidFormatError
 from sounds.models import LiveProgramme, Schedule, Segment
-from sounds.parser import parse_container, parse_node, parse_schedule
+from sounds.parser import Parser
 
 
 class ScheduleService(Base):
@@ -17,7 +17,7 @@ class ScheduleService(Base):
         if date:
             url_template = URLs.SCHEDULE_DATE
             try:
-                _ = dt.strptime(date, "%Y-%m-%d")
+                _ = dt.strptime(date, "%Y-%m-%d").replace(tzinfo=self.timezone)
             except ValueError:
                 raise InvalidFormatError(
                     "Invalid date specified, must be in the format YYYY-MM-DD"
@@ -25,10 +25,10 @@ class ScheduleService(Base):
         json_resp = await self._get_json(
             url_template=url_template, url_args={"station_id": station_id, "date": date}
         )
-        schedule = parse_schedule(json_resp)
+        schedule = Parser(self.logger).parse_schedule(json_resp)
         return schedule if isinstance(schedule, Schedule) else None
 
-    async def current_programme(self, station_id: str) -> Optional[LiveProgramme]:
+    async def current_programme(self, station_id: str) -> LiveProgramme | None:
         json_resp = await self._get_json(url_template=constants.URLs.STATIONS)
         listing = next(
             (
@@ -39,7 +39,7 @@ class ScheduleService(Base):
             None,
         )
         if listing:
-            listing = cast(LiveProgramme, parse_node(listing))
+            listing = cast(LiveProgramme, Parser(self.logger).parse_node(listing))
         return listing
 
     async def recently_played_items(self, station_id: str, results=10) -> list[Segment]:
@@ -48,7 +48,7 @@ class ScheduleService(Base):
             url_template=URLs.NOW_PLAYING,
             url_args={"station_id": station_id, "limit": results},
         )
-        segments = parse_container(json_resp)
+        segments = Parser(self.logger).parse_container(json_resp)
         if isinstance(segments, list):
             return [segment for segment in segments if isinstance(segment, Segment)]
         return []

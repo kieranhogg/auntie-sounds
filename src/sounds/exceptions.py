@@ -28,3 +28,7 @@ class InvalidArgumentsError(SoundsException):
 
 class NotFoundError(SoundsException):
     pass
+
+
+class ParserError(SoundsException):
+    pass

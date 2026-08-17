@@ -1,16 +1,12 @@
 from enum import Enum
-from typing import TYPE_CHECKING
 
 from sounds.auth import AuthService
 from sounds.base import Base
 from sounds.constants import SignedInURLs, URLs
 from sounds.exceptions import APIResponseError
 from sounds.models import Menu, MenuItem, RecommendedMenuItem
-from sounds.parser import parse_container, parse_menu
+from sounds.parser import Parser
 from sounds.requests import RequestManager
-
-if TYPE_CHECKING:
-    pass
 
 
 class MenuRecommendationOptions(Enum):
@@ -40,7 +36,7 @@ class PersonalService(Base):
             return await self._get_json(url_template=URLs.EXPERIENCE_MENU)
 
         json_resp = await self.requests.run(call)
-        menu = parse_menu(json_resp)
+        menu = Parser(self.logger).parse_menu(json_resp)
         if not isinstance(menu, Menu) or not menu or len(menu.sub_items) == 0:
             raise APIResponseError("Menu not converted correctly")
         if recommendations == MenuRecommendationOptions.EXCLUDE:
@@ -63,21 +59,25 @@ class PersonalService(Base):
         return MenuItem(
             id="podcasts",
             title="Podcasts",
-            sub_items=parse_menu(json).sub_items,
+            sub_items=Parser(self.logger).parse_menu(json).sub_items,
         )
 
     async def get_music_menu_item(self) -> MenuItem:
         return MenuItem(
             id="music",
             title="Music",
-            sub_items=parse_menu(await self._get_json(URLs.MUSIC)).sub_items,
+            sub_items=Parser(self.logger)
+            .parse_menu(await self._get_json(URLs.MUSIC))
+            .sub_items,
         )
 
     async def get_news_menu_item(self) -> MenuItem:
         return MenuItem(
             id="news",
             title="News",
-            sub_items=parse_menu(await self._get_json(URLs.NEWS)).sub_items,
+            sub_items=Parser(self.logger)
+            .parse_menu(await self._get_json(URLs.NEWS))
+            .sub_items,
         )
 
     async def get_explore_all(self):
@@ -95,22 +95,22 @@ class PersonalService(Base):
         async def call():
             return await self._get_json(url_template=SignedInURLs.LATEST)
 
-        return parse_container(await self.requests.run(call))
+        return Parser(self.logger).parse_container(await self.requests.run(call))
 
     async def get_subscriptions(self):
         async def call():
             return await self._get_json(url_template=SignedInURLs.SUBSCRIBED)
 
-        return parse_container(await self.requests.run(call))
+        return Parser(self.logger).parse_container(await self.requests.run(call))
 
     async def get_bookmarks(self):
         async def call():
             return await self._get_json(url_template=SignedInURLs.BOOKMARKS)
 
-        return parse_container(await self.requests.run(call))
+        return Parser(self.logger).parse_container(await self.requests.run(call))
 
     async def continue_listening(self):
         async def call():
             return await self._get_json(url_template=SignedInURLs.CONTINUE)
 
-        return parse_container(await self.requests.run(call))
+        return Parser(self.logger).parse_container(await self.requests.run(call))

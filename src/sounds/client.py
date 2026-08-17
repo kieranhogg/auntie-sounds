@@ -80,6 +80,7 @@ class SoundsClient:
             "session": self._session,
             "timeout": self.timeout,
             "logger": self.logger,
+            "timezone": self.timezone,
             "mock_session": self.mock_session,
             **kwargs,
         }
@@ -136,7 +137,7 @@ class SoundsClient:
     def setLogger(self, log_level=None):
         logging.addLevelName(constants.VERBOSE_LOG_LEVEL, "VERBOSE")
         if not log_level:
-            log_level = logging.WARN
+            log_level = logging.WARNING
         logging.basicConfig(
             level=log_level,
             format="%(asctime)s -%(levelname)s -on line: %(lineno)d -%(message)s",

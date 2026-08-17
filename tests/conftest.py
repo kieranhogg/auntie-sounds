@@ -1,5 +1,6 @@
 import json
-from logging import DEBUG, Logger
+import logging
+from logging import DEBUG
 from pathlib import Path
 from unittest.mock import AsyncMock, Mock
 
@@ -49,13 +50,19 @@ def mock_session(cookie_jar):
 
 @pytest.fixture
 def mock_logger():
-    logger = Mock(spec=Logger)
+    logger = Mock(spec=logging.Logger)
     logger.debug = Mock()
     logger.info = Mock()
     logger.warning = Mock()
     logger.error = Mock()
     logger.log = Mock()
     logger.setLevel = Mock()
+    return logger
+
+
+@pytest.fixture
+def logger():
+    logger = logging.getLogger("testing")
     return logger
 
 

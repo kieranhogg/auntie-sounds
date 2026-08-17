@@ -1,14 +1,14 @@
 import itertools
 from datetime import datetime as dt
 from datetime import timedelta
-from typing import List, Literal, Optional
+from typing import Literal
 
 from sounds import constants
 from sounds.base import Base
 from sounds.constants import URLs
 from sounds.exceptions import NotFoundError
 from sounds.models import LiveStation, MenuItem, Network
-from sounds.parser import parse_container, parse_node
+from sounds.parser import Parser
 from sounds.schedule import ScheduleService
 from sounds.streaming import StreamingService
 from sounds.utils import _date_with_ordinal
@@ -29,11 +29,11 @@ class StationService(Base):
         # Simple cache to prevent fetching all stations each time
         self.stations: list[LiveStation] = []
 
-    async def get_stations_detailed(self) -> Optional[List[Network]]:
+    async def get_stations_detailed(self) -> list[Network] | None:
         json_resp = await self._get_json(url_template=URLs.NETWORKS_LIST)
-        stations = parse_container(json_resp)
+        stations = Parser(self.logger).parse_container(json_resp)
         if isinstance(stations, list):
-            station_list: List[Network] = [
+            station_list: list[Network] = [
                 station for station in stations if isinstance(station, Network)
             ]
             return station_list
@@ -76,11 +76,11 @@ class StationService(Base):
             else:
                 # Just get the national data list
                 stations = json_resp["data"][0]["data"]
-            stations_list = parse_node(stations)
+            stations_list = Parser(self.logger).parse_node(stations)
             self.stations = stations_list
 
         if isinstance(stations_list, list):
-            all_stations: List[LiveStation] = [
+            all_stations: list[LiveStation] = [
                 station for station in stations_list if isinstance(station, LiveStation)
             ]
 
@@ -96,13 +96,13 @@ class StationService(Base):
             return all_stations
         return []
 
-    async def get_local_stations(self) -> List[LiveStation]:
+    async def get_local_stations(self) -> list[LiveStation]:
         json_resp = await self._get_json(url_template=URLs.STATIONS)
         self.logger.log(constants.VERBOSE_LOG_LEVEL, "Getting local station list...")
         self.logger.log(constants.VERBOSE_LOG_LEVEL, json_resp)
         station_data = json_resp["data"][1]["data"]
-        station_list = [parse_node(s) for s in station_data]
-        local_stations: List[LiveStation] = [
+        station_list = [Parser(self.logger).parse_node(s) for s in station_data]
+        local_stations: list[LiveStation] = [
             station
             for station in station_list
             if station is not None and isinstance(station, LiveStation)
@@ -142,7 +142,7 @@ class StationService(Base):
         self,
         station_id: str,
         include_stream: bool = False,
-        stream_format: Literal["hls"] | Literal["dash"] = "hls",
+        stream_format: Literal["hls", "dash"] = "hls",
         include_schedule: bool = False,
         date: str | None = None,
     ) -> LiveStation | None:
@@ -183,7 +183,7 @@ class StationService(Base):
         json_resp = await self._get_json(
             url_template=URLs.BROADCAST, url_args={"pid": pid}
         )
-        broadcast = parse_node(json_resp)
+        broadcast = Parser(self.logger).parse_node(json_resp)
         return broadcast
 
     async def get_station_schedule_menu(self, inclue_local: bool = False):
@@ -203,16 +203,20 @@ class StationService(Base):
             raise NotFoundError(f"Couldn't get station with id {station_id}")
 
         schedule = [
-            MenuItem(id=dt.now().strftime("%Y-%m-%d"), title="Today", sub_items=[]),
             MenuItem(
-                id=(dt.now() - timedelta(days=1)).strftime("%Y-%m-%d"),
+                id=dt.now(tz=self.timezone).strftime("%Y-%m-%d"),
+                title="Today",
+                sub_items=[],
+            ),
+            MenuItem(
+                id=(dt.now(tz=self.timezone) - timedelta(days=1)).strftime("%Y-%m-%d"),
                 title="Yesterday",
                 sub_items=[],
             ),
         ]
         # Maximum is 30 days prior
         for diff in range(28):
-            this_date = dt.now() - timedelta(days=2 + diff)
+            this_date = dt.now(tz=self.timezone) - timedelta(days=2 + diff)
             schedule.extend(
                 [
                     MenuItem(

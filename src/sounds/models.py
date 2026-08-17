@@ -1,5 +1,6 @@
-from dataclasses import asdict, dataclass, field, fields
+from dataclasses import asdict, dataclass, field
 from datetime import datetime as dt
+from logging import Logger
 from pprint import pformat
 from typing import Any, List, Optional, Sequence
 from warnings import deprecated
@@ -8,7 +9,6 @@ from zoneinfo import ZoneInfo
 import pytz
 
 from sounds import models
-from sounds.constants import BaseSoundsTypes, PlayableSoundsTypes
 from sounds.utils import image_from_recipe, network_logo
 
 type SoundsTypes = (
@@ -41,7 +41,7 @@ class SerializableMixin:
         return asdict(self)  # ty:ignore[invalid-argument-type]
 
     @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> "Segment":
+    def from_dict(cls, data: dict[str, Any]) -> Segment:
         return cls(**data)  # ty:ignore[invalid-return-type]
 
     def __str__(self):
@@ -81,9 +81,9 @@ class ImageMixin:
 class BaseObject(SerializableMixin):
     """Base class for all objects with common functionality."""
 
-    type: Optional[str] = None
+    type: str | None = None
     uris: dict = field(default_factory=dict)
-    recommendation: Optional[dict] = None
+    recommendation: dict | None = None
 
     def __post_init__(self):
         pass
@@ -94,17 +94,17 @@ class Network(SerializableMixin):
     """Represents a network/brand with basic metadata."""
 
     id: str
-    key: Optional[str] = None
-    short_title: Optional[str] = None
-    logo_url: Optional[str] = None
-    current_programme: Optional["LiveProgramme"] = None
-    sort: Optional[int] = None
-    group: Optional[str] = None
-    contacts: Optional[dict] = None
-    services: Optional[dict] = None
-    promoted_category_summaries: Optional[dict] = None
-    active: Optional[bool] = None
-    international: Optional[bool] = None
+    key: str | None = None
+    short_title: str | None = None
+    logo_url: str | None = None
+    current_programme: LiveProgramme | None = None
+    sort: int | None = None
+    group: str | None = None
+    contacts: str | None = None
+    services: str | None = None
+    promoted_category_summaries: str | None = None
+    active: bool | None = None
+    international: bool | None = None
 
     def __post_init__(self):
         if self.logo_url:
@@ -120,14 +120,14 @@ class Container(BaseObject, IdentifiableMixin):
     """Base container for organizing content - not directly playable."""
 
     id: str
-    title: Optional[str] = None
-    description: Optional[str] = None
-    image_url: Optional[str] = None
+    title: str | None = None
+    description: str | None = None
+    image_url: str | None = None
     synopses: dict = field(default_factory=dict)
     titles: dict = field(default_factory=dict)
-    urn: Optional[str] = None
-    network: Optional[Network] = None
-    sub_items: Optional[List[SoundsTypes]] = None
+    urn: str | None = None
+    network: Network | None = None
+    sub_items: list[SoundsTypes] | None = None
 
 
 @dataclass(kw_only=True)
@@ -147,21 +147,21 @@ class PlayableItem(BaseObject, IdentifiableMixin):
     """Base class for actual playable content."""
 
     id: str
-    urn: Optional[str] = None
-    pid: Optional[str] = None
-    type: Optional[str] = None
-    duration: Optional[dict] = None
-    progress: Optional[dict] = None
-    image_url: Optional[str] = None
+    urn: str | None = None
+    pid: str | None = None
+    type: str | None = None
+    duration: dict | None = None
+    progress: dict | None = None
+    image_url: str | None = None
     titles: dict = field(default_factory=dict)
     synopses: dict = field(default_factory=dict)
-    network: Optional[Network] = None
-    container: Optional[Container] = None
-    start: Optional[dt] = None
-    end: Optional[dt] = None
-    release: Optional[dict] = None
-    availability: Optional[dict] = None
-    stream: Optional[str] = None
+    network: Network | None = None
+    container: Container | None = None
+    start: dt | None = None
+    end: dt | None = None
+    release: dict | None = None
+    availability: dict | None = None
+    stream: str | None = None
 
     def __post_init__(self):
         self.start = _parse_datetime(self.start)
@@ -209,7 +209,7 @@ class Broadcast:
     repeat: bool
     critical: bool
     on_air: bool
-    programme: "RadioShow"
+    programme: RadioShow
 
     def __post_init__(self):
         self.start = _parse_datetime(self.start)
@@ -235,8 +235,8 @@ class Station(Container):
     """Represents a radio/media station."""
 
     local: bool = False
-    stream: Optional["Stream"] = None
-    schedule: Optional["Schedule"] = None
+    stream: Stream | None = None
+    schedule: Schedule | None = None
 
 
 @dataclass(kw_only=True)
@@ -272,7 +272,7 @@ class LiveProgramme(PlayableItem, ImageMixin):
 @dataclass(kw_only=True)
 class LiveStation(PlayableItem, IdentifiableMixin, ImageMixin):
     local: bool = False
-    schedule: Optional["Schedule"] = None
+    schedule: Schedule | None = None
 
     def __post_init__(self):
         super().__post_init__()
@@ -327,18 +327,19 @@ class Schedule(Container):
 
     id: str
     # title is the date of the schedule
-    sub_items: Optional[List[ScheduleItem]]
+    sub_items: list[ScheduleItem] | None
 
     def get_current_item(
         self,
-        timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo = pytz.timezone("UTC"),
-    ) -> Optional[ScheduleItem]:
+        timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo | None,
+    ) -> ScheduleItem | None:
         """Get the currently airing schedule item."""
+        if not timezone:
+            timezone = pytz.timezone("UTC")
         if self.sub_items and isinstance(self.sub_items, list):
             for item in self.sub_items:
-                if isinstance(item, ScheduleItem):
-                    if item.is_live(timezone):
-                        return item
+                if isinstance(item, ScheduleItem) and item.is_live(timezone):
+                    return item
         return None
 
 
@@ -379,46 +380,36 @@ class PodcastEpisode(PlayableItem, ImageMixin, IdentifiableMixin):
 class Podcast(ImageContainer):
     """Represents a podcast container (holds episodes)."""
 
-    pass
-
 
 @dataclass(kw_only=True)
 class RadioSeries(ImageContainer):
     """Represents a radio series container (holds episodes)."""
-
-    pass
 
 
 @dataclass(kw_only=True)
 class Collection(ImageContainer):
     """Represents a collection container."""
 
-    pass
-
 
 @dataclass(kw_only=True)
 class Category(ImageContainer):
     """Represents a content category."""
-
-    pass
 
 
 @dataclass(kw_only=True)
 class CategoryItemContainer(SerializableMixin):
     """Represents a content category container."""
 
-    id: Optional[str] = None
+    id: str | None = None
     total: int
     limit: int
     offset: int
-    sub_items: Optional[List[SoundsTypes]] = None
+    sub_items: list[SoundsTypes] | None = None
 
 
 @dataclass(kw_only=True)
 class Playlist(ImageContainer):
     """Represents a playlist container."""
-
-    pass
 
 
 @dataclass(kw_only=True)
@@ -456,16 +447,14 @@ class MenuItem(ImageContainer):
 class RecommendedMenuItem(MenuItem):
     """Represents a recommended menu item."""
 
-    pass
-
 
 @dataclass(kw_only=True)
 class Menu(SerializableMixin):
     """Represents a menu container with items."""
 
-    sub_items: List[MenuItem] | Sequence[MenuItem] | None
+    sub_items: list[MenuItem] | Sequence[MenuItem] | None
 
-    def get(self, key: str) -> Optional[MenuItem | RecommendedMenuItem]:
+    def get(self, key: str) -> MenuItem | RecommendedMenuItem | None:
         """Get a menu item by ID."""
         if self.sub_items:
             for item in self.sub_items:
@@ -486,9 +475,9 @@ class PromoItem(Container):
 
 @dataclass(kw_only=True)
 class SearchResults(SerializableMixin):
-    stations: List[LiveStation | StationSearchResult]
-    shows: List[Podcast | RadioShow]
-    episodes: List[PodcastEpisode | RadioClip | RadioShow]
+    stations: list[LiveStation | StationSearchResult]
+    shows: list[Podcast | RadioShow]
+    episodes: list[PodcastEpisode | RadioClip | RadioShow]
 
 
 @dataclass(kw_only=True)
