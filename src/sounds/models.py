@@ -570,7 +570,7 @@ def model_factory(object):
                 new_type = DisplayItem
                 # new_type = object.item
             case ItemType.BROADCAST_SUMMARY.value | ItemType.BROADCAST.value:
-                if urn == ItemURN.STATION:
+                if urn == ItemURN.STATION.value:
                     new_type = Station
                 if (
                     object.get("progress") and object.get("progress").get("value") == 0
