@@ -1,0 +1,98 @@
+{
+    "$schema": "https://rms.api.bbc.co.uk/docs/swagger.json#/definitions/PlayableItem",
+    "type": "playable_item",
+    "id": "p0hzr5mz",
+    "urn": "urn:bbc:radio:episode:p0hzr7bm",
+    "network": {
+        "id": "bbc_news",
+        "key": "news",
+        "short_title": "News",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.9.4/networks/bbc_news/{type}_{size}.{format}",
+        "network_type": "master_brand"
+    },
+    "titles": {
+        "primary": "Newscast",
+        "secondary": "Electioncast: The campaign begins!",
+        "tertiary": null,
+        "entity_title": "Electioncast: The campaign begins!"
+    },
+    "synopses": {
+        "short": "The leaders are off on the campaign trail",
+        "medium": null,
+        "long": "Today marks day one of the general election campaign, and the Prime Minister has done his first round of interviews. \n\nAdam and Chris discuss what was said, what the party slogans say about their campaigns and where the leaders start on the campaign trail.\n\nYou can join our Newscast online community here: https://tinyurl.com/newscastcommunityhere Newscast brings you daily analysis of the latest political news stories from the BBC.\n\nIt was presented by Adam Fleming. It was made by Chris Gray with Miranda Slade. The technical producer was Dafydd Evans. The assistant editor is Chris Gray. The senior news editor is Sam Bonham."
+    },
+    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0hzr7hz.jpg",
+    "duration": {
+        "value": 1612,
+        "label": "26 mins"
+    },
+    "progress": {
+        "value": 970,
+        "label": "10 mins left"
+    },
+    "container": {
+        "type": "series",
+        "id": "p05299nl",
+        "urn": "urn:bbc:radio:series:p05299nl",
+        "title": "Newscast",
+        "synopses": {
+            "short": "Brian Cox and James Graham join Adam for our first episode live from the fringe!",
+            "medium": "Brian Cox and James Graham join Adam for our first episode live from the fringe!",
+            "long": "The BBC's daily news podcast, Newscast dives into the day's big stories so you're never out of your depth.\n\nNewscast picks the brains of BBC News experts so you're ready if someone picks yours, covering the latest developments in politics in Westminster and beyond.\n\nFollow the new Labour government led by Sir Keir Starmer. How will Kemi Badenoch do as leader of the Conservative party? Newscast will give you all the best insights from BBC News so you're across all the day's top stories. \n\nNewscast is hosted by trusted journalists including Adam Fleming, BBC Political Editor Chris Mason, Laura Kuenssberg and Paddy O'Connell.    \n\nYou can now listen to Newscast on a smart speaker. If you want to listen, just say \"Ask BBC Sounds to play Newscast”. It works on most smart speakers.\n\nCatch Newscast seven-days a week and watch on BBC One at 23:40 on Thursday night or later on BBC iPlayer. \n\nGET IN TOUCH:\nYou can join our Newscast online community here: https://tinyurl.com/newscastcommunityhere\nSend us a message or voicenote via WhatsApp to 03301239480\nEmail Newscast@bbc.co.uk\nOr use the hashtag #BBCNewscast\n\nNewscast is part of the BBC News Podcasts family of podcasts. The team that makes Newscast also makes lots of other podcasts, including The Global Story, The Today Podcast, and of course Americast and Ukrainecast. If you enjoy Newscast (and if you're reading this then you hopefully do), then we think that you will enjoy some of our other pods too. See links below.\n\nThe Global Story: https://www.bbc.co.uk/sounds/brand/w13xtvsd\nThe Today Podcast: https://www.bbc.co.uk/sounds/brand/p0gg4k6r\nAmericast: https://www.bbc.co.uk/sounds/brand/p07h19zz\nUkrainecast: https://www.bbc.co.uk/sounds/brand/p0bqztzm"
+        },
+        "activities": []
+    },
+    "download": {
+        "type": "non_drm",
+        "quality_variants": {
+            "low": {
+                "bitrate": 128,
+                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0hzr5mz.mp3",
+                "file_size": 26000000,
+                "label": "26 MB"
+            },
+            "medium": {
+                "bitrate": 128,
+                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0hzr5mz.mp3",
+                "file_size": 26000000,
+                "label": "26 MB"
+            },
+            "high": {
+                "bitrate": 128,
+                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0hzr5mz.mp3",
+                "file_size": 26000000,
+                "label": "26 MB"
+            }
+        }
+    },
+    "availability": {
+        "from": "2024-05-23T09:20:00Z",
+        "to": null,
+        "label": "Available for over a year"
+    },
+    "release": {
+        "date": "2024-05-23T00:00:00Z",
+        "label": "23 May 2024"
+    },
+    "guidance": {
+        "competition_warning": false,
+        "warnings": null
+    },
+    "activities": [
+        {
+            "type": "play_activity",
+            "action": "paused",
+            "label": "Resume"
+        }
+    ],
+    "uris": [
+        {
+            "type": "latest",
+            "id": null,
+            "label": "Latest",
+            "uri": "/v2/my/programmes/playable?container=p05299nl&sort=sequential&type=episode&experience=domestic"
+        }
+    ],
+    "play_context": null,
+    "recommendation": null
+}

@@ -3,6 +3,8 @@ classification logic. This is where most of the BBC API's JSON shapes get
 turned into typed models.
 """
 
+import json
+
 import pytest
 
 from sounds.model_factory import ModelFactory
@@ -11,6 +13,7 @@ from sounds.models import (
     Collection,
     LiveStation,
     Network,
+    Podcast,
     PodcastEpisode,
     RadioClip,
     RadioShow,
@@ -121,6 +124,13 @@ class TestEpisodeVsPodcastClassification:
         }
         result = Parser(logger).parse_node(node)
         assert isinstance(result, RadioShow)
+
+    def test_bbc_news_podcast_is_podcast(self, logger):
+        """Test that a podcast associated with BBC News, and not a station is a Podcast not a RadioSeries."""
+        with open("tests/json/podcast_news.json") as node_file:
+            node = json.loads(node_file.read())
+            result = Parser(logger).parse_node(node)
+            assert isinstance(result.container, Podcast)
 
 
 class TestClipVsPodcastClassification:
