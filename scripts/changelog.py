@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 import datetime
 import pathlib
 import sys
@@ -21,8 +20,6 @@ if not body.strip():
     sys.exit("Unreleased section is empty — nothing to release")
 
 today = datetime.date.today().isoformat()
-new_text = (
-    f"{before}{marker}\n\n## [{version}] - {today}\n{body}\n{tail}"
-)
+new_text = f"{before}{marker}\n\n## [{version}] - {today}\n{body}\n{tail}"
 path.write_text(new_text)
 pathlib.Path("release_notes.md").write_text(body + "\n")
