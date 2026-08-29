@@ -1,0 +1,86 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Version bump level
+        required: true
+        type: choice
+        options: [patch, minor, major]
+        default: patch
+
+permissions:
+  contents: write
+  id-token: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: github.ref == 'refs/heads/stable'
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/auntie-sounds
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: stable
+          fetch-depth: 0
+
+      - uses: astral-sh/setup-uv@v6
+
+      - name: Install deps
+        run: uv sync --locked --all-extras --dev
+
+      - name: Run tests
+        run: uv run pytest
+
+      - name: Bump version
+        run: uv version --bump ${{ inputs.bump }}
+
+      - name: Read new version
+        id: v
+        run: |
+          version=$(uv run python -c "import tomllib; print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])")
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Debug workspace
+        run: |
+          pwd
+          ls -la "${{ github.workspace }}/scripts"
+          
+      - name: Finalize CHANGELOG.md
+        id: notes
+        run: python3 ${{ github.workspace }}/scripts/changelog.py "${{ steps.v.outputs.version }}"
+
+      - name: Update lockfile
+        run: uv lock
+
+      - name: Commit release
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add pyproject.toml uv.lock CHANGELOG.md
+          git commit -m "chore: release v${{ steps.v.outputs.version }}"
+          git tag "v${{ steps.v.outputs.version }}"
+          git push origin stable
+          git push origin "v${{ steps.v.outputs.version }}"
+
+      - name: Build
+        run: uv build
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "v${{ steps.v.outputs.version }}" \
+            dist/* \
+            --title "v${{ steps.v.outputs.version }}" \
+            --notes-file release_notes.md
