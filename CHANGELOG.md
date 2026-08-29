@@ -1,60 +1,67 @@
-v2.0.4
+# CHANGELOG
+
+## [Unreleased]
+
+## [2.0.5] - 2026-08-29
+* Fix: add the schedule menu back for international listeners
+
+## [v2.0.4]
 * Relax remaining dependencies to >= to prevent upstream being blocked
 
-v2.0.3
+## [v2.0.3]
 * Fix: recommendation folder options were not being passed to `Client.get_menu()`
 * Relax aiohttp dependency to >= 3.14.1​ to prevent upstream being blocked
 
-v2.0.2
+## [2.0.2]
 * Fix: fix discrepency between session-provided cookie jars, new session jars and saving to disk
 * Fix: handle edge-case when a previous session is present when a new anonymous client is created 
 
-v2.0.1
+## [2.0.1]
 * Fix: errors with email and password stages were not being detected
 
-v2.0
+## [2.0]
 
-API Changes
+### API Changes
 * `SoundsClient.authenticate()` has been removed, username and password are passed directly to `SoundsClient()`
 * The `Broadcast` model has been deprecated
 
-v1.1.8
+## [1.1.8]
 
 * Fix: Fix NameError when running in Music Assistant
 
-v1.1.7
+## [1.1.7]
 
 * Fix: Always get local stations when finding a station with `Stations.get_station()`
 * Fix: `Auth.user_info()` wouldn't be set if renewing a session
 
-v1.1.6
+## [1.1.6]
 
 * Fix: `Streaming.get_by_pid()` can fail with stale sessions
 
-v1.1.5
+## [1.1.5]
 
 * Fix: non-UK logins not logging in correctly
 
-v1.1.4
+## [1.1.4]
 
 * Fix: Radio 4 uses two different IDs, use the correct one
 
-v1.1.3
+## [1.1.3]
 
 * Fix: The API response in `StreamingService.get_heartbeat_details()` could raise an uncaught TypeError
 
-v1.1.2
+## [1.1.2]
 
 * Improved type checking
 
-v1.1.1
+## [1.1.1]
 
 * Improved type checking
 
-v1.1.0
+## [1.1.0]
 
 * Add the `stream_format` parameter to allow selection of preferred stream type
 
-v1.0 
+## [1.0] 
 
 Initial release
