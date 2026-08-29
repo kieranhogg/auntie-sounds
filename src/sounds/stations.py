@@ -51,37 +51,27 @@ class StationService(Base):
         :return: A list of Station objects
         :rtype: list[Station]
         """
-        if self.stations:
-            stations_list = self.stations
-        else:
+        if not self.stations:
             json_resp = await self._get_json(url_template=URLs.STATIONS)
-            self.logger.log(constants.VERBOSE_LOG_LEVEL, "Getting station list...")
-            self.logger.log(constants.VERBOSE_LOG_LEVEL, json_resp)
-
-            # Append a key to assign if they are local stations or not
+            ...
             for station in json_resp["data"][0]["data"]:
                 station["local"] = False
-
             for station in json_resp["data"][1]["data"]:
                 station["local"] = True
 
-            if include_local:
-                # Flatten the national and local stations sublists
-                stations = list(
-                    itertools.chain(
-                        json_resp["data"][0]["data"], json_resp["data"][1]["data"]
-                    )
+            combined = list(
+                itertools.chain(
+                    json_resp["data"][0]["data"], json_resp["data"][1]["data"]
                 )
+            )
+            self.stations = parse_node(combined)
 
-            else:
-                # Just get the national data list
-                stations = json_resp["data"][0]["data"]
-            stations_list = parse_node(stations)
-            self.stations = stations_list
-
+        stations_list = self.stations
         if isinstance(stations_list, list):
-            all_stations: List[LiveStation] = [
-                station for station in stations_list if isinstance(station, LiveStation)
+            all_stations = [
+                s
+                for s in stations_list
+                if isinstance(s, LiveStation) and (include_local or not s.local)
             ]
 
             if include_streams and isinstance(stations_list, list):
