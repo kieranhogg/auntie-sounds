@@ -227,15 +227,9 @@ class SoundsClient:
                 menu.sub_items.insert(0, listen_live)
                 menu.sub_items.insert(1, schedule)
                 menu.sub_items.insert(len(menu.sub_items), explore_all)
-        elif (
-            await self.user.is_uk_listener()
-            and recommendations != MenuRecommendationOptions.ONLY
-        ):
-            # UK listener, not logged in, construct UK menu
-            menu = Menu(sub_items=[listen_live, schedule, explore_all])
         elif recommendations != MenuRecommendationOptions.ONLY:
-            # Construct international menu
-            menu = Menu(sub_items=[listen_live, explore_all])
+            # Treat i18n and UK logged out the same
+            menu = Menu(sub_items=[listen_live, schedule, explore_all])
         return menu
 
     async def logout(self):
