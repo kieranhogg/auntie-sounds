@@ -1,8 +1,6 @@
 # CHANGELOG
 
 ## [Unreleased]
-
-## [2.0.5] - 2026-08-29
 * Fix: add the schedule menu back for international listeners
 
 ## [v2.0.4]
