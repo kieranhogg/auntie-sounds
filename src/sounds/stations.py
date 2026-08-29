@@ -51,22 +51,30 @@ class StationService(Base):
         :return: A list of Station objects
         :rtype: list[Station]
         """
-        if not self.stations:
-            json_resp = await self._get_json(url_template=URLs.STATIONS)
-            ...
-            for station in json_resp["data"][0]["data"]:
-                station["local"] = False
-            for station in json_resp["data"][1]["data"]:
-                station["local"] = True
+        json_resp = await self._get_json(url_template=URLs.STATIONS)
+        self.logger.log(constants.VERBOSE_LOG_LEVEL, "Getting station list...")
+        self.logger.log(constants.VERBOSE_LOG_LEVEL, json_resp)
 
-            combined = list(
+        # Append a key to assign if they are local stations or not
+        for station in json_resp["data"][0]["data"]:
+            station["local"] = False
+
+        for station in json_resp["data"][1]["data"]:
+            station["local"] = True
+
+        if include_local:
+            # Flatten the national and local stations sublists
+            stations = list(
                 itertools.chain(
                     json_resp["data"][0]["data"], json_resp["data"][1]["data"]
                 )
             )
-            self.stations = parse_node(combined)
 
-        stations_list = self.stations
+        else:
+            # Just get the national data list
+            stations = json_resp["data"][0]["data"]
+        stations_list = parse_node(stations)
+
         if isinstance(stations_list, list):
             all_stations = [
                 s

@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## [Unreleased]
+* Fix: remove internal station list cache which was causing upstream bugs
 
 ## [2.0.6] - 2026-08-29
 * Fix: local stations not being returned correctly
