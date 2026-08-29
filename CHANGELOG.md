@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## [Unreleased]
+
+## [2.0.6] - 2026-08-29
 * Fix: local stations not being returned correctly
 
 ## [2.0.5] - 2026-08-29
