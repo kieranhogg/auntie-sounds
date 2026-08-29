@@ -2,21 +2,13 @@ from dataclasses import fields
 from logging import Logger
 from typing import ClassVar
 
-from sounds.constants import (
-    BaseSoundsTypes,
-    ContainerType,
-    ItemURN,
-    PlayableSoundsTypes,
-)
-from sounds.exceptions import ParserError
+from sounds.constants import BaseSoundsTypes, ContainerType, IDType, ItemType, ItemURN
 from sounds.models import (
-    Broadcast,
     Category,
     CategoryItemContainer,
     Collection,
     CollectionItemContainer,
     Container,
-    DisplayItem,
     Header,
     LiveStation,
     MenuItem,
@@ -34,6 +26,7 @@ from sounds.models import (
     Station,
     StationSearchResult,
 )
+from sounds.utils import _network_id
 
 
 class ModelFactory:
@@ -61,18 +54,36 @@ class ModelFactory:
     def __init__(self, logger: Logger):
         self.logger = logger
 
-    def _podcast_or_series(self, original_object, urn) -> type:
-        # return (
-        #     Podcast
-        #     if (original_object.get("network") or {}).get("id") == "bbc_sounds_podcasts"
-        #     else RadioSeries
-        # )
-        if (
-            "network" in original_object
-            and (original_object.get("network").get("id") == "bbc_sounds_podcasts")
-        ) or (
-            "network" not in original_object
-            and urn == ItemURN.RADIO_SHOW_OR_PODCAST.value
+    def _podcast_or_series(
+        self,
+        original_object: dict,
+        urn: str,
+        parent_network: dict | Network | None = None,
+    ) -> type:
+        network_id = _network_id(original_object.get("network") or parent_network)
+
+        if network_id in ("bbc_sounds_podcasts", "bbc_news") or (
+            not network_id and urn == ItemURN.RADIO_SHOW_OR_PODCAST.value
+        ):
+            return Podcast
+        return RadioSeries
+
+    def _podcast_or_series(
+        self,
+        original_object: dict,
+        urn: str,
+        parent_network: dict | Network | None = None,
+    ) -> type:
+        network_id = None
+        if type(parent_network) is Network:
+            network_id = parent_network.id
+        else:
+            network = original_object.get("network") or parent_network
+            if network:
+                network_id = network.get("id")
+
+        if (network_id in ("bbc_sounds_podcasts", "bbc_news")) or (
+            not network_id and urn == ItemURN.RADIO_SHOW_OR_PODCAST.value
         ):
             return Podcast
         return RadioSeries
@@ -98,10 +109,13 @@ class ModelFactory:
         return LiveStation if original_object.get("synopses") is not None else Station
 
     def _programme_episode(self, original_object) -> tuple[type, dict]:
-        pass
+        if object["total"] > 1:
+            raise NotImplementedError("Container has more than 1 programme!")
+        episode = object["data"][0]
+        formats = {c.get("key") for c in episode.get("categories", [])}
+        return (PodcastEpisode if "podcasts" in formats else RadioShow), episode
 
-    def parse_object(self, original_object: dict):
-        from sounds.constants import ContainerType, IDType, ItemType, ItemURN
+    def parse_object(self, original_object: dict, parent_network: dict | None = None):
 
         new_type = None
 
@@ -152,7 +166,7 @@ class ModelFactory:
                         return None
 
                 case ItemType.DISPLAY_ITEM.value:
-                    if object.get("item") is not None:
+                    if original_object.get("item") is not None:
                         return None
                     new_type = MenuItem
 
@@ -160,8 +174,9 @@ class ModelFactory:
                     if urn == ItemURN.STATION.value:
                         new_type = Station
                     if (
-                        object.get("progress") and object["progress"].get("value") == 0
-                    ) or object.get("on_air"):
+                        original_object.get("progress")
+                        and original_object["progress"].get("value") == 0
+                    ) or original_object.get("on_air"):
                         # Live, or not yet aired
                         new_type = ScheduleItem
                     elif original_object.get("playable_item") is not None:
@@ -194,16 +209,11 @@ class ModelFactory:
                 new_type = self.CONTAINER_SCHEMA_MAP[object_type]
             elif object_type == BaseSoundsTypes.PROGRAMMES.value:
                 new_type, original_object = self._programme_episode(original_object)
-            elif object_type in (ContainerType.ITEM.value, ContainerType.SERIES.value):
-                if urn == ItemURN.RADIO_SHOW_OR_PODCAST.value:
-                    new_type = (
-                        Podcast
-                        if (original_object.get("network") or {}).get("id")
-                        in ("bbc_sounds_podcasts", "bbc_news")
-                        else RadioSeries
-                    )
-                else:
-                    new_type = Podcast
+            elif object_type in (
+                ContainerType.ITEM.value,
+                ContainerType.SERIES.value,
+            ):
+                new_type = self._podcast_or_series(original_object, urn, parent_network)
             else:
                 self.logger.warning(f"Unknown container type: {object_type}")
                 self.logger.debug(original_object)
@@ -217,7 +227,7 @@ class ModelFactory:
             return None
 
         if not new_type:
-            self.logger.error(f"Unexpected object type: {object_type}")
+            self.logger.error(f"Unexpected original_object type: {object_type}")
             self.logger.debug(
                 f"Object:\n{original_object}\n\nSchema type:{schema_type}"
             )

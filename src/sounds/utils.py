@@ -84,3 +84,12 @@ def _date_with_ordinal(date_obj: datetime, format_string: str = "%A %-d$ %B") ->
         ordinal = ["st", "nd", "rd"][date_obj.day % 10 - 1]
 
     return date_formatted.replace("$", ordinal)
+
+
+def _network_id(self, network: dict | "Network" | None) -> str | None:
+    from sounds.models import Network
+
+    """Get a network id string from a possible Network or dict repr."""
+    if network is None:
+        return None
+    return network.id if isinstance(network, Network) else network.get("id")

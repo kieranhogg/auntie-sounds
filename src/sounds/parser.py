@@ -31,7 +31,9 @@ class Parser:
     def __init__(self, logger: Logger):
         self.logger = logger
 
-    def parse_node(self, node: dict) -> SoundsTypes | list[SoundsTypes] | None:
+    def parse_node(
+        self, node: dict, parent_network: dict | None = None
+    ) -> SoundsTypes | list[SoundsTypes] | None:
         """
         Recursively parses a node. A node with a 'data' key is a container, otherwise,
         it's a playable item.
@@ -53,7 +55,7 @@ class Parser:
             results = []
             for item in node:
                 if item is not None:
-                    parsed = self.parse_node(item)
+                    parsed = self.parse_node(item, parent_network=parent_network)
                     if isinstance(parsed, list):
                         results.extend(parsed)
                     elif parsed is not None:
@@ -61,25 +63,32 @@ class Parser:
             return results if results else None
 
         if "data" in node:
-            container = model_factory.parse_object(node)
+            node_network = node.get("network") or parent_network
+            container = model_factory.parse_object(node, parent_network=node_network)
             if not container:
                 return None
 
             if isinstance(container, (Container, CategoryItemContainer, Menu)):
-                sub_items = self.parse_node(node["data"])
+                sub_items = self.parse_node(node["data"], parent_network=node_network)
                 if isinstance(sub_items, list):
                     container.sub_items = sub_items
 
             return container
 
         else:
-            playable_item = model_factory.parse_object(node)
+            playable_item = model_factory.parse_object(
+                node, parent_network=parent_network
+            )
             for nested_object in nested_objects:
                 if nested_object.source_key not in ignored_objects and getattr(
                     playable_item, nested_object.source_key, None
                 ):
                     source_dict = getattr(playable_item, nested_object.source_key)
-                    out_object = model_factory.parse_object(source_dict)
+                    out_object = model_factory.parse_object(
+                        source_dict,
+                        parent_network=getattr(playable_item, "network", None)
+                        or parent_network,
+                    )
                     if type(out_object) in [dict, None]:
                         msg = f"Failed to parse object: {source_dict}"
                         self.logger.error(msg)
@@ -89,6 +98,7 @@ class Parser:
                         nested_object.source_key,
                         out_object,
                     )
+
             # Post-processing
             if isinstance(playable_item, PlayableItem):
                 if playable_item is not None and (
