@@ -49,7 +49,8 @@ class StreamingService(Base):
     async def get_stream_jwt_token(self, station_id):
         """Requests a JWT token for a given station.
 
-        For now, this also works for non-UK listeners, returning a non-UK stream when used."""
+        For now, this also works for non-UK listeners, returning a non-UK stream when used.
+        """
         json = await self._get_json(
             url_template=URLs.JWT, url_args={"station_id": station_id}
         )
@@ -223,8 +224,12 @@ class StreamingService(Base):
         self.logger.debug(f"Getting playable item with PID {pid}")
 
         if await self.user.is_uk_listener() and self.user.login_details_provided:
-            json_resp = await self._get_json(
-                url_template=SignedInURLs.PID_PLAYABLE, url_args={"pid": pid}
+            json_resp = await self.requests.run(
+                partial(
+                    self._get_json,
+                    url_template=SignedInURLs.PID_PLAYABLE,
+                    url_args={"pid": pid},
+                )
             )
         else:
             json_resp = await self._get_json(
