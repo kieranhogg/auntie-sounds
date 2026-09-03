@@ -84,3 +84,6 @@ jobs:
             dist/* \
             --title "v${{ steps.v.outputs.version }}" \
             --notes-file release_notes.md
+      
+      - name: Clean up
+        run: rm release_notes.md
