@@ -10,6 +10,7 @@ from sounds.models import (
     Collection,
     LiveStation,
     Network,
+    Playlist,
     PodcastEpisode,
     RadioClip,
     RadioShow,
@@ -167,3 +168,33 @@ class TestStationClassification:
         result = model_factory(node)
         assert isinstance(result, Station)
         assert not isinstance(result, LiveStation)
+
+
+class TestPlaylists:
+    def test_playlist_is_converted_correctly(self):
+        node = {
+            "type": "container_item",
+            "uris": [
+                {
+                    "type": "latest",
+                    "id": None,
+                    "label": "Latest",
+                    "uri": "/v2/curations/m002gj2t/members/playable?experience=domestic",
+                }
+            ],
+            "id": "m002gj2t",
+            "title": None,
+            "description": None,
+            "image_url": "https://ichef.bbci.co.uk/images/ic/1280x1280/p0p7mkxs.jpg",
+            "synopses": {
+                "short": "The world's greatest classical festival is coming to a close!",
+                "medium": "Experience all the highlights from the world’s greatest classical music festival here. To listen on smart speaker just say, “ask BBC Sounds to play The Proms”",
+                "long": "Experience all the highlights from the world’s greatest classical music festival here. To listen on smart speaker just say, “ask BBC Sounds to play The Proms”",
+            },
+            "titles": {"primary": "BBC Proms", "secondary": None, "tertiary": None},
+            "urn": "urn:bbc:radio:curation:m002gj2t",
+            "network": None,
+            "sub_items": [],
+        }
+        result = model_factory(node)
+        assert isinstance(result, Playlist)

@@ -601,6 +601,8 @@ def model_factory(object):
             new_type = Collection
         elif urn == ItemURN.CATEGORY.value:
             new_type = Category
+        elif urn == ItemURN.PLAYLIST.value:
+            new_type = Playlist
         elif object_type == ContainerType.BRAND.value:
             if (
                 hasattr(object, "network")
