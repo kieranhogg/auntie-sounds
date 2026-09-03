@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## [Unreleased]
+
+## [2.0.8] - 2026-09-02
 * Fix: StreamingService.get_by_pid() was not using RequestManager.run() to use the authenticated endpoint
 
 ## [2.0.7] - 2026-08-29
