@@ -1,0 +1,9 @@
+rules:
+  - id: enforce-request-manager-for-auth-urls
+    message: "Architecture Alert:"
+    severity: ERROR
+    languages:
+      - python
+    patterns:
+      - pattern: SignedInURLs.$X
+      - pattern-not-inside: RequestManager.run(...)
