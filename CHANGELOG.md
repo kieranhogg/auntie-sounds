@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## [Unreleased]
+
+## [2.0.9] - 2026-09-03
 * Fix: Playlists weren't correctly converted
 
 ## [2.0.8] - 2026-09-02
