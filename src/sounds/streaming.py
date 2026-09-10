@@ -233,7 +233,7 @@ class StreamingService(Base):
             )
         else:
             json_resp = await self._get_json(
-                url_template=URLs.PID_PLAYABLE, url_args={"pid": pid}
+                url_template=URLs.PROGRAMME_FROM_PID_PLAYABLE, url_args={"pid": pid}
             )
 
         self.logger.debug(json_resp)
@@ -273,7 +273,7 @@ class StreamingService(Base):
 
     async def get_heartbeat_details(self, pid):
         json_resp = await self._get_json(
-            url_template=URLs.PLAYLIST, url_args={"pid": pid}
+            url_template=URLs.PID_DETAILS, url_args={"pid": pid}
         )
         self.logger.debug(f"Heartbeat details response: {json_resp}")
         try:
