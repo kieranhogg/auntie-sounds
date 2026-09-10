@@ -60,20 +60,6 @@ class ModelFactory:
         urn: str,
         parent_network: dict | Network | None = None,
     ) -> type:
-        network_id = _network_id(original_object.get("network") or parent_network)
-
-        if network_id in ("bbc_sounds_podcasts", "bbc_news") or (
-            not network_id and urn == ItemURN.RADIO_SHOW_OR_PODCAST.value
-        ):
-            return Podcast
-        return RadioSeries
-
-    def _podcast_or_series(
-        self,
-        original_object: dict,
-        urn: str,
-        parent_network: dict | Network | None = None,
-    ) -> type:
         network_id = None
         if type(parent_network) is Network:
             network_id = parent_network.id
