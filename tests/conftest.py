@@ -139,12 +139,12 @@ async def sounds_client(mock_session):
 
 @pytest.fixture
 def sample_radio_series_data():
-    return json.loads(open("tests/json/radio_series.json").read())
+    return json.loads(open("tests/fixtures/api/radio_series.json").read())
 
 
 @pytest.fixture
 def sample_network_data():
-    return json.loads(open("tests/json/schedule.json").read())
+    return json.loads(open("tests/fixtures/api/schedule.json").read())
 
 
 @pytest.fixture
@@ -165,14 +165,14 @@ def sample_schedule_item_data():
 
 @pytest.fixture
 def sample_podcast_episode_data():
-    return json.loads(open("tests/json/podcast.json").read())
+    return json.loads(open("tests/fixtures/api/podcast.json").read())
 
 
 @pytest.fixture
 def sample_playable_item():
-    return json.loads(open("tests/json/pid_playable.json").read())
+    return json.loads(open("tests/fixtures/api/pid_playable.json").read())
 
 
 @pytest.fixture
 def sample_menu_data():
-    return json.loads(open("tests/json/menu.json").read())
+    return json.loads(open("tests/fixtures/api/menu.json").read())
