@@ -26,7 +26,6 @@ from sounds.models import (
     Station,
     StationSearchResult,
 )
-from sounds.utils import _network_id
 
 
 class ModelFactory:
