@@ -76,7 +76,7 @@ class StationService(Base):
         stations_list = Parser(self.logger).parse_node(stations)
 
         if isinstance(stations_list, list):
-            all_stations: List[LiveStation] = [
+            all_stations: list[LiveStation] = [
                 station for station in stations_list if isinstance(station, LiveStation) and (include_local or not station.local)
             ]
 
