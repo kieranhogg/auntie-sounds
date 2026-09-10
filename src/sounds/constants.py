@@ -33,15 +33,6 @@ class SignedInURLs(Enum):
 
 
 class URLs(Enum):
-    # Not yet used
-    """
-    /v2/networks - Provides the list of all the v2 networks
-    /v2/networks/playable - Provides the list of all the playable networks
-    /v2/networks/{id}/playable - Provides the network playable item by network ID. <span>🎶</span> Green Day
-    /radio/networks.json - All iPlayer Radio networks - contains business logic for masterbrand and service relationships
-    /v2/services/{sid}/tracks/latest/playable - Retrieve list of tracks as playable items for a service <span>🎶</span> Deftones
-    """
-
     # Auth URLs
     LOGIN_START = "https://session.bbc.co.uk/session?ptrt=https%3A%2F%2Fwww.bbc.co.uk%2Fsounds&context=iplayerradio&userOrigin=sounds"
     LOGIN_START_I18N = "https://account.bbc.com/auth?realm=%2F&clientId=Account&ptrt=https%3A%2F%2Fwww.bbc.com%2F&userOrigin=BBCS_BBC&purpose=free&isCasso=false&action=sign-in&redirectUri=https%3A%2F%2Fsession.bbc.com%2Fsession%2Fcallback%3Frealm%3D%2F&service=IdSignInService"
@@ -79,10 +70,15 @@ class URLs(Enum):
     CATEGORY_LATEST = "https://rms.api.bbc.co.uk/v2/programmes/playable?category={category}&sort=-release_date&experience=domestic"
     CATEGORY_POPULAR = "https://rms.api.bbc.co.uk/v2/programmes/playable?category={category}&sort=popular&experience=domestic"
     BROADCAST = "https://rms.api.bbc.co.uk/v2/broadcasts/{pid}"
-    PID = "https://rms.api.bbc.co.uk/v2/programmes/{pid}"
-    PID_PLAYABLE = "https://rms.api.bbc.co.uk/v2/programmes/{pid}/playable"
+    # Despite the name, this returns a single programme
+    PROGRAMME_FROM_PID = "https://rms.api.bbc.co.uk/v2/programmes/{pid}"
+    PROGRAMME_FROM_PID_PLAYABLE = (
+        "https://rms.api.bbc.co.uk/v2/programmes/{pid}/playable"
+    )
     CONTAINER_URL = "https://rms.api.bbc.co.uk/v2/experience/inline/container/{urn}"
-    PLAYLIST = "https://www.bbc.co.uk/programmes/{pid}/playlist.json"
+
+    # This endpoint gets extra details from a pid such as vpid and parent pid
+    PID_DETAILS = "https://www.bbc.co.uk/programmes/{pid}/playlist.json"
     COLLECTIONS_FULL = "https://rms.api.bbc.co.uk/v2/collections/{pid}/members/container?experience=domestic&offset={offset}&limit={limit}"
     COLLECTIONS = "https://rms.api.bbc.co.uk/v2/collections/{pid}/members/container?experience=domestic"
     CURATIONS = "https://rms.api.bbc.co.uk/v2/curations/{pid}/members/playable?experience=domestic"
