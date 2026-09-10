@@ -1,8 +1,9 @@
-from collections import namedtuple
 from collections.abc import Sequence
 from dataclasses import fields
 from logging import Logger
+from typing import NamedTuple
 
+from sounds import FEATURE_FLAGS, FeatureFlags
 from sounds.exceptions import ParserError
 from sounds.model_factory import ModelFactory
 from sounds.models import (
@@ -27,9 +28,50 @@ from sounds.utils import network_logo
 ParseResult = SoundsTypes | Sequence["ParseResult"] | None
 
 
+class NestedObject(NamedTuple):
+    source_key: str
+    replacement_model: ParseResult
+    concrete_class: bool = True
+
+
 class Parser:
+
     def __init__(self, logger: Logger):
         self.logger = logger
+        self.nested_objects = [
+            NestedObject("network", Network),
+            NestedObject("container", Container, False),
+        ]
+        if FEATURE_FLAGS.get(FeatureFlags.SINGLE_ITEM_PROMO):
+            self.nested_objects.append(NestedObject("item", Container))
+
+        self.ignored_objects = ["activities"]
+
+    def parse_nested_objects(self, node: dict) -> dict:
+        for nested_object in self.nested_objects:
+            if getattr(node, nested_object.source_key, None):
+                source_dict = getattr(node, nested_object.source_key)
+                if nested_object.concrete_class:
+                    out_object = ModelFactory(logger=self.logger).parse_object(
+                        source_dict,
+                        parent_network=getattr(node, "network", None) or node,
+                        force_type=nested_object.replacement_model,
+                    )
+                else:
+                    out_object = ModelFactory(logger=self.logger).parse_object(
+                        source_dict,
+                        parent_network=getattr(node, "network", None) or node,
+                    )
+                if out_object is None or type(out_object) is dict:
+                    msg = f"Failed to parse object: {source_dict}"
+                    self.logger.error(msg)
+                    raise ParserError(msg)
+                setattr(
+                    node,
+                    nested_object.source_key,
+                    out_object,
+                )
+        return node
 
     def parse_node(
         self, node: dict, parent_network: dict | None = None
@@ -39,15 +81,6 @@ class Parser:
         it's a playable item.
         """
 
-        NestedObject = namedtuple("NestedObject", ["source_key", "replacement_model"])
-        nested_objects = [
-            NestedObject("network", Network),
-            NestedObject("container", Container),
-            NestedObject("item", Container),
-            NestedObject("programme", RadioShow),
-            NestedObject("now", Network),
-        ]
-        ignored_objects = ["activities"]
         model_factory = ModelFactory(logger=self.logger)
         if isinstance(node, list):
             # While we can have list of nodes and nodes within nodes,
@@ -79,25 +112,7 @@ class Parser:
             playable_item = model_factory.parse_object(
                 node, parent_network=parent_network
             )
-            for nested_object in nested_objects:
-                if nested_object.source_key not in ignored_objects and getattr(
-                    playable_item, nested_object.source_key, None
-                ):
-                    source_dict = getattr(playable_item, nested_object.source_key)
-                    out_object = model_factory.parse_object(
-                        source_dict,
-                        parent_network=getattr(playable_item, "network", None)
-                        or parent_network,
-                    )
-                    if out_object is None or type(out_object) is dict:
-                        msg = f"Failed to parse object: {source_dict}"
-                        self.logger.error(msg)
-                        raise ParserError(msg)
-                    setattr(
-                        playable_item,
-                        nested_object.source_key,
-                        out_object,
-                    )
+            playable_item = self.parse_nested_objects(playable_item)
 
             # Post-processing
             if isinstance(playable_item, PlayableItem):
