@@ -208,3 +208,27 @@ class TestPlaylists:
         }
         result = Parser(logger).parse_node(node)
         assert isinstance(result, Playlist)
+
+
+class TestProgrammes:
+    def test_programme_podcast_episode(self, logger):
+        """Test the parser for programme endpoint data converts to podcast episode correctly"""
+        with open("tests/fixtures/api/PROGRAMME_FROM_PID.json") as node_file:
+            json_data = json.loads(node_file.read())
+            original_object = json_data["data"][0]
+            new_type, new_object = ModelFactory(logger)._programme_episode(json_data)
+            assert new_type is PodcastEpisode
+            assert original_object == new_object
+
+    def test_programme_radio_episode(self, logger):
+        """Test the parser for programme endpoint data converts to radio show correctly"""
+        with open("tests/fixtures/api/PROGRAMME_FROM_PID.json") as node_file:
+            json_data = json.loads(node_file.read())
+            original_object = json_data["data"][0]
+
+            # Remove the podcast type present in the test data
+            del original_object["categories"][4]
+
+            new_type, new_object = ModelFactory(logger)._programme_episode(json_data)
+            assert new_type is RadioShow
+            assert original_object == new_object

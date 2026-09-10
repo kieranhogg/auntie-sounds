@@ -95,9 +95,10 @@ class ModelFactory:
         return LiveStation if original_object.get("synopses") is not None else Station
 
     def _programme_episode(self, original_object) -> tuple[type, dict]:
-        if object["total"] > 1:
+        """Reads contents from PROGRAMME_FROM_PID, decides its type and extracts the episode"""
+        if original_object["total"] > 1:
             raise NotImplementedError("Container has more than 1 programme!")
-        episode = object["data"][0]
+        episode = original_object["data"][0]
         formats = {c.get("key") for c in episode.get("categories", [])}
         return (PodcastEpisode if "podcasts" in formats else RadioShow), episode
 
