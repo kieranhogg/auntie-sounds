@@ -89,7 +89,7 @@ class Parser:
                         parent_network=getattr(playable_item, "network", None)
                         or parent_network,
                     )
-                    if type(out_object) in [dict, None]:
+                    if out_object is None:
                         msg = f"Failed to parse object: {source_dict}"
                         self.logger.error(msg)
                         raise ParserError(msg)
