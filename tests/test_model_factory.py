@@ -13,8 +13,8 @@ from sounds.models import (
     Collection,
     LiveStation,
     Network,
-    Podcast,
     Playlist,
+    Podcast,
     PodcastEpisode,
     RadioClip,
     RadioShow,
@@ -181,7 +181,7 @@ class TestStationClassification:
 
 
 class TestPlaylists:
-    def test_playlist_is_converted_correctly(self):
+    def test_playlist_is_converted_correctly(self, logger):
         node = {
             "type": "container_item",
             "uris": [
@@ -206,5 +206,5 @@ class TestPlaylists:
             "network": None,
             "sub_items": [],
         }
-        result = model_factory(node)
+        result = Parser(logger).parse_node(node)
         assert isinstance(result, Playlist)

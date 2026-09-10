@@ -1,3 +1,4 @@
+from functools import partial
 from typing import TYPE_CHECKING, Literal, cast
 
 from sounds import constants
