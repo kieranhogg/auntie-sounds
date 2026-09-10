@@ -9,10 +9,9 @@ import pytest
 import pytz
 from yarl import URL
 
-from sounds import URLs
 from sounds.auth import AuthService
 from sounds.client import SoundsClient
-from sounds.constants import COOKIE_ID
+from sounds.constants import COOKIE_ID, URLs
 from sounds.cookies import CookieStore
 from sounds.requests import RequestManager
 from sounds.schedule import ScheduleService
