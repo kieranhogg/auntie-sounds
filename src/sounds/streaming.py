@@ -223,8 +223,12 @@ class StreamingService(Base):
         self.logger.debug(f"Getting playable item with PID {pid}")
 
         if await self.user.is_uk_listener() and self.user.login_details_provided:
-            json_resp = await self._get_json(
-                url_template=SignedInURLs.PID_PLAYABLE, url_args={"pid": pid}
+            json_resp = await self.requests.run(
+                partial(
+                    self._get_json,
+                    url_template=SignedInURLs.PID_PLAYABLE,
+                    url_args={"pid": pid},
+                )
             )
         else:
             json_resp = await self._get_json(

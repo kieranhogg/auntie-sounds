@@ -1,6 +1,16 @@
 # CHANGELOG
 
 ## [Unreleased]
+* Fix: Playlists weren't correctly converted
+
+## [2.0.8] - 2026-09-02
+* Fix: StreamingService.get_by_pid() was not using RequestManager.run() to use the authenticated endpoint
+
+## [2.0.7] - 2026-08-29
+* Fix: remove internal station list cache which was causing upstream bugs
+
+## [2.0.6] - 2026-08-29
+* Fix: local stations not being returned correctly
 
 ## [2.0.5] - 2026-08-29
 * Fix: add the schedule menu back for international listeners

@@ -1,0 +1,14 @@
+rules:
+  - id: signed-in-urls-usage
+    languages: [python]
+    severity: WARNING
+    message: SignedInURLs.$X used outside an approved requests.run() wrapper
+    patterns:
+      - pattern: SignedInURLs.$X
+      - pattern-not-inside: $OBJ.run(...)
+      - pattern-not-inside: |
+          def call(...):
+              ...
+      - pattern-not-inside: |
+          async def call(...):
+              ...
