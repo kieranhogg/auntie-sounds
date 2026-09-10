@@ -128,7 +128,7 @@ class TestEpisodeVsPodcastClassification:
 
     def test_bbc_news_podcast_is_podcast(self, logger):
         """Test that a podcast associated with BBC News, and not a station is a Podcast not a RadioSeries."""
-        with open("tests/json/podcast_news.json") as node_file:
+        with open("tests/fixtures/api/podcast_news.json") as node_file:
             node = json.loads(node_file.read())
             result = Parser(logger).parse_node(node)
             assert isinstance(result.container, Podcast)
