@@ -34,7 +34,7 @@ def image_from_recipe(
     image_recipe: str,
     size: int,
     height: int | None = None,
-    format="jpg",
+    format: str | None = None,
     img_type: ImageType | None = None,
 ) -> str | None:
     """
@@ -51,14 +51,16 @@ def image_from_recipe(
     else:
         img_size = f"{size}x{size}"
 
+    if not format:
+        format = "jpg"
     if "{format}" in image_recipe and format:
-        image_recipe = image_recipe.format(format=format, recipe=img_size)
-    elif "{type}" in image_recipe and img_type:
-        image_recipe = image_recipe.format(type=img_type, recipe=img_size)
-    else:
-        image_recipe = image_recipe.format(recipe=img_size)
+        return image_recipe.format(format=format, recipe=img_size)
 
-    return image_recipe
+
+    if "{type}" in image_recipe and img_type:
+        return image_recipe.format(type=img_type, recipe=img_size)
+
+    return image_recipe.format(recipe=img_size)
 
 
 async def image_from_spotify(url: str) -> str | None:

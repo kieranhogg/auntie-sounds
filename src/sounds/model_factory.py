@@ -1,5 +1,5 @@
+import logging
 from dataclasses import fields
-from logging import Logger
 from typing import ClassVar
 
 from sounds.constants import BaseSoundsTypes, ContainerType, IDType, ItemType, ItemURN
@@ -27,6 +27,51 @@ from sounds.models import (
     StationSearchResult,
 )
 
+logger = logging.getLogger(__name__)
+
+
+def _podcast_or_series(
+        original_object: dict,
+    urn: str,
+    parent_network: dict | Network | None = None,
+) -> type:
+    network_id = None
+    if type(parent_network) is Network:
+        network_id = parent_network.id
+    else:
+        network = original_object.get("network") or parent_network
+        if network:
+            network_id = network.get("id")
+
+    if (network_id in ("bbc_sounds_podcasts", "bbc_news")) or (
+        not network_id and urn == ItemURN.RADIO_SHOW_OR_PODCAST.value
+    ):
+        return Podcast
+    return RadioSeries
+
+
+def _episode_or_show(original_object) -> type:
+    container = original_object.get("container")
+    if not container:
+        return RadioShow
+    is_brand = ContainerType(container.get("type")) == ContainerType.BRAND
+    is_podcast_network = (original_object.get("network") or {}).get(
+        "id"
+    ) == "bbc_sounds_podcasts"
+    return RadioShow if is_brand and not is_podcast_network else PodcastEpisode
+
+
+def _clip_or_episode(original_object) -> type:
+    # Sometimes these can appear in podcast episodes listings
+    container = original_object.get("container")
+    if container and ContainerType(container.get("type")) == ContainerType.BRAND:
+        return PodcastEpisode
+    return RadioClip
+
+
+def _live_station_or_station(original_object) -> type:
+    return LiveStation if original_object.get("synopses") is not None else Station
+
 
 class ModelFactory:
     PLAYABLE_ITEM_URN_MAP: ClassVar[dict[str, type]] = {
@@ -49,49 +94,6 @@ class ModelFactory:
         # Collection group of items
         BaseSoundsTypes.CONTAINER_ITEMS.value: CollectionItemContainer,
     }
-
-    def __init__(self, logger: Logger):
-        self.logger = logger
-
-    def _podcast_or_series(
-        self,
-        original_object: dict,
-        urn: str,
-        parent_network: dict | Network | None = None,
-    ) -> type:
-        network_id = None
-        if type(parent_network) is Network:
-            network_id = parent_network.id
-        else:
-            network = original_object.get("network") or parent_network
-            if network:
-                network_id = network.get("id")
-
-        if (network_id in ("bbc_sounds_podcasts", "bbc_news")) or (
-            not network_id and urn == ItemURN.RADIO_SHOW_OR_PODCAST.value
-        ):
-            return Podcast
-        return RadioSeries
-
-    def _episode_or_show(self, original_object) -> type:
-        container = original_object.get("container")
-        if not container:
-            return RadioShow
-        is_brand = ContainerType(container.get("type")) == ContainerType.BRAND
-        is_podcast_network = (original_object.get("network") or {}).get(
-            "id"
-        ) == "bbc_sounds_podcasts"
-        return RadioShow if is_brand and not is_podcast_network else PodcastEpisode
-
-    def _clip_or_episode(self, original_object) -> type:
-        # Sometimes these can appear in podcast episodes listings
-        container = original_object.get("container")
-        if container and ContainerType(container.get("type")) == ContainerType.BRAND:
-            return PodcastEpisode
-        return RadioClip
-
-    def _live_station_or_station(self, original_object) -> type:
-        return LiveStation if original_object.get("synopses") is not None else Station
 
     def _programme_episode(self, original_object) -> tuple[type, dict]:
         """Reads contents from PROGRAMME_FROM_PID, decides its type and extracts the episode"""
@@ -141,16 +143,16 @@ class ModelFactory:
 
                     case ItemType.PLAYABLE_ITEM.value:
                         if urn == ItemURN.EPISODE.value:
-                            new_type = self._episode_or_show(original_object)
+                            new_type = _episode_or_show(original_object)
                         elif urn == ItemURN.CLIP.value:
                             # Sometimes these can appear in podcast episodes listings
-                            new_type = self._clip_or_episode(original_object)
+                            new_type = _clip_or_episode(original_object)
                         elif urn == ItemURN.STATION.value:
-                            new_type = self._live_station_or_station(original_object)
+                            new_type = _live_station_or_station(original_object)
                         elif urn in self.PLAYABLE_ITEM_URN_MAP:
                             new_type = self.PLAYABLE_ITEM_URN_MAP[urn]
                         else:
-                            self.logger.warning(
+                            logger.warning(
                                 f"No playableitem: {original_object} {type(original_object)}"
                             )
                             return None
@@ -186,7 +188,7 @@ class ModelFactory:
                         new_type = Header
 
                     case _:
-                        self.logger.error(f"No ItemType handler for {original_object}")
+                        logger.error(f"No ItemType handler for {original_object}")
                         return None
 
             elif object_type in ContainerType or object_type in BaseSoundsTypes:
@@ -194,7 +196,7 @@ class ModelFactory:
                 if urn in self.CONTAINER_URN_MAP:
                     new_type = self.CONTAINER_URN_MAP[urn]
                 elif object_type == ContainerType.BRAND.value:
-                    new_type = self._podcast_or_series(original_object, urn)
+                    new_type = _podcast_or_series(original_object, urn)
                 elif object_type in self.CONTAINER_SCHEMA_MAP:
                     new_type = self.CONTAINER_SCHEMA_MAP[object_type]
                 elif object_type == BaseSoundsTypes.PROGRAMMES.value:
@@ -203,14 +205,14 @@ class ModelFactory:
                     ContainerType.ITEM.value,
                     ContainerType.SERIES.value,
                 ):
-                    new_type = self._podcast_or_series(
+                    new_type = _podcast_or_series(
                         original_object, urn, parent_network
                     )
                 else:
-                    self.logger.warning(f"Unknown container type: {object_type}")
-                    self.logger.debug(original_object)
+                    logger.warning(f"Unknown container type: {object_type}")
+                    logger.debug(original_object)
                 # This is a station or network
-            elif original_object.get("network_type") is not None:
+            elif original_object.get("network_type"):
                 new_type = Network
             elif "key" in original_object:
                 # This is a weird nested network thing
@@ -219,8 +221,8 @@ class ModelFactory:
                 return None
 
             if not new_type:
-                self.logger.error(f"Unexpected original_object type: {object_type}")
-                self.logger.debug(
+                logger.error(f"Unexpected original_object type: {object_type}")
+                logger.debug(
                     f"Object:\n{original_object}\n\nSchema type:{schema_type}"
                 )
                 return None

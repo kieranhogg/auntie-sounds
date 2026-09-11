@@ -1,9 +1,11 @@
+import logging
 from logging import Logger
 
 from sounds.auth import AuthService
 from sounds.cookies import CookieStore
 from sounds.exceptions import UnauthorisedError
 
+logger = logging.getLogger(__name__)
 
 class RequestManager:
     def __init__(

@@ -1,5 +1,6 @@
 from sounds.base import Base
 from sounds.constants import URLs
+from sounds.exceptions import APIResponseError, NotFoundError, UnauthorisedError
 
 
 class UserService(Base):
@@ -13,13 +14,15 @@ class UserService(Base):
 
     async def _ensure_loaded(self):
         if not self._user_info:
-            # Set conservative default as a safeguard
-            self._user_info = {
-                "X-Country": "us",
-                "X-Ip_is_uk_combined": "no",
-                "X-Ip_is_advertise_combined": "yes",
-            }
-            await self.refresh()
+            try:
+                await self.refresh()
+            except UnauthorisedError, NotFoundError, APIResponseError:
+                # Set conservative default as a safeguard
+                self._user_info = {
+                    "X-Country": "us",
+                    "X-Ip_is_uk_combined": "no",
+                    "X-Ip_is_advertise_combined": "yes",
+                }
 
     async def listener_country(self) -> str | None:
         """Return the listener's current country."""

@@ -1,6 +1,6 @@
+import logging
 from collections.abc import Sequence
 from dataclasses import fields
-from logging import Logger
 from typing import NamedTuple
 
 from sounds import FEATURE_FLAGS, FeatureFlags
@@ -25,6 +25,8 @@ from sounds.models import (
 )
 from sounds.utils import network_logo
 
+logger = logging.getLogger(__name__)
+
 ParseResult = SoundsTypes | Sequence["ParseResult"] | None
 
 
@@ -34,10 +36,20 @@ class NestedObject(NamedTuple):
     concrete_class: bool = True
 
 
+def _promote_if_recommended(menu_item: MenuItem) -> MenuItem:
+    """Convert menu_item to RecommendedMenuItem if its first sub-item is a recommendation."""
+    first_child = menu_item.sub_items[0]
+    if getattr(first_child, "recommendation", None) is not None:
+        data = {
+            field.name: getattr(menu_item, field.name) for field in fields(MenuItem)
+        }
+        return RecommendedMenuItem(**data)
+    return menu_item
+
+
 class Parser:
 
-    def __init__(self, logger: Logger):
-        self.logger = logger
+    def __init__(self):
         self.nested_objects = [
             NestedObject("network", Network),
             NestedObject("container", Container, False),
@@ -46,25 +58,26 @@ class Parser:
             self.nested_objects.append(NestedObject("item", Container))
 
         self.ignored_objects = ["activities"]
+        self.model_factory = ModelFactory()
 
     def parse_nested_objects(self, node: dict) -> dict:
         for nested_object in self.nested_objects:
             if getattr(node, nested_object.source_key, None):
                 source_dict = getattr(node, nested_object.source_key)
                 if nested_object.concrete_class:
-                    out_object = ModelFactory(logger=self.logger).parse_object(
+                    out_object = ModelFactory().parse_object(
                         source_dict,
                         parent_network=getattr(node, "network", None) or node,
                         force_type=nested_object.replacement_model,
                     )
                 else:
-                    out_object = ModelFactory(logger=self.logger).parse_object(
+                    out_object = ModelFactory().parse_object(
                         source_dict,
                         parent_network=getattr(node, "network", None) or node,
                     )
                 if out_object is None or type(out_object) is dict:
                     msg = f"Failed to parse object: {source_dict}"
-                    self.logger.error(msg)
+                    logger.error(msg)
                     raise ParserError(msg)
                 setattr(
                     node,
@@ -81,7 +94,6 @@ class Parser:
         it's a playable item.
         """
 
-        model_factory = ModelFactory(logger=self.logger)
         if isinstance(node, list):
             # While we can have list of nodes and nodes within nodes,
             # we don't have lists of lists (or if we do we handle them in other functions)
@@ -97,7 +109,7 @@ class Parser:
 
         if "data" in node:
             node_network = node.get("network") or parent_network
-            container = model_factory.parse_object(node, parent_network=node_network)
+            container = self.model_factory.parse_object(node, parent_network=node_network)
             if not container:
                 return None
 
@@ -109,7 +121,7 @@ class Parser:
             return container
 
         else:
-            playable_item = model_factory.parse_object(
+            playable_item = self.model_factory.parse_object(
                 node, parent_network=parent_network
             )
             playable_item = self.parse_nested_objects(playable_item)
@@ -140,19 +152,9 @@ class Parser:
 
         # Promote any menu item to a "recommended" variant if its first child is a recommendation
         menu.sub_items = [
-            self._promote_if_recommended(item) for item in menu_items if item.sub_items
+            _promote_if_recommended(item) for item in menu_items if item.sub_items
         ]
         return menu
-
-    def _promote_if_recommended(self, menu_item: MenuItem) -> MenuItem:
-        """Convert menu_item to RecommendedMenuItem if its first sub-item is a recommendation."""
-        first_child = menu_item.sub_items[0]
-        if getattr(first_child, "recommendation", None) is not None:
-            data = {
-                field.name: getattr(menu_item, field.name) for field in fields(MenuItem)
-            }
-            return RecommendedMenuItem(**data)
-        return menu_item
 
     def parse_schedule(self, json_data: dict):
         schedule = self.parse_node(json_data["data"][0])

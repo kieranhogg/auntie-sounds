@@ -1,3 +1,5 @@
+import asyncio
+import logging
 from enum import Enum
 
 from sounds.auth import AuthService
@@ -8,6 +10,7 @@ from sounds.models import Menu, MenuItem, RecommendedMenuItem
 from sounds.parser import Parser
 from sounds.requests import RequestManager
 
+logger = logging.getLogger(__name__)
 
 class MenuRecommendationOptions(Enum):
     EXCLUDE = "Exclude"
@@ -25,6 +28,7 @@ class PersonalService(Base):
         super().__init__(**kwargs)
         self.auth = auth
         self.requests = requests
+        self.parser = Parser()
 
     async def get_uk_menu(
         self,
@@ -33,10 +37,10 @@ class PersonalService(Base):
         """Gets the main Sounds menu."""
 
         async def call():
-            return await self._get_json(url_template=URLs.EXPERIENCE_MENU)
+            return await self._get_json(url_template=SignedInURLs.EXPERIENCE_MENU)
 
         json_resp = await self.requests.run(call)
-        menu = Parser(self.logger).parse_menu(json_resp)
+        menu = self.parser.parse_menu(json_resp)
         if not isinstance(menu, Menu) or not menu or len(menu.sub_items) == 0:
             raise APIResponseError("Menu not converted correctly")
         if recommendations == MenuRecommendationOptions.EXCLUDE:
@@ -59,14 +63,14 @@ class PersonalService(Base):
         return MenuItem(
             id="podcasts",
             title="Podcasts",
-            sub_items=Parser(self.logger).parse_menu(json).sub_items,
+            sub_items=self.parser.parse_menu(json).sub_items,
         )
 
     async def get_music_menu_item(self) -> MenuItem:
         return MenuItem(
             id="music",
             title="Music",
-            sub_items=Parser(self.logger)
+            sub_items=self.parser
             .parse_menu(await self._get_json(URLs.MUSIC))
             .sub_items,
         )
@@ -75,42 +79,40 @@ class PersonalService(Base):
         return MenuItem(
             id="news",
             title="News",
-            sub_items=Parser(self.logger)
+            sub_items=self.parser
             .parse_menu(await self._get_json(URLs.NEWS))
             .sub_items,
         )
 
     async def get_explore_all(self):
-        return MenuItem(
-            title="Explore All",
-            id="explore",
-            sub_items=[
-                await self.get_podcasts_menu_item(),
-                await self.get_music_menu_item(),
-                await self.get_news_menu_item(),
-            ],
+        explore_items = await asyncio.gather(
+            self.get_podcasts_menu_item(),
+            self.get_music_menu_item(),
+            self.get_news_menu_item(),
         )
+
+        return MenuItem(title="Explore All", id="explore", sub_items=explore_items)
 
     async def get_latest(self):
         async def call():
             return await self._get_json(url_template=SignedInURLs.LATEST)
 
-        return Parser(self.logger).parse_container(await self.requests.run(call))
+        return self.parser.parse_container(await self.requests.run(call))
 
     async def get_subscriptions(self):
         async def call():
             return await self._get_json(url_template=SignedInURLs.SUBSCRIBED)
 
-        return Parser(self.logger).parse_container(await self.requests.run(call))
+        return self.parser.parse_container(await self.requests.run(call))
 
     async def get_bookmarks(self):
         async def call():
             return await self._get_json(url_template=SignedInURLs.BOOKMARKS)
 
-        return Parser(self.logger).parse_container(await self.requests.run(call))
+        return self.parser.parse_container(await self.requests.run(call))
 
     async def continue_listening(self):
         async def call():
             return await self._get_json(url_template=SignedInURLs.CONTINUE)
 
-        return Parser(self.logger).parse_container(await self.requests.run(call))
+        return self.parser.parse_container(await self.requests.run(call))

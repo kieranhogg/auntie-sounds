@@ -1,21 +1,15 @@
-from enum import Enum
+from enum import Enum, StrEnum, auto
 from pathlib import Path
 from typing import Final
 
 # This is the ID of the cookie we use to check we have a valid session
 COOKIE_ID = "ckns_id"
 VERBOSE_LOG_LEVEL: Final[int] = 5
-FIXTURES_FOLDER = Path("tests", "json")
-
-
-class Fixtures(Enum):
-    EXPERIENCE_MENU = "menu.json"
-    SCHEDULE_DATE_URL = "schedule.json"
-    SCHEDULE = "schedule.json"
-    STATIONS = "stations.json"
+FIXTURES_FOLDER = Path("tests", "fixtures", "api")
 
 
 class SignedInURLs(Enum):
+    EXPERIENCE_MENU = "https://rms.api.bbc.co.uk/v2/my/experience/inline/listen"
     RENEW_SESSION = (
         "https://session.bbc.co.uk/session?context=iplayerradio&userOrigin=sounds"
     )
@@ -33,8 +27,8 @@ class SignedInURLs(Enum):
 
 
 class URLs(Enum):
-    # Auth URLs
-    LOGIN_START = "https://session.bbc.co.uk/session?ptrt=https%3A%2F%2Fwww.bbc.co.uk%2Fsounds&context=iplayerradio&userOrigin=sounds"
+    # LOGIN_START resolves to: https://account.bbc.com/auth/identifier/signin?realm=%2F&clientId=Account&context=iplayerradio&ptrt=https%3A%2F%2Fwww.bbc.co.uk%2Fsounds&userOrigin=sounds&mvtUserId=<hash>&isCasso=false&action=sign-in&sequenceId=&redirectUri=https%3A%2F%2Fsession.bbc.co.uk%2Fsession%2Fcallback%3Frealm%3D%2F&service=IdSignInService&nonce=<nonce>
+    LOGIN_START = "https://session.bbc.co.uk/session?ptrt=https%3A%2F%2Fwww.bbc.co.uk%2Fsounds"
     LOGIN_START_I18N = "https://account.bbc.com/auth?realm=%2F&clientId=Account&ptrt=https%3A%2F%2Fwww.bbc.com%2F&userOrigin=BBCS_BBC&purpose=free&isCasso=false&action=sign-in&redirectUri=https%3A%2F%2Fsession.bbc.com%2Fsession%2Fcallback%3Frealm%3D%2F&service=IdSignInService"
     LOGIN_BASE = "https://account.bbc.com"
     COOKIE_BASE = "https://www.bbc.co.uk"
@@ -84,8 +78,6 @@ class URLs(Enum):
     CURATIONS = "https://rms.api.bbc.co.uk/v2/curations/{pid}/members/playable?experience=domestic"
 
     # Menu, search, etc.
-    EXPERIENCE_MENU = "https://rms.api.bbc.co.uk/v2/my/experience/inline/listen"
-
     SEARCH_URL = "https://rms.api.bbc.co.uk/v2/experience/inline/search?q={search}"
     SHOW_SEARCH_URL = (
         "https://rms.api.bbc.co.uk/v2/programmes/search/container?q={search}"
@@ -96,9 +88,6 @@ class URLs(Enum):
     PODCASTS = "https://rms.api.bbc.co.uk/v2/experience/inline/speech"
     MUSIC = "https://rms.api.bbc.co.uk/v2/experience/inline/music"
     NEWS = "https://rms.api.bbc.co.uk/v2/experience/inline/container/urn:bbc:radio:category:news"
-
-
-# URLs = GenericURLs. SignedInURLs
 
 
 class BaseSoundsTypes(Enum):
@@ -123,15 +112,15 @@ class PlayableSoundsTypes(Enum):
     BROADCASTS = "BroadcastsResponse"
 
 
-class ImageType(Enum):
+class ImageType(StrEnum):
     """An enum for valid image types for recipes"""
 
-    COLOUR = "colour"
-    COLOUR_DEFAULT = "colour_default"
-    BACKGROUND = "background"
-    BLOCKS_COLOUR = "blocks_colour"
-    BLOCKS_COLOUR_BLACK = "blocks_colour_black"
-    BLOCKS_COLOUR_WHITE = "blocks_colour_white"
+    COLOUR = auto()
+    COLOUR_DEFAULT = auto()
+    BACKGROUND = auto()
+    BLOCKS_COLOUR = auto()
+    BLOCKS_COLOUR_BLACK = auto()
+    BLOCKS_COLOUR_WHITE = auto()
 
 
 class ItemURN(Enum):

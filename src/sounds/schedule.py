@@ -1,5 +1,8 @@
+import logging
 from datetime import datetime as dt
-from typing import cast
+from datetime import tzinfo
+
+import aiohttp
 
 from sounds import constants
 from sounds.base import Base
@@ -8,8 +11,20 @@ from sounds.exceptions import InvalidFormatError
 from sounds.models import LiveProgramme, Schedule, Segment
 from sounds.parser import Parser
 
+logger = logging.getLogger(__name__)
 
 class ScheduleService(Base):
+    def __init__(
+        self,
+        session: aiohttp.ClientSession,
+        timezone: tzinfo | None = None,
+        timeout: aiohttp.ClientTimeout | None = None,
+        mock_session: bool = False,
+        **kwargs,
+    ):
+        super().__init__(session=session, timezone=timezone, timeout=timeout, mock_session=mock_session, **kwargs)
+        self.parser = Parser()
+        
     async def get_schedule(
         self, station_id: str, date: str | None = None
     ) -> Schedule | None:
@@ -25,21 +40,21 @@ class ScheduleService(Base):
         json_resp = await self._get_json(
             url_template=url_template, url_args={"station_id": station_id, "date": date}
         )
-        schedule = Parser(self.logger).parse_schedule(json_resp)
+        schedule = self.parser.parse_schedule(json_resp)
         return schedule if isinstance(schedule, Schedule) else None
 
     async def current_programme(self, station_id: str) -> LiveProgramme | None:
         json_resp = await self._get_json(url_template=constants.URLs.STATIONS)
         listing = next(
             (
-                station
+                self.parser.parse_node(station)
                 for station in json_resp["data"][0]["data"]
                 if station.get("id") == station_id
             ),
             None,
         )
-        if listing:
-            listing = cast(LiveProgramme, Parser(self.logger).parse_node(listing))
+        # if listing:
+            # listing = self.parser.parse_node(listing)
         return listing
 
     async def recently_played_items(self, station_id: str, results=10) -> list[Segment]:
@@ -48,7 +63,7 @@ class ScheduleService(Base):
             url_template=URLs.NOW_PLAYING,
             url_args={"station_id": station_id, "limit": results},
         )
-        segments = Parser(self.logger).parse_container(json_resp)
+        segments = self.parser.parse_container(json_resp)
         if isinstance(segments, list):
             return [segment for segment in segments if isinstance(segment, Segment)]
         return []

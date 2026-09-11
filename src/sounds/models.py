@@ -1,8 +1,7 @@
 from dataclasses import asdict, dataclass, field
 from datetime import datetime as dt
-from logging import Logger
 from pprint import pformat
-from typing import Any, List, Optional, Sequence
+from typing import Any, Sequence
 from warnings import deprecated
 from zoneinfo import ZoneInfo
 
@@ -30,7 +29,6 @@ type SoundsTypes = (
     | models.Station
     | models.StationSearchResult
 )
-
 
 def _parse_datetime(value):
     return dt.fromisoformat(value) if isinstance(value, str) else value

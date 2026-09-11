@@ -9,22 +9,61 @@ from colorlog import ColoredFormatter
 
 from sounds import constants
 from sounds.auth import AuthService
+from sounds.content import ContentService
 from sounds.cookies import CookieStore
 from sounds.exceptions import InvalidArgumentsError
 from sounds.models import Menu, MenuItem, Segment, Station, Stream
 from sounds.personal import MenuRecommendationOptions, PersonalService
+from sounds.playback import PlaybackService
 from sounds.requests import RequestManager
 from sounds.schedule import ScheduleService
 from sounds.stations import StationService
-from sounds.streaming import StreamingService
 from sounds.user import UserService
 from sounds.utils import _get_data_dir
 
 COOKIE_FILE = Path(_get_data_dir(), "sounds_jar")
 
+logger = logging.getLogger(__name__)
+
+
+def setLogger(log_level=None):
+    logging.addLevelName(constants.VERBOSE_LOG_LEVEL, "VERBOSE")
+    if not log_level:
+        log_level = logging.WARNING
+    logging.basicConfig(
+        level=log_level,
+        format="%(asctime)s -%(levelname)s -on line: %(lineno)d -%(message)s",
+    )
+    log_fmt = "%(asctime)s.%(msecs)03d %(levelname)s (%(threadName)s) [%(name)s] %(message)s"
+    colorfmt = f"%(log_color)s{log_fmt}%(reset)s"
+    logging.getLogger().handlers[0].setFormatter(
+        ColoredFormatter(
+            colorfmt,
+            reset=True,
+            log_colors={
+                "VERBOSE": "light_black",
+                "DEBUG": "cyan",
+                "INFO": "green",
+                "WARNING": "yellow",
+                "ERROR": "red",
+                "CRITICAL": "red",
+            },
+        )
+    )
+    if log_level:
+        logger.setLevel(log_level)
+    else:
+        logger.setLevel(constants.VERBOSE_LOG_LEVEL)
+
 
 class SoundsClient:
-    """A client to interact with the Sounds API"""
+    """A client to interact with the Sounds API.
+
+    :param debug_login: Indicates to the AuthService whether the HTML pages should be saved to disk during the login process.
+
+
+    :raises TypeError:
+    """
 
     def __init__(
         self,
@@ -33,19 +72,14 @@ class SoundsClient:
         session: aiohttp.ClientSession | None = None,
         cookie_file_location: str | Path = COOKIE_FILE,
         timezone: tzinfo | None = None,
-        logger: logging.Logger | None = None,
         log_level: int | None = None,
         mock_session: bool = False,
+        debug_login: bool = False,
         **kwargs,
     ) -> None:
-        if logger:
-            self.logger = logger
-        else:
-            self.logger = logging.getLogger()
-            self.setLogger(log_level)
-            self.logger.log(constants.VERBOSE_LOG_LEVEL, "SoundsClient.__init__()")
+        setLogger(log_level)
 
-        self.logger.debug("Creating new SoundsClient")
+        logger.debug("Creating new SoundsClient")
 
         self.username = username
         self.password = password
@@ -55,19 +89,20 @@ class SoundsClient:
         self.current_segment: Segment | None = None
         self.timeout = aiohttp.ClientTimeout(total=10)
         self.mock_session = mock_session
+        self.debug_login = debug_login
         if timezone:
             self.timezone = timezone
         else:
-            self.logger.warning(
+            logger.warning(
                 "No timezone provided, assuming UTC so any time calculations for the schedules may be incorrect"
             )
             self.timezone = pytz.timezone("UTC")
 
         if session:
-            self.logger.debug("Reusing provided aiohttp session.")
+            logger.debug("Reusing provided aiohttp session.")
             self._session = session
         else:
-            self.logger.debug("No provided aiohttp session, creating a new one.")
+            logger.debug("No provided aiohttp session, creating a new one.")
             self._session = aiohttp.ClientSession()
         self.managing_session = session is None
 
@@ -79,7 +114,6 @@ class SoundsClient:
         service_kwargs = {
             "session": self._session,
             "timeout": self.timeout,
-            "logger": self.logger,
             "timezone": self.timezone,
             "mock_session": self.mock_session,
             **kwargs,
@@ -91,7 +125,7 @@ class SoundsClient:
         self.cookie_store.load()
         if self.cookie_store.has_session_cookie and not self.login_details_provided:
             # Handle the edge case of a session going from logged in to anonymous
-            self.logger.info(
+            logger.info(
                 "Login credentials not provided, so clearing persisted session."
             )
             self.cookie_store.clear()
@@ -100,6 +134,7 @@ class SoundsClient:
         self.auth = AuthService(
             cookie_store=self.cookie_store,
             on_login_success=self.save_cookies,
+            debug_login=self.debug_login,
             **service_kwargs,
         )
         self.schedules = ScheduleService(
@@ -114,19 +149,27 @@ class SoundsClient:
         self.requests = RequestManager(
             auth=self.auth,
             cookie_store=self.cookie_store,
-            logger=self.logger,
+            logger=logger,
             username=self.username,
             password=self.password,
         )
-        self.streaming = StreamingService(
+        self.playback = PlaybackService(
             auth=self.auth,
             requests=self.requests,
             schedules=self.schedules,
             user=self.user,
             **service_kwargs,
         )
+        self.content = ContentService(
+            auth=self.auth,
+            requests=self.requests,
+            schedules=self.schedules,
+            user=self.user,
+            playback=self.playback,
+        )
         self.stations = StationService(
-            streaming=self.streaming,
+            content=self.content,
+            playback=self.playback,
             schedules=self.schedules,
             **service_kwargs,
         )
@@ -134,45 +177,17 @@ class SoundsClient:
             auth=self.auth, requests=self.requests, **service_kwargs
         )
 
-    def setLogger(self, log_level=None):
-        logging.addLevelName(constants.VERBOSE_LOG_LEVEL, "VERBOSE")
-        if not log_level:
-            log_level = logging.WARNING
-        logging.basicConfig(
-            level=log_level,
-            format="%(asctime)s -%(levelname)s -on line: %(lineno)d -%(message)s",
-        )
-        log_fmt = "%(asctime)s.%(msecs)03d %(levelname)s (%(threadName)s) [%(name)s] %(message)s"
-        colorfmt = f"%(log_color)s{log_fmt}%(reset)s"
-        logging.getLogger().handlers[0].setFormatter(
-            ColoredFormatter(
-                colorfmt,
-                reset=True,
-                log_colors={
-                    "VERBOSE": "light_black",
-                    "DEBUG": "cyan",
-                    "INFO": "green",
-                    "WARNING": "yellow",
-                    "ERROR": "red",
-                    "CRITICAL": "red",
-                },
-            )
-        )
-        if log_level:
-            self.logger.setLevel(log_level)
-        else:
-            self.logger.setLevel(constants.VERBOSE_LOG_LEVEL)
-
     async def login(self) -> bool:
         """Signs into BBC Sounds.
 
-        :param username: The username or email address to sign in with
-        :param password: The password to sign in with
+        :param force_new_session: Ignores any existing session or cookies and creates a new one
+
         :return: True if successfully logged in, False otherwise
-        :rtype: bool
         :raises LoginFailedError: If the login fails for any reason
         :raises UnauthorisedError: If the login is not authorised
+        :raises InvalidArgumentsError: If either a username or password isn't set
         """
+
         if self.mock_session:
             return True
 
@@ -182,7 +197,7 @@ class SoundsClient:
             )
 
         if self.has_session_cookie:
-            self.logger.info("Existing session cookie found, reusing")
+            logger.info("Existing session cookie found, reusing")
             ok = await self.auth.renew_session()
             return ok
 
@@ -199,6 +214,10 @@ class SoundsClient:
 
     def load_cookies(self):
         self.cookie_store.load()
+
+    def clear_cookies(self):
+        self.cookie_store.clear()
+        self.cookie_store.save()
 
     @property
     def has_session_cookie(self) -> bool:
@@ -234,13 +253,13 @@ class SoundsClient:
         return menu
 
     async def logout(self):
-        self.logger.debug("Logging out...")
+        logger.debug("Logging out...")
         self.cookie_store.clear()
         self.cookie_store.save()
-        self.logger.debug("Logged out.")
+        logger.debug("Logged out.")
 
     async def close(self):
-        self.logger.debug("Session close explicitly requested.")
+        logger.debug("Session close explicitly requested.")
         if self._session and self.managing_session:
             await self._session.close()
         self.cookie_store.save()
@@ -250,6 +269,6 @@ class SoundsClient:
 
     async def __aexit__(self, *args):
         if self.managing_session:
-            self.logger.debug("Closed session")
+            logger.debug("Closed session")
             await self.close()
         self.cookie_store.save()

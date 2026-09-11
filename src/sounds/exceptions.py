@@ -30,5 +30,9 @@ class NotFoundError(SoundsException):
     pass
 
 
+class MultipleObjectsFound(SoundsException):
+    pass
+
+
 class ParserError(SoundsException):
     pass

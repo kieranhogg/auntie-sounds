@@ -1,4 +1,5 @@
 import itertools
+import logging
 from datetime import datetime as dt
 from datetime import timedelta
 from typing import Literal
@@ -6,32 +7,34 @@ from typing import Literal
 from sounds import constants
 from sounds.base import Base
 from sounds.constants import URLs
+from sounds.content import ContentService
 from sounds.exceptions import NotFoundError
 from sounds.models import LiveStation, MenuItem, Network
 from sounds.parser import Parser
+from sounds.playback import PlaybackService
 from sounds.schedule import ScheduleService
-from sounds.streaming import StreamingService
 from sounds.utils import _date_with_ordinal
 
+logger = logging.getLogger(__name__)
 
 class StationService(Base):
     def __init__(
         self,
-        streaming: StreamingService,
+        content: ContentService,
+        playback: PlaybackService,
         schedules: ScheduleService,
         *args,
         **kwargs,
     ):
         super().__init__(*args, **kwargs)
-        self.streams = streaming
+        self.content = content
+        self.playback = playback
         self.schedules = schedules
-
-        # Simple cache to prevent fetching all stations each time
-        self.stations: list[LiveStation] = []
+        self.parser = Parser()
 
     async def get_stations_detailed(self) -> list[Network] | None:
         json_resp = await self._get_json(url_template=URLs.NETWORKS_LIST)
-        stations = Parser(self.logger).parse_container(json_resp)
+        stations = self.parser.parse_container(json_resp)
         if isinstance(stations, list):
             station_list: list[Network] = [
                 station for station in stations if isinstance(station, Network)
@@ -52,8 +55,8 @@ class StationService(Base):
         :rtype: list[Station]
         """
         json_resp = await self._get_json(url_template=URLs.STATIONS)
-        self.logger.log(constants.VERBOSE_LOG_LEVEL, "Getting station list...")
-        self.logger.log(constants.VERBOSE_LOG_LEVEL, json_resp)
+        logger.log(constants.VERBOSE_LOG_LEVEL, "Getting station list...")
+        logger.log(constants.VERBOSE_LOG_LEVEL, json_resp)
 
         # Append a key to assign if they are local stations or not
         for station in json_resp["data"][0]["data"]:
@@ -73,17 +76,20 @@ class StationService(Base):
         else:
             # Just get the national data list
             stations = json_resp["data"][0]["data"]
-        stations_list = Parser(self.logger).parse_node(stations)
+        stations_list = self.parser.parse_node(stations)
 
         if isinstance(stations_list, list):
             all_stations: list[LiveStation] = [
-                station for station in stations_list if isinstance(station, LiveStation) and (include_local or not station.local)
+                station
+                for station in stations_list
+                if isinstance(station, LiveStation)
+                and (include_local or not station.local)
             ]
 
             if include_streams and isinstance(stations_list, list):
                 for station in all_stations:
                     if not station.stream:
-                        station.stream = await self.streams.get_live_stream(station.id)
+                        station.stream = await self.playback.get_live_stream(station.id)
 
             if include_schedules and isinstance(stations_list, list):
                 for station in all_stations:
@@ -94,10 +100,10 @@ class StationService(Base):
 
     async def get_local_stations(self) -> list[LiveStation]:
         json_resp = await self._get_json(url_template=URLs.STATIONS)
-        self.logger.log(constants.VERBOSE_LOG_LEVEL, "Getting local station list...")
-        self.logger.log(constants.VERBOSE_LOG_LEVEL, json_resp)
+        logger.log(constants.VERBOSE_LOG_LEVEL, "Getting local station list...")
+        logger.log(constants.VERBOSE_LOG_LEVEL, json_resp)
         station_data = json_resp["data"][1]["data"]
-        station_list = [Parser(self.logger).parse_node(s) for s in station_data]
+        station_list = [self.parser.parse_node(s) for s in station_data]
         local_stations: list[LiveStation] = [
             station
             for station in station_list
@@ -129,7 +135,7 @@ class StationService(Base):
             return None
 
         if include_stream:
-            station.stream = await self.streams.get_live_stream(station.id)
+            station.stream = await self.playback.get_live_stream(station.id)
         if include_schedule:
             station.schedule = await self.schedules.get_schedule(station.id, date=date)
         return station
@@ -154,16 +160,16 @@ class StationService(Base):
         Returns:
             LiveStation | None: A LiveStation object if station_id is found
         """
-        stations = await self.get_stations(include_local=True)
-        # station id is almost always the same as pid but not quite, e.g. bbc_radio_fourfm and bbc_radio_four
-        station = next(
-            (s for s in stations if s.id == station_id),
-            None,
+        json_response = await self._get_json(
+            url_template=URLs.STATION_PLAYABLE_DETAILS,
+            url_args={"station_id": station_id},
         )
+        station = self.parser.parse_node(json_response)
 
+        # station id is almost always the same as pid but not quite, e.g. bbc_radio_fourfm and bbc_radio_four
         if station:
             if include_stream:
-                stream = await self.streams.get_live_stream(
+                stream = await self.playback.get_live_stream(
                     station_id=station_id, stream_format=stream_format
                 )
                 if stream:
@@ -179,9 +185,10 @@ class StationService(Base):
         json_resp = await self._get_json(
             url_template=URLs.BROADCAST, url_args={"pid": pid}
         )
-        broadcast = Parser(self.logger).parse_node(json_resp)
+        broadcast = self.parser.parse_node(json_resp)
         return broadcast
 
+    # FIXME: typo here - what actually calls this?
     async def get_station_schedule_menu(self, inclue_local: bool = False):
 
         return MenuItem(

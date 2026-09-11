@@ -4,10 +4,11 @@ import os
 from abc import ABC
 from typing import Literal
 
+import aiofiles
 import aiohttp
 from pytz import tzinfo
 
-from sounds.constants import FIXTURES_FOLDER, Fixtures, SignedInURLs, URLs
+from sounds.constants import FIXTURES_FOLDER, SignedInURLs, URLs
 from sounds.exceptions import (
     APIResponseError,
     InvalidArgumentsError,
@@ -17,6 +18,7 @@ from sounds.exceptions import (
     UnauthorisedError,
 )
 
+logger = logging.getLogger(__name__)
 
 class Base(ABC):
     """Base class for other classes to inherit shared session and state"""
@@ -26,7 +28,6 @@ class Base(ABC):
     def __init__(
         self,
         session: aiohttp.ClientSession,
-        logger: logging.Logger | None = None,
         timezone: tzinfo | None = None,
         timeout: aiohttp.ClientTimeout | None = None,
         mock_session: bool = False,
@@ -34,10 +35,6 @@ class Base(ABC):
         **kwargs,
     ):
         self._session = session
-        if logger:
-            self.logger = logger
-        else:
-            self.logger = logging.getLogger(__name__)
         self.timezone = timezone
         self._timeout = timeout or self.DEFAULT_TIMEOUT
         self.mock_session = mock_session
@@ -45,8 +42,8 @@ class Base(ABC):
     async def _make_request(
         self, method: Literal["GET", "POST"], url: str, **kwargs
     ) -> aiohttp.ClientResponse:
-        """Makes a HTTP request using the shared session and state"""
-        self.logger.debug(f"Making HTTP {method} request to {url}")
+        """Makes an HTTP request using the shared session and state"""
+        logger.debug(f"Making HTTP {method} request to {url}")
         try:
             kwargs.setdefault("timeout", self._timeout or self.DEFAULT_TIMEOUT)
             kwargs.setdefault("ssl", True)
@@ -54,10 +51,10 @@ class Base(ABC):
 
             resp = await self._session.request(method, url, **kwargs)
 
-            self.logger.debug(f"Response content type: {resp.content_type}")
-            self.logger.debug(f"Response status: {resp.status}")
-            self.logger.debug(f"Response url: {resp.url}")
-            self.logger.debug(f"HTTP {method} {url} - Status {resp.status}")
+            logger.debug(f"Response content type: {resp.content_type}")
+            logger.debug(f"Response status: {resp.status}")
+            logger.debug(f"Response url: {resp.url}")
+            logger.debug(f"HTTP {method} {url} - Status {resp.status}")
             if (
                 not (200 <= resp.status < 400)  # Allow 2xx and 3xx
                 and resp.content_type == "application/json"
@@ -73,13 +70,13 @@ class Base(ABC):
                         raise APIResponseError(message)
             return resp
         except aiohttp.ClientConnectorDNSError as e:
-            self.logger.error(f"HTTP request failed: {method} {url} - {e}")
+            logger.error(f"HTTP request failed: {method} {url} - {e}")
             raise NetworkError(f"Connection failed: {e}")
         except aiohttp.ContentTypeError as e:
-            self.logger.error(f"HTTP request failed: {method} {url} - {e}")
+            logger.error(f"HTTP request failed: {method} {url} - {e}")
             raise SoundsException(f"Invalid response type: {e}")
         except aiohttp.ClientError as e:
-            self.logger.error(f"HTTP request failed: {method} {url} - {e}")
+            logger.error(f"HTTP request failed: {method} {url} - {e}")
             raise SoundsException(f"Request failed: {e}")
 
     def _build_url(
@@ -112,18 +109,18 @@ class Base(ABC):
         kwargs.setdefault("allow_redirects", True)
         url = self._build_url(url=url, url_template=url_template, url_args=url_args)
 
-        if self.mock_session and url_template:
+        if self.mock_session and (url_template or url):
             try:
-                filename = Fixtures[url_template.name].value
-                json_file = os.path.join(FIXTURES_FOLDER, filename)
-                with open(json_file) as file_reader:
-                    json_contents = json.loads(file_reader.read())
+                filename = (url_template or url).name
+                json_file = os.path.join(FIXTURES_FOLDER, filename + ".json")
+                async with aiofiles.open(json_file) as file_reader:
+                    json_contents = json.loads(await file_reader.read())
                 return json_contents
             except KeyError:
                 raise InvalidArgumentsError(f"No matching fixture for {url_template}")
 
         try:
-            self.logger.debug(f"Requesting URL {url}")
+            logger.debug(f"Requesting URL {url}")
             resp = await self._session.request(method="GET", url=url, **kwargs)
             json_resp = await resp.json()
 
@@ -143,7 +140,7 @@ class Base(ABC):
                 raise UnauthorisedError(e)
             raise APIResponseError(f"Request failed: {e}")
         except aiohttp.ClientError as e:
-            self.logger.error(f"HTTP request failed: {url} - {e}")
+            logger.error(f"HTTP request failed: {url} - {e}")
             raise SoundsException(f"Request failed: {e}")
 
     async def _get_html(
@@ -158,11 +155,11 @@ class Base(ABC):
         kwargs.setdefault("ssl", True)
         kwargs.setdefault("allow_redirects", True)
         url = self._build_url(url=url, url_template=url_template, url_args=url_args)
-        self.logger.debug(f"Making HTTP {method} request to {url}")
+        logger.debug(f"Making HTTP {method} request to {url}")
 
         try:
             resp = await self._session.request(method, url, **kwargs)
-            self.logger.debug(f"Response status: {resp.status}")
+            logger.debug(f"Response status: {resp.status}")
             resp.raise_for_status()
             return await resp.text()
         except aiohttp.ClientResponseError as e:
@@ -170,5 +167,5 @@ class Base(ABC):
                 raise UnauthorisedError(e)
             raise APIResponseError(f"Request failed: {e}")
         except aiohttp.ClientError as e:
-            self.logger.error(f"HTTP request failed: {method} {url} - {e}")
+            logger.error(f"HTTP request failed: {method} {url} - {e}")
             raise SoundsException(f"Request failed: {e}")
