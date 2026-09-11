@@ -189,14 +189,14 @@ class StationService(Base):
         return broadcast
 
     # FIXME: typo here - what actually calls this?
-    async def get_station_schedule_menu(self, inclue_local: bool = False):
+    async def get_station_schedule_menu(self, include_local: bool = False):
 
         return MenuItem(
             id="stations",
             title="Station & Schedules",
             sub_items=[
                 await self.get_station_menu(station.id)
-                for station in await self.get_stations(include_local=inclue_local)
+                for station in await self.get_stations(include_local=include_local)
             ],
         )
 
