@@ -35,7 +35,7 @@ class TestModelFactoryBasicTypes:
             "id": "bbc_radio_one",
             "short_title": "Radio 1",
         }
-        result = ModelFactory(logger).parse_object(node)
+        result = ModelFactory().parse_object(node)
         assert isinstance(result, Network)
         assert result.id == "bbc_radio_one"
 
@@ -52,7 +52,7 @@ class TestModelFactoryBasicTypes:
                 "urn": "urn:bbc:radio:episode:m2",
             },
         ]
-        result = Parser(logger).parse_node(nodes)
+        result = Parser().parse_node(nodes)
         assert isinstance(result, list)
         assert len(result) == 2
         assert all(isinstance(item, RadioShow) for item in result)
@@ -67,7 +67,7 @@ class TestModelFactoryBasicTypes:
             "offset": {"start": 0},
             "uris": [],
         }
-        result = Parser(logger).parse_node(node)
+        result = Parser().parse_node(node)
         assert isinstance(result, Segment)
         assert result.id == "seg1"
 
@@ -77,7 +77,7 @@ class TestModelFactoryBasicTypes:
             "id": "coll1",
             "urn": "urn:bbc:radio:collection:coll1",
         }
-        result = Parser(logger).parse_node(node)
+        result = Parser().parse_node(node)
         assert isinstance(result, Collection)
 
     def test_category_urn(self, logger):
@@ -86,7 +86,7 @@ class TestModelFactoryBasicTypes:
             "id": "cat1",
             "urn": "urn:bbc:radio:category:cat1",
         }
-        result = Parser(logger).parse_node(node)
+        result = Parser().parse_node(node)
         assert isinstance(result, Category)
 
 
@@ -101,7 +101,7 @@ class TestEpisodeVsPodcastClassification:
             "id": "m001",
             "urn": "urn:bbc:radio:episode:m001",
         }
-        result = Parser(logger).parse_node(node)
+        result = Parser().parse_node(node)
         assert isinstance(result, RadioShow)
 
     def test_episode_in_podcast_brand_container_is_podcast_episode(self, logger):
@@ -112,7 +112,7 @@ class TestEpisodeVsPodcastClassification:
             "container": {"id": "brand", "type": "brand"},
             "network": {"id": "bbc_sounds_podcasts"},
         }
-        result = Parser(logger).parse_node(node)
+        result = Parser().parse_node(node)
         assert isinstance(result, PodcastEpisode)
 
     def test_episode_in_non_podcast_brand_container_is_radio_show(self, logger):
@@ -123,14 +123,14 @@ class TestEpisodeVsPodcastClassification:
             "container": {"id": "brand", "type": "brand"},
             "network": {"id": "bbc_radio_one"},
         }
-        result = Parser(logger).parse_node(node)
+        result = Parser().parse_node(node)
         assert isinstance(result, RadioShow)
 
     def test_bbc_news_podcast_is_podcast(self, logger):
         """Test that a podcast associated with BBC News, and not a station is a Podcast not a RadioSeries."""
         with open("tests/fixtures/api/podcast_news.json") as node_file:
             node = json.loads(node_file.read())
-            result = Parser(logger).parse_node(node)
+            result = Parser().parse_node(node)
             assert isinstance(result.container, Podcast)
 
 
@@ -141,7 +141,7 @@ class TestClipVsPodcastClassification:
             "id": "m010",
             "urn": "urn:bbc:radio:clip:m010",
         }
-        result = Parser(logger).parse_node(node)
+        result = Parser().parse_node(node)
         assert isinstance(result, RadioClip)
 
     def test_clip_in_brand_container_is_podcast_episode(self, logger):
@@ -151,7 +151,7 @@ class TestClipVsPodcastClassification:
             "urn": "urn:bbc:radio:clip:m011",
             "container": {"id": "brand", "type": "brand"},
         }
-        result = Parser(logger).parse_node(node)
+        result = Parser().parse_node(node)
         assert isinstance(result, PodcastEpisode)
 
 
@@ -166,8 +166,8 @@ class TestStationClassification:
             "urn": "urn:bbc:radio:network:radio1",
             "synopses": {"short": "BBC Radio 1"},
         }
-        result = Parser(logger).parse_node(node)
-        assert isinstance(result, LiveStation)
+        result = Parser().parse_node(node)
+        assert type(result) is LiveStation
 
     def test_station_without_synopses_is_plain_station(self, logger):
         node = {
@@ -175,9 +175,14 @@ class TestStationClassification:
             "id": "radio1",
             "urn": "urn:bbc:radio:network:radio1",
         }
-        result = Parser(logger).parse_node(node)
-        assert isinstance(result, Station)
-        assert not isinstance(result, LiveStation)
+        result = Parser().parse_node(node)
+        assert type(result) is Station
+
+    def test_network_with_synopses_is_livestation(self, logger):
+        with open("tests/fixtures/api/STATION_PLAYABLE_DETAILS.json") as f:
+            json_data = json.loads(f.read())
+            result = Parser().parse_node(json_data)
+            assert type(result) is LiveStation
 
 
 class TestPlaylists:
@@ -206,7 +211,7 @@ class TestPlaylists:
             "network": None,
             "sub_items": [],
         }
-        result = Parser(logger).parse_node(node)
+        result = Parser().parse_node(node)
         assert isinstance(result, Playlist)
 
 
@@ -216,7 +221,7 @@ class TestProgrammes:
         with open("tests/fixtures/api/PROGRAMME_FROM_PID.json") as node_file:
             json_data = json.loads(node_file.read())
             original_object = json_data["data"][0]
-            new_type, new_object = ModelFactory(logger)._programme_episode(json_data)
+            new_type, new_object = ModelFactory()._programme_episode(json_data)
             assert new_type is PodcastEpisode
             assert original_object == new_object
 
@@ -229,6 +234,6 @@ class TestProgrammes:
             # Remove the podcast type present in the test data
             del original_object["categories"][4]
 
-            new_type, new_object = ModelFactory(logger)._programme_episode(json_data)
+            new_type, new_object = ModelFactory()._programme_episode(json_data)
             assert new_type is RadioShow
             assert original_object == new_object

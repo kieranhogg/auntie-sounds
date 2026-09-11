@@ -1,3 +1,4 @@
+import logging
 from unittest.mock import Mock
 
 import aiohttp
@@ -19,10 +20,9 @@ def _jar_with_session_cookie() -> aiohttp.CookieJar:
 class TestCookieStore:
     """Tests for CookieStore."""
 
-    async def test_has_session_cookie_true_when_present(self, tmp_path, mock_logger):
+    async def test_has_session_cookie_true_when_present(self, tmp_path):
         store = CookieStore(
             session=Mock(cookie_jar=_jar_with_session_cookie()),
-            logger=mock_logger,
             cookie_file_location=tmp_path / "cookies",
         )
         assert store.has_session_cookie is True
@@ -48,15 +48,16 @@ class TestCookieStore:
         assert store.has_session_cookie is False
 
     async def test_load_warns_but_does_not_raise_when_file_missing(
-        self, tmp_path, mock_logger
+        self, tmp_path, caplog
     ):
         store = CookieStore(
             session=Mock(cookie_jar=aiohttp.CookieJar()),
-            logger=mock_logger,
             cookie_file_location=tmp_path / "does_not_exist",
         )
         store.load()  # must not raise
-        mock_logger.warning.assert_called_once()
+        for record in caplog.records:
+            assert record.levelno == logging.WARNING
+        assert "Cookie location does not exist." in caplog.text
 
     async def test_save_then_load_round_trip(self, tmp_path, mock_logger):
         """save() should persist cookies that a fresh load() into an empty jar can restore."""

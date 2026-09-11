@@ -129,7 +129,7 @@ class TestPersonalService:
             URLs.NEWS: news_json,
         }
 
-        async def fake_get_json(url=None, url_template=None, **kwargs):
+        async def fake_get_json(url=None, url_template=None):
             return responses[url or url_template]
 
         monkeypatch.setattr(personal_service, "_get_json", fake_get_json)

@@ -12,14 +12,14 @@ class TestParser:
 
     def test_parse_menu(self, logger, sample_menu_data):
         """Test parsing menu data"""
-        result = Parser(logger).parse_menu(sample_menu_data)
+        result = Parser().parse_menu(sample_menu_data)
         assert isinstance(result, Menu)
         assert result.sub_items is not None
         assert len(result.sub_items) == 10
 
     def test_parse_podcast_episode(self, logger, sample_podcast_episode_data):
         """Test parsing podcast episode data"""
-        result = Parser(logger).parse_node(sample_podcast_episode_data)
+        result = Parser().parse_node(sample_podcast_episode_data)
         assert isinstance(result, PodcastEpisode)
         assert isinstance(result.container, Podcast)
 
@@ -32,7 +32,7 @@ class TestParser:
                 {"id": "playable_search", "data": []},
             ]
         }
-        result = Parser(logger).parse_search(data)
+        result = Parser().parse_search(data)
         assert isinstance(result, SearchResults)
         assert hasattr(result, "stations")
         assert hasattr(result, "shows")
@@ -42,7 +42,7 @@ class TestParser:
 class TestParserNestedObjects:
     def test_ignored_nested_objects(self, logger: Logger):
         """Test that that embedded objects with keys in the ignore_objects list are removed."""
-        parser = Parser(logger)
+        parser = Parser()
         with open("tests/fixtures/api/PROGRAMME_FROM_PID_PLAYABLE.json") as json_file:
             json_data = json.loads(json_file.read())
             for key in parser.ignored_objects:
@@ -59,9 +59,6 @@ class TestParserNestedObjects:
             NestedObject("network", Network),
             NestedObject("container", Container),
         """
-
-        parser = Parser(logger)
-
         data = {
             "type": "playable_item",
             "id": "p0p78bd4",
@@ -86,7 +83,7 @@ class TestParserNestedObjects:
                 "activities": [],
             },
         }
-        parser = Parser(logger)
+        parser = Parser()
         result = parser.parse_node(data)
         for nested_object in parser.nested_objects:
             assert hasattr(result, nested_object.source_key)

@@ -1,3 +1,4 @@
+from sounds.playback import PlaybackService
 import json
 import logging
 from logging import DEBUG
@@ -12,10 +13,11 @@ from yarl import URL
 from sounds.auth import AuthService
 from sounds.client import SoundsClient
 from sounds.constants import COOKIE_ID, URLs
+from sounds.content import ContentService
 from sounds.cookies import CookieStore
 from sounds.requests import RequestManager
 from sounds.schedule import ScheduleService
-from sounds.streaming import StreamingService
+from sounds.stations import StationService
 from sounds.user import UserService
 
 pytestmark = pytest.mark.anyio
@@ -108,25 +110,61 @@ def mock_user(mock_session, mock_logger, monkeypatch):
     monkeypatch.setattr(user, "is_uk_listener", AsyncMock(return_value=True))
     return user
 
-
 @pytest.fixture
-def mock_streaming_service(
-    mock_logger,
+def mock_playback(
     mock_session,
     mock_auth_service,
     mock_schedule,
     mock_user,
     mock_requests,
 ):
-    return StreamingService(
+    return PlaybackService(
         session=mock_session,
-        logger=mock_logger,
         auth=mock_auth_service,
         schedules=mock_schedule,
         user=mock_user,
         requests=mock_requests,
     )
 
+@pytest.fixture
+def mock_content(
+    mock_logger,
+    mock_session,
+    mock_auth_service,
+    mock_schedule,
+    mock_user,
+    mock_requests,
+    mock_playback
+):
+    return ContentService(
+        session=mock_session,
+        auth=mock_auth_service,
+        schedules=mock_schedule,
+        user=mock_user,
+        requests=mock_requests,
+        playback=mock_playback,
+    )
+
+@pytest.fixture
+def mock_station(
+    mock_logger,
+    mock_session,
+    mock_auth_service,
+    mock_schedule,
+    mock_user,
+    mock_requests,
+    mock_playback,
+    mock_content
+):
+    return StationService(
+        session=mock_session,
+        auth=mock_auth_service,
+        schedules=mock_schedule,
+        user=mock_user,
+        requests=mock_requests,
+        playback=mock_playback,
+        content=mock_content,
+    )
 
 @pytest.fixture
 async def sounds_client(mock_session):
@@ -175,4 +213,4 @@ def sample_playable_item():
 
 @pytest.fixture
 def sample_menu_data():
-    return json.loads(open("tests/fixtures/api/menu.json").read())
+    return json.loads(open("tests/fixtures/api/EXPERIENCE_MENU.json").read())

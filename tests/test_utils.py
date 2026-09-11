@@ -13,7 +13,9 @@ class TestUtils:
     def test_network_logo_formatting(self):
         """Test network logo URL formatting."""
         recipe = "https://example.com/{type}/{size}.{format}"
-        result = network_logo(recipe, ImageType.COLOUR, 450, "png")
+        result = network_logo(
+            logo_recipe=recipe, img_type=ImageType.COLOUR, size=450, img_format="png"
+        )
         assert result == "https://example.com/colour/450x450.png"
 
     def test_network_logo_none_recipe(self):
@@ -37,3 +39,9 @@ class TestUtils:
         """Test image recipe with None input."""
         result = image_from_recipe(None, 640)
         assert result is None
+
+    def test_image_from_recipe_with_different_format(self):
+        """Test image recipe with just a non-jpg format."""
+        recipe = "https://example.com/{recipe}.{format}"
+        result = image_from_recipe(recipe, 640, format="png")
+        assert result == "https://example.com/640x640.png"

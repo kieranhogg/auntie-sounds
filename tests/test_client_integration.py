@@ -15,7 +15,8 @@ class TestIntegration:
         assert client.timezone == pytz.UTC
         assert client.auth is not None
         assert client.stations is not None
-        assert client.streaming is not None
+        assert client.playback is not None
+        assert client.content is not None
         assert client.schedules is not None
         assert client.personal is not None
         await client.close()
