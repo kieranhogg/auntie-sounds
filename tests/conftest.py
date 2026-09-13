@@ -53,7 +53,7 @@ def _mock_cookie_store(mock_session):
 @pytest.fixture(name="mock_schedule")
 def _mock_schedule(mock_session, mock_requests):
     return ScheduleService(
-        session=mock_session,
+        timezone="UTC",
         requests=mock_requests,
     )
 

@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING, Literal, cast
 import aiohttp
 
 from sounds import endpoints
-from sounds.base import Base
 from sounds.endpoints import URLs
 from sounds.exceptions import APIResponseError, InvalidFormatError, NotFoundError
 from sounds.models import (
@@ -33,7 +32,7 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
-class ContentService(Base):
+class ContentService:
     """Resolving IDs (pids/urns) and browsing the catalog: podcasts, radio
     series, categories, collections, playlists, and search.
 
@@ -44,13 +43,10 @@ class ContentService(Base):
 
     def __init__(
         self,
-        playback: PlaybackService,
         user: UserService,
         requests: RequestManager,
-        session: aiohttp.ClientSession,
         **kwargs,
     ):
-        super().__init__(session=session, **kwargs)
         self.user = user
         self.requests: RequestManager = requests
         self.parser = Parser()

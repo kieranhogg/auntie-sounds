@@ -2,9 +2,7 @@ import logging
 from enum import StrEnum
 from typing import Literal
 
-import sounds
-from sounds import base
-from sounds.base import Base
+from sounds import VERBOSE_LOG_LEVEL
 from sounds.endpoints import URLs
 from sounds.exceptions import APIResponseError
 from sounds.requests import RequestManager
@@ -16,8 +14,8 @@ def get_best_stream(
     streams: list[dict], prefer_type: Literal["hls", "dash"] = "hls"
 ) -> str | None:
     """Looks for the first valid stream with the requested format."""
-    logger.log(sounds.VERBOSE_LOG_LEVEL, "Looking for best stream in:")
-    logger.log(sounds.VERBOSE_LOG_LEVEL, streams)
+    logger.log(VERBOSE_LOG_LEVEL, "Looking for best stream in:")
+    logger.log(VERBOSE_LOG_LEVEL, streams)
 
     return next(
         (
@@ -29,14 +27,13 @@ def get_best_stream(
     )
 
 
-class PlaybackService(Base):
+class PlaybackService:
     """Actions to do with turning an ID into audio, or reporting playback progress.
 
     ContentService deals with resolving items, this service deals with just playing items.
     """
 
     def __init__(self, requests: RequestManager, **kwargs):
-        super().__init__(**kwargs)
         self.requests = requests
 
     async def get_stream_token(self, station_id):
@@ -129,7 +126,9 @@ class PlaybackService(Base):
             "resource_type": resource_type,
             "version_pid": vpid,
         }
-        resp = await self._make_request(method="POST", url=URLs.PLAYS, json=data)
+        resp = await self.requests.make_request(
+            method="POST", url=URLs.PLAYS, json=data
+        )
         if resp.status != 202:
             raise APIResponseError(resp)
         return True

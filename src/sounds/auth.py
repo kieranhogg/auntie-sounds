@@ -19,7 +19,7 @@ from sounds.exceptions import (
     NotFoundError,
     UnauthorisedError,
 )
-from sounds.requests import build_url
+from sounds.requests import build_url, _build_headers
 from sounds.utils import _get_data_dir
 
 if TYPE_CHECKING:
@@ -87,18 +87,6 @@ class AuthService:
         if self._client.debug_login:
             logger.info("Saving login pages to file as requested")
 
-    async def _build_headers(self, referer: str | None = None) -> dict:
-        """Builds the standard headers to send when logging in"""
-        base_headers = {
-            "Accept-Language": "en-GB,en;q=0.9",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
-            "Origin": URLs.LOGIN_BASE.value,
-            "Cache-Control": "max-age=0",
-        }
-        if referer:
-            base_headers["Referer"] = referer
-        return base_headers
-
     async def login(self, username: str, password: str) -> bool:
         """
 
@@ -128,7 +116,7 @@ class AuthService:
         request = await self._client.requests.make_request(
             method="GET",
             url=URLs.LOGIN_START.value,
-            headers=await self._build_headers(),
+            headers=await _build_headers(),
             allow_redirects=False,
         )
 
@@ -149,7 +137,7 @@ class AuthService:
             request = await self._client.requests.make_request(
                 "GET",
                 url=location,
-                headers=await self._build_headers(),
+                headers=await _build_headers(),
                 allow_redirects=False,
             )
 
@@ -184,7 +172,7 @@ class AuthService:
             url=url,
             method="POST",
             data=data,
-            headers=await self._build_headers(referer=URLs.LOGIN_START.value),
+            headers=await _build_headers(referer=URLs.LOGIN_START.value),
         )
         soup = BeautifulSoup(html_contents, "html.parser")
         error_el = soup.select_one(f".{self.ERROR_CLASS}")
@@ -213,7 +201,7 @@ class AuthService:
         :raises LoginFailedError: if we find a recognised error message on the page
         """
         logger.debug("Logging in...")
-        headers = await self._build_headers(referer=referrer_url)
+        headers = await _build_headers(referer=referrer_url)
         data = {"username": username, "password": password}
         resp = await self._client.requests.make_request(
             method="POST",

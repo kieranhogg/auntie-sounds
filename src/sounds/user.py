@@ -1,14 +1,12 @@
-from sounds.base import Base
 from sounds.endpoints import URLs
 from sounds.exceptions import APIResponseError, NotFoundError, UnauthorisedError
 from sounds.requests import RequestManager
 
 
-class UserService(Base):
+class UserService:
     def __init__(
-        self, requests: RequestManager, login_details_provided: bool, *args, **kwargs
+        self, requests: RequestManager, login_details_provided: bool, **kwargs
     ) -> None:
-        super().__init__(*args, **kwargs)
         self.requests = requests
         self._user_info: dict[str, str] = {}
         self.login_details_provided = login_details_provided

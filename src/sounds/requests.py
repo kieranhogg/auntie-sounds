@@ -25,6 +25,19 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
+async def _build_headers(referer: str | None = None) -> dict:
+    """Builds the standard headers to send."""
+    base_headers = {
+        "Accept-Language": "en-GB,en;q=0.9",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+        "Origin": URLs.LOGIN_BASE.value,
+        "Cache-Control": "max-age=0",
+    }
+    if referer:
+        base_headers["Referer"] = referer
+    return base_headers
+
+
 def build_url(
     url: URLs | str,
     url_args: dict | None = None,
@@ -93,6 +106,7 @@ class RequestManager:
         kwargs.setdefault("timeout", self._client.timeout)
         kwargs.setdefault("ssl", True)
         kwargs.setdefault("allow_redirects", True)
+        kwargs.setdefault("headers", await _build_headers())
         url = build_url(url)
         logger.debug(f"Making HTTP {method} request to {url}")
         try:

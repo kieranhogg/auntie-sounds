@@ -3,7 +3,6 @@ import logging
 from enum import Enum
 
 from sounds.auth import AuthService
-from sounds.base import Base
 from sounds.endpoints import URLs
 from sounds.exceptions import APIResponseError
 from sounds.models import Menu, MenuItem, PlayableItem, RecommendedMenuItem, SoundsTypes
@@ -19,14 +18,13 @@ class MenuRecommendationOptions(Enum):
     ONLY = "Only"
 
 
-class PersonalService(Base):
+class PersonalService:
     def __init__(
         self,
         auth: AuthService,
         requests: RequestManager,
         **kwargs,
     ):
-        super().__init__(**kwargs)
         self.auth = auth
         self.requests = requests
         self.parser = Parser()

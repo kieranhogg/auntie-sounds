@@ -107,15 +107,8 @@ class SoundsClient:
                 "SoundsClient requires aiohttp.CookieJar for cookie persistence"
             )
 
-        service_kwargs = {
-            "session": self._session,
-            "timeout": self.timeout,
-            "timezone": self.timezone,
-            "mock_session": self.mock_session,
-            **kwargs,
-        }
         self.cookie_store = CookieStore(
-            **service_kwargs, cookie_file_location=cookie_file_location
+            session=self._session, cookie_file_location=cookie_file_location
         )
 
         self.cookie_store.load()
@@ -133,21 +126,18 @@ class SoundsClient:
             on_login_success=self.save_cookies,
         )
         self.schedules = ScheduleService(
-            cookie_store=self.cookie_store, requests=self.requests, **service_kwargs
+            requests=self.requests,
+            timezone=self.timezone,
         )
         self.user = UserService(
             cookie_store=self.cookie_store,
             login_details_provided=self.login_details_provided,
             requests=self.requests,
-            **service_kwargs,
         )
 
-        self.schedules = ScheduleService(
-            cookie_store=self.cookie_store, requests=self.requests, **service_kwargs
-        )
+        self.schedules = ScheduleService(requests=self.requests, timezone=self.timezone)
         self.playback = PlaybackService(
             requests=self.requests,
-            **service_kwargs,
         )
         self.content = ContentService(
             auth=self.auth,
@@ -155,18 +145,14 @@ class SoundsClient:
             schedules=self.schedules,
             user=self.user,
             playback=self.playback,
-            **service_kwargs,
         )
         self.stations = StationService(
             content=self.content,
             playback=self.playback,
             schedules=self.schedules,
             requests=self.requests,
-            **service_kwargs,
         )
-        self.personal = PersonalService(
-            auth=self.auth, requests=self.requests, **service_kwargs
-        )
+        self.personal = PersonalService(auth=self.auth, requests=self.requests)
 
     async def login(self) -> bool:
         """Signs into BBC Sounds.

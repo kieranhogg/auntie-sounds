@@ -8,6 +8,7 @@ logger = logging.getLogger(__name__)
 # This is the ID of the cookie we use to check we have a valid session
 COOKIE_ID = "ckns_id"
 
+
 class CookieStore:
     _COOKIE_CLEAR_DOMAINS = ("bbc.co.uk", "bbc.com")
 
@@ -15,8 +16,7 @@ class CookieStore:
         self,
         session: aiohttp.ClientSession,
         mock_session: bool = False,
-        cookie_file_location: str | None = None,
-        **kwargs,
+        cookie_file_location: str | Path | None = None,
     ):
         if isinstance(cookie_file_location, str):
             self.path = Path(cookie_file_location)

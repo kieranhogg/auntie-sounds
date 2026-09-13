@@ -5,7 +5,6 @@ from datetime import tzinfo
 import aiohttp
 
 from sounds import endpoints
-from sounds.base import Base
 from sounds.endpoints import URLs
 from sounds.exceptions import InvalidFormatError
 from sounds.models import LiveProgramme, Schedule, Segment
@@ -15,24 +14,10 @@ from sounds.requests import RequestManager
 logger = logging.getLogger(__name__)
 
 
-class ScheduleService(Base):
-    def __init__(
-        self,
-        requests: RequestManager,
-        session: aiohttp.ClientSession,
-        timezone: tzinfo | None = None,
-        timeout: aiohttp.ClientTimeout | None = None,
-        mock_session: bool = False,
-        **kwargs,
-    ):
-        super().__init__(
-            session=session,
-            timezone=timezone,
-            timeout=timeout,
-            mock_session=mock_session,
-            **kwargs,
-        )
+class ScheduleService:
+    def __init__(self, requests: RequestManager, timezone: tzinfo):
         self.requests = requests
+        self.timezone = timezone
         self.parser = Parser()
 
     async def get_schedule(

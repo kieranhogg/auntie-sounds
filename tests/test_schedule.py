@@ -13,9 +13,9 @@ pytestmark = pytest.mark.anyio
 class TestScheduleService:
     """Tests for schedule service"""
 
-    async def test_get_schedule_invalid_date_format(self, mock_session):
+    async def test_get_schedule_invalid_date_format(self):
         """Test get_schedule with invalid date format"""
-        service = ScheduleService(session=mock_session, requests=Mock())
+        service = ScheduleService(timezone="UTC", requests=Mock())
 
         with pytest.raises(InvalidFormatError):
             await service.get_schedule("bbc_radio_one", date="2025/01/15")

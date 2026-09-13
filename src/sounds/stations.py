@@ -1,14 +1,10 @@
 import itertools
 import logging
-import re
 from datetime import datetime as dt
 from datetime import timedelta
 from typing import Literal
 
-import sounds
-from sounds import base, client
-from sounds.base import Base
-from sounds.content import ContentService
+from sounds import VERBOSE_LOG_LEVEL
 from sounds.endpoints import URLs
 from sounds.exceptions import NotFoundError
 from sounds.models import LiveStation, MenuItem, Network
@@ -21,7 +17,7 @@ from sounds.utils import _date_with_ordinal
 logger = logging.getLogger(__name__)
 
 
-class StationService(Base):
+class StationService:
     def __init__(
         self,
         playback: PlaybackService,
@@ -30,7 +26,6 @@ class StationService(Base):
         *args,
         **kwargs,
     ):
-        super().__init__(*args, **kwargs)
         self.playback = playback
         self.schedules = schedules
         self.requests = requests
@@ -59,8 +54,8 @@ class StationService(Base):
         :rtype: list[Station]
         """
         json_resp = await self.requests.get_json_response(url=URLs.STATIONS)
-        logger.log(sounds.VERBOSE_LOG_LEVEL, "Getting station list...")
-        logger.log(sounds.VERBOSE_LOG_LEVEL, json_resp)
+        logger.log(VERBOSE_LOG_LEVEL, "Getting station list...")
+        logger.log(VERBOSE_LOG_LEVEL, json_resp)
 
         # Append a key to assign if they are local stations or not
         for station in json_resp["data"][0]["data"]:
@@ -101,8 +96,8 @@ class StationService(Base):
 
     async def get_local_stations(self) -> list[LiveStation]:
         json_resp = await self.requests.get_json_response(url=URLs.STATIONS)
-        logger.log(sounds.VERBOSE_LOG_LEVEL, "Getting local station list...")
-        logger.log(sounds.VERBOSE_LOG_LEVEL, json_resp)
+        logger.log(VERBOSE_LOG_LEVEL, "Getting local station list...")
+        logger.log(VERBOSE_LOG_LEVEL, json_resp)
         station_data = json_resp["data"][1]["data"]
         station_list = [self.parser.parse_node(s) for s in station_data]
         local_stations: list[LiveStation] = [
