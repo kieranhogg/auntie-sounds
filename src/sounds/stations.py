@@ -1,39 +1,43 @@
 import itertools
 import logging
+import re
 from datetime import datetime as dt
 from datetime import timedelta
 from typing import Literal
 
-from sounds import constants
+import sounds
+from sounds import base, client
 from sounds.base import Base
-from sounds.constants import URLs
 from sounds.content import ContentService
+from sounds.endpoints import URLs
 from sounds.exceptions import NotFoundError
 from sounds.models import LiveStation, MenuItem, Network
 from sounds.parser import Parser
 from sounds.playback import PlaybackService
+from sounds.requests import RequestManager
 from sounds.schedule import ScheduleService
 from sounds.utils import _date_with_ordinal
 
 logger = logging.getLogger(__name__)
 
+
 class StationService(Base):
     def __init__(
         self,
-        content: ContentService,
         playback: PlaybackService,
         schedules: ScheduleService,
+        requests: RequestManager,
         *args,
         **kwargs,
     ):
         super().__init__(*args, **kwargs)
-        self.content = content
         self.playback = playback
         self.schedules = schedules
+        self.requests = requests
         self.parser = Parser()
 
-    async def get_stations_detailed(self) -> list[Network] | None:
-        json_resp = await self._get_json(url_template=URLs.NETWORKS_LIST)
+    async def get_networks(self) -> list[Network] | None:
+        json_resp = await self.requests.get_json_response(url=URLs.NETWORKS_LIST)
         stations = self.parser.parse_container(json_resp)
         if isinstance(stations, list):
             station_list: list[Network] = [
@@ -54,9 +58,9 @@ class StationService(Base):
         :return: A list of Station objects
         :rtype: list[Station]
         """
-        json_resp = await self._get_json(url_template=URLs.STATIONS)
-        logger.log(constants.VERBOSE_LOG_LEVEL, "Getting station list...")
-        logger.log(constants.VERBOSE_LOG_LEVEL, json_resp)
+        json_resp = await self.requests.get_json_response(url=URLs.STATIONS)
+        logger.log(sounds.VERBOSE_LOG_LEVEL, "Getting station list...")
+        logger.log(sounds.VERBOSE_LOG_LEVEL, json_resp)
 
         # Append a key to assign if they are local stations or not
         for station in json_resp["data"][0]["data"]:
@@ -80,10 +84,7 @@ class StationService(Base):
 
         if isinstance(stations_list, list):
             all_stations: list[LiveStation] = [
-                station
-                for station in stations_list
-                if isinstance(station, LiveStation)
-                and (include_local or not station.local)
+                station for station in stations_list if type(station) is LiveStation
             ]
 
             if include_streams and isinstance(stations_list, list):
@@ -99,15 +100,13 @@ class StationService(Base):
         return []
 
     async def get_local_stations(self) -> list[LiveStation]:
-        json_resp = await self._get_json(url_template=URLs.STATIONS)
-        logger.log(constants.VERBOSE_LOG_LEVEL, "Getting local station list...")
-        logger.log(constants.VERBOSE_LOG_LEVEL, json_resp)
+        json_resp = await self.requests.get_json_response(url=URLs.STATIONS)
+        logger.log(sounds.VERBOSE_LOG_LEVEL, "Getting local station list...")
+        logger.log(sounds.VERBOSE_LOG_LEVEL, json_resp)
         station_data = json_resp["data"][1]["data"]
         station_list = [self.parser.parse_node(s) for s in station_data]
         local_stations: list[LiveStation] = [
-            station
-            for station in station_list
-            if station is not None and isinstance(station, LiveStation)
+            station for station in station_list if type(station) is LiveStation
         ]
         return local_stations
 
@@ -160,8 +159,8 @@ class StationService(Base):
         Returns:
             LiveStation | None: A LiveStation object if station_id is found
         """
-        json_response = await self._get_json(
-            url_template=URLs.STATION_PLAYABLE_DETAILS,
+        json_response = await self.requests.get_json_response(
+            url=URLs.STATION_PLAYABLE_DETAILS,
             url_args={"station_id": station_id},
         )
         station = self.parser.parse_node(json_response)
@@ -182,14 +181,13 @@ class StationService(Base):
         return station
 
     async def get_broadcast(self, pid: str):
-        json_resp = await self._get_json(
-            url_template=URLs.BROADCAST, url_args={"pid": pid}
+        json_resp = await self.requests.get_json_response(
+            url=URLs.BROADCAST, url_args={"pid": pid}
         )
         broadcast = self.parser.parse_node(json_resp)
         return broadcast
 
-    # FIXME: typo here - what actually calls this?
-    async def get_station_schedule_menu(self, include_local: bool = False):
+    async def get_schedule_menu(self, include_local: bool = False):
 
         return MenuItem(
             id="stations",

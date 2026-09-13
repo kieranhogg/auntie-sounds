@@ -7,7 +7,7 @@ import aiohttp
 import pytz
 from colorlog import ColoredFormatter
 
-from sounds import constants
+from sounds import VERBOSE_LOG_LEVEL
 from sounds.auth import AuthService
 from sounds.content import ContentService
 from sounds.cookies import CookieStore
@@ -27,14 +27,16 @@ logger = logging.getLogger(__name__)
 
 
 def setLogger(log_level=None):
-    logging.addLevelName(constants.VERBOSE_LOG_LEVEL, "VERBOSE")
+    logging.addLevelName(VERBOSE_LOG_LEVEL, "VERBOSE")
     if not log_level:
         log_level = logging.WARNING
     logging.basicConfig(
         level=log_level,
         format="%(asctime)s -%(levelname)s -on line: %(lineno)d -%(message)s",
     )
-    log_fmt = "%(asctime)s.%(msecs)03d %(levelname)s (%(threadName)s) [%(name)s] %(message)s"
+    log_fmt = (
+        "%(asctime)s.%(msecs)03d %(levelname)s (%(threadName)s) [%(name)s] %(message)s"
+    )
     colorfmt = f"%(log_color)s{log_fmt}%(reset)s"
     logging.getLogger().handlers[0].setFormatter(
         ColoredFormatter(
@@ -53,17 +55,11 @@ def setLogger(log_level=None):
     if log_level:
         logger.setLevel(log_level)
     else:
-        logger.setLevel(constants.VERBOSE_LOG_LEVEL)
+        logger.setLevel(VERBOSE_LOG_LEVEL)
 
 
 class SoundsClient:
-    """A client to interact with the Sounds API.
-
-    :param debug_login: Indicates to the AuthService whether the HTML pages should be saved to disk during the login process.
-
-
-    :raises TypeError:
-    """
+    """A client to interact with the Sounds API."""
 
     def __init__(
         self,
@@ -131,33 +127,26 @@ class SoundsClient:
             self.cookie_store.clear()
             self.cookie_store.save()
 
+        self.requests = RequestManager(self)
         self.auth = AuthService(
-            cookie_store=self.cookie_store,
+            self,
             on_login_success=self.save_cookies,
-            debug_login=self.debug_login,
-            **service_kwargs,
         )
         self.schedules = ScheduleService(
-            cookie_store=self.cookie_store, **service_kwargs
+            cookie_store=self.cookie_store, requests=self.requests, **service_kwargs
         )
         self.user = UserService(
             cookie_store=self.cookie_store,
             login_details_provided=self.login_details_provided,
+            requests=self.requests,
             **service_kwargs,
         )
 
-        self.requests = RequestManager(
-            auth=self.auth,
-            cookie_store=self.cookie_store,
-            logger=logger,
-            username=self.username,
-            password=self.password,
+        self.schedules = ScheduleService(
+            cookie_store=self.cookie_store, requests=self.requests, **service_kwargs
         )
         self.playback = PlaybackService(
-            auth=self.auth,
             requests=self.requests,
-            schedules=self.schedules,
-            user=self.user,
             **service_kwargs,
         )
         self.content = ContentService(
@@ -166,11 +155,13 @@ class SoundsClient:
             schedules=self.schedules,
             user=self.user,
             playback=self.playback,
+            **service_kwargs,
         )
         self.stations = StationService(
             content=self.content,
             playback=self.playback,
             schedules=self.schedules,
+            requests=self.requests,
             **service_kwargs,
         )
         self.personal = PersonalService(
@@ -179,8 +170,6 @@ class SoundsClient:
 
     async def login(self) -> bool:
         """Signs into BBC Sounds.
-
-        :param force_new_session: Ignores any existing session or cookies and creates a new one
 
         :return: True if successfully logged in, False otherwise
         :raises LoginFailedError: If the login fails for any reason
@@ -238,8 +227,12 @@ class SoundsClient:
         listen_live = MenuItem(
             title="Listen Live", id="listen_live", sub_items=stations
         )
-        schedule = await self.stations.get_station_schedule_menu()
-        if await self.user.is_uk_listener() and self.username and self.password:
+        schedule = await self.stations.get_schedule_menu()
+        if (
+            await self.user.is_uk_account_and_location()
+            and self.username
+            and self.password
+        ):
             # UK listener, logged in, get menu from Sounds API
             menu = await self.personal.get_uk_menu(recommendations=recommendations)
             if recommendations != MenuRecommendationOptions.ONLY:

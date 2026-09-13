@@ -3,9 +3,10 @@ from pathlib import Path
 
 import aiohttp
 
-from sounds.constants import COOKIE_ID
-
 logger = logging.getLogger(__name__)
+
+# This is the ID of the cookie we use to check we have a valid session
+COOKIE_ID = "ckns_id"
 
 class CookieStore:
     _COOKIE_CLEAR_DOMAINS = ("bbc.co.uk", "bbc.com")
@@ -13,8 +14,9 @@ class CookieStore:
     def __init__(
         self,
         session: aiohttp.ClientSession,
-        cookie_file_location: Path | str,
-        mock_session: bool = False
+        mock_session: bool = False,
+        cookie_file_location: str | None = None,
+        **kwargs,
     ):
         if isinstance(cookie_file_location, str):
             self.path = Path(cookie_file_location)

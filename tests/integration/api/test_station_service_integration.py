@@ -1,5 +1,6 @@
 import os
-from datetime import datetime as dt, timedelta
+from datetime import datetime as dt
+from datetime import timedelta
 
 import pytest
 
@@ -40,7 +41,7 @@ class TestStationServiceIntegration:
 
     async def test_get_station(self, real_sounds_client: SoundsClient):
         station = await real_sounds_client.stations.get_station(
-            "bbc_radio_four", include_stream=True, include_schedule=True
+            "bbc_radio_one", include_stream=True, include_schedule=True
         )
         assert type(station) is LiveStation
 

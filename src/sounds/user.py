@@ -1,16 +1,20 @@
 from sounds.base import Base
-from sounds.constants import URLs
+from sounds.endpoints import URLs
 from sounds.exceptions import APIResponseError, NotFoundError, UnauthorisedError
+from sounds.requests import RequestManager
 
 
 class UserService(Base):
-    def __init__(self, login_details_provided: bool, *args, **kwargs) -> None:
+    def __init__(
+        self, requests: RequestManager, login_details_provided: bool, *args, **kwargs
+    ) -> None:
         super().__init__(*args, **kwargs)
-        self._user_info: dict[str, str] = dict()
+        self.requests = requests
+        self._user_info: dict[str, str] = {}
         self.login_details_provided = login_details_provided
 
     async def refresh(self) -> None:
-        self._user_info = await self._get_json(url_template=URLs.USER_INFO)
+        self._user_info = await self.requests.get_json_response(url=URLs.USER_INFO)
 
     async def _ensure_loaded(self):
         if not self._user_info:
@@ -29,12 +33,12 @@ class UserService(Base):
         await self._ensure_loaded()
         return self._user_info.get("X-Country")
 
-    async def is_in_uk(self) -> bool:
+    async def is_geolocated_in_uk(self) -> bool:
         """Listener is in the UK."""
         await self._ensure_loaded()
         return self._user_info.get("X-Country") == "gb"
 
-    async def is_uk_listener(self) -> bool:
+    async def is_uk_account_and_location(self) -> bool:
         """Listener has a UK-based account and is in the UK."""
         await self._ensure_loaded()
         return self._user_info.get("X-Ip_is_uk_combined") == "yes"

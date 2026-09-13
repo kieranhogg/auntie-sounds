@@ -1,4 +1,5 @@
 from enum import StrEnum, auto
+from typing import Final
 
 
 class FeatureFlags(StrEnum):
@@ -8,3 +9,4 @@ class FeatureFlags(StrEnum):
 
 
 FEATURE_FLAGS = {FeatureFlags.SINGLE_ITEM_PROMO: False}
+VERBOSE_LOG_LEVEL: Final[int] = 5

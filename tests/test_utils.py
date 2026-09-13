@@ -1,8 +1,7 @@
 import pytest
 from pytest import MarkDecorator
 
-from sounds.constants import ImageType
-from sounds.utils import image_from_recipe, network_logo
+from sounds.utils import image_from_recipe, network_logo, ImageType
 
 pytestmark: MarkDecorator = pytest.mark.anyio
 
@@ -14,7 +13,7 @@ class TestUtils:
         """Test network logo URL formatting."""
         recipe = "https://example.com/{type}/{size}.{format}"
         result = network_logo(
-            logo_recipe=recipe, img_type=ImageType.COLOUR, size=450, img_format="png"
+            logo_recipe=recipe, img_type=ImageType.COLOUR, size=450, file_extension="png"
         )
         assert result == "https://example.com/colour/450x450.png"
 
@@ -26,13 +25,13 @@ class TestUtils:
     def test_image_from_recipe_square(self):
         """Test image recipe formatting for square images."""
         recipe = "https://example.com/{recipe}.{format}"
-        result = image_from_recipe(recipe, size=640, format="jpg")
+        result = image_from_recipe(recipe, size=640, file_extension="jpg")
         assert result == "https://example.com/640x640.jpg"
 
     def test_image_from_recipe_rectangle(self):
         """Test image recipe formatting for rectangular images."""
         recipe = "https://example.com/{recipe}.{format}"
-        result = image_from_recipe(recipe, 640, height=480, format="jpg")
+        result = image_from_recipe(recipe, 640, height=480, file_extension="jpg")
         assert result == "https://example.com/640x480.jpg"
 
     def test_image_from_recipe_none(self):
@@ -43,5 +42,5 @@ class TestUtils:
     def test_image_from_recipe_with_different_format(self):
         """Test image recipe with just a non-jpg format."""
         recipe = "https://example.com/{recipe}.{format}"
-        result = image_from_recipe(recipe, 640, format="png")
+        result = image_from_recipe(recipe, 640, file_extension="png")
         assert result == "https://example.com/640x640.png"

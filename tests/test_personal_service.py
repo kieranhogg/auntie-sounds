@@ -1,11 +1,12 @@
-from unittest.mock import AsyncMock, Mock
+from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
 
-from sounds.constants import URLs
+from sounds.endpoints import URLs
 from sounds.exceptions import APIResponseError
 from sounds.models import Menu, MenuItem, RecommendedMenuItem
 from sounds.personal import MenuRecommendationOptions, PersonalService
+from sounds.requests import RequestManager
 
 pytestmark = pytest.mark.anyio
 
@@ -28,20 +29,26 @@ def _playable_child(suffix: str, recommendation: dict | None = None) -> dict:
     return node
 
 
-class FakeRequestManager:
-    """Bypasses the login/retry logic so these test parsing and filtering."""
-
-    async def run(self, call):
-        return await call()
+async def run(self, call):
+    return await call()
 
 
 @pytest.fixture
-def personal_service(mock_session, mock_logger):
+def request_manager(mock_session, sounds_client):
+    return RequestManager(
+        sounds_client,
+        username=None,
+        password=None,
+    )
+
+
+@pytest.fixture
+def personal_service(mock_session, request_manager, monkeypatch):
+    monkeypatch.setattr(RequestManager, "run", run)
     return PersonalService(
         auth=Mock(),
-        requests=FakeRequestManager(),
+        requests=request_manager,
         session=mock_session,
-        logger=mock_logger,
     )
 
 
@@ -63,10 +70,12 @@ class TestPersonalService:
     """Tests for personal service"""
 
     async def test_get_uk_menu_include_keeps_everything(
-        self, personal_service, monkeypatch, mixed_menu_json
+        self, request_manager, personal_service, monkeypatch, mixed_menu_json
     ):
         monkeypatch.setattr(
-            personal_service, "_get_json", AsyncMock(return_value=mixed_menu_json)
+            request_manager,
+            "get_json_response",
+            AsyncMock(return_value=mixed_menu_json),
         )
 
         menu = await personal_service.get_uk_menu(
@@ -79,10 +88,12 @@ class TestPersonalService:
         assert type(menu.get("regular")) is MenuItem
 
     async def test_get_uk_menu_exclude_drops_recommendations(
-        self, personal_service, monkeypatch, mixed_menu_json
+        self, request_manager, personal_service, monkeypatch, mixed_menu_json
     ):
         monkeypatch.setattr(
-            personal_service, "_get_json", AsyncMock(return_value=mixed_menu_json)
+            request_manager,
+            "get_json_response",
+            AsyncMock(return_value=mixed_menu_json),
         )
 
         menu = await personal_service.get_uk_menu(
@@ -92,10 +103,12 @@ class TestPersonalService:
         assert [item.id for item in menu.sub_items] == ["regular"]
 
     async def test_get_uk_menu_only_keeps_recommendations(
-        self, personal_service, monkeypatch, mixed_menu_json
+        self, request_manager, personal_service, monkeypatch, mixed_menu_json
     ):
         monkeypatch.setattr(
-            personal_service, "_get_json", AsyncMock(return_value=mixed_menu_json)
+            request_manager,
+            "get_json_response",
+            AsyncMock(return_value=mixed_menu_json),
         )
 
         menu = await personal_service.get_uk_menu(
@@ -105,17 +118,17 @@ class TestPersonalService:
         assert [item.id for item in menu.sub_items] == ["recommended"]
 
     async def test_get_uk_menu_raises_on_empty_response(
-        self, personal_service, monkeypatch
+        self, request_manager, personal_service, monkeypatch
     ):
         monkeypatch.setattr(
-            personal_service, "_get_json", AsyncMock(return_value={"data": []})
+            request_manager, "get_json_response", AsyncMock(return_value={"data": []})
         )
 
         with pytest.raises(APIResponseError):
             await personal_service.get_uk_menu()
 
     async def test_get_explore_all_composes_submenus(
-        self, personal_service, monkeypatch
+        self, request_manager, personal_service, monkeypatch
     ):
         podcasts_json = {
             "data": [_menu_item_node("podcasts_item", [_playable_child("3")])]
@@ -129,10 +142,10 @@ class TestPersonalService:
             URLs.NEWS: news_json,
         }
 
-        async def fake_get_json(url=None, url_template=None):
-            return responses[url or url_template]
+        async def fake_get_json(url=None):
+            return responses[url]
 
-        monkeypatch.setattr(personal_service, "_get_json", fake_get_json)
+        monkeypatch.setattr(request_manager, "get_json_response", fake_get_json)
 
         explore_all = await personal_service.get_explore_all()
 

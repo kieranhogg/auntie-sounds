@@ -5,8 +5,8 @@ import aiohttp
 import pytest
 from yarl import URL
 
-from sounds.constants import COOKIE_ID, URLs
-from sounds.cookies import CookieStore
+from sounds.endpoints import URLs
+from sounds.cookies import CookieStore, COOKIE_ID
 
 pytestmark = pytest.mark.anyio
 
@@ -27,19 +27,17 @@ class TestCookieStore:
         )
         assert store.has_session_cookie is True
 
-    async def test_has_session_cookie_false_when_empty(self, tmp_path, mock_logger):
+    async def test_has_session_cookie_false_when_empty(self, tmp_path):
         store = CookieStore(
             session=Mock(cookie_jar=aiohttp.CookieJar()),
-            logger=mock_logger,
-            cookie_file_location=tmp_path / "cookies",
+                        cookie_file_location=tmp_path / "cookies",
         )
         assert store.has_session_cookie is False
 
-    async def test_clear_removes_session_cookie(self, tmp_path, mock_logger):
+    async def test_clear_removes_session_cookie(self, tmp_path):
         store = CookieStore(
             session=Mock(cookie_jar=_jar_with_session_cookie()),
-            logger=mock_logger,
-            cookie_file_location=tmp_path / "cookies",
+                        cookie_file_location=tmp_path / "cookies",
         )
         assert store.has_session_cookie is True
 
@@ -59,40 +57,36 @@ class TestCookieStore:
             assert record.levelno == logging.WARNING
         assert "Cookie location does not exist." in caplog.text
 
-    async def test_save_then_load_round_trip(self, tmp_path, mock_logger):
+    async def test_save_then_load_round_trip(self, tmp_path):
         """save() should persist cookies that a fresh load() into an empty jar can restore."""
         cookie_path = tmp_path / "cookies.pickle"
         store_a = CookieStore(
             session=Mock(cookie_jar=_jar_with_session_cookie()),
-            logger=mock_logger,
-            cookie_file_location=cookie_path,
+                        cookie_file_location=cookie_path,
         )
         store_a.save()
         assert cookie_path.exists()
 
         store_b = CookieStore(
             session=Mock(cookie_jar=aiohttp.CookieJar()),
-            logger=mock_logger,
-            cookie_file_location=cookie_path,
+                        cookie_file_location=cookie_path,
         )
         store_b.load()
 
         assert store_b.has_session_cookie is True
 
-    async def test_load_skips_when_jar_already_populated(self, tmp_path, mock_logger):
+    async def test_load_skips_when_jar_already_populated(self, tmp_path):
         """If the in-memory jar already has cookies, load() should not overwrite them from disk."""
         cookie_path = tmp_path / "cookies.pickle"
         # Persist an empty jar to disk.
         CookieStore(
             session=Mock(cookie_jar=aiohttp.CookieJar()),
-            logger=mock_logger,
-            cookie_file_location=cookie_path,
+                        cookie_file_location=cookie_path,
         ).save()
 
         store = CookieStore(
             session=Mock(cookie_jar=_jar_with_session_cookie()),
-            logger=mock_logger,
-            cookie_file_location=cookie_path,
+                        cookie_file_location=cookie_path,
         )
         store.load()
 

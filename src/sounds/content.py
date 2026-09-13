@@ -2,9 +2,11 @@ import logging
 from functools import partial
 from typing import TYPE_CHECKING, Literal, cast
 
-from sounds import constants
+import aiohttp
+
+from sounds import endpoints
 from sounds.base import Base
-from sounds.constants import SignedInURLs, URLs
+from sounds.endpoints import URLs
 from sounds.exceptions import APIResponseError, InvalidFormatError, NotFoundError
 from sounds.models import (
     Category,
@@ -21,7 +23,6 @@ from sounds.models import (
     Segment,
 )
 from sounds.parser import Parser
-from sounds.playback import PlaybackService
 from sounds.requests import RequestManager
 from sounds.user import UserService
 from sounds.utils import image_from_spotify
@@ -46,23 +47,19 @@ class ContentService(Base):
         playback: PlaybackService,
         user: UserService,
         requests: RequestManager,
-        *args,
+        session: aiohttp.ClientSession,
         **kwargs,
     ):
-        super().__init__(*args, **kwargs)
-        self.playback = playback
+        super().__init__(session=session, **kwargs)
         self.user = user
         self.requests: RequestManager = requests
         self.parser = Parser()
 
-
     async def get_podcasts(self) -> Menu:
         podcasts = self.parser.parse_menu(
-            await self._get_json(url_template=constants.URLs.PODCASTS)
+            await self.requests.get_json_response(url=endpoints.URLs.PODCASTS)
         )
         return podcasts
-
-
 
     async def get_podcast(
         self, urn=None, pid=None, include_episodes=True
@@ -146,8 +143,6 @@ class ContentService(Base):
             raise APIResponseError(f"Item requested not a radio show! {show!s}")
         return show
 
-
-
     async def get_by_pid(
         self,
         pid,
@@ -156,17 +151,20 @@ class ContentService(Base):
     ) -> SoundsTypes:
         logger.debug(f"Getting playable item with PID {pid}")
 
-        if await self.user.is_uk_listener() and self.user.login_details_provided:
+        if (
+            await self.user.is_uk_account_and_location()
+            and self.user.login_details_provided
+        ):
             json_resp = await self.requests.run(
                 partial(
-                    self._get_json,
-                    url_template=SignedInURLs.PID_PLAYABLE,
+                    self.requests.get_json_response,
+                    url=URLs.PID_PLAYABLE,
                     url_args={"pid": pid},
                 )
             )
         else:
-            json_resp = await self._get_json(
-                url_template=URLs.PROGRAMME_FROM_PID_PLAYABLE, url_args={"pid": pid}
+            json_resp = await self.requests.get_json_response(
+                url=URLs.PROGRAMME_FROM_PID_PLAYABLE, url_args={"pid": pid}
             )
 
         logger.debug(json_resp)
@@ -184,8 +182,8 @@ class ContentService(Base):
         return playable_item
 
     async def get_pid_container(self, pid) -> list[PlayableItem] | None:
-        json_resp = await self._get_json(
-            url_template=URLs.PLAYABLE_ITEMS_CONTAINER, url_args={"pid": pid}
+        json_resp = await self.requests.get_json_response(
+            url=URLs.PLAYABLE_ITEMS_CONTAINER, url_args={"pid": pid}
         )
         container = self.parser.parse_container(json_resp)
         if isinstance(container, list):
@@ -196,8 +194,8 @@ class ContentService(Base):
         return None
 
     async def get_container(self, urn) -> list[SoundsTypes] | SoundsTypes | Container:
-        json_resp = await self._get_json(
-            url_template=URLs.CONTAINER_URL, url_args={"urn": urn}
+        json_resp = await self.requests.get_json_response(
+            url=URLs.CONTAINER_URL, url_args={"urn": urn}
         )
         container = self.parser.parse_container(json_resp)
         if type(container) is list and len(container) == 1:
@@ -205,35 +203,35 @@ class ContentService(Base):
         return container
 
     async def get_category(self, category) -> Category:
-        json_resp = await self._get_json(
-            url_template=URLs.CATEGORY_LATEST, url_args={"category": category}
+        json_resp = await self.requests.get_json_response(
+            url=URLs.CATEGORY_LATEST, url_args={"category": category}
         )
         return cast("Category", self.parser.parse_node(json_resp))
 
     async def get_collection(self, pid) -> Collection:
-        json_resp = await self._get_json(
-            url_template=URLs.COLLECTIONS, url_args={"pid": pid}
+        json_resp = await self.requests.get_json_response(
+            url=URLs.COLLECTIONS, url_args={"pid": pid}
         )
         return cast("Collection", self.parser.parse_node(json_resp))
 
     async def get_playlist_contents(self, pid) -> list[SoundsTypes]:
         """Gets a curation/playlist."""
-        json_resp = await self._get_json(
-            url_template=URLs.CURATIONS, url_args={"pid": pid}
+        json_resp = await self.requests.get_json_response(
+            url=URLs.CURATIONS, url_args={"pid": pid}
         )
         return self.parser.parse_container(json_resp) if json_resp else []
 
     async def search(self, query) -> SearchResults:
-        json_resp = await self._get_json(
-            url_template=URLs.SEARCH_URL, url_args={"search": query}
+        json_resp = await self.requests.get_json_response(
+            url=URLs.SEARCH_URL, url_args={"search": query}
         )
         return self.parser.parse_search(json_resp)
 
     async def get_show_segments(
         self, vpid, fetch_missing_images: bool = False
     ) -> list[Segment]:
-        json_resp = await self._get_json(
-            url_template=URLs.SEGMENTS, url_args={"vpid": vpid}
+        json_resp = await self.requests.get_json_response(
+            url=URLs.SEGMENTS, url_args={"vpid": vpid}
         )
         parsed_segments = self.parser.parse_container(json_resp)
         if isinstance(parsed_segments, list):

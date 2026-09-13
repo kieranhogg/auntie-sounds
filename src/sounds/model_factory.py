@@ -1,8 +1,8 @@
 import logging
 from dataclasses import fields
+from enum import StrEnum, auto
 from typing import ClassVar
 
-from sounds.constants import BaseSoundsTypes, ContainerType, IDType, ItemType, ItemURN
 from sounds.models import (
     Category,
     CategoryItemContainer,
@@ -44,7 +44,7 @@ def _podcast_or_series(
             network_id = network.get("id")
 
     if (network_id in ("bbc_sounds_podcasts", "bbc_news")) or (
-        not network_id and urn == ItemURN.RADIO_SHOW_OR_PODCAST.value
+        not network_id and urn == ItemURN.RADIO_SHOW_OR_PODCAST
     ):
         return Podcast
     return RadioSeries
@@ -73,26 +73,89 @@ def _live_station_or_station(original_object) -> type:
     return LiveStation if original_object.get("synopses") is not None else Station
 
 
+
+class BaseSoundsTypes(StrEnum):
+    """Types as defined in the JSON schema"""
+    PROGRAMMES = "Programmes"
+    EXPERIENCE_RESPONSE = "ExperienceResponse"
+    ERROR = "ErrorResponse"
+    SEGMENTS = "SegmentItemsResponse"
+    CONTAINER_ITEMS = "ContainerItems"
+    PLAYABLE_ITEMS = "PlayableItems"
+
+
+class PlayableSoundsTypes(StrEnum):
+    """Types as defined in the JSON schema"""
+
+    EPISODE = "Episode"
+    PROGRAMMES = "Programmes"
+    EXPERIENCE_RESPONSE = "ExperienceResponse"
+    PLAYABLE_ITEM = "PlayableItem"
+    BROADCASTS = "BroadcastsResponse"
+
+
+class ItemURN(StrEnum):
+    EPISODE = "urn:bbc:radio:episode"
+    CLIP = "urn:bbc:radio:clip"
+    COLLECTION = "urn:bbc:radio:collection"
+    CATEGORY = "urn:bbc:radio:category"
+    SERIES = "urn:bbc:radio:series"
+    RADIO_SHOW_OR_PODCAST = "urn:bbc:radio:brand"
+    STATION = "urn:bbc:radio:network"
+    PROMO_ITEM = "urn:bbc:radio:content:single_item_promo"
+    SEGMENT_ITEM = "urn:bbc:radio:segment:music"
+    PLAYLIST = "urn:bbc:radio:curation"
+
+
+class ItemType(StrEnum):
+    PLAYABLE_ITEM = auto()
+    DISPLAY_ITEM = auto()
+    BROADCAST_SUMMARY = auto()
+    INLINE_DISPLAY_MODULE = auto()
+    INLINE_HEADER_MODULE = auto()
+    EPISODE = auto()
+    BROADCAST = auto()
+    RADIO_SEARCH = "live_search_result_item"
+    SEGMENT_ITEM = auto()
+
+
+class ContainerType(StrEnum):
+    BRAND = "brand"
+    SERIES = "series"
+    ITEM = "container_item"
+
+
+class NetworkType(StrEnum):
+    MASTER = "master_brand"
+
+
+class IDType(StrEnum):
+    SCHEDULE_ITEMS = "schedule_items"
+    SINGLE_ITEM_PROMO = "single_item_promo"
+    STATION_SEARCH_CONTAINER = "live_search"
+    SHOW_SEARCH_CONTAINER = "container_search"
+    EPISODE_SEARCH_CONTAINER = "playable_search"
+
 class ModelFactory:
     PLAYABLE_ITEM_URN_MAP: ClassVar[dict[str, type]] = {
-        ItemURN.COLLECTION.value: Collection,
-        ItemURN.CATEGORY.value: Category,
-        ItemURN.SERIES.value: Podcast,
-        ItemURN.RADIO_SHOW_OR_PODCAST.value: RadioShow,
-        ItemURN.PROMO_ITEM.value: PromoItem,
-        ItemURN.PLAYLIST.value: Playlist,
+        ItemURN.COLLECTION: Collection,
+        ItemURN.CATEGORY: Category,
+        ItemURN.SERIES: Podcast,
+        ItemURN.RADIO_SHOW_OR_PODCAST: RadioShow,
+        ItemURN.PROMO_ITEM: PromoItem,
+        ItemURN.PLAYLIST: Playlist,
     }
 
     CONTAINER_URN_MAP: ClassVar[dict[str, type]] = {
-        ItemURN.COLLECTION.value: Collection,
-        ItemURN.CATEGORY.value: Category,
-        ItemURN.PLAYLIST.value: Playlist,
+        ItemURN.COLLECTION: Collection,
+        ItemURN.CATEGORY: Category,
+        ItemURN.PLAYLIST: Playlist,
     }
 
     CONTAINER_SCHEMA_MAP: ClassVar[dict[str, type]] = {
-        BaseSoundsTypes.PLAYABLE_ITEMS.value: CategoryItemContainer,
+        BaseSoundsTypes.PLAYABLE_ITEMS: CategoryItemContainer,
         # Collection group of items
-        BaseSoundsTypes.CONTAINER_ITEMS.value: CollectionItemContainer,
+        BaseSoundsTypes.CONTAINER_ITEMS: CollectionItemContainer,
     }
 
     def _programme_episode(self, original_object) -> tuple[type, dict]:
@@ -129,25 +192,25 @@ class ModelFactory:
             if object_type in ItemType:
                 match object_type:
                     # Menu item, container or schedule
-                    case ItemType.INLINE_DISPLAY_MODULE.value:
-                        if original_object["id"] == IDType.SCHEDULE_ITEMS.value:
+                    case ItemType.INLINE_DISPLAY_MODULE:
+                        if original_object["id"] == IDType.SCHEDULE_ITEMS:
                             # This is a container of schedule items
                             new_type = Schedule
                         elif "container" in original_object["id"]:
                             new_type = Container
-                        elif original_object["id"] == IDType.SINGLE_ITEM_PROMO.value:
+                        elif original_object["id"] == IDType.SINGLE_ITEM_PROMO:
                             # This is the special promo item menu, ignoring for now
                             return None
                         else:
                             new_type = MenuItem
 
-                    case ItemType.PLAYABLE_ITEM.value:
-                        if urn == ItemURN.EPISODE.value:
+                    case ItemType.PLAYABLE_ITEM:
+                        if urn == ItemURN.EPISODE:
                             new_type = _episode_or_show(original_object)
-                        elif urn == ItemURN.CLIP.value:
+                        elif urn == ItemURN.CLIP:
                             # Sometimes these can appear in podcast episodes listings
                             new_type = _clip_or_episode(original_object)
-                        elif urn == ItemURN.STATION.value:
+                        elif urn == ItemURN.STATION:
                             new_type = _live_station_or_station(original_object)
                         elif urn in self.PLAYABLE_ITEM_URN_MAP:
                             new_type = self.PLAYABLE_ITEM_URN_MAP[urn]
@@ -157,13 +220,13 @@ class ModelFactory:
                             )
                             return None
 
-                    case ItemType.DISPLAY_ITEM.value:
+                    case ItemType.DISPLAY_ITEM:
                         if original_object.get("item") is not None:
                             return None
                         new_type = MenuItem
 
-                    case ItemType.BROADCAST_SUMMARY.value | ItemType.BROADCAST.value:
-                        if urn == ItemURN.STATION.value:
+                    case ItemType.BROADCAST_SUMMARY | ItemType.BROADCAST:
+                        if urn == ItemURN.STATION:
                             new_type = Station
                         if (
                             original_object.get("progress")
@@ -176,15 +239,15 @@ class ModelFactory:
                         else:
                             new_type = ScheduleItem
 
-                    case ItemType.RADIO_SEARCH.value:
+                    case ItemType.RADIO_SEARCH:
                         new_type = StationSearchResult
                         # Search results embed the actual station details in a now key
                         original_object = original_object["now"]
 
-                    case ItemType.SEGMENT_ITEM.value:
+                    case ItemType.SEGMENT_ITEM:
                         new_type = Segment
 
-                    case ItemType.INLINE_HEADER_MODULE.value:
+                    case ItemType.INLINE_HEADER_MODULE:
                         new_type = Header
 
                     case _:
@@ -195,15 +258,15 @@ class ModelFactory:
                 # This is a nested/parent container, work out which
                 if urn in self.CONTAINER_URN_MAP:
                     new_type = self.CONTAINER_URN_MAP[urn]
-                elif object_type == ContainerType.BRAND.value:
+                elif object_type == ContainerType.BRAND:
                     new_type = _podcast_or_series(original_object, urn)
                 elif object_type in self.CONTAINER_SCHEMA_MAP:
                     new_type = self.CONTAINER_SCHEMA_MAP[object_type]
-                elif object_type == BaseSoundsTypes.PROGRAMMES.value:
+                elif object_type == BaseSoundsTypes.PROGRAMMES:
                     new_type, original_object = self._programme_episode(original_object)
                 elif object_type in (
-                    ContainerType.ITEM.value,
-                    ContainerType.SERIES.value,
+                    ContainerType.ITEM,
+                    ContainerType.SERIES,
                 ):
                     new_type = _podcast_or_series(
                         original_object, urn, parent_network

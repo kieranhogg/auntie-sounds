@@ -4,13 +4,14 @@ from enum import Enum
 
 from sounds.auth import AuthService
 from sounds.base import Base
-from sounds.constants import SignedInURLs, URLs
+from sounds.endpoints import URLs
 from sounds.exceptions import APIResponseError
-from sounds.models import Menu, MenuItem, RecommendedMenuItem
+from sounds.models import Menu, MenuItem, PlayableItem, RecommendedMenuItem, SoundsTypes
 from sounds.parser import Parser
 from sounds.requests import RequestManager
 
 logger = logging.getLogger(__name__)
+
 
 class MenuRecommendationOptions(Enum):
     EXCLUDE = "Exclude"
@@ -37,7 +38,7 @@ class PersonalService(Base):
         """Gets the main Sounds menu."""
 
         async def call():
-            return await self._get_json(url_template=SignedInURLs.EXPERIENCE_MENU)
+            return await self.requests.get_json_response(url=URLs.EXPERIENCE_MENU)
 
         json_resp = await self.requests.run(call)
         menu = self.parser.parse_menu(json_resp)
@@ -59,7 +60,7 @@ class PersonalService(Base):
         return menu
 
     async def get_podcasts_menu_item(self) -> MenuItem:
-        json = await self._get_json(URLs.PODCASTS)
+        json = await self.requests.get_json_response(URLs.PODCASTS)
         return MenuItem(
             id="podcasts",
             title="Podcasts",
@@ -70,18 +71,18 @@ class PersonalService(Base):
         return MenuItem(
             id="music",
             title="Music",
-            sub_items=self.parser
-            .parse_menu(await self._get_json(URLs.MUSIC))
-            .sub_items,
+            sub_items=self.parser.parse_menu(
+                await self.requests.get_json_response(URLs.MUSIC)
+            ).sub_items,
         )
 
     async def get_news_menu_item(self) -> MenuItem:
         return MenuItem(
             id="news",
             title="News",
-            sub_items=self.parser
-            .parse_menu(await self._get_json(URLs.NEWS))
-            .sub_items,
+            sub_items=self.parser.parse_menu(
+                await self.requests.get_json_response(URLs.NEWS)
+            ).sub_items,
         )
 
     async def get_explore_all(self):
@@ -95,24 +96,24 @@ class PersonalService(Base):
 
     async def get_latest(self):
         async def call():
-            return await self._get_json(url_template=SignedInURLs.LATEST)
+            return await self.requests.get_json_response(url=URLs.LATEST)
 
         return self.parser.parse_container(await self.requests.run(call))
 
     async def get_subscriptions(self):
         async def call():
-            return await self._get_json(url_template=SignedInURLs.SUBSCRIBED)
+            return await self.requests.get_json_response(url=URLs.SUBSCRIBED)
 
         return self.parser.parse_container(await self.requests.run(call))
 
     async def get_bookmarks(self):
         async def call():
-            return await self._get_json(url_template=SignedInURLs.BOOKMARKS)
+            return await self.requests.get_json_response(url=URLs.BOOKMARKS)
 
         return self.parser.parse_container(await self.requests.run(call))
 
-    async def continue_listening(self):
+    async def get_continue_listening(self) -> list[PlayableItem] | None:
         async def call():
-            return await self._get_json(url_template=SignedInURLs.CONTINUE)
+            return await self.requests.get_json_response(url=URLs.CONTINUE)
 
         return self.parser.parse_container(await self.requests.run(call))

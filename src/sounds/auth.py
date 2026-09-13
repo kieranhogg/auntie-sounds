@@ -7,20 +7,23 @@ highly-coupled to the URLs and HTML content of the pages requested.
 
 import logging
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from bs4 import BeautifulSoup, Tag
 
-from sounds import constants
-from sounds.base import Base
-from sounds.constants import VERBOSE_LOG_LEVEL, URLs
-from sounds.cookies import CookieStore
+from sounds import VERBOSE_LOG_LEVEL, endpoints
+from sounds.endpoints import URLs
 from sounds.exceptions import (
     LoginFailedError,
     MultipleObjectsFound,
     NotFoundError,
     UnauthorisedError,
 )
+from sounds.requests import build_url
 from sounds.utils import _get_data_dir
+
+if TYPE_CHECKING:
+    from sounds.client import SoundsClient
 
 logger = logging.getLogger(__name__)
 
@@ -55,7 +58,7 @@ def _get_form_action(html: str) -> str:
     return action
 
 
-class AuthService(Base):
+class AuthService:
     """Service to handle authentication with BBC Sounds."""
 
     ERROR_CLASS = "sb-form-message--error"
@@ -66,27 +69,22 @@ class AuthService(Base):
     PASSWORD_LENGTH_MSG = (
         "Sorry, that password is too short. It needs to be eight characters or more."
     )
-    PASSWORD_TOO_EASY_ERROR_MSG = "Sorry, that password isn't valid. Make sure it's hard to guess."
+    PASSWORD_TOO_EASY_ERROR_MSG = (
+        "Sorry, that password isn't valid. Make sure it's hard to guess."
+    )
     PASSWORD_NUMBER_SYMBOL_ERROR_MSG = "Sorry, that password isn't valid. Please include something that isn't a letter."
 
     def __init__(
         self,
-        cookie_store: CookieStore,
+        client: SoundsClient,
         on_login_success=None,
-        debug_login=False,
-        **kwargs,
     ):
-        super().__init__(cookie_store=cookie_store, **kwargs)
+        self._client = client
         self.user_info = None
-        self.debug_login = debug_login
         self._on_login_success = on_login_success
-        self.debug_login = debug_login
-        if kwargs.get("mock_session"):
-            self.mock_session = True
+        if self._client.mock_session:
             return
-
-        if self.debug_login:
-            # Can't move this to the above conditional as logger not initialised yet
+        if self._client.debug_login:
             logger.info("Saving login pages to file as requested")
 
     async def _build_headers(self, referer: str | None = None) -> dict:
@@ -127,7 +125,7 @@ class AuthService(Base):
         logger.debug("Getting initial login page")
 
         # Get the initial login page form target
-        request = await self._make_request(
+        request = await self._client.requests.make_request(
             method="GET",
             url=URLs.LOGIN_START.value,
             headers=await self._build_headers(),
@@ -148,7 +146,7 @@ class AuthService(Base):
                 logger.debug("Redirected to magic link signin page, removing")
                 location = location.replace("/identifier/signin?", "?")
 
-            request = await self._make_request(
+            request = await self._client.requests.make_request(
                 "GET",
                 url=location,
                 headers=await self._build_headers(),
@@ -182,7 +180,7 @@ class AuthService(Base):
         """Post username to get to the next login step"""
         logger.debug("Submitting username")
         data = {"username": username}
-        html_contents = await self._get_html(
+        html_contents = await self._client.requests.get_html_response(
             url=url,
             method="POST",
             data=data,
@@ -217,7 +215,7 @@ class AuthService(Base):
         logger.debug("Logging in...")
         headers = await self._build_headers(referer=referrer_url)
         data = {"username": username, "password": password}
-        resp = await self._make_request(
+        resp = await self._client.requests.make_request(
             method="POST",
             url=url,
             data=data,
@@ -244,7 +242,7 @@ class AuthService(Base):
             return True
 
     def _save_file_if_needed(self, html: str | bytes, filename: str):
-        if self.debug_login:
+        if self._client.debug_login:
             with open(Path(_get_data_dir(), filename), "w") as page:
                 html = BeautifulSoup(html, features="html.parser").prettify()
                 page.write(str(html))
@@ -252,8 +250,8 @@ class AuthService(Base):
     async def renew_session(self) -> bool:
         """Renew a session which has expired, but user is logged in."""
         try:
-            url = self._build_url(url_template=constants.SignedInURLs.RENEW_SESSION)
-            await self._make_request("GET", url)
+            url = build_url(url=endpoints.URLs.RENEW_SESSION)
+            await self._client.requests.make_request("GET", url)
             return True
         except UnauthorisedError:
             logger.error("Failed to renew session")

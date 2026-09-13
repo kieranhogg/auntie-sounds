@@ -29,7 +29,7 @@ pytestmark = pytest.mark.anyio
 class TestModelFactoryBasicTypes:
     """Basic factory usage."""
 
-    def test_network_node(self, logger):
+    def test_network_node(self):
         node = {
             "network_type": "master_brand",
             "id": "bbc_radio_one",
@@ -39,7 +39,7 @@ class TestModelFactoryBasicTypes:
         assert isinstance(result, Network)
         assert result.id == "bbc_radio_one"
 
-    def test_list_of_nodes_via_parse_node(self, logger):
+    def test_list_of_nodes_via_parse_node(self):
         nodes = [
             {
                 "type": "playable_item",
@@ -57,7 +57,7 @@ class TestModelFactoryBasicTypes:
         assert len(result) == 2
         assert all(isinstance(item, RadioShow) for item in result)
 
-    def test_segment_item(self, logger):
+    def test_segment_item(self):
         node = {
             "type": "segment_item",
             "id": "seg1",
@@ -71,7 +71,7 @@ class TestModelFactoryBasicTypes:
         assert isinstance(result, Segment)
         assert result.id == "seg1"
 
-    def test_collection_urn(self, logger):
+    def test_collection_urn(self):
         node = {
             "type": "playable_item",
             "id": "coll1",
@@ -80,7 +80,7 @@ class TestModelFactoryBasicTypes:
         result = Parser().parse_node(node)
         assert isinstance(result, Collection)
 
-    def test_category_urn(self, logger):
+    def test_category_urn(self):
         node = {
             "type": "playable_item",
             "id": "cat1",
@@ -95,7 +95,7 @@ class TestEpisodeVsPodcastClassification:
     container, or when the container isn't a bbc_sounds_podcasts brand -
     otherwise it's a PodcastEpisode."""
 
-    def test_episode_with_no_container_is_radio_show(self, logger):
+    def test_episode_with_no_container_is_radio_show(self):
         node = {
             "type": "playable_item",
             "id": "m001",
@@ -104,7 +104,7 @@ class TestEpisodeVsPodcastClassification:
         result = Parser().parse_node(node)
         assert isinstance(result, RadioShow)
 
-    def test_episode_in_podcast_brand_container_is_podcast_episode(self, logger):
+    def test_episode_in_podcast_brand_container_is_podcast_episode(self):
         node = {
             "type": "playable_item",
             "id": "m002",
@@ -115,7 +115,7 @@ class TestEpisodeVsPodcastClassification:
         result = Parser().parse_node(node)
         assert isinstance(result, PodcastEpisode)
 
-    def test_episode_in_non_podcast_brand_container_is_radio_show(self, logger):
+    def test_episode_in_non_podcast_brand_container_is_radio_show(self):
         node = {
             "type": "playable_item",
             "id": "m003",
@@ -126,7 +126,7 @@ class TestEpisodeVsPodcastClassification:
         result = Parser().parse_node(node)
         assert isinstance(result, RadioShow)
 
-    def test_bbc_news_podcast_is_podcast(self, logger):
+    def test_bbc_news_podcast_is_podcast(self):
         """Test that a podcast associated with BBC News, and not a station is a Podcast not a RadioSeries."""
         with open("tests/fixtures/api/podcast_news.json") as node_file:
             node = json.loads(node_file.read())
@@ -135,7 +135,7 @@ class TestEpisodeVsPodcastClassification:
 
 
 class TestClipVsPodcastClassification:
-    def test_clip_with_no_brand_container_is_radio_clip(self, logger):
+    def test_clip_with_no_brand_container_is_radio_clip(self):
         node = {
             "type": "playable_item",
             "id": "m010",
@@ -144,7 +144,7 @@ class TestClipVsPodcastClassification:
         result = Parser().parse_node(node)
         assert isinstance(result, RadioClip)
 
-    def test_clip_in_brand_container_is_podcast_episode(self, logger):
+    def test_clip_in_brand_container_is_podcast_episode(self):
         node = {
             "type": "playable_item",
             "id": "m011",
@@ -159,7 +159,7 @@ class TestStationClassification:
     """LiveStation vs. plain Station depends entirely on whether
     'synopses' is present."""
 
-    def test_station_with_synopses_is_live_station(self, logger):
+    def test_station_with_synopses_is_live_station(self):
         node = {
             "type": "playable_item",
             "id": "radio1",
@@ -169,7 +169,7 @@ class TestStationClassification:
         result = Parser().parse_node(node)
         assert type(result) is LiveStation
 
-    def test_station_without_synopses_is_plain_station(self, logger):
+    def test_station_without_synopses_is_plain_station(self):
         node = {
             "type": "playable_item",
             "id": "radio1",
@@ -178,7 +178,7 @@ class TestStationClassification:
         result = Parser().parse_node(node)
         assert type(result) is Station
 
-    def test_network_with_synopses_is_livestation(self, logger):
+    def test_network_with_synopses_is_livestation(self):
         with open("tests/fixtures/api/STATION_PLAYABLE_DETAILS.json") as f:
             json_data = json.loads(f.read())
             result = Parser().parse_node(json_data)
@@ -186,7 +186,7 @@ class TestStationClassification:
 
 
 class TestPlaylists:
-    def test_playlist_is_converted_correctly(self, logger):
+    def test_playlist_is_converted_correctly(self):
         node = {
             "type": "container_item",
             "uris": [
@@ -216,7 +216,7 @@ class TestPlaylists:
 
 
 class TestProgrammes:
-    def test_programme_podcast_episode(self, logger):
+    def test_programme_podcast_episode(self):
         """Test the parser for programme endpoint data converts to podcast episode correctly"""
         with open("tests/fixtures/api/PROGRAMME_FROM_PID.json") as node_file:
             json_data = json.loads(node_file.read())
@@ -225,7 +225,7 @@ class TestProgrammes:
             assert new_type is PodcastEpisode
             assert original_object == new_object
 
-    def test_programme_radio_episode(self, logger):
+    def test_programme_radio_episode(self):
         """Test the parser for programme endpoint data converts to radio show correctly"""
         with open("tests/fixtures/api/PROGRAMME_FROM_PID.json") as node_file:
             json_data = json.loads(node_file.read())

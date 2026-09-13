@@ -4,27 +4,37 @@ from datetime import tzinfo
 
 import aiohttp
 
-from sounds import constants
+from sounds import endpoints
 from sounds.base import Base
-from sounds.constants import URLs
+from sounds.endpoints import URLs
 from sounds.exceptions import InvalidFormatError
 from sounds.models import LiveProgramme, Schedule, Segment
 from sounds.parser import Parser
+from sounds.requests import RequestManager
 
 logger = logging.getLogger(__name__)
+
 
 class ScheduleService(Base):
     def __init__(
         self,
+        requests: RequestManager,
         session: aiohttp.ClientSession,
         timezone: tzinfo | None = None,
         timeout: aiohttp.ClientTimeout | None = None,
         mock_session: bool = False,
         **kwargs,
     ):
-        super().__init__(session=session, timezone=timezone, timeout=timeout, mock_session=mock_session, **kwargs)
+        super().__init__(
+            session=session,
+            timezone=timezone,
+            timeout=timeout,
+            mock_session=mock_session,
+            **kwargs,
+        )
+        self.requests = requests
         self.parser = Parser()
-        
+
     async def get_schedule(
         self, station_id: str, date: str | None = None
     ) -> Schedule | None:
@@ -37,14 +47,14 @@ class ScheduleService(Base):
                 raise InvalidFormatError(
                     "Invalid date specified, must be in the format YYYY-MM-DD"
                 )
-        json_resp = await self._get_json(
-            url_template=url_template, url_args={"station_id": station_id, "date": date}
+        json_resp = await self.requests.get_json_response(
+            url=url_template, url_args={"station_id": station_id, "date": date}
         )
         schedule = self.parser.parse_schedule(json_resp)
         return schedule if isinstance(schedule, Schedule) else None
 
     async def current_programme(self, station_id: str) -> LiveProgramme | None:
-        json_resp = await self._get_json(url_template=constants.URLs.STATIONS)
+        json_resp = await self.requests.get_json_response(url=endpoints.URLs.STATIONS)
         listing = next(
             (
                 self.parser.parse_node(station)
@@ -54,13 +64,13 @@ class ScheduleService(Base):
             None,
         )
         # if listing:
-            # listing = self.parser.parse_node(listing)
+        # listing = self.parser.parse_node(listing)
         return listing
 
     async def recently_played_items(self, station_id: str, results=10) -> list[Segment]:
         """Gets the recent playing items on this station"""
-        json_resp = await self._get_json(
-            url_template=URLs.NOW_PLAYING,
+        json_resp = await self.requests.get_json_response(
+            url=URLs.NOW_PLAYING,
             url_args={"station_id": station_id, "limit": results},
         )
         segments = self.parser.parse_container(json_resp)

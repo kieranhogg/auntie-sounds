@@ -10,20 +10,20 @@ from sounds.parser import Parser
 class TestParser:
     """Tests for parser functions"""
 
-    def test_parse_menu(self, logger, sample_menu_data):
+    def test_parse_menu(self, sample_menu_data):
         """Test parsing menu data"""
         result = Parser().parse_menu(sample_menu_data)
         assert isinstance(result, Menu)
         assert result.sub_items is not None
         assert len(result.sub_items) == 10
 
-    def test_parse_podcast_episode(self, logger, sample_podcast_episode_data):
+    def test_parse_podcast_episode(self, sample_podcast_episode_data):
         """Test parsing podcast episode data"""
         result = Parser().parse_node(sample_podcast_episode_data)
         assert isinstance(result, PodcastEpisode)
         assert isinstance(result.container, Podcast)
 
-    def test_parse_search_results(self, logger):
+    def test_parse_search_results(self):
         """Test parsing search results"""
         data = {
             "data": [
@@ -40,7 +40,7 @@ class TestParser:
 
 
 class TestParserNestedObjects:
-    def test_ignored_nested_objects(self, logger: Logger):
+    def test_ignored_nested_objects(self: Logger):
         """Test that that embedded objects with keys in the ignore_objects list are removed."""
         parser = Parser()
         with open("tests/fixtures/api/PROGRAMME_FROM_PID_PLAYABLE.json") as json_file:
@@ -52,7 +52,7 @@ class TestParserNestedObjects:
                 with pytest.raises(AttributeError):
                     getattr(result, key)
 
-    def test_nested_objects(self, logger: Logger):
+    def test_nested_objects(self: Logger):
         """Test that that embedded objects with keys in the nested_objects list are parsed as objects too.
 
         Currently:
