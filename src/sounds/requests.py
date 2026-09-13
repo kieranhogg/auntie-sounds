@@ -107,6 +107,10 @@ class RequestManager:
         kwargs.setdefault("ssl", True)
         kwargs.setdefault("allow_redirects", True)
         kwargs.setdefault("headers", await _build_headers())
+
+        # If we have a endpoint, we can check if it's an authenticated one
+        if isinstance(url, URLs):
+            login_required = url.login_required
         url = build_url(url)
         logger.debug(f"Making HTTP {method} request to {url}")
         try:
@@ -119,6 +123,9 @@ class RequestManager:
             else:
                 resp = await self._client._session.request(method, url, **kwargs)
             logger.debug(f"HTTP {method} {url} - Status {resp.status}")
+            if resp.status == 401:
+                raise UnauthorisedError(resp.reason)
+            resp.raise_for_status()
             return resp
         except aiohttp.ClientConnectorDNSError as e:
             logger.error(f"HTTP request failed: {method} {url} - {e}")
@@ -177,9 +184,8 @@ class RequestManager:
     ) -> str:
         """Gets raw text/HTML response."""
         built_url = build_url(url=url, url_args=url_args)
-        resp = await self.make_request(method, built_url, **kwargs)
         try:
-            resp.raise_for_status()
+            resp = await self.make_request(method, built_url, **kwargs)
         except aiohttp.ClientResponseError as e:
             if e.status == 401:
                 raise UnauthorisedError(e) from e

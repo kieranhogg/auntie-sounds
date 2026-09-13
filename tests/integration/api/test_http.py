@@ -1,8 +1,13 @@
+import logging
+
 import pytest
 
 from sounds.client import SoundsClient
 from sounds.endpoints import URLs
+from sounds.exceptions import UnauthorisedError
 from sounds.requests import build_url
+
+logger = logging.getLogger(__name__)
 
 
 @pytest.fixture
@@ -19,3 +24,12 @@ class TestHTTP:
             ),
         )
         assert resp.status == 200
+
+    async def test_make_request_authenticated_endpoint_without_credentials(
+        self, client
+    ):
+        with pytest.raises(UnauthorisedError):
+            await client.requests.make_request(
+                method="GET",
+                url=build_url(URLs.EXPERIENCE_MENU),
+            )
