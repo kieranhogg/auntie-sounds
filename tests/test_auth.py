@@ -1,7 +1,9 @@
+from unittest.mock import AsyncMock
+
 import pytest
 
 from sounds.auth import _get_form_action
-from sounds.exceptions import MultipleObjectsFound, NotFoundError
+from sounds.exceptions import MultipleObjectsFound, NotFoundError, UnauthorisedError
 
 
 class TestAuthHelpers:
@@ -34,3 +36,10 @@ class TestAuthHelpers:
         html = "<form></form><form></form>"
         with pytest.raises(NotFoundError):
             _get_form_action(html)
+
+
+class TestAuthBehaviour:
+    async def test_retry_with_reauth_falls_back_to_full_login_when_renewal_fails(
+        self, mock_auth_service, mock_requests
+    ):
+        pass

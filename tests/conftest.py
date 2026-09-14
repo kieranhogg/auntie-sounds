@@ -59,14 +59,14 @@ def _mock_schedule(mock_session, mock_requests):
 
 
 @pytest.fixture
-def mock_auth_service(sounds_client):
-    return AuthService(sounds_client)
+def mock_auth_service(mock_requests, mock_cookie_store):
+    return AuthService(requests=mock_requests, cookie_store=mock_cookie_store)
 
 
 @pytest.fixture(name="mock_requests")
-def _mock_requests(sounds_client):
+def _mock_requests(mock_session):
     return RequestManager(
-        sounds_client,
+        session=mock_session,
         username="user",
         password="password",
     )

@@ -34,9 +34,9 @@ async def run(self, call):
 
 
 @pytest.fixture
-def request_manager(mock_session, sounds_client):
+def request_manager(mock_session):
     return RequestManager(
-        sounds_client,
+        session=mock_session,
         username=None,
         password=None,
     )
