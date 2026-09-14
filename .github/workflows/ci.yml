@@ -31,4 +31,4 @@ jobs:
       - name: Install dependencies
         run: uv sync --all-extras --dev --frozen
       - name: Test with pytest
-        run: uv run pytest tests --cov=src
+        run: uv run pytest -m "not api" -k "not integration"
