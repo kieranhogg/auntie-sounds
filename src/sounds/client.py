@@ -83,7 +83,6 @@ class SoundsClient:
         self.current_station: Station | None = None
         self.current_stream: Stream | None = None
         self.current_segment: Segment | None = None
-        self.timeout = aiohttp.ClientTimeout(total=10)
         self.mock_session = mock_session
         self.debug_login = debug_login
         if timezone:
@@ -120,11 +119,20 @@ class SoundsClient:
             self.cookie_store.clear()
             self.cookie_store.save()
 
-        self.requests = RequestManager(self)
+        self.requests = RequestManager(
+            session=self._session,
+            mock_session=self.mock_session,
+        )
         self.auth = AuthService(
-            self,
+            requests=self.requests,
+            cookie_store=self.cookie_store,
+            username=self.username,
+            password=self.password,
+            mock_session=self.mock_session,
+            debug_login=self.debug_login,
             on_login_success=self.save_cookies,
         )
+        self.requests.set_reauth_handler(self.auth.retry_with_reauth)
         self.schedules = ScheduleService(
             requests=self.requests,
             timezone=self.timezone,
