@@ -1,6 +1,6 @@
 import logging
 from dataclasses import fields
-from enum import StrEnum, auto
+from enum import StrEnum, auto, unique
 from typing import ClassVar
 
 from sounds.models import (
@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 def _podcast_or_series(
-        original_object: dict,
+    original_object: dict,
     urn: str,
     parent_network: dict | Network | None = None,
 ) -> type:
@@ -73,9 +73,10 @@ def _live_station_or_station(original_object) -> type:
     return LiveStation if original_object.get("synopses") is not None else Station
 
 
-
+@unique
 class BaseSoundsTypes(StrEnum):
     """Types as defined in the JSON schema"""
+
     PROGRAMMES = "Programmes"
     EXPERIENCE_RESPONSE = "ExperienceResponse"
     ERROR = "ErrorResponse"
@@ -84,6 +85,7 @@ class BaseSoundsTypes(StrEnum):
     PLAYABLE_ITEMS = "PlayableItems"
 
 
+@unique
 class PlayableSoundsTypes(StrEnum):
     """Types as defined in the JSON schema"""
 
@@ -94,6 +96,7 @@ class PlayableSoundsTypes(StrEnum):
     BROADCASTS = "BroadcastsResponse"
 
 
+@unique
 class ItemURN(StrEnum):
     EPISODE = "urn:bbc:radio:episode"
     CLIP = "urn:bbc:radio:clip"
@@ -107,6 +110,7 @@ class ItemURN(StrEnum):
     PLAYLIST = "urn:bbc:radio:curation"
 
 
+@unique
 class ItemType(StrEnum):
     PLAYABLE_ITEM = auto()
     DISPLAY_ITEM = auto()
@@ -119,22 +123,26 @@ class ItemType(StrEnum):
     SEGMENT_ITEM = auto()
 
 
+@unique
 class ContainerType(StrEnum):
     BRAND = "brand"
     SERIES = "series"
     ITEM = "container_item"
 
 
+@unique
 class NetworkType(StrEnum):
     MASTER = "master_brand"
 
 
+@unique
 class IDType(StrEnum):
     SCHEDULE_ITEMS = "schedule_items"
     SINGLE_ITEM_PROMO = "single_item_promo"
     STATION_SEARCH_CONTAINER = "live_search"
     SHOW_SEARCH_CONTAINER = "container_search"
     EPISODE_SEARCH_CONTAINER = "playable_search"
+
 
 class ModelFactory:
     PLAYABLE_ITEM_URN_MAP: ClassVar[dict[str, type]] = {
@@ -268,9 +276,7 @@ class ModelFactory:
                     ContainerType.ITEM,
                     ContainerType.SERIES,
                 ):
-                    new_type = _podcast_or_series(
-                        original_object, urn, parent_network
-                    )
+                    new_type = _podcast_or_series(original_object, urn, parent_network)
                 else:
                     logger.warning(f"Unknown container type: {object_type}")
                     logger.debug(original_object)
@@ -285,9 +291,7 @@ class ModelFactory:
 
             if not new_type:
                 logger.error(f"Unexpected original_object type: {object_type}")
-                logger.debug(
-                    f"Object:\n{original_object}\n\nSchema type:{schema_type}"
-                )
+                logger.debug(f"Object:\n{original_object}\n\nSchema type:{schema_type}")
                 return None
 
         try:
