@@ -1,12 +1,14 @@
+import asyncio.constants
 import itertools
 import logging
 from datetime import datetime as dt
 from datetime import timedelta
+from itertools import chain
 from typing import Literal
 
 from sounds import VERBOSE_LOG_LEVEL
 from sounds.endpoints import URLs
-from sounds.exceptions import NotFoundError
+from sounds.exceptions import APIResponseError, NotFoundError
 from sounds.models import LiveStation, MenuItem, Network
 from sounds.parser import Parser
 from sounds.playback import PlaybackService
@@ -57,25 +59,18 @@ class StationService:
         logger.log(VERBOSE_LOG_LEVEL, "Getting station list...")
         logger.log(VERBOSE_LOG_LEVEL, json_resp)
 
-        # Append a key to assign if they are local stations or not
-        for station in json_resp["data"][0]["data"]:
-            station["local"] = False
-
-        for station in json_resp["data"][1]["data"]:
-            station["local"] = True
+        try:
+            national_stations = json_resp["data"][0]["data"]
+            local_stations = json_resp["data"][1]["data"]
+        except KeyError, IndexError:
+            raise APIResponseError("Station list response not as expected.")
 
         if include_local:
-            # Flatten the national and local stations sublists
-            stations = list(
-                itertools.chain(
-                    json_resp["data"][0]["data"], json_resp["data"][1]["data"]
-                )
-            )
-
+            requested_stations = list(chain([national_stations, local_stations]))
         else:
-            # Just get the national data list
-            stations = json_resp["data"][0]["data"]
-        stations_list = self.parser.parse_node(stations)
+            requested_stations = national_stations
+
+        stations_list = self.parser.parse_node(requested_stations)
 
         if isinstance(stations_list, list):
             all_stations: list[LiveStation] = [
@@ -83,14 +78,21 @@ class StationService:
             ]
 
             if include_streams and isinstance(stations_list, list):
-                for station in all_stations:
-                    if not station.stream:
-                        station.stream = await self.playback.get_live_stream(station.id)
+                # Parallelise the requests to improve speed, one to watch for API rates in future
+                needs_stream = [s for s in all_stations if not s.stream]
+                streams = await asyncio.gather(
+                    *(self.playback.get_live_stream(s.id) for s in needs_stream)
+                )
+                for station, stream in zip(needs_stream, streams):
+                    station.stream = stream
 
             if include_schedules and isinstance(stations_list, list):
-                for station in all_stations:
-                    if not station.schedule:
-                        station.schedule = await self.schedules.get_schedule(station.id)
+                needs_schedule = [s for s in all_stations if not s.schedule]
+                schedules = await asyncio.gather(
+                    *(self.schedules.get_schedule(s.id) for s in needs_schedule)
+                )
+                for station, schedule in zip(needs_schedule, schedules):
+                    station.schedule = schedule
             return all_stations
         return []
 
