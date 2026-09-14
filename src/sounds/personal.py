@@ -5,7 +5,7 @@ from enum import Enum
 from sounds.auth import AuthService
 from sounds.endpoints import URLs
 from sounds.exceptions import APIResponseError
-from sounds.models import Menu, MenuItem, PlayableItem, RecommendedMenuItem, SoundsTypes
+from sounds.models import Menu, MenuItem, PlayableItem, RecommendedMenuItem
 from sounds.parser import Parser
 from sounds.requests import RequestManager
 

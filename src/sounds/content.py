@@ -2,8 +2,6 @@ import logging
 from functools import partial
 from typing import TYPE_CHECKING, Literal, cast
 
-import aiohttp
-
 from sounds import endpoints
 from sounds.endpoints import URLs
 from sounds.exceptions import APIResponseError, InvalidFormatError, NotFoundError

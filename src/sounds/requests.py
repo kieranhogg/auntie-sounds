@@ -2,16 +2,13 @@ import json
 import logging
 import os
 import re
-import unittest
+from collections.abc import Callable
 from functools import partial
-from typing import TYPE_CHECKING, Awaitable, Callable, Literal
-from unittest.mock import Mock
+from typing import TYPE_CHECKING, Literal
 
 import aiofiles
 import aiohttp
-from mypy.build import build
 
-from sounds.cookies import CookieStore
 from sounds.endpoints import URLs
 from sounds.exceptions import (
     APIResponseError,

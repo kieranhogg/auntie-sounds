@@ -7,7 +7,6 @@ highly-coupled to the URLs and HTML content of the pages requested.
 
 import logging
 from pathlib import Path
-from typing import TYPE_CHECKING
 
 from bs4 import BeautifulSoup, Tag
 
@@ -22,9 +21,6 @@ from sounds.exceptions import (
 )
 from sounds.requests import RequestManager, build_headers, build_url
 from sounds.utils import _get_data_dir
-
-if TYPE_CHECKING:
-    from sounds.client import SoundsClient
 
 logger = logging.getLogger(__name__)
 

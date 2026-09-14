@@ -1,7 +1,8 @@
+from collections.abc import Sequence
 from dataclasses import asdict, dataclass, field
 from datetime import datetime as dt
 from pprint import pformat
-from typing import Any, Sequence
+from typing import Any
 from warnings import deprecated
 from zoneinfo import ZoneInfo
 

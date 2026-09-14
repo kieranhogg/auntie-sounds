@@ -2,8 +2,6 @@ import logging
 from datetime import datetime as dt
 from datetime import tzinfo
 
-import aiohttp
-
 from sounds import endpoints
 from sounds.endpoints import URLs
 from sounds.exceptions import APIResponseError, InvalidFormatError

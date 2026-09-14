@@ -1,5 +1,4 @@
 import asyncio.constants
-import itertools
 import logging
 from datetime import datetime as dt
 from datetime import timedelta
