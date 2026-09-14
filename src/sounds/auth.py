@@ -12,6 +12,7 @@ from typing import TYPE_CHECKING
 from bs4 import BeautifulSoup, Tag
 
 from sounds import VERBOSE_LOG_LEVEL, endpoints
+from sounds.cookies import CookieStore
 from sounds.endpoints import URLs
 from sounds.exceptions import (
     LoginFailedError,
@@ -19,7 +20,7 @@ from sounds.exceptions import (
     NotFoundError,
     UnauthorisedError,
 )
-from sounds.requests import build_url, _build_headers
+from sounds.requests import RequestManager, build_headers, build_url
 from sounds.utils import _get_data_dir
 
 if TYPE_CHECKING:
@@ -76,15 +77,26 @@ class AuthService:
 
     def __init__(
         self,
-        client: SoundsClient,
+        requests: RequestManager,
+        cookie_store: CookieStore,
+        username: str | None = None,
+        password: str | None = None,
+        mock_session: bool = False,
+        debug_login: bool = False,
         on_login_success=None,
     ):
-        self._client = client
         self.user_info = None
+        self.requests = requests
+        self.cookie_store = cookie_store
+        self.username = username
+        self.password = password
+        self.mock_session = mock_session
+        self.debug_login = debug_login
         self._on_login_success = on_login_success
-        if self._client.mock_session:
+
+        if self.mock_session:
             return
-        if self._client.debug_login:
+        if self.debug_login:
             logger.info("Saving login pages to file as requested")
 
     async def login(self, username: str, password: str) -> bool:
@@ -106,6 +118,35 @@ class AuthService:
         )
         return ok
 
+    async def retry_with_reauth(self, call):
+        """Runs `call`, transparently renewing/re-logging-in on a 401.
+
+        This can be used to handle authentication failures encountered in services.
+        E.g. RequestManager uses this as its login_required retry hook."""
+        try:
+            return await call()
+        except UnauthorisedError:
+            if not self.username or not self.password:
+                raise UnauthorisedError("No username and/or password provided.")
+            if self.cookie_store.has_session_cookie:
+                try:
+                    await self.renew_session()
+                    return await call()
+                except UnauthorisedError:
+                    logger.error("Session renewal failed, trying full login...")
+            await self.login(username=self.username, password=self.password)
+            return await call()
+
+    async def renew_session(self) -> bool:
+        """Renew a session which has expired, but user is logged in."""
+        try:
+            url = build_url(url=endpoints.URLs.RENEW_SESSION)
+            await self.requests.make_request("GET", url)
+            return True
+        except UnauthorisedError:
+            logger.error("Failed to renew session")
+            return False
+
     async def _get_login_form(self) -> str:
         """
         :raises LoginFailedError: if the login page, or form, cannot be located
@@ -113,10 +154,10 @@ class AuthService:
         logger.debug("Getting initial login page")
 
         # Get the initial login page form target
-        request = await self._client.requests.make_request(
+        request = await self.requests.make_request(
             method="GET",
             url=URLs.LOGIN_START.value,
-            headers=await _build_headers(),
+            headers=build_headers(),
             allow_redirects=False,
         )
 
@@ -134,10 +175,10 @@ class AuthService:
                 logger.debug("Redirected to magic link signin page, removing")
                 location = location.replace("/identifier/signin?", "?")
 
-            request = await self._client.requests.make_request(
+            request = await self.requests.make_request(
                 "GET",
                 url=location,
-                headers=await _build_headers(),
+                headers=build_headers(),
                 allow_redirects=False,
             )
 
@@ -168,11 +209,11 @@ class AuthService:
         """Post username to get to the next login step"""
         logger.debug("Submitting username")
         data = {"username": username}
-        html_contents = await self._client.requests.get_html_response(
+        html_contents = await self.requests.get_html_response(
             url=url,
             method="POST",
             data=data,
-            headers=await _build_headers(referer=URLs.LOGIN_START.value),
+            headers=build_headers(referer=URLs.LOGIN_START.value),
         )
         soup = BeautifulSoup(html_contents, "html.parser")
         error_el = soup.select_one(f".{self.ERROR_CLASS}")
@@ -201,9 +242,9 @@ class AuthService:
         :raises LoginFailedError: if we find a recognised error message on the page
         """
         logger.debug("Logging in...")
-        headers = await _build_headers(referer=referrer_url)
+        headers = build_headers(referer=referrer_url)
         data = {"username": username, "password": password}
-        resp = await self._client.requests.make_request(
+        resp = await self.requests.make_request(
             method="POST",
             url=url,
             data=data,
@@ -230,17 +271,7 @@ class AuthService:
             return True
 
     def _save_file_if_needed(self, html: str | bytes, filename: str):
-        if self._client.debug_login:
+        if self.debug_login:
             with open(Path(_get_data_dir(), filename), "w") as page:
                 html = BeautifulSoup(html, features="html.parser").prettify()
                 page.write(str(html))
-
-    async def renew_session(self) -> bool:
-        """Renew a session which has expired, but user is logged in."""
-        try:
-            url = build_url(url=endpoints.URLs.RENEW_SESSION)
-            await self._client.requests.make_request("GET", url)
-            return True
-        except UnauthorisedError:
-            logger.error("Failed to renew session")
-            return False
