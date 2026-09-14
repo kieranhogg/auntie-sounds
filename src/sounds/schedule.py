@@ -6,7 +6,7 @@ import aiohttp
 
 from sounds import endpoints
 from sounds.endpoints import URLs
-from sounds.exceptions import InvalidFormatError
+from sounds.exceptions import APIResponseError, InvalidFormatError
 from sounds.models import LiveProgramme, Schedule, Segment
 from sounds.parser import Parser
 from sounds.requests import RequestManager
@@ -40,17 +40,20 @@ class ScheduleService:
 
     async def current_programme(self, station_id: str) -> LiveProgramme | None:
         json_resp = await self.requests.get_json_response(url=endpoints.URLs.STATIONS)
+        try:
+            stations_data = json_resp["data"][0]["data"]
+        except IndexError, KeyError:
+            raise APIResponseError("Station listing data not in expected format.")
+
         listing = next(
             (
                 self.parser.parse_node(station)
-                for station in json_resp["data"][0]["data"]
+                for station in stations_data
                 if station.get("id") == station_id
             ),
             None,
         )
-        # if listing:
-        # listing = self.parser.parse_node(listing)
-        return listing
+        return listing if type(listing) is LiveProgramme else None
 
     async def recently_played_items(self, station_id: str, results=10) -> list[Segment]:
         """Gets the recent playing items on this station"""
@@ -66,9 +69,10 @@ class ScheduleService:
     async def currently_playing_song(self, station_id) -> Segment | None:
         """Gets the currently playing song, if one is playing."""
         recently_played = await self.recently_played_items(station_id)
-        try:
-            if recently_played[0].offset["now_playing"]:
-                return recently_played[0]
-        except IndexError:
-            pass
+        if recently_played:
+            try:
+                if recently_played[0].offset["now_playing"]:
+                    return recently_played[0]
+            except IndexError, KeyError:
+                pass
         return None
