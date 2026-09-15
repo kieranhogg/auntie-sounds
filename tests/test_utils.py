@@ -1,7 +1,7 @@
 import pytest
 from pytest import MarkDecorator
 
-from sounds.utils import image_from_recipe, network_logo, ImageType
+from sounds.utils import ImageType, image_from_recipe, network_logo
 
 pytestmark: MarkDecorator = pytest.mark.anyio
 

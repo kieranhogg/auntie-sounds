@@ -2,8 +2,6 @@ import asyncio
 import logging
 from enum import Enum
 
-from mypy.plugins.proper_plugin import is_improper_type
-
 from sounds.auth import AuthService
 from sounds.endpoints import URLs
 from sounds.exceptions import APIResponseError

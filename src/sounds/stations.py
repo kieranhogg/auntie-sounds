@@ -1,7 +1,7 @@
 import asyncio.constants
 import logging
 from datetime import datetime as dt
-from datetime import timedelta, tzinfo
+from datetime import timedelta
 from itertools import chain
 from typing import Literal
 

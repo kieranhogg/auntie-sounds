@@ -19,7 +19,7 @@ tail = ("\n## [" + rest[1]) if len(rest) > 1 else ""
 if not body.strip():
     sys.exit("Unreleased section is empty — nothing to release")
 
-today = datetime.date.today().isoformat()
+today = datetime.datetime.now(tz=datetime.UTC).date().isoformat()
 new_text = f"{before}{marker}\n\n## [{version}] - {today}\n{body}\n{tail}"
 path.write_text(new_text)
 pathlib.Path("release_notes.md").write_text(body + "\n")

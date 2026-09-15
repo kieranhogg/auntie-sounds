@@ -4,7 +4,6 @@ from pathlib import Path
 from typing import cast
 
 import aiohttp
-from pytest import File
 
 logger = logging.getLogger(__name__)
 

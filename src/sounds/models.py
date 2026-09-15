@@ -2,33 +2,32 @@ from collections.abc import Sequence
 from dataclasses import asdict, dataclass, field
 from datetime import datetime as dt
 from pprint import pformat
-from typing import TYPE_CHECKING, Any, Protocol, Self, cast
+from typing import Any, Self
 from warnings import deprecated
 from zoneinfo import ZoneInfo
 
 import pytz
 
-from sounds import models
 from sounds.utils import image_from_recipe, network_logo
 
 type SoundsTypes = (
-    models.Category
-    | models.CategoryItemContainer
-    | models.Container
-    | models.Collection
-    | models.LiveStation
-    | models.MenuItem
-    | models.Podcast
-    | models.PodcastEpisode
-    | models.RadioClip
-    | models.RadioSeries
-    | models.RadioShow
-    | models.RecommendedMenuItem
-    | models.Segment
-    | models.Schedule
-    | models.ScheduleItem
-    | models.Station
-    | models.StationSearchResult
+    Category
+    | CategoryItemContainer
+    | Container
+    | Collection
+    | LiveStation
+    | MenuItem
+    | Podcast
+    | PodcastEpisode
+    | RadioClip
+    | RadioSeries
+    | RadioShow
+    | RecommendedMenuItem
+    | Segment
+    | Schedule
+    | ScheduleItem
+    | Station
+    | StationSearchResult
 )
 
 

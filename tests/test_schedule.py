@@ -1,10 +1,9 @@
-from unittest.mock import AsyncMock, Mock
+from unittest.mock import Mock
 
 import pytest
 
 from sounds.client import SoundsClient
 from sounds.exceptions import InvalidFormatError
-from sounds.requests import RequestManager
 from sounds.schedule import ScheduleService
 
 pytestmark = pytest.mark.anyio

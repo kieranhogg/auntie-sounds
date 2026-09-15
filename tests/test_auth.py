@@ -1,9 +1,8 @@
-from unittest.mock import AsyncMock
 
 import pytest
 
 from sounds.auth import _get_form_action
-from sounds.exceptions import MultipleObjectsFound, NotFoundError, UnauthorisedError
+from sounds.exceptions import MultipleObjectsFound, NotFoundError
 
 
 class TestAuthHelpers:

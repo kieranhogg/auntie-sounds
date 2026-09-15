@@ -31,7 +31,7 @@ class TestRequestManager:
     """Tests for RequestManager.run()'s auth-retry logic."""
 
     async def test_run_succeeds_first_try(self):
-        manager, auth = _make_manager(has_session_cookie=True)
+        manager, _ = _make_manager(has_session_cookie=True)
         call = AsyncMock(return_value="ok")
 
         result = await manager.run(call)
@@ -64,7 +64,7 @@ class TestRequestManager:
         manager.reauth_handler.assert_awaited_once()
 
     async def test_run_raises_when_no_credentials_available(self):
-        manager, auth = _make_manager(
+        manager, _ = _make_manager(
             has_session_cookie=False, username=None, password=None
         )
         call = AsyncMock(side_effect=UnauthorisedError("expired"))
@@ -74,7 +74,7 @@ class TestRequestManager:
 
     async def test_run_raises_after_login(self):
         """If the call still 401s even after a full re-login, that should be raised."""
-        manager, auth = _make_manager(has_session_cookie=False)
+        manager, _ = _make_manager(has_session_cookie=False)
         call = AsyncMock(
             side_effect=[
                 UnauthorisedError("expired"),

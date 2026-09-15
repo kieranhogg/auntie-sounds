@@ -5,8 +5,8 @@ import aiohttp
 import pytest
 from yarl import URL
 
+from sounds.cookies import COOKIE_ID, CookieStore
 from sounds.endpoints import URLs
-from sounds.cookies import CookieStore, COOKIE_ID
 
 pytestmark = pytest.mark.anyio
 
