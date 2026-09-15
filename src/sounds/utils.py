@@ -16,6 +16,7 @@ class ImageType(StrEnum):
     BLOCKS_COLOUR_BLACK = auto()
     BLOCKS_COLOUR_WHITE = auto()
 
+
 def network_logo(
     logo_recipe: str,
     img_type: ImageType = ImageType.COLOUR,
@@ -73,10 +74,12 @@ async def image_from_spotify(url: str) -> str | None:
             return json_resp.get("thumbnail_url")
     return None
 
+
 def _get_data_dir() -> Path:
-    dir = AppDirs(appname="auntie-sounds", version="1").user_data_dir
-    Path(dir).mkdir(parents=True, exist_ok=True)
+    dir = Path(AppDirs(appname="auntie-sounds", version="1").user_data_dir)
+    dir.mkdir(parents=True, exist_ok=True)
     return dir
+
 
 def _date_with_ordinal(date_obj: datetime, format_string: str = "%A %-d$ %B") -> str:
     date_formatted = date_obj.strftime(format_string)

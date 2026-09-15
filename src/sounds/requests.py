@@ -34,8 +34,9 @@ def build_url(
 ) -> str:
     if isinstance(url, URLs):
         url = url.value
+    url_str: str = url.value if isinstance(url, URLs) else url
     pattern = re.compile(r".*(\{.*}).*")
-    parameters_required = re.findall(pattern, url)
+    parameters_required = re.findall(pattern, url_str)
     for keyword in parameters_required:
         keyword = keyword.replace("{", "").replace("}", "")
         if not url_args or keyword not in url_args:
@@ -43,8 +44,8 @@ def build_url(
                 f"{keyword} is a required parameter for the URL, but it is not in url_args."
             )
     if parameters_required and url_args:
-        return url.format(**url_args)
-    return url
+        return url_str.format(**url_args)
+    return url_str
 
 
 def build_headers(referer: str | None = None) -> dict:
@@ -196,7 +197,7 @@ class RequestManager:
         self,
         url: URLs | str,
         url_args: dict | None = None,
-        method: str = "GET",
+        method: Literal["GET", "POST"] = "GET",
         **kwargs,
     ) -> str:
         """Gets raw text/HTML response."""

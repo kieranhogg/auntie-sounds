@@ -3,6 +3,8 @@ from enum import Enum, unique
 
 @unique
 class URLs(Enum):
+    login_required: bool
+
     def __new__(cls, value, login_required):
         obj = object.__new__(cls)
         obj._value_ = value

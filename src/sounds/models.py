@@ -2,11 +2,12 @@ from collections.abc import Sequence
 from dataclasses import asdict, dataclass, field
 from datetime import datetime as dt
 from pprint import pformat
-from typing import Any
+from typing import Any, Self
 from warnings import deprecated
 from zoneinfo import ZoneInfo
 
 import pytz
+from _typeshed import DataclassInstance
 
 from sounds import models
 from sounds.utils import image_from_recipe, network_logo
@@ -31,16 +32,17 @@ type SoundsTypes = (
     | models.StationSearchResult
 )
 
+
 def _parse_datetime(value):
     return dt.fromisoformat(value) if isinstance(value, str) else value
 
 
 class SerializableMixin:
-    def to_dict(self):
-        return asdict(self)  # ty:ignore[invalid-argument-type]
+    def to_dict(self: DataclassInstance) -> dict[str, Any]:
+        return asdict(self)
 
     @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> Segment:
+    def from_dict(cls, data: dict[str, Any]) -> Self:
         return cls(**data)  # ty:ignore[invalid-return-type]
 
     def __str__(self):
@@ -126,7 +128,7 @@ class Container(BaseObject, IdentifiableMixin):
     titles: dict = field(default_factory=dict)
     urn: str | None = None
     network: Network | None = None
-    sub_items: list[SoundsTypes] | None = None
+    sub_items: Sequence[SoundsTypes] | None = None
 
 
 @dataclass(kw_only=True)
@@ -326,7 +328,7 @@ class Schedule(Container):
 
     id: str
     # title is the date of the schedule
-    sub_items: list[ScheduleItem] | None
+    sub_items: Sequence[ScheduleItem] | None = None
 
     def get_current_item(
         self,
@@ -403,7 +405,7 @@ class CategoryItemContainer(SerializableMixin):
     total: int
     limit: int
     offset: int
-    sub_items: list[SoundsTypes] | None = None
+    sub_items: Sequence[SoundsTypes] | None = None
 
 
 @dataclass(kw_only=True)
@@ -451,7 +453,7 @@ class RecommendedMenuItem(MenuItem):
 class Menu(SerializableMixin):
     """Represents a menu container with items."""
 
-    sub_items: list[MenuItem] | Sequence[MenuItem] | None
+    sub_items: list[MenuItem]
 
     def get(self, key: str) -> MenuItem | RecommendedMenuItem | None:
         """Get a menu item by ID."""

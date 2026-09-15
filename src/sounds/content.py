@@ -20,6 +20,7 @@ from sounds.models import (
     Segment,
 )
 from sounds.parser import Parser
+from sounds.playback import PlaybackService
 from sounds.requests import RequestManager
 from sounds.user import UserService
 from sounds.utils import image_from_spotify
@@ -40,13 +41,11 @@ class ContentService:
     """
 
     def __init__(
-        self,
-        user: UserService,
-        requests: RequestManager,
-        **kwargs,
+        self, user: UserService, requests: RequestManager, playback: PlaybackService
     ):
-        self.user = user
+        self.user: UserService = user
         self.requests: RequestManager = requests
+        self.playback: PlaybackService = playback
         self.parser = Parser()
 
     async def get_podcasts(self) -> Menu:
@@ -74,14 +73,18 @@ class ContentService:
                     None,
                 )
             else:
-                podcast = podcast_container
-
+                podcast = (
+                    podcast_container
+                    if isinstance(podcast_container, (Podcast, RadioSeries))
+                    else None
+                )
             if podcast and not include_episodes and getattr(podcast, "sub_items", None):
                 podcast.sub_items = []
         elif pid:
             # If we only have the PID, we can grab the episodes and parse out the podcast or radio series
             podcast_episodes = await self.get_pid_container(pid=pid)
-            logger.debug(f"Received {len(podcast_episodes)} episodes for podcast")
+            length = len(podcast_episodes) if podcast_episodes else 0
+            logger.debug("Received %s episodes for podcast", length)
             if (
                 podcast_episodes
                 and len(podcast_episodes) > 1
@@ -170,7 +173,7 @@ class ContentService:
             raise APIResponseError(f"Couldn't get playable item with PID {pid}")
 
         if include_stream:
-            playable_item.stream = await self.get_episode_stream(
+            playable_item.stream = await self.playback.get_episode_stream(
                 episode_id=playable_item.id, stream_format=stream_format
             )
         return playable_item
@@ -187,13 +190,17 @@ class ContentService:
             return playable_container
         return None
 
-    async def get_container(self, urn) -> list[SoundsTypes] | SoundsTypes | Container:
+    async def get_container(
+        self, urn
+    ) -> list[SoundsTypes] | SoundsTypes | Container | None:
         json_resp = await self.requests.get_json_response(
             url=URLs.CONTAINER_URL, url_args={"urn": urn}
         )
         container = self.parser.parse_container(json_resp)
         if type(container) is list and len(container) == 1:
-            container = container[0]
+            return container[0]
+        if not container:
+            return []
         return container
 
     async def get_category(self, category) -> Category:
@@ -213,7 +220,14 @@ class ContentService:
         json_resp = await self.requests.get_json_response(
             url=URLs.CURATIONS, url_args={"pid": pid}
         )
-        return self.parser.parse_container(json_resp) if json_resp else []
+        if not json_resp:
+            return []
+        if not json_resp:
+            return []
+        container = self.parser.parse_container(json_resp)
+        if isinstance(container, list):
+            return container
+        return [container] if container else []
 
     async def search(self, query) -> SearchResults:
         json_resp = await self.requests.get_json_response(

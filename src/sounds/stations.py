@@ -1,7 +1,7 @@
 import asyncio.constants
 import logging
 from datetime import datetime as dt
-from datetime import timedelta
+from datetime import timedelta, tzinfo
 from itertools import chain
 from typing import Literal
 
@@ -24,8 +24,6 @@ class StationService:
         playback: PlaybackService,
         schedules: ScheduleService,
         requests: RequestManager,
-        *args,
-        **kwargs,
     ):
         self.playback = playback
         self.schedules = schedules
@@ -162,18 +160,19 @@ class StationService:
         station = self.parser.parse_node(json_response)
 
         # station id is almost always the same as pid but not quite, e.g. bbc_radio_fourfm and bbc_radio_four
-        if station:
-            if include_stream:
-                stream = await self.playback.get_live_stream(
-                    station_id=station_id, stream_format=stream_format
-                )
-                if stream:
-                    station.stream = stream
+        if not isinstance(station, LiveStation):
+            return None
+        if include_stream:
+            stream = await self.playback.get_live_stream(
+                station_id=station_id, stream_format=stream_format
+            )
+            if stream:
+                station.stream = stream
 
-            if include_schedule:
-                station.schedule = await self.schedules.get_schedule(
-                    station_id=station_id, date=date
-                )
+        if include_schedule:
+            station.schedule = await self.schedules.get_schedule(
+                station_id=station_id, date=date
+            )
         return station
 
     async def get_broadcast(self, pid: str):
@@ -201,19 +200,21 @@ class StationService:
 
         schedule = [
             MenuItem(
-                id=dt.now(tz=self.timezone).strftime("%Y-%m-%d"),
+                id=dt.now(tz=self.schedules.timezone).strftime("%Y-%m-%d"),
                 title="Today",
                 sub_items=[],
             ),
             MenuItem(
-                id=(dt.now(tz=self.timezone) - timedelta(days=1)).strftime("%Y-%m-%d"),
+                id=(dt.now(tz=self.schedules.timezone) - timedelta(days=1)).strftime(
+                    "%Y-%m-%d"
+                ),
                 title="Yesterday",
                 sub_items=[],
             ),
         ]
         # Maximum is 30 days prior
         for diff in range(28):
-            this_date = dt.now(tz=self.timezone) - timedelta(days=2 + diff)
+            this_date = dt.now(tz=self.schedules.timezone) - timedelta(days=2 + diff)
             schedule.extend(
                 [
                     MenuItem(

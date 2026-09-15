@@ -32,11 +32,11 @@ logger = logging.getLogger(__name__)
 
 def _podcast_or_series(
     original_object: dict,
-    urn: str,
+    urn: str | None,
     parent_network: dict | Network | None = None,
 ) -> type:
     network_id = None
-    if type(parent_network) is Network:
+    if isinstance(parent_network, Network):
         network_id = parent_network.id
     else:
         network = original_object.get("network") or parent_network
@@ -191,11 +191,9 @@ class ModelFactory:
             object_type = original_object.get("type", None)
             if object_type is None:
                 object_type = schema_type
-            urn = (
-                original_object.get("urn").rsplit(":", 1)[0]
-                if original_object.get("urn")
-                else None
-            )
+
+            raw_urn = original_object.get("urn")
+            urn = raw_urn.rsplit(":", 1)[0] if raw_urn else None
 
             if object_type in ItemType:
                 match object_type:

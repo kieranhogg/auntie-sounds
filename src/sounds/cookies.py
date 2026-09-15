@@ -1,7 +1,10 @@
 import logging
+from http.cookiejar import FileCookieJar
 from pathlib import Path
+from typing import cast
 
 import aiohttp
+from pytest import File
 
 logger = logging.getLogger(__name__)
 
@@ -18,26 +21,37 @@ class CookieStore:
         mock_session: bool = False,
         cookie_file_location: str | Path | None = None,
     ):
+        self.path: Path | None
         if isinstance(cookie_file_location, str):
             self.path = Path(cookie_file_location)
         else:
             self.path = cookie_file_location
+
         self.mock_session = mock_session
         self.session = session
 
     def load(self) -> None:
         logger.debug("Loading cookies from disk...")
+        if self.path is None:
+            logger.warning("No cookie file location configured.")
+            return
         if self.path.exists():
             if len(self.session.cookie_jar) > 0:
                 logger.info("Skipping loading into existing cookie jar.")
             else:
-                self.session.cookie_jar.load(self.path)  # ty:ignore[unresolved-attribute]
+                cast(
+                    aiohttp.CookieJar,
+                    self.session.cookie_jar,
+                ).load(str(self.path))
             return
         logger.warning("Cookie location does not exist.")
 
     def save(self) -> None:
+        if self.path is None:
+            logger.warning("No cookie file location configured.")
+            return
         logger.debug("Saving cookies to disk...")
-        self.session.cookie_jar.save(self.path)  # ty:ignore[unresolved-attribute]
+        cast(FileCookieJar, self.session.cookie_jar).save(str(self.path))
 
     @property
     def has_session_cookie(self) -> bool:
@@ -54,7 +68,9 @@ class CookieStore:
 
     def _get_filtered_cookies(self) -> list:
         filtered_cookies = [
-            cookie for cookie in self.session.cookie_jar if cookie.key == COOKIE_ID
+            cookie
+            for cookie in cast(aiohttp.CookieJar, self.session.cookie_jar)
+            if cookie.key == COOKIE_ID
         ]
         logger.debug(filtered_cookies)
         return filtered_cookies

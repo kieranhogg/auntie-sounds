@@ -148,14 +148,11 @@ class SoundsClient:
             requests=self.requests,
         )
         self.content = ContentService(
-            auth=self.auth,
             requests=self.requests,
-            schedules=self.schedules,
             user=self.user,
             playback=self.playback,
         )
         self.stations = StationService(
-            content=self.content,
             playback=self.playback,
             schedules=self.schedules,
             requests=self.requests,

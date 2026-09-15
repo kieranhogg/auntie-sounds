@@ -2,6 +2,8 @@ import asyncio
 import logging
 from enum import Enum
 
+from mypy.plugins.proper_plugin import is_improper_type
+
 from sounds.auth import AuthService
 from sounds.endpoints import URLs
 from sounds.exceptions import APIResponseError
@@ -114,4 +116,7 @@ class PersonalService:
         async def call():
             return await self.requests.get_json_response(url=URLs.CONTINUE)
 
-        return self.parser.parse_container(await self.requests.run(call))
+        container = self.parser.parse_container(await self.requests.run(call))
+        if isinstance(container, list):
+            return [item for item in container if isinstance(item, PlayableItem)]
+        return None

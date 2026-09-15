@@ -38,6 +38,8 @@ class NestedObject(NamedTuple):
 
 def _promote_if_recommended(menu_item: MenuItem) -> MenuItem:
     """Convert menu_item to RecommendedMenuItem if its first sub-item is a recommendation."""
+    if not menu_item.sub_items:
+        return menu_item
     first_child = menu_item.sub_items[0]
     if getattr(first_child, "recommendation", None) is not None:
         data = {
@@ -48,7 +50,6 @@ def _promote_if_recommended(menu_item: MenuItem) -> MenuItem:
 
 
 class Parser:
-
     def __init__(self):
         self.nested_objects = [
             NestedObject("network", Network),
@@ -87,7 +88,7 @@ class Parser:
         return node
 
     def parse_node(
-        self, node: dict, parent_network: dict | None = None
+        self, node: dict | list, parent_network: dict | None = None
     ) -> SoundsTypes | list[SoundsTypes] | None:
         """
         Recursively parses a node. A node with a 'data' key is a container, otherwise,
@@ -109,7 +110,9 @@ class Parser:
 
         if "data" in node:
             node_network = node.get("network") or parent_network
-            container = self.model_factory.parse_object(node, parent_network=node_network)
+            container = self.model_factory.parse_object(
+                node, parent_network=node_network
+            )
             if not container:
                 return None
 
@@ -124,7 +127,7 @@ class Parser:
             playable_item = self.model_factory.parse_object(
                 node, parent_network=parent_network
             )
-            playable_item = self.parse_nested_objects(playable_item)
+            self.parse_nested_objects(playable_item)
 
             # Post-processing
             if isinstance(playable_item, PlayableItem):
