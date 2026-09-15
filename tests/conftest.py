@@ -112,9 +112,6 @@ def _mock_content(
     mock_playback,
 ):
     return ContentService(
-        session=mock_session,
-        auth=mock_auth_service,
-        schedules=mock_schedule,
         user=mock_user,
         requests=mock_requests,
         playback=mock_playback,
@@ -132,13 +129,9 @@ def _mock_station(
     mock_content,
 ):
     return StationService(
-        session=mock_session,
-        auth=mock_auth_service,
         schedules=mock_schedule,
-        user=mock_user,
         requests=mock_requests,
         playback=mock_playback,
-        content=mock_content,
     )
 
 
