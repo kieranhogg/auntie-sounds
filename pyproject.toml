@@ -55,6 +55,9 @@ dev = [
     "ruff>=0.16.5",
     "sphinx-autoapi>=3.6.1",
     "sphinx>=9.0.4",
+    "types-aiofiles>=25.1.0.20260518",
+    "types-appdirs>=1.4.3.5",
+    "types-pytz>=2026.3.1.20260727",
 ]
 
 [tool.coverage.run]
