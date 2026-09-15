@@ -2,12 +2,11 @@ from collections.abc import Sequence
 from dataclasses import asdict, dataclass, field
 from datetime import datetime as dt
 from pprint import pformat
-from typing import Any, Self
+from typing import TYPE_CHECKING, Any, Protocol, Self, cast
 from warnings import deprecated
 from zoneinfo import ZoneInfo
 
 import pytz
-from _typeshed import DataclassInstance
 
 from sounds import models
 from sounds.utils import image_from_recipe, network_logo
@@ -38,12 +37,12 @@ def _parse_datetime(value):
 
 
 class SerializableMixin:
-    def to_dict(self: DataclassInstance) -> dict[str, Any]:
-        return asdict(self)
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)  # type: ignore
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> Self:
-        return cls(**data)  # ty:ignore[invalid-return-type]
+        return cls(**data)  # type: ignore
 
     def __str__(self):
         return pformat(self)
