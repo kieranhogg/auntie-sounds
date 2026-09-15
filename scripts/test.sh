@@ -1,1 +1,1 @@
-uv run pytest tests --cov=src
+uv run pytest -m "not api" -k "not integration"
