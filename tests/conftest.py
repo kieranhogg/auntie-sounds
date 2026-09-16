@@ -65,11 +65,7 @@ def mock_auth_service(mock_requests, mock_cookie_store):
 
 @pytest.fixture(name="mock_requests")
 def _mock_requests(mock_session):
-    return RequestManager(
-        session=mock_session,
-        username="user",
-        password="password",
-    )
+    return RequestManager(session=mock_session, login_details_provided=True)
 
 
 @pytest.fixture(name="mock_user")
@@ -139,6 +135,18 @@ def _mock_station(
 async def _sounds_client(mock_session):
     client = SoundsClient(
         session=mock_session, timezone=pytz.timezone("UTC"), log_level=DEBUG
+    )
+    yield client
+    await client.close()
+
+
+@pytest.fixture(name="sounds_client_with_mock_data")
+async def _sounds_client_with_mock_data(mock_session):
+    client = SoundsClient(
+        session=mock_session,
+        mock_data=True,
+        timezone=pytz.timezone("UTC"),
+        log_level=DEBUG,
     )
     yield client
     await client.close()

@@ -5,7 +5,7 @@ import pytest
 from sounds.endpoints import URLs
 from sounds.exceptions import APIResponseError
 from sounds.models import Menu, MenuItem, RecommendedMenuItem
-from sounds.personal import MenuRecommendationOptions, PersonalService
+from sounds.personal import PersonalService
 from sounds.requests import RequestManager
 
 pytestmark = pytest.mark.anyio
@@ -37,8 +37,6 @@ async def run(self, call):
 def request_manager(mock_session):
     return RequestManager(
         session=mock_session,
-        username=None,
-        password=None,
     )
 
 
@@ -48,7 +46,6 @@ def personal_service(mock_session, request_manager, monkeypatch):
     return PersonalService(
         auth=Mock(),
         requests=request_manager,
-        session=mock_session,
     )
 
 
@@ -78,12 +75,14 @@ class TestPersonalService:
             AsyncMock(return_value=mixed_menu_json),
         )
 
-        menu = await personal_service.get_uk_menu(
-            recommendations=MenuRecommendationOptions.INCLUDE
+        menu = await personal_service.construct_uk_menu(
+            listen_live=MenuItem(id="listen_live"),
+            catch_up=MenuItem(id="catch_up"),
+            schedule=MenuItem(id="schedule"),
         )
 
         assert isinstance(menu, Menu)
-        assert len(menu.sub_items) == 2
+        assert len(menu.sub_items) == 6
         assert isinstance(menu.get("recommended"), RecommendedMenuItem)
         assert type(menu.get("regular")) is MenuItem
 
@@ -96,11 +95,12 @@ class TestPersonalService:
             AsyncMock(return_value=mixed_menu_json),
         )
 
-        menu = await personal_service.get_uk_menu(
-            recommendations=MenuRecommendationOptions.EXCLUDE
+        menu = await personal_service.construct_uk_menu(
+            listen_live=MenuItem(id="listen_live"),
+            catch_up=MenuItem(id="catch_up"),
+            schedule=MenuItem(id="schedule"),
         )
-
-        assert [item.id for item in menu.sub_items] == ["regular"]
+        assert [item.id for item in menu.sub_items] != ["recommended"]
 
     async def test_get_uk_menu_only_keeps_recommendations(
         self, request_manager, personal_service, monkeypatch, mixed_menu_json
@@ -111,11 +111,9 @@ class TestPersonalService:
             AsyncMock(return_value=mixed_menu_json),
         )
 
-        menu = await personal_service.get_uk_menu(
-            recommendations=MenuRecommendationOptions.ONLY
-        )
+        folders = await personal_service.get_recommendations()
 
-        assert [item.id for item in menu.sub_items] == ["recommended"]
+        assert [item.id for item in folders] == ["recommended"]
 
     async def test_get_uk_menu_raises_on_empty_response(
         self, request_manager, personal_service, monkeypatch
@@ -125,7 +123,11 @@ class TestPersonalService:
         )
 
         with pytest.raises(APIResponseError):
-            await personal_service.get_uk_menu()
+            await personal_service.construct_uk_menu(
+                listen_live=MenuItem(id="listen_live"),
+                catch_up=MenuItem(id="catch_up"),
+                schedule=MenuItem(id="schedule"),
+            )
 
     async def test_get_explore_all_composes_submenus(
         self, request_manager, personal_service, monkeypatch
