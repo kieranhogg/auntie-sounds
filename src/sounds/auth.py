@@ -152,7 +152,7 @@ class AuthService:
         # Get the initial login page form target
         request = await self.requests.make_request(
             method="GET",
-            url=URLs.LOGIN_START.value,
+            url=URLs.LOGIN_START,
             headers=build_headers(),
             allow_redirects=False,
         )
