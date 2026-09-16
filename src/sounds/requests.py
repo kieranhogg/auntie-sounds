@@ -80,37 +80,30 @@ class RequestManager:
         self,
         session: ClientSession,
         timeout: ClientTimeout = DEFAULT_TIMEOUT,
-        mock_session: bool = False,
-        username: str | None = None,
-        password: str | None = None,
+        mock_data: bool = False,
+        login_details_provided: bool = False,
         reauth_handler: Callable | None = None,
     ):
         self._session: ClientSession = session
         self.timeout: ClientTimeout = timeout
-        self.mock_session: bool = mock_session
-        self.username: str | None = username
-        self.password: str | None = password
+        self.mock_data: bool = mock_data
+        self.login_details_provided: bool = login_details_provided
         self.reauth_handler: Callable | None = reauth_handler
 
     async def run(self, call):
-        """Ensures user is logged in before running `call`."""
-        try:
-            logger.debug(f"Running {call}")
-            return await call()
-        except UnauthorisedError:
-            logger.debug("Unauthorised when accessing an authenticated endpoint.")
+        """Runs `call`, falling back to `reauth_handler`, if set, to retry auth.
 
-            if not self.username or not self.password:
-                logger.error("No username and/or password provided.")
-                raise UnauthorisedError(
-                    "No username and/or password provided and endpoint requires authentication."
-                )
+        `reauth_handler` (just `AuthService.retry_with_reauth` at present) owns
+        the authenticated endpoint lifecycle: trying `call` > checking
+        credentials > renewing/logging in, and retrying. `run()` just passes
+        it over.
+        """
 
-            if self.reauth_handler:
-                logger.debug("Calling reauth_handler %s.", self.reauth_handler)
-                await self.reauth_handler()
-                return await call()
-            raise
+        logger.debug(f"Running {call}")
+        if self.reauth_handler:
+            logger.debug("Calling reauth_handler %s.", self.reauth_handler)
+            return await self.reauth_handler(call)
+        return await call()
 
     async def _request_or_raise(self, method, url, **kwargs) -> aiohttp.ClientResponse:
         """Make a HTTP request, converting any 401s errors into UnauthorisedError
@@ -178,11 +171,11 @@ class RequestManager:
         """Gets JSON response from an endpoint."""
         # built_url = build_url(url=url, url_args=url_args)
 
-        if not self.mock_session:
+        if not self.mock_data:
             resp = await self.make_request(
                 method="GET", url=url, url_args=url_args, **kwargs
             )
-            json_resp = await resp.json()
+            json_resp: dict = await resp.json()
             _raise_for_api_errors(json_resp)
             return json_resp
         else:
@@ -190,7 +183,7 @@ class RequestManager:
                 json_file = os.path.join(FIXTURES_FOLDER, url.name + ".json")
                 async with aiofiles.open(json_file) as file_reader:
                     return json.loads(await file_reader.read())
-            except KeyError:
+            except FileNotFoundError:
                 raise InvalidArgumentsError(f"No matching fixture for {url}")
 
     async def get_html_response(

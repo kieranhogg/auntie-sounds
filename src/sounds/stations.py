@@ -13,7 +13,6 @@ from sounds.parser import Parser
 from sounds.playback import PlaybackService
 from sounds.requests import RequestManager
 from sounds.schedule import ScheduleService
-from sounds.utils import _date_with_ordinal
 
 logger = logging.getLogger(__name__)
 
@@ -62,6 +61,7 @@ class StationService:
         except KeyError, IndexError:
             raise APIResponseError("Station list response not as expected.")
 
+        requested_stations: list[dict] = []
         if include_local:
             requested_stations = list(chain([national_stations, local_stations]))
         else:
@@ -111,12 +111,6 @@ class StationService:
         include_schedule: bool = False,
         date: str | None = None,
     ) -> LiveStation | None:
-        """
-        Gets a station's details
-
-        :return: A Station object
-        :rtype: Station
-        """
         stations = await self.get_stations(
             include_local=True,
         )
@@ -141,14 +135,14 @@ class StationService:
         include_schedule: bool = False,
         date: str | None = None,
     ) -> LiveStation | None:
-        """Get a live radio station
+        """Get a live radio station.
 
         Args:
-            station_id (str): ID of the station, e.g. bbc_radio_four
-            include_stream (bool, optional): Set LiveStation.stream to the stream URL. Defaults to False.
-            stream_format (Literal["hls"] | Literal["dash"], optional): Stream format preference. Defaults to "hls".
-            include_schedule (bool, optional): Set LiveStation.schedule to the station schedule. Defaults to False.
-            date (str | None, optional): The date of the schedule, if `include_schedule` is True. Defaults to None.
+            station_id: ID of the station, e.g. bbc_radio_four
+            include_stream (optional): Set LiveStation.stream to the stream URL. Defaults to False.
+            stream_format: Stream format preference. Defaults to "hls".
+            include_schedule (optional): Set LiveStation.schedule to the station schedule. Defaults to False.
+            date (optional): The date of the schedule, if `include_schedule` is True. Defaults to None.
 
         Returns:
             LiveStation | None: A LiveStation object if station_id is found
@@ -182,51 +176,57 @@ class StationService:
         broadcast = self.parser.parse_node(json_resp)
         return broadcast
 
+    async def get_listen_live_menu(self, include_local: bool = False):
+
+        return MenuItem(
+            id="listen_live",
+            title="Listen Live",
+            sub_items=await self.get_stations(include_local=include_local),
+        )
+
     async def get_schedule_menu(self, include_local: bool = False):
 
         return MenuItem(
-            id="stations",
-            title="Station & Schedules",
+            id="schedule",
+            title="Station Schedules",
             sub_items=[
-                await self.get_station_menu(station.id)
+                await self.get_station_schedule_or_catch_up_menu(
+                    station_id=station.id, catch_up=False
+                )
                 for station in await self.get_stations(include_local=include_local)
             ],
         )
 
-    async def get_station_menu(self, station_id: str) -> MenuItem:
+    async def get_catch_up_menu(self, include_local: bool = False):
+        return MenuItem(
+            id="catch_up",
+            title="Catch-up Radio",
+            sub_items=[
+                await self.get_station_schedule_or_catch_up_menu(
+                    station.id, catch_up=True
+                )
+                for station in await self.get_stations(include_local=include_local)
+            ],
+        )
+
+    async def get_station_schedule_or_catch_up_menu(
+        self, station_id: str, catch_up: bool = True
+    ) -> MenuItem:
         station = await self.get_station(station_id)
         if not station or not isinstance(station, LiveStation):
             raise NotFoundError(f"Couldn't get station with id {station_id}")
 
-        schedule = [
-            MenuItem(
-                id=dt.now(tz=self.schedules.timezone).strftime("%Y-%m-%d"),
-                title="Today",
-                sub_items=[],
-            ),
-            MenuItem(
-                id=(dt.now(tz=self.schedules.timezone) - timedelta(days=1)).strftime(
-                    "%Y-%m-%d"
-                ),
-                title="Yesterday",
-                sub_items=[],
-            ),
-        ]
-        # Maximum is 30 days prior
-        for diff in range(28):
-            this_date = dt.now(tz=self.schedules.timezone) - timedelta(days=2 + diff)
-            schedule.extend(
-                [
-                    MenuItem(
-                        id=this_date.strftime("%Y-%m-%d"),
-                        title=_date_with_ordinal(this_date),
-                        sub_items=[],
-                    )
-                ]
-            )
+        start_date = dt.now(tz=self.schedules.timezone).date()
+        if catch_up:
+            end_date = start_date - timedelta(days=30)
+        else:
+            end_date = start_date + timedelta(days=7)
+        date_data = await self.schedules.get_station_schedules(
+            station_id, start_date, end_date
+        )
         return MenuItem(
             id=station_id,
             title=station.network.short_title if station.network else "Unknown Station",
             image_url=station.network.logo_url if station.network else None,
-            sub_items=schedule,
+            sub_items=date_data,
         )

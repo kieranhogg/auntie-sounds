@@ -1,7 +1,7 @@
 import asyncio
 import logging
-from enum import Enum, StrEnum, auto
-from typing import Sequence
+from collections.abc import Sequence
+from enum import StrEnum, auto
 
 from sounds.auth import AuthService
 from sounds.endpoints import URLs
@@ -16,7 +16,6 @@ logger = logging.getLogger(__name__)
 class MenuRecommendationOptions(StrEnum):
     EXCLUDE = auto()
     INCLUDE = auto()
-    ONLY = auto()
 
 
 class PersonalService:
@@ -37,33 +36,69 @@ class PersonalService:
         self.requests = requests
         self.parser = Parser()
 
-    async def get_uk_menu(
+    async def construct_uk_menu(
         self,
-        recommendations: MenuRecommendationOptions = MenuRecommendationOptions.INCLUDE,
+        listen_live: MenuItem,
+        catch_up: MenuItem,
+        schedule: MenuItem,
+        include_recommendations: bool = True,
     ) -> Menu:
-        """Gets the main Sounds menu."""
+        """Gets the main Sounds menu for UK-based users."""
 
-        async def call():
-            return await self.requests.get_json_response(url=URLs.EXPERIENCE_MENU)
-
-        json_resp = await self.requests.run(call)
+        json_resp = await self.requests.get_json_response(url=URLs.EXPERIENCE_MENU)
         menu = self.parser.parse_menu(json_resp)
         if not isinstance(menu, Menu) or not menu or len(menu.sub_items) == 0:
-            raise APIResponseError("Menu not converted correctly")
-        if recommendations == MenuRecommendationOptions.EXCLUDE:
-            filtered_menu = [
+            raise APIResponseError("Menu not converted correctly.")
+        if include_recommendations:
+            menu.sub_items = list(menu.sub_items)
+        else:
+            # Filter out recommendations if needed
+            menu.sub_items = [
                 item
                 for item in menu.sub_items
-                if item and type(item) is not RecommendedMenuItem
+                if item
+                and (
+                    not include_recommendations
+                    and type(item) is not RecommendedMenuItem
+                )
             ]
-        elif recommendations == MenuRecommendationOptions.ONLY:
-            filtered_menu = [
-                item for item in menu.sub_items if type(item) is RecommendedMenuItem
-            ]
-        else:
-            filtered_menu = list(menu.sub_items)
-        menu.sub_items = filtered_menu
+        menu.sub_items = [
+            listen_live,
+            catch_up,
+            schedule,
+            *menu.sub_items,
+            await self.get_explore_all(),
+        ]
         return menu
+
+    async def get_recommendations(self) -> Sequence[RecommendedMenuItem]:
+        json_resp = await self.requests.get_json_response(url=URLs.EXPERIENCE_MENU)
+        menu = self.parser.parse_menu(json_resp)
+        return [
+            recommendation
+            for recommendation in menu.sub_items
+            if isinstance(recommendation, RecommendedMenuItem)
+        ]
+
+    async def construct_international_menu(
+        self,
+        listen_live: MenuItem,
+        catch_up: MenuItem,
+        schedule: MenuItem,
+    ) -> Menu:
+        """Gets the main Sounds menu for international users."""
+
+        return Menu(
+            sub_items=[
+                listen_live,
+                catch_up,
+                schedule,
+                await self.get_explore_all(),
+            ]
+        )
+
+    def get_listen_live(self):
+        return MenuItem(title="Listen Live", id="listen_live", sub_items=self.sta)
 
     async def get_podcasts_menu_item(self) -> MenuItem:
         json = await self.requests.get_json_response(URLs.PODCASTS)
@@ -101,28 +136,23 @@ class PersonalService:
         return MenuItem(title="Explore All", id="explore", sub_items=explore_items)
 
     async def get_latest(self):
-        async def call():
-            return await self.requests.get_json_response(url=URLs.LATEST)
-
-        return self.parser.parse_container(await self.requests.run(call))
+        return self.parser.parse_container(
+            await self.requests.get_json_response(url=URLs.LATEST)
+        )
 
     async def get_subscriptions(self):
-        async def call():
-            return await self.requests.get_json_response(url=URLs.SUBSCRIBED)
-
-        return self.parser.parse_container(await self.requests.run(call))
+        return self.parser.parse_container(
+            await self.requests.get_json_response(url=URLs.SUBSCRIBED)
+        )
 
     async def get_bookmarks(self):
-        async def call():
-            return await self.requests.get_json_response(url=URLs.BOOKMARKS)
-
-        return self.parser.parse_container(await self.requests.run(call))
+        return self.parser.parse_container(
+            await self.requests.get_json_response(url=URLs.BOOKMARKS)
+        )
 
     async def get_continue_listening(self) -> list[PlayableItem] | None:
-        async def call():
-            return await self.requests.get_json_response(url=URLs.CONTINUE)
-
-        container = self.parser.parse_container(await self.requests.run(call))
+        json_response = await self.requests.get_json_response(url=URLs.CONTINUE)
+        container = self.parser.parse_container(json_response)
         if isinstance(container, list):
             return [item for item in container if isinstance(item, PlayableItem)]
         return None
