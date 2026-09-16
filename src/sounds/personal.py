@@ -12,10 +12,10 @@ from sounds.requests import RequestManager
 logger = logging.getLogger(__name__)
 
 
-class MenuRecommendationOptions(Enum):
-    EXCLUDE = "Exclude"
-    INCLUDE = "Include"
-    ONLY = "Only"
+class MenuRecommendationOptions(StrEnum):
+    EXCLUDE = auto()
+    INCLUDE = auto()
+    ONLY = auto()
 
 
 class PersonalService:
