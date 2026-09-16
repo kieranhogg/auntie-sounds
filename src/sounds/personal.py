@@ -1,6 +1,7 @@
 import asyncio
 import logging
-from enum import Enum
+from enum import Enum, StrEnum, auto
+from typing import Sequence
 
 from sounds.auth import AuthService
 from sounds.endpoints import URLs
@@ -19,11 +20,18 @@ class MenuRecommendationOptions(StrEnum):
 
 
 class PersonalService:
+    """PersonalService interacts with the personalised endpoints of the API.
+
+    The main API returns a fairly comprehensive nested menu structure for those
+    users who are logged in. It also has some fairly noteable items missing,
+    such as live radio stations and catch-up. This service ultimately constructs
+    the menus for both logged-in users, and a smaller version for logged-out
+    users, or international."""
+
     def __init__(
         self,
         auth: AuthService,
         requests: RequestManager,
-        **kwargs,
     ):
         self.auth = auth
         self.requests = requests
