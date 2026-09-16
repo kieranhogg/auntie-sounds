@@ -77,7 +77,7 @@ class AuthService:
         cookie_store: CookieStore,
         username: str | None = None,
         password: str | None = None,
-        mock_session: bool = False,
+        mock_data: bool = False,
         debug_login: bool = False,
         on_login_success=None,
     ):
@@ -86,11 +86,11 @@ class AuthService:
         self.cookie_store = cookie_store
         self.username = username
         self.password = password
-        self.mock_session = mock_session
+        self.mock_data = mock_data
         self.debug_login = debug_login
         self._on_login_success = on_login_success
 
-        if self.mock_session:
+        if self.mock_data:
             return
         if self.debug_login:
             logger.info("Saving login pages to file as requested")
