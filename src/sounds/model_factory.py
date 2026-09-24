@@ -225,7 +225,7 @@ class ModelFactory:
     def parse_object(
         self,
         original_object: dict,
-        parent_network: dict | type[Any] | None = None,
+        parent_network: dict | SoundsTypes | None = None,
         type_hint: type[Any] | None = None,
     ):
         new_type: type[Any]

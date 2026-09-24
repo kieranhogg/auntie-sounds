@@ -200,4 +200,3 @@ class Endpoints(Enum):
     BOOKMARKS = ("/v2/my/programmes/favourites/playable", True)
     CONTINUE = ("/v2/my/programmes/plays/playable", True)
     PID_PLAYABLE = ("/v2/my/programmes/{pid}/playable", True)
-
