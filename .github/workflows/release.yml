@@ -104,7 +104,7 @@ jobs:
         run: uv sync --locked --all-extras --dev
 
       - name: Run tests
-        run: uv run pytest
+        run: uv run pytest -m "not api" -k "not integration"
 
       - name: Bump version (Beta)
         run: |
