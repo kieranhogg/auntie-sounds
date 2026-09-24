@@ -1,7 +1,6 @@
 import logging
 from datetime import datetime as dt
 from datetime import timedelta
-from logging import Logger
 
 import pytest
 import pytz

@@ -9,17 +9,16 @@ import pytest
 
 from sounds.model_factory import ModelFactory
 from sounds.models import (
-    Collection,
     Category,
+    Collection,
+    LiveStation,
     Network,
-    PlayableNetwork,
     Playlist,
     Podcast,
     PodcastEpisode,
     RadioClip,
     RadioShow,
     Segment,
-    LiveStation,
     Station,
 )
 from sounds.parser import Parser
