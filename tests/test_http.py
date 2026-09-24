@@ -25,4 +25,6 @@ class TestHTTP:
 
     async def test_build_url_template(self, client):
         url = build_url(url=Endpoints.NETWORK_DETAILS, url_args={"network_id": "123"})
-        assert url == URL_BASE + Endpoints.NETWORK_DETAILS.value.format(network_id="123")
+        assert url == URL_BASE + Endpoints.NETWORK_DETAILS.value.format(
+            network_id="123"
+        )

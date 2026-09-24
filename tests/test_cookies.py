@@ -30,14 +30,14 @@ class TestCookieStore:
     async def test_has_session_cookie_false_when_empty(self, tmp_path):
         store = CookieStore(
             session=Mock(cookie_jar=aiohttp.CookieJar()),
-                        cookie_file_location=tmp_path / "cookies",
+            cookie_file_location=tmp_path / "cookies",
         )
         assert store.has_session_cookie is False
 
     async def test_clear_removes_session_cookie(self, tmp_path):
         store = CookieStore(
             session=Mock(cookie_jar=_jar_with_session_cookie()),
-                        cookie_file_location=tmp_path / "cookies",
+            cookie_file_location=tmp_path / "cookies",
         )
         assert store.has_session_cookie is True
 
@@ -62,14 +62,14 @@ class TestCookieStore:
         cookie_path = tmp_path / "cookies.pickle"
         store_a = CookieStore(
             session=Mock(cookie_jar=_jar_with_session_cookie()),
-                        cookie_file_location=cookie_path,
+            cookie_file_location=cookie_path,
         )
         store_a.save()
         assert cookie_path.exists()
 
         store_b = CookieStore(
             session=Mock(cookie_jar=aiohttp.CookieJar()),
-                        cookie_file_location=cookie_path,
+            cookie_file_location=cookie_path,
         )
         store_b.load()
 
@@ -81,12 +81,12 @@ class TestCookieStore:
         # Persist an empty jar to disk.
         CookieStore(
             session=Mock(cookie_jar=aiohttp.CookieJar()),
-                        cookie_file_location=cookie_path,
+            cookie_file_location=cookie_path,
         ).save()
 
         store = CookieStore(
             session=Mock(cookie_jar=_jar_with_session_cookie()),
-                        cookie_file_location=cookie_path,
+            cookie_file_location=cookie_path,
         )
         store.load()
 

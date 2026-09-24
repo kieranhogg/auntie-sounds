@@ -31,7 +31,9 @@ class TestHTTP:
         self, client
     ):
         with pytest.raises(UnauthorisedError):
-            await client.requests.make_request(method="GET", url=Endpoints.EXPERIENCE_MENU)
+            await client.requests.make_request(
+                method="GET", url=Endpoints.EXPERIENCE_MENU
+            )
 
     async def test_make_request_authenticated_endpoint_with_credentials(self):
         client = SoundsClient(
@@ -39,6 +41,8 @@ class TestHTTP:
         )
 
         try:
-            await client.requests.make_request(method="GET", url=Endpoints.EXPERIENCE_MENU)
+            await client.requests.make_request(
+                method="GET", url=Endpoints.EXPERIENCE_MENU
+            )
         except UnauthorisedError as e:
             pytest.fail(f"make_request() raised an UnauthorisedError unexpectedly: {e}")

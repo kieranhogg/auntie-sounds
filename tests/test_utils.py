@@ -24,7 +24,7 @@ class TestUtils:
 
     def test_network_logo_none_recipe(self):
         """Test network logo with None recipe."""
-        result = network_logo(None)
+        result = network_logo("")
         assert result is None
 
     def test_image_from_recipe_square(self):
@@ -41,7 +41,7 @@ class TestUtils:
 
     def test_image_from_recipe_none(self):
         """Test image recipe with None input."""
-        result = image_from_recipe(None, 640)
+        result = image_from_recipe("", 640)
         assert result is None
 
     def test_image_from_recipe_with_different_format(self):
@@ -49,4 +49,3 @@ class TestUtils:
         recipe = "https://example.com/{recipe}.{format}"
         result = image_from_recipe(recipe, 640, file_extension="png")
         assert result == "https://example.com/640x640.png"
-

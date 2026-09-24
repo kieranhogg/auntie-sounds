@@ -35,7 +35,9 @@ class TestStationServiceIntegration:
         assert all(type(station) is LiveStation for station in stations)
 
     async def test_get_all_stations(self, real_sounds_client: SoundsClient):
-        stations = await real_sounds_client.stations.get_stations(include_local_stations=True)
+        stations = await real_sounds_client.stations.get_stations(
+            include_local_stations=True
+        )
         assert len(stations) == 71
         assert all(type(station) is LiveStation for station in stations)
 

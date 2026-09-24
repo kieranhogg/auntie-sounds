@@ -32,11 +32,7 @@ class TestPlaybackService:
         result = get_best_stream(streams, prefer_type="hls")
         assert result is None
 
-
-
-    async def test_invalid_pid(
-        self, mock_user, mock_session, mock_content
-    ):
+    async def test_invalid_pid(self, mock_user, mock_session, mock_content):
         """Test get_pid with an invalid PID."""
         mock_session.request = AsyncMock()
         mock_response = AsyncMock()

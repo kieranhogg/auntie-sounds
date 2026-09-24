@@ -18,7 +18,9 @@ from sounds.models import (
     PodcastEpisode,
     RadioClip,
     RadioShow,
-    Segment, LiveStation, Station,
+    Segment,
+    LiveStation,
+    Station,
 )
 from sounds.parser import Parser
 
@@ -237,7 +239,7 @@ class TestStationClassification:
             "type": "playable_item",
             "id": "radio1",
             "urn": "urn:bbc:radio:network:radio1",
-            "synopses": {"short": ""}
+            "synopses": {"short": ""},
         }
         result = Parser().parse_node(node)
         assert type(result) is LiveStation

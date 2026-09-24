@@ -1,6 +1,2 @@
-
-
-
-
 class TestNetwork:
     pass
