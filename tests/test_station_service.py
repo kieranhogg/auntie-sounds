@@ -44,7 +44,7 @@ class TestStationService:
         )
         mock_session.request = AsyncMock(return_value=mock_response)
 
-        result = await mock_station.get_stations(include_local=False)
+        result = await mock_station.get_stations(include_local_stations=False)
         assert isinstance(result, list)
         assert [s.id for s in result] == ["national1"]
         assert len(result) == 1
@@ -74,5 +74,5 @@ class TestStationService:
         )
         mock_session.request = AsyncMock(return_value=mock_response)
 
-        result = await mock_station.get_stations(include_local=True)
+        result = await mock_station.get_stations(include_local_stations=True)
         assert {s.id for s in result} == {"national1", "local1"}

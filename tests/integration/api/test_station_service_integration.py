@@ -35,7 +35,7 @@ class TestStationServiceIntegration:
         assert all(type(station) is LiveStation for station in stations)
 
     async def test_get_all_stations(self, real_sounds_client: SoundsClient):
-        stations = await real_sounds_client.stations.get_stations(include_local=True)
+        stations = await real_sounds_client.stations.get_stations(include_local_stations=True)
         assert len(stations) == 71
         assert all(type(station) is LiveStation for station in stations)
 
@@ -65,14 +65,18 @@ class TestStationServiceIntegration:
         station = await real_sounds_client.stations.get_station(
             "bbc_radio_one", include_schedule=True
         )
-        today = dt.now().date().strftime("%Y-%m-%d")
+        today = dt.now(tz=real_sounds_client.timezone).date().strftime("%Y-%m-%d")
         assert type(station) is LiveStation
         assert type(station.schedule) is Schedule
         assert len(station.schedule.sub_items) > 0
         assert station.schedule.title == today
 
     async def test_get_station_schedule_date(self, real_sounds_client: SoundsClient):
-        yesterday = (dt.now() - timedelta(days=1)).date().strftime("%Y-%m-%d")
+        yesterday = (
+            (dt.now(tz=real_sounds_client.timezone) - timedelta(days=1))
+            .date()
+            .strftime("%Y-%m-%d")
+        )
         station = await real_sounds_client.stations.get_station(
             "bbc_radio_one", include_schedule=True, date=yesterday
         )

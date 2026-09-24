@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 import pytest
 from pytest import MarkDecorator
 
@@ -13,7 +15,10 @@ class TestUtils:
         """Test network logo URL formatting."""
         recipe = "https://example.com/{type}/{size}.{format}"
         result = network_logo(
-            logo_recipe=recipe, img_type=ImageType.COLOUR, size=450, file_extension="png"
+            logo_recipe=recipe,
+            img_type=ImageType.COLOUR,
+            size=450,
+            file_extension="png",
         )
         assert result == "https://example.com/colour/450x450.png"
 
@@ -44,3 +49,4 @@ class TestUtils:
         recipe = "https://example.com/{recipe}.{format}"
         result = image_from_recipe(recipe, 640, file_extension="png")
         assert result == "https://example.com/640x640.png"
+

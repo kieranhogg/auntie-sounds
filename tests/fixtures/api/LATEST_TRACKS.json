@@ -1,0 +1,160 @@
+{
+  "$schema": "https://rms.api.bbc.co.uk/docs/swagger.json#/definitions/PlayableItemsResponse",
+  "total": 4,
+  "limit": 4,
+  "offset": 0,
+  "data": [
+    {
+      "type": "playable_item",
+      "id": "n9c6mh",
+      "urn": "urn:bbc:radio:segment:p0pbhq22",
+      "network": {
+        "id": "bbc_6music",
+        "key": "6music",
+        "short_title": "Radio 6 Music",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_6music/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Maestro",
+        "secondary": "LourenÃ§o Rebetez",
+        "tertiary": null,
+        "entity_title": "Maestro"
+      },
+      "synopses": null,
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0bqcdzf.jpg",
+      "duration": null,
+      "progress": null,
+      "container": null,
+      "download": null,
+      "availability": {
+        "from": null,
+        "to": null,
+        "label": "Now Playing"
+      },
+      "release": {
+        "date": null,
+        "label": null
+      },
+      "guidance": null,
+      "activities": [],
+      "uris": [],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "n9c6mf",
+      "urn": "urn:bbc:radio:segment:p0pbhpyj",
+      "network": {
+        "id": "bbc_6music",
+        "key": "6music",
+        "short_title": "Radio 6 Music",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_6music/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Respiro Fundo",
+        "secondary": "Joyce",
+        "tertiary": null,
+        "entity_title": "Respiro Fundo"
+      },
+      "synopses": null,
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0bqcdzf.jpg",
+      "duration": null,
+      "progress": null,
+      "container": null,
+      "download": null,
+      "availability": {
+        "from": null,
+        "to": null,
+        "label": "3 Minutes Ago"
+      },
+      "release": {
+        "date": null,
+        "label": null
+      },
+      "guidance": null,
+      "activities": [],
+      "uris": [],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "n9c6mx",
+      "urn": "urn:bbc:radio:segment:p0pbhprn",
+      "network": {
+        "id": "bbc_6music",
+        "key": "6music",
+        "short_title": "Radio 6 Music",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_6music/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Um Canto de Trabalho",
+        "secondary": "Boca Livre",
+        "tertiary": null,
+        "entity_title": "Um Canto de Trabalho"
+      },
+      "synopses": null,
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0bqcdzf.jpg",
+      "duration": null,
+      "progress": null,
+      "container": null,
+      "download": null,
+      "availability": {
+        "from": null,
+        "to": null,
+        "label": "6 Minutes Ago"
+      },
+      "release": {
+        "date": null,
+        "label": null
+      },
+      "guidance": null,
+      "activities": [],
+      "uris": [],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "n9c6mb",
+      "urn": "urn:bbc:radio:segment:p0pbhphv",
+      "network": {
+        "id": "bbc_6music",
+        "key": "6music",
+        "short_title": "Radio 6 Music",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_6music/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Beijo Ãrabe",
+        "secondary": "Fabio Santanna",
+        "tertiary": null,
+        "entity_title": "Beijo Ãrabe"
+      },
+      "synopses": null,
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0bqcdzf.jpg",
+      "duration": null,
+      "progress": null,
+      "container": null,
+      "download": null,
+      "availability": {
+        "from": null,
+        "to": null,
+        "label": "10 Minutes Ago"
+      },
+      "release": {
+        "date": null,
+        "label": null
+      },
+      "guidance": null,
+      "activities": [],
+      "uris": [],
+      "play_context": null,
+      "recommendation": null
+    }
+  ]
+}

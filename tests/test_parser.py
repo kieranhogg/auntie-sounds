@@ -3,6 +3,7 @@ from logging import Logger
 
 import pytest
 
+from sounds.model_factory import ModelFactory
 from sounds.models import Menu, Podcast, PodcastEpisode, RadioShow, SearchResults
 from sounds.parser import Parser
 
@@ -69,6 +70,7 @@ class TestParserNestedObjects:
                 "short_title": "Radio 4",
                 "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
                 "network_type": "master_brand",
+                "services": [{"id": "id", "short_title": "title", "type": "type"}],
             },
             "container": {
                 "type": "brand",
@@ -82,8 +84,16 @@ class TestParserNestedObjects:
                 },
                 "activities": [],
             },
+            "titles": {
+                "primary": "Title",
+                "secondary": None,
+                "tertiary": None,
+                "entity_title": None,
+            },
         }
         parser = Parser()
         result = parser.parse_node(data)
-        for nested_object in parser.nested_objects:
-            assert hasattr(result, nested_object.source_key)
+        for nested_object in ModelFactory.nested_objects:
+            assert hasattr(result, nested_object.source_key) or hasattr(
+                result.network, nested_object.source_key
+            )  # For network->services

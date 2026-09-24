@@ -1,0 +1,3317 @@
+{
+  "$schema": "https://rms.api.bbc.co.uk/docs/swagger.json#/definitions/BroadcastsResponse",
+  "total": 775,
+  "limit": 30,
+  "offset": 0,
+  "data": [
+    {
+      "type": "broadcast",
+      "pid": "p0p0k4jj",
+      "start": "2026-08-18T00:00:00Z",
+      "end": "2026-08-18T01:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 3600,
+      "progress": 3600,
+      "live": false,
+      "blanked": false,
+      "repeat": true,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m001hwps",
+        "urn": "urn:bbc:radio:episode:m001hwps",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2023-02-16T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "6 Music Artist Collection",
+          "secondary": "Phoebe Bridgers",
+          "tertiary": "Phoebe Bridgers Live",
+          "entity_title": "Phoebe Bridgers Live",
+          "display_title": "6 Music Artist Collection - Phoebe Bridgers - Phoebe Bridgers Live",
+          "primary_title": "Phoebe Bridgers",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Phoebe Bridgers live, recorded in Belfast at the Biggest Weekend and at Glastonbury 2022.",
+          "medium": "Phoebe Bridgers, recorded live in Belfast at the Biggest Weekend in 2018 and at Glastonbury with The Jesus & Mary Chain in 2022.",
+          "long": "Phoebe Bridgers, recorded live in Belfast at the Biggest Weekend in 2018 and at Glastonbury with The Jesus & Mary Chain in 2022."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0np0162",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0np0162.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "factual",
+            "key": "factual",
+            "title": "Factual"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "m000ppc6",
+            "title": "6 Music Artist Collection",
+            "synopses": {
+              "short": "Celebrating the music and career of artists and exploring their influences.",
+              "medium": "Celebrating the music and career of artists and exploring their influences and those they have in turn inspired.",
+              "long": "Celebrating the music and career of artists and exploring their influences and those they have in turn inspired."
+            }
+          },
+          {
+            "type": "series",
+            "id": "m001sfnw",
+            "title": "Phoebe Bridgers",
+            "synopses": {
+              "short": "Celebrating the music and career of Phoebe Bridgers.",
+              "medium": "Celebrating the music and career of Phoebe Bridgers.",
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0k4jq",
+      "start": "2026-08-18T01:00:00Z",
+      "end": "2026-08-18T02:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 3600,
+      "progress": 3600,
+      "live": false,
+      "blanked": false,
+      "repeat": true,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m000t5kk",
+        "urn": "urn:bbc:radio:episode:m000t5kk",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2021-03-17T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "6 Music Artist Collection",
+          "secondary": "Phoebe Bridgers",
+          "tertiary": "Vol. 3: A selection of records that inspire Phoebe to write",
+          "entity_title": "Vol. 3: A selection of records that inspire Phoebe to write",
+          "display_title": "6 Music Artist Collection - Phoebe Bridgers - Vol. 3: A selection of records that inspire Phoebe to write",
+          "primary_title": "Phoebe Bridgers",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Phoebe curates a serene mixtape featuring Brian Eno, Julianna Barwick, Yo La Tengo & more.",
+          "medium": "Phoebe curates a serene mixtape featuring Brian Eno, Julianna Barwick, Yo La Tengo and more.",
+          "long": "In Volume 3 Phoebe curates a playlist of inspiring tracks; the music that helps her write featuring Brian Eno, Julianna Barwick, Yo La Tengo and more."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0np012b",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0np012b.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          },
+          {
+            "type": "genre",
+            "id": "music-hiphoprnbanddancehall",
+            "key": "hiphoprnbanddancehall",
+            "title": "Hip Hop, RnB & Dancehall"
+          },
+          {
+            "type": "genre",
+            "id": "music-rockandindie",
+            "key": "rockandindie",
+            "title": "Rock & Indie"
+          },
+          {
+            "type": "genre",
+            "id": "music-soulandreggae",
+            "key": "soulandreggae",
+            "title": "Soul & Reggae"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "m000ppc6",
+            "title": "6 Music Artist Collection",
+            "synopses": {
+              "short": "Celebrating the music and career of artists and exploring their influences.",
+              "medium": "Celebrating the music and career of artists and exploring their influences and those they have in turn inspired.",
+              "long": "Celebrating the music and career of artists and exploring their influences and those they have in turn inspired."
+            }
+          },
+          {
+            "type": "series",
+            "id": "m001sfnw",
+            "title": "Phoebe Bridgers",
+            "synopses": {
+              "short": "Celebrating the music and career of Phoebe Bridgers.",
+              "medium": "Celebrating the music and career of Phoebe Bridgers.",
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0k4jv",
+      "start": "2026-08-18T02:00:00Z",
+      "end": "2026-08-18T03:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 3600,
+      "progress": 3600,
+      "live": false,
+      "blanked": false,
+      "repeat": true,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m000tn8f",
+        "urn": "urn:bbc:radio:episode:m000tn8f",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2021-03-31T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "6 Music Artist Collection",
+          "secondary": "Phoebe Bridgers",
+          "tertiary": "Vol 5: Pain; Songs for dark, depressing days",
+          "entity_title": "Vol 5: Pain; Songs for dark, depressing days",
+          "display_title": "6 Music Artist Collection - Phoebe Bridgers - Vol 5: Pain; Songs for dark, depressing days",
+          "primary_title": "Phoebe Bridgers",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Phoebeâ€™s playlist is devoted to the darkest corner of the library of songs in her head.",
+          "medium": "Phoebeâ€™s latest playlist is devoted to the darkest corner of the library of songs in her head. Featuring Elliott Smith, Townes Van Zandt, The Barr Brothers, Gillian Welch and more.",
+          "long": "Phoebeâ€™s latest playlist is devoted to the darkest corner of the library of songs in her head. Featuring Elliott Smith, Townes Van Zandt, The Barr Brothers, Gillian Welch and more."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0np013k",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0np013k.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          },
+          {
+            "type": "genre",
+            "id": "music-hiphoprnbanddancehall",
+            "key": "hiphoprnbanddancehall",
+            "title": "Hip Hop, RnB & Dancehall"
+          },
+          {
+            "type": "genre",
+            "id": "music-rockandindie",
+            "key": "rockandindie",
+            "title": "Rock & Indie"
+          },
+          {
+            "type": "genre",
+            "id": "music-soulandreggae",
+            "key": "soulandreggae",
+            "title": "Soul & Reggae"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "m000ppc6",
+            "title": "6 Music Artist Collection",
+            "synopses": {
+              "short": "Celebrating the music and career of artists and exploring their influences.",
+              "medium": "Celebrating the music and career of artists and exploring their influences and those they have in turn inspired.",
+              "long": "Celebrating the music and career of artists and exploring their influences and those they have in turn inspired."
+            }
+          },
+          {
+            "type": "series",
+            "id": "m001sfnw",
+            "title": "Phoebe Bridgers",
+            "synopses": {
+              "short": "Celebrating the music and career of Phoebe Bridgers.",
+              "medium": "Celebrating the music and career of Phoebe Bridgers.",
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0k4k1",
+      "start": "2026-08-18T03:00:00Z",
+      "end": "2026-08-18T04:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 3600,
+      "progress": 3600,
+      "live": false,
+      "blanked": false,
+      "repeat": true,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m001rz0f",
+        "urn": "urn:bbc:radio:episode:m001rz0f",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2023-11-07T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "6 Music Artist Collection",
+          "secondary": "Phoebe Bridgers",
+          "tertiary": "The Phoebe Bridgers Playlist",
+          "entity_title": "The Phoebe Bridgers Playlist",
+          "display_title": "6 Music Artist Collection - Phoebe Bridgers - The Phoebe Bridgers Playlist",
+          "primary_title": "Phoebe Bridgers",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "A trip through Phoebe Bridgers's extraordinarily prolific decade of music.",
+          "medium": "A trip through Phoebe Bridgers's extraordinarily prolific decade of music, from her first singles through to the success of boygenius.",
+          "long": "A trip through Phoebe Bridgers's extraordinarily prolific decade of music, from her first singles through to the success of boygenius."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0np01bz",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0np01bz.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          },
+          {
+            "type": "genre",
+            "id": "music-hiphoprnbanddancehall",
+            "key": "hiphoprnbanddancehall",
+            "title": "Hip Hop, RnB & Dancehall"
+          },
+          {
+            "type": "genre",
+            "id": "music-rockandindie",
+            "key": "rockandindie",
+            "title": "Rock & Indie"
+          },
+          {
+            "type": "genre",
+            "id": "music-soulandreggae",
+            "key": "soulandreggae",
+            "title": "Soul & Reggae"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "m000ppc6",
+            "title": "6 Music Artist Collection",
+            "synopses": {
+              "short": "Celebrating the music and career of artists and exploring their influences.",
+              "medium": "Celebrating the music and career of artists and exploring their influences and those they have in turn inspired.",
+              "long": "Celebrating the music and career of artists and exploring their influences and those they have in turn inspired."
+            }
+          },
+          {
+            "type": "series",
+            "id": "m001sfnw",
+            "title": "Phoebe Bridgers",
+            "synopses": {
+              "short": "Celebrating the music and career of Phoebe Bridgers.",
+              "medium": "Celebrating the music and career of Phoebe Bridgers.",
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p184kk",
+      "start": "2026-08-18T04:00:00Z",
+      "end": "2026-08-18T06:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 7200,
+      "progress": 7200,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m00304dt",
+        "urn": "urn:bbc:radio:episode:m00304dt",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-08-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Chris Hawkins",
+          "secondary": "The biggest tunes to start the day",
+          "tertiary": null,
+          "entity_title": "The biggest tunes to start the day",
+          "display_title": "Chris Hawkins - The biggest tunes to start the day",
+          "primary_title": "Chris Hawkins",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "The biggest tunes to start the day, plus there's your chance to vote on a 'Lost Love'.",
+          "medium": "The biggest tunes to start the day, plus there's your chance to vote on a 'Lost Love'.",
+          "long": "The biggest tunes to start the day, your chance to vote on a 'Lost Love', plus will your track get a spin on the wheel?\n\nGet involved Text 64046 or Whatsapp 03700 100 600.\n\nProduced in Salford by Audio Always for BBC Radio 6 Music."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0m53mxl",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0m53mxl.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          },
+          {
+            "type": "genre",
+            "id": "music-rockandindie",
+            "key": "rockandindie",
+            "title": "Rock & Indie"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "b0072l8y",
+            "title": "Chris Hawkins",
+            "synopses": {
+              "short": "Chris Hawkins starts your day with new music, forgotten classics and session tracks.",
+              "medium": "Chris Hawkins starts your day with a mix of the best new music, forgotten classics and session tracks from the BBC archive across the week.",
+              "long": "Chris Hawkins starts your day with a mix of the best new music, forgotten classics and session tracks from the BBC archive across the week."
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0k578",
+      "start": "2026-08-18T06:00:00Z",
+      "end": "2026-08-18T09:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 10800,
+      "progress": 10800,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m00301dk",
+        "urn": "urn:bbc:radio:episode:m00301dk",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-08-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Nick Grimshaw",
+          "secondary": "Noah Jupe, and a trip back to the 00s",
+          "tertiary": null,
+          "entity_title": "Noah Jupe, and a trip back to the 00s",
+          "display_title": "Nick Grimshaw - Noah Jupe, and a trip back to the 00s",
+          "primary_title": "Nick Grimshaw",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Actor Noah Jupe chats to Nick about his role in drama film & Sons, alongside Bill Nighy.",
+          "medium": "Actor Noah Jupe chats to Nick about favourite music and his role in drama film & Sons, alongside Bill Nighy.",
+          "long": "Actor Noah Jupe (Hamnet, A Quiet Place) chats to Nick about his favourite music and his role in drama film & Sons, alongside Bill Nighy and Johnny Flynn. Plus, Nick gets nostalgic with a trip back to the 00s via a hidden gem from the BBC archive. \n\nAnd as always, there's plenty of wonderful music to start your day, including the Cloudbusting mix to banish the grey skies.\n\nProduced by BBC Audio for BBC Radio 6 Music."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0m53m3f",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0m53m3f.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "m002844t",
+            "title": "Nick Grimshaw",
+            "synopses": {
+              "short": "Nick's got your breakfast soundtrack sorted - with guests, chat, and really good songs",
+              "medium": "Nick's got your breakfast soundtrack sorted - with guests, chat, and really good songs",
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0k57d",
+      "start": "2026-08-18T09:00:00Z",
+      "end": "2026-08-18T12:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 10800,
+      "progress": 10800,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m00301dn",
+        "urn": "urn:bbc:radio:episode:m00301dn",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-08-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Lauren Laverne",
+          "secondary": "Antony Szmierek live in session",
+          "tertiary": null,
+          "entity_title": "Antony Szmierek live in session",
+          "display_title": "Lauren Laverne - Antony Szmierek live in session",
+          "primary_title": "Lauren Laverne",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Antony Szmierek is live in session with Lauren.",
+          "medium": "Antony Szmierek is live in session with Lauren playing tracks from his new second album, Decoding Birdsong.",
+          "long": "Antony Szmierek is live in session with Lauren playing tracks from his new second album, Decoding Birdsong.\n\nLauren gives you the finest blend of fantastic music for your Tuesday morning. We take a moment to reflect something beautiful happening with our 6 Music listeners in the Beauty Spot, and look forward to the day ahead in A View From The Afternoon.\n\nProduced by BBC Audio for BBC Radio 6 Music."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0m53ld7",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0m53ld7.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          },
+          {
+            "type": "genre",
+            "id": "music-rockandindie",
+            "key": "rockandindie",
+            "title": "Rock & Indie"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "b00c000j",
+            "title": "Lauren Laverne",
+            "synopses": {
+              "short": "Music and chat with Lauren Laverne.",
+              "medium": "Music and chat with Lauren Laverne.",
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0k57l",
+      "start": "2026-08-18T12:00:00Z",
+      "end": "2026-08-18T15:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 10800,
+      "progress": 10800,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m00301dq",
+        "urn": "urn:bbc:radio:episode:m00301dq",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-08-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Craig Charles",
+          "secondary": "A veritable feast of music and fun with Panic Shack",
+          "tertiary": null,
+          "entity_title": "A veritable feast of music and fun with Panic Shack",
+          "display_title": "Craig Charles - A veritable feast of music and fun with Panic Shack",
+          "primary_title": "Craig Charles",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Panic Shack join Craig ahead of their appearance at Green Man Festival 2026.",
+          "medium": "Ahead of their appearance at Green Man Festival 2026, Meg and Em from Panic Shack stop by to chat about supporting The Sex Pistols, touring the States, and their new music plans.",
+          "long": "Ahead of their appearance at Green Man Festival 2026, Meg and Em from Panic Shack stop by to chat about supporting The Sex Pistols, touring the States, and their new music plans.\n\nPlus, we take a moment to chill out in the Zen Den, we hop onto the Trike of Psych, and it's down to YOU to pick the last song of the show.\n\nTo get involved, email craig@bbc.co.uk.\n\nProduced in Salford by Audio Always for BBC Radio 6 Music."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0m53lm4",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0m53lm4.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "m000h9wt",
+            "title": "Craig Charles",
+            "synopses": {
+              "short": "The afternoon party that everyone's invited to.",
+              "medium": "The afternoon party that everyone's invited to.",
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0k57q",
+      "start": "2026-08-18T15:00:00Z",
+      "end": "2026-08-18T18:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 10800,
+      "progress": 10800,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m00301ds",
+        "urn": "urn:bbc:radio:episode:m00301ds",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-08-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Huw Stephens",
+          "secondary": "6 Musicology",
+          "tertiary": null,
+          "entity_title": "6 Musicology",
+          "display_title": "Huw Stephens - 6 Musicology",
+          "primary_title": "Huw Stephens",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Professor Sophie Daniels joins Huw to talk 'Unusual Song Shapes' in songs.",
+          "medium": "Professor Sophie Daniels joins Huw to talk 'Unusual Song Shapes' in songs, and Weezer's Rivers Cuomo takes part in this week's 'Song I Wish I'd Written'.",
+          "long": "Professor Sophie Daniels joins Huw to talk 'Unusual Song Shapes' in songs in this week's 6 Musicology, and Weezer's Rivers Cuomo takes part in this week's ''Song I Wish I'd Written'. \n\nHuw has another brand new quiz created by the Music Quiz Generator, giving one of you the opportunity to win a Music Sounds Better With Huw pinbadge. And we declare that your evening has begun with the Home Run playlist at 5 o'clock. \n\nProduced by BBC Audio in Cardiff for BBC Radio 6 Music."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0m53mdd",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0m53mdd.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "m0001wgx",
+            "title": "Huw Stephens",
+            "synopses": {
+              "short": "All the best music, Tuesday to Friday on 6 Music - live from Cardiff.",
+              "medium": "All the best music, Tuesday to Friday on 6 Music - live from Cardiff.",
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0k57s",
+      "start": "2026-08-18T18:00:00Z",
+      "end": "2026-08-18T20:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 7200,
+      "progress": 7200,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m00301dv",
+        "urn": "urn:bbc:radio:episode:m00301dv",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-08-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "New Music Fix",
+          "secondary": "Sailor Honeymoon live in session",
+          "tertiary": null,
+          "entity_title": "Sailor Honeymoon live in session",
+          "display_title": "New Music Fix - Sailor Honeymoon live in session",
+          "primary_title": "New Music Fix",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Seoul-based DIY punk trio Sailor Honeymoon are live in session from Salford.",
+          "medium": "Seoul-based DIY punk trio Sailor Honeymoon are live in session from Salford, following the release of their debut album The Worst of Sailor Honeymoon.",
+          "long": "Seoul-based DIY punk trio Sailor Honeymoon are live in session from Salford, following the release of their debut album The Worst of Sailor Honeymoon.\n\nProduced in Salford by BBC Audio for BBC Radio 6 Music."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0lsyqqk",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lsyqqk.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          },
+          {
+            "type": "genre",
+            "id": "music-rockandindie",
+            "key": "rockandindie",
+            "title": "Rock & Indie"
+          },
+          {
+            "type": "format",
+            "id": "magazinesandreviews",
+            "key": "magazinesandreviews",
+            "title": "Magazines & Reviews"
+          },
+          {
+            "type": "format",
+            "id": "mixes",
+            "key": "mixes",
+            "title": "Mixes"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "b00rz79k",
+            "title": "New Music Fix",
+            "synopses": {
+              "short": "Get your daily fix of new music with Deb Grant and Nathan Shepherd.",
+              "medium": "Get your daily fix of new music with Deb Grant and Nathan Shepherd, plus a weekly roundup of the best new albums with Matt Everitt.",
+              "long": null
+            }
+          }
+        ],
+        "availability": {
+          "type": "original",
+          "id": "m00301dt",
+          "duration": 7200,
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "has_guidance": false,
+          "available_from_date": "2026-08-18T20:00:00Z",
+          "available_to_date": "2026-09-17T20:00:00Z",
+          "status": "available",
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 97000000,
+                "label": "97 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 128000000,
+                "label": "128 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 318000000,
+                "label": "318 MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0k57v",
+      "start": "2026-08-18T20:00:00Z",
+      "end": "2026-08-18T22:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 7200,
+      "progress": 7200,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m00301dx",
+        "urn": "urn:bbc:radio:episode:m00301dx",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-08-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Riley & Coe",
+          "secondary": "18/08/2026",
+          "tertiary": null,
+          "entity_title": "18/08/2026",
+          "display_title": "Riley & Coe - 18/08/2026",
+          "primary_title": "Riley & Coe",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Gideon Coe plays his music loves from every era and genre.",
+          "medium": "Gideon Coe plays his music loves from every era and genre.",
+          "long": "Gideon Coe plays his music loves from every era and genre.\n\nProduced by BBC Audio North for BBC Radio 6 Music."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0ly1k63",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0ly1k63.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          },
+          {
+            "type": "genre",
+            "id": "music-rockandindie",
+            "key": "rockandindie",
+            "title": "Rock & Indie"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "m001mf2c",
+            "title": "Riley & Coe",
+            "synopses": {
+              "short": "Two great musical minds coming together to share records from every era and genre.",
+              "medium": "Two great musical minds coming together to share records from every era and genre.",
+              "long": null
+            }
+          }
+        ],
+        "availability": {
+          "type": "original",
+          "id": "m00301dw",
+          "duration": 7200,
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "has_guidance": false,
+          "available_from_date": "2026-08-18T22:00:00Z",
+          "available_to_date": "2026-09-17T22:00:00Z",
+          "status": "available",
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 97000000,
+                "label": "97 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 128000000,
+                "label": "128 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 318000000,
+                "label": "318 MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0k57z",
+      "start": "2026-08-18T22:00:00Z",
+      "end": "2026-08-18T23:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 3600,
+      "progress": 3600,
+      "live": false,
+      "blanked": false,
+      "repeat": true,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m001st6k",
+        "urn": "urn:bbc:radio:episode:m001st6k",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2023-12-05T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": 2,
+          "total": 0
+        },
+        "titles": {
+          "primary": "6 Music Artist in Residence",
+          "secondary": "Shygirl",
+          "tertiary": "Lose Yourself",
+          "entity_title": "Lose Yourself",
+          "display_title": "6 Music Artist in Residence - Shygirl - Lose Yourself",
+          "primary_title": "Shygirl",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "South London musician and performer Shygirl takes over the residency.",
+          "medium": "South London musician and performer Shygirl shares the music that she gets lost in.",
+          "long": "In the second episode of â€˜Shyâ€™s Music Therapyâ€™, Shygirl inspires you to stop and lose yourself in this dramatic playlist. Spinning records from Bjork, Caroline Polachek and Sevdaliza."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0p13dcn",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p13dcn.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          },
+          {
+            "type": "format",
+            "id": "mixes",
+            "key": "mixes",
+            "title": "Mixes"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "m000pj9w",
+            "title": "6 Music Artist in Residence",
+            "synopses": {
+              "short": "6 Music's Artist In Residence is a journey into the musical soul of an artist.",
+              "medium": "6 Music's Artist In Residence is a journey into the musical soul of an artist, based around a theme or mood.",
+              "long": "6 Music's Artist In Residence will be a journey into the musical soul of an artist, based around a theme or mood. Each episode finds the host playing records that have informed specific periods of their life."
+            }
+          },
+          {
+            "type": "series",
+            "id": "m001v1bm",
+            "title": "Shygirl",
+            "synopses": {
+              "short": "South London musician and performer Shygirl takes over the residency.",
+              "medium": "South London musician and performer Shygirl takes over the residency.",
+              "long": null
+            }
+          }
+        ],
+        "availability": {
+          "type": "original",
+          "id": "m001st6h",
+          "duration": 3600,
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "has_guidance": false,
+          "available_from_date": "2026-08-18T23:00:00Z",
+          "available_to_date": "2026-09-17T23:00:00Z",
+          "status": "available",
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 49000000,
+                "label": "49 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 65000000,
+                "label": "65 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 160000000,
+                "label": "160 MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p184ng",
+      "start": "2026-08-18T23:00:00Z",
+      "end": "2026-08-19T00:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 3600,
+      "progress": 3600,
+      "live": false,
+      "blanked": false,
+      "repeat": true,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m002x35l",
+        "urn": "urn:bbc:radio:episode:m002x35l",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-06-12T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "6 Music's Indie Forever",
+          "secondary": "Indie Duets playlist!",
+          "tertiary": null,
+          "entity_title": "Indie Duets playlist!",
+          "display_title": "6 Music's Indie Forever - Indie Duets playlist!",
+          "primary_title": "6 Music's Indie Forever",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Nathan Shepherd celebrates Indie Duets. With Mystery Jets, Manics and The xx!",
+          "medium": "Nathan Shepherd celebrates Indie Duets. With Mystery Jets, Manics and The xx!",
+          "long": "Nathan Shepherd selects the best indie duets. Songs by bands with dual singers like The xx, The Naked and Famous, and Belle and Sebastian. Plus, indie collaborations from Bombay Bicycle Club with Holly Humberstone, and Sam Fender with Olivia Dean.\n\nProduced in Salford by We Are Grape for BBC 6 Music."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0p6rbnv",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p6rbnv.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          },
+          {
+            "type": "genre",
+            "id": "music-rockandindie",
+            "key": "rockandindie",
+            "title": "Rock & Indie"
+          },
+          {
+            "type": "format",
+            "id": "mixes",
+            "key": "mixes",
+            "title": "Mixes"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "m0012v02",
+            "title": "6 Music's Indie Forever",
+            "synopses": {
+              "short": "Nothing but upbeat indie tunes you know and love with a sprinkling of future hits.",
+              "medium": "Nothing but solid gold upbeat indie bangers; a throwback to the indie tunes you love with a sprinkling of the finest future hits. New playlists are available weekly!",
+              "long": "Nothing but solid gold upbeat indie bangers; a throwback to the indie tunes you love with a sprinkling of the finest future hits. New playlists are available weekly, subscribe for more!"
+            }
+          }
+        ],
+        "availability": {
+          "type": "original",
+          "id": "m002x35k",
+          "duration": 3600,
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "has_guidance": false,
+          "available_from_date": "2026-08-19T00:00:00Z",
+          "available_to_date": "2026-09-18T00:00:00Z",
+          "status": "available",
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 49000000,
+                "label": "49 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 65000000,
+                "label": "65 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 160000000,
+                "label": "160 MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0k581",
+      "start": "2026-08-19T00:00:00Z",
+      "end": "2026-08-19T01:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 3600,
+      "progress": 3600,
+      "live": false,
+      "blanked": false,
+      "repeat": true,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "b00sl4y4",
+        "urn": "urn:bbc:radio:episode:b00sl4y4",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2011-04-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "6 Music Stories",
+          "secondary": "From Mento To Lovers' Rock - Episode 5",
+          "tertiary": null,
+          "entity_title": "From Mento To Lovers' Rock - Episode 5",
+          "display_title": "6 Music Stories - From Mento To Lovers' Rock - Episode 5",
+          "primary_title": "6 Music Stories",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Linton Kwesi Johnson continues his history of Jamaican music. First broadcast in 1983.",
+          "medium": "Documentary series about Jamaican popular music with Linton Kwesi Johnson, exploring the roots of reggae in slave culture and the musical traditions of Europe and Africa.",
+          "long": "Linton Kwesi Johnson continues his history of Jamaican music. In this episode, he looks at the post-war growth of the local record industry and the heyday of ska. First broadcast in 1983."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0lt42tq",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lt42tq.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "factual",
+            "key": "factual",
+            "title": "Factual"
+          },
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          },
+          {
+            "type": "format",
+            "id": "documentaries",
+            "key": "documentaries",
+            "title": "Documentaries"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "m001lbww",
+            "title": "6 Music Stories",
+            "synopses": {
+              "short": "Delve deeper into the stories behind your favourite artists.",
+              "medium": "Delve deeper into the stories behind your favourite artists, genres and moments in music history.",
+              "long": "Delve deeper into the stories behind your favourite artists, genres and moments in music history, as we celebrate the names, places and movements that have shaped our lives."
+            }
+          }
+        ],
+        "availability": {
+          "type": "original",
+          "id": "b00sl4ws",
+          "duration": 3600,
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "has_guidance": false,
+          "available_from_date": "2026-08-19T01:00:00Z",
+          "available_to_date": "2026-09-18T01:00:00Z",
+          "status": "available",
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 49000000,
+                "label": "49 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 65000000,
+                "label": "65 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 160000000,
+                "label": "160 MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0k583",
+      "start": "2026-08-19T01:00:00Z",
+      "end": "2026-08-19T02:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 3600,
+      "progress": 3600,
+      "live": false,
+      "blanked": false,
+      "repeat": true,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "b00sl4y6",
+        "urn": "urn:bbc:radio:episode:b00sl4y6",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2011-04-19T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "6 Music Stories",
+          "secondary": "From Mento to Lovers' Rock - Episode 6",
+          "tertiary": null,
+          "entity_title": "From Mento to Lovers' Rock - Episode 6",
+          "display_title": "6 Music Stories - From Mento to Lovers' Rock - Episode 6",
+          "primary_title": "6 Music Stories",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Linton Kwesi Johnson considers rocksteady and social unrest in Jamaica in the 60s.",
+          "medium": "Documentary series about Jamaican popular music with Linton Kwesi Johnson, exploring the roots of reggae in slave culture and the musical traditions of Europe and Africa.",
+          "long": "Linton Kwesi Johnson continues his 10-part history of Jamaican music. In part six, he considers the social unrest on the island in the sixties and the emergence of the new rocksteady style."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0lt42tq",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lt42tq.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "factual",
+            "key": "factual",
+            "title": "Factual"
+          },
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          },
+          {
+            "type": "format",
+            "id": "documentaries",
+            "key": "documentaries",
+            "title": "Documentaries"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "m001lbww",
+            "title": "6 Music Stories",
+            "synopses": {
+              "short": "Delve deeper into the stories behind your favourite artists.",
+              "medium": "Delve deeper into the stories behind your favourite artists, genres and moments in music history.",
+              "long": "Delve deeper into the stories behind your favourite artists, genres and moments in music history, as we celebrate the names, places and movements that have shaped our lives."
+            }
+          }
+        ],
+        "availability": {
+          "type": "original",
+          "id": "b00sl4x5",
+          "duration": 3600,
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "has_guidance": false,
+          "available_from_date": "2026-08-19T02:00:00Z",
+          "available_to_date": "2026-09-18T02:00:00Z",
+          "status": "available",
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 49000000,
+                "label": "49 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 65000000,
+                "label": "65 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 160000000,
+                "label": "160 MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0k585",
+      "start": "2026-08-19T02:00:00Z",
+      "end": "2026-08-19T03:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 3600,
+      "progress": 3600,
+      "live": false,
+      "blanked": false,
+      "repeat": true,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m000d7yv",
+        "urn": "urn:bbc:radio:episode:m000d7yv",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2020-01-15T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "6 Music Live Hour",
+          "secondary": "Auto Da FÃ©, the Cigarettes and the Flowers",
+          "tertiary": null,
+          "entity_title": "Auto Da FÃ©, the Cigarettes and the Flowers",
+          "display_title": "6 Music Live Hour - Auto Da FÃ©, the Cigarettes and the Flowers",
+          "primary_title": "6 Music Live Hour",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Auto Da FÃ© in concert in London in 1983, plus sessions by the Cigarettes and the Flowers.",
+          "medium": "Auto Da FÃ© in concert at the Paris Theatre in London in 1983, plus a session by the Cigarettes, recorded on 15 January 1980, and one by the Flowers from August 1979.",
+          "long": "Auto Da FÃ© in concert at the Paris Theatre in London in 1983, plus a session by the Cigarettes, recorded on 15 January 1980, and one by the Flowers from August 1979. Presented by Chris Hawkins."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0lt43dq",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lt43dq.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          },
+          {
+            "type": "genre",
+            "id": "music-classicpopandrock",
+            "key": "classicpopandrock",
+            "title": "Classic Pop & Rock"
+          },
+          {
+            "type": "genre",
+            "id": "music-rockandindie",
+            "key": "rockandindie",
+            "title": "Rock & Indie"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "b00rwm3t",
+            "title": "6 Music Live Hour",
+            "synopses": {
+              "short": "6 Music presents gems from the vast BBC archive including concerts and live sessions.",
+              "medium": "With gems from the BBC archive, including concerts and live sessions from a variety of artists - from the up-and-coming to the established to the long-forgotten-but-still-loved.",
+              "long": null
+            }
+          }
+        ],
+        "availability": {
+          "type": "original",
+          "id": "m000d7yt",
+          "duration": 3600,
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "has_guidance": false,
+          "available_from_date": "2026-08-19T03:00:00Z",
+          "available_to_date": "2026-09-18T03:00:00Z",
+          "status": "available",
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 49000000,
+                "label": "49 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 65000000,
+                "label": "65 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 160000000,
+                "label": "160 MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0k587",
+      "start": "2026-08-19T03:00:00Z",
+      "end": "2026-08-19T04:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 3600,
+      "progress": 3600,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m00301dz",
+        "urn": "urn:bbc:radio:episode:m00301dz",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-08-19T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "The 6 Music Playlist",
+          "secondary": "Charli xcx, Django Django, Moses Boyd and more!",
+          "tertiary": null,
+          "entity_title": "Charli xcx, Django Django, Moses Boyd and more!",
+          "display_title": "The 6 Music Playlist - Charli xcx, Django Django, Moses Boyd and more!",
+          "primary_title": "The 6 Music Playlist",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Want to hear the latest tracks 6 Music have added to their playlist? Then listen here!",
+          "medium": "Want to hear the latest tracks 6 Music have added to their playlist? Then listen here!",
+          "long": null
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0lt43ng",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lt43ng.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "m001j52w",
+            "title": "The 6 Music Playlist",
+            "synopses": {
+              "short": "Want to hear the latest tracks 6 Music have added to their playlist? Then listen here!",
+              "medium": "Want to hear the latest tracks 6 Music have added to their playlist? Then listen here!",
+              "long": null
+            }
+          }
+        ],
+        "availability": {
+          "type": "original",
+          "id": "m00301dy",
+          "duration": 3600,
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "has_guidance": false,
+          "available_from_date": "2026-08-19T04:00:00Z",
+          "available_to_date": "2026-09-18T04:00:00Z",
+          "status": "available",
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 49000000,
+                "label": "49 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 65000000,
+                "label": "65 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 160000000,
+                "label": "160 MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p184nj",
+      "start": "2026-08-19T04:00:00Z",
+      "end": "2026-08-19T06:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 7200,
+      "progress": 7200,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m00304f2",
+        "urn": "urn:bbc:radio:episode:m00304f2",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-08-19T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Chris Hawkins",
+          "secondary": "Wednesday means Names in Songs",
+          "tertiary": null,
+          "entity_title": "Wednesday means Names in Songs",
+          "display_title": "Chris Hawkins - Wednesday means Names in Songs",
+          "primary_title": "Chris Hawkins",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Names in Songs returns, can you hear your name in a well-known song?",
+          "medium": "Names in Songs returns, can you hear your name in a well-known song?",
+          "long": "Names in Songs returns, can you hear your name in a well-known song?\n\nAlso, we spin a Factory Reset track for that perfect midweek stop-down and chill-out. If youâ€™ve got a calming tune you'd like to hear, then please email Chris - chris.6music@bbc.co.uk\n\nProduced in Salford by Audio Always for BBC Radio 6 Music."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0m53mxl",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0m53mxl.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          },
+          {
+            "type": "genre",
+            "id": "music-rockandindie",
+            "key": "rockandindie",
+            "title": "Rock & Indie"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "b0072l8y",
+            "title": "Chris Hawkins",
+            "synopses": {
+              "short": "Chris Hawkins starts your day with new music, forgotten classics and session tracks.",
+              "medium": "Chris Hawkins starts your day with a mix of the best new music, forgotten classics and session tracks from the BBC archive across the week.",
+              "long": "Chris Hawkins starts your day with a mix of the best new music, forgotten classics and session tracks from the BBC archive across the week."
+            }
+          }
+        ],
+        "availability": {
+          "type": "original",
+          "id": "m00304f1",
+          "duration": 7200,
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "has_guidance": false,
+          "available_from_date": "2026-08-19T06:00:00Z",
+          "available_to_date": "2026-09-18T06:00:00Z",
+          "status": "available",
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 97000000,
+                "label": "97 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 128000000,
+                "label": "128 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 318000000,
+                "label": "318 MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0h8qb",
+      "start": "2026-08-19T06:00:00Z",
+      "end": "2026-08-19T09:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 10800,
+      "progress": 10800,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m00301j9",
+        "urn": "urn:bbc:radio:episode:m00301j9",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-08-19T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Nick Grimshaw",
+          "secondary": "Guests, chat and really good songs",
+          "tertiary": null,
+          "entity_title": "Guests, chat and really good songs",
+          "display_title": "Nick Grimshaw - Guests, chat and really good songs",
+          "primary_title": "Nick Grimshaw",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Wonderful music to start the day, including the Cloudbusting mix to banish the grey skies.",
+          "medium": "Wonderful music to start your day, including the Cloudbusting mix to banish the grey skies.",
+          "long": "Wonderful music to start your day, including the Cloudbusting mix to banish the grey skies.\n\nProduced by BBC Audio for BBC Radio 6 Music."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0m53m3f",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0m53m3f.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "m002844t",
+            "title": "Nick Grimshaw",
+            "synopses": {
+              "short": "Nick's got your breakfast soundtrack sorted - with guests, chat, and really good songs",
+              "medium": "Nick's got your breakfast soundtrack sorted - with guests, chat, and really good songs",
+              "long": null
+            }
+          }
+        ],
+        "availability": {
+          "type": "original",
+          "id": "m00301j8",
+          "duration": 10740,
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "has_guidance": false,
+          "available_from_date": "2026-08-19T09:00:00Z",
+          "available_to_date": "2026-09-18T09:00:00Z",
+          "status": "available",
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 143000000,
+                "label": "143 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 191000000,
+                "label": "191 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 474000000,
+                "label": "474 MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0h8qd",
+      "start": "2026-08-19T09:00:00Z",
+      "end": "2026-08-19T12:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 10800,
+      "progress": 10800,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m00301jc",
+        "urn": "urn:bbc:radio:episode:m00301jc",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-08-19T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Lauren Laverne",
+          "secondary": "Lively anthems and unexpected gems for your midweek morning",
+          "tertiary": null,
+          "entity_title": "Lively anthems and unexpected gems for your midweek morning",
+          "display_title": "Lauren Laverne - Lively anthems and unexpected gems for your midweek morning",
+          "primary_title": "Lauren Laverne",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Lauren gets your Wednesday going with the most magnificent music.",
+          "medium": "Lauren gets your Wednesday going with the most magnificent music.",
+          "long": "Lauren gives you the finest blend of fantastic music for your Wednesday morning. We take a moment to reflect something beautiful happening with our 6 Music listeners in the Beauty Spot, and look forward to the day ahead in A View From The Afternoon.\n\nProduced by BBC Audio for BBC Radio 6 Music."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0m53ld7",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0m53ld7.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          },
+          {
+            "type": "genre",
+            "id": "music-rockandindie",
+            "key": "rockandindie",
+            "title": "Rock & Indie"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "b00c000j",
+            "title": "Lauren Laverne",
+            "synopses": {
+              "short": "Music and chat with Lauren Laverne.",
+              "medium": "Music and chat with Lauren Laverne.",
+              "long": null
+            }
+          }
+        ],
+        "availability": {
+          "type": "original",
+          "id": "m00301jb",
+          "duration": 10800,
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "has_guidance": false,
+          "available_from_date": "2026-08-19T12:00:00Z",
+          "available_to_date": "2026-09-18T12:00:00Z",
+          "status": "available",
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 144000000,
+                "label": "144 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 192000000,
+                "label": "192 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 477000000,
+                "label": "477 MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0h8qg",
+      "start": "2026-08-19T12:00:00Z",
+      "end": "2026-08-19T15:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 10800,
+      "progress": 10800,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m00301jf",
+        "urn": "urn:bbc:radio:episode:m00301jf",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-08-19T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Craig Charles",
+          "secondary": "Welcome to your midweek pick-me-up!",
+          "tertiary": null,
+          "entity_title": "Welcome to your midweek pick-me-up!",
+          "display_title": "Craig Charles - Welcome to your midweek pick-me-up!",
+          "primary_title": "Craig Charles",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "We hear another of your left-field music suggestions as we turn Left At The Lights.",
+          "medium": "Craig celebrates your midweek wins, and we hear another of your left-field music suggestions as we turn Left At The Lights.",
+          "long": "Craig celebrates your midweek wins, and we hear another of your left-field music suggestions as we turn Left At The Lights.\n\nPlus, we hear from the owner of a GIANT synthesiser, we crack open the Trunk of Punk, and YOU might end up picking the last song of the show... But it's got to be a belter!\n\nFancy getting involved? Email craig@bbc.co.uk.\n\nProduced in Salford by Audio Always for BBC Radio 6 Music."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0m53lm4",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0m53lm4.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "m000h9wt",
+            "title": "Craig Charles",
+            "synopses": {
+              "short": "The afternoon party that everyone's invited to.",
+              "medium": "The afternoon party that everyone's invited to.",
+              "long": null
+            }
+          }
+        ],
+        "availability": {
+          "type": "original",
+          "id": "m00301jd",
+          "duration": 10800,
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "has_guidance": false,
+          "available_from_date": "2026-08-19T15:00:00Z",
+          "available_to_date": "2026-09-18T15:00:00Z",
+          "status": "available",
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 144000000,
+                "label": "144 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 192000000,
+                "label": "192 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 477000000,
+                "label": "477 MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0h8qj",
+      "start": "2026-08-19T15:00:00Z",
+      "end": "2026-08-19T18:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 10800,
+      "progress": 10800,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m00301jh",
+        "urn": "urn:bbc:radio:episode:m00301jh",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-08-19T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Huw Stephens",
+          "secondary": "Jamie T + Westside Cowboy",
+          "tertiary": null,
+          "entity_title": "Jamie T + Westside Cowboy",
+          "display_title": "Huw Stephens - Jamie T + Westside Cowboy",
+          "primary_title": "Huw Stephens",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Jamie T stops by with some cool news & Westside Cowboy drop by to talk their debut album!",
+          "medium": "Jamie T will be on the phone with some cool news and Westside Cowboy drop by to talk their debut album 'It Goes On' out this Friday.",
+          "long": "Jamie T will be on the phone with some cool news & Westside Cowboy drop by to talk their debut album 'It Goes On' out this Friday.\n\nWe have another quiz from Huw's Music Quiz Generator, giving one of you the opportunity to win a Music Sounds Better With Huw pinbadge.\n\nProduced by BBC Audio in Cardiff for BBC Radio 6 Music."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0m53mdd",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0m53mdd.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "m0001wgx",
+            "title": "Huw Stephens",
+            "synopses": {
+              "short": "All the best music, Tuesday to Friday on 6 Music - live from Cardiff.",
+              "medium": "All the best music, Tuesday to Friday on 6 Music - live from Cardiff.",
+              "long": null
+            }
+          }
+        ],
+        "availability": {
+          "type": "original",
+          "id": "m00301jg",
+          "duration": 10800,
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "has_guidance": false,
+          "available_from_date": "2026-08-19T18:00:00Z",
+          "available_to_date": "2026-09-18T18:00:00Z",
+          "status": "available",
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 144000000,
+                "label": "144 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 192000000,
+                "label": "192 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 477000000,
+                "label": "477 MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0h8ql",
+      "start": "2026-08-19T18:00:00Z",
+      "end": "2026-08-19T20:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 7200,
+      "progress": 7200,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m00301jm",
+        "urn": "urn:bbc:radio:episode:m00301jm",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-08-19T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "New Music Fix",
+          "secondary": "Digging Deep with Panda Bear",
+          "tertiary": null,
+          "entity_title": "Digging Deep with Panda Bear",
+          "display_title": "New Music Fix - Digging Deep with Panda Bear",
+          "primary_title": "New Music Fix",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Deb chats to Panda Bear of Animal Collective about the music that has shaped his career.",
+          "medium": "Deb chats to Panda Bear of Animal Collective about the music that has shaped his career. His latest album 'A ? of WHEN' was made with long time collaborator Sonic Boom.",
+          "long": "Deb chats to Panda Bear of Animal Collective about the music that has shaped his career. His latest album 'A ? of WHEN' was made with long time collaborator Sonic Boom.\n\nProduced in Salford by BBC Audio for BBC Radio 6 Music."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0lsyqqk",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lsyqqk.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          },
+          {
+            "type": "genre",
+            "id": "music-rockandindie",
+            "key": "rockandindie",
+            "title": "Rock & Indie"
+          },
+          {
+            "type": "format",
+            "id": "magazinesandreviews",
+            "key": "magazinesandreviews",
+            "title": "Magazines & Reviews"
+          },
+          {
+            "type": "format",
+            "id": "mixes",
+            "key": "mixes",
+            "title": "Mixes"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "b00rz79k",
+            "title": "New Music Fix",
+            "synopses": {
+              "short": "Get your daily fix of new music with Deb Grant and Nathan Shepherd.",
+              "medium": "Get your daily fix of new music with Deb Grant and Nathan Shepherd, plus a weekly roundup of the best new albums with Matt Everitt.",
+              "long": null
+            }
+          }
+        ],
+        "availability": {
+          "type": "original",
+          "id": "m00301jk",
+          "duration": 7200,
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "has_guidance": false,
+          "available_from_date": "2026-08-19T20:00:00Z",
+          "available_to_date": "2026-09-18T20:00:00Z",
+          "status": "available",
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 97000000,
+                "label": "97 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 128000000,
+                "label": "128 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 318000000,
+                "label": "318 MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0h8qn",
+      "start": "2026-08-19T20:00:00Z",
+      "end": "2026-08-19T22:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 7200,
+      "progress": 7200,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m00301jr",
+        "urn": "urn:bbc:radio:episode:m00301jr",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-08-19T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Riley & Coe",
+          "secondary": "19/08/2026",
+          "tertiary": null,
+          "entity_title": "19/08/2026",
+          "display_title": "Riley & Coe - 19/08/2026",
+          "primary_title": "Riley & Coe",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Gideon Coe plays his music loves from every era and genre.",
+          "medium": "Gideon Coe plays his music loves from every era and genre.",
+          "long": "Gideon Coe plays his music loves from every era and genre.\n\nProduced by BBC Audio North for BBC Radio 6 Music."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0ly1k63",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0ly1k63.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          },
+          {
+            "type": "genre",
+            "id": "music-rockandindie",
+            "key": "rockandindie",
+            "title": "Rock & Indie"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "m001mf2c",
+            "title": "Riley & Coe",
+            "synopses": {
+              "short": "Two great musical minds coming together to share records from every era and genre.",
+              "medium": "Two great musical minds coming together to share records from every era and genre.",
+              "long": null
+            }
+          }
+        ],
+        "availability": {
+          "type": "original",
+          "id": "m00301jp",
+          "duration": 7200,
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "has_guidance": false,
+          "available_from_date": "2026-08-19T22:00:00Z",
+          "available_to_date": "2026-09-18T22:00:00Z",
+          "status": "available",
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 97000000,
+                "label": "97 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 128000000,
+                "label": "128 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 318000000,
+                "label": "318 MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0h8qq",
+      "start": "2026-08-19T22:00:00Z",
+      "end": "2026-08-19T23:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 3600,
+      "progress": 3600,
+      "live": false,
+      "blanked": false,
+      "repeat": true,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m001st66",
+        "urn": "urn:bbc:radio:episode:m001st66",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2023-12-06T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": 3,
+          "total": 0
+        },
+        "titles": {
+          "primary": "6 Music Artist in Residence",
+          "secondary": "Shygirl",
+          "tertiary": "Up Against The Clock!",
+          "entity_title": "Up Against The Clock!",
+          "display_title": "6 Music Artist in Residence - Shygirl - Up Against The Clock!",
+          "primary_title": "Shygirl",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "South London musician and performer Shygirl takes over the residency.",
+          "medium": "South London musician and performer Shygirl shares the high-energy tracks she turns to for a motivation boost.",
+          "long": "In the third episode of 'Shy's Music Therapy', Shygirl brings you a high-energy playlist to help combat anxiety and provide a motivation boost. Featuring fresh music from LSDXOXO, Charli xcx and some 00s dance selections."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0p13dcn",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p13dcn.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          },
+          {
+            "type": "format",
+            "id": "mixes",
+            "key": "mixes",
+            "title": "Mixes"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "m000pj9w",
+            "title": "6 Music Artist in Residence",
+            "synopses": {
+              "short": "6 Music's Artist In Residence is a journey into the musical soul of an artist.",
+              "medium": "6 Music's Artist In Residence is a journey into the musical soul of an artist, based around a theme or mood.",
+              "long": "6 Music's Artist In Residence will be a journey into the musical soul of an artist, based around a theme or mood. Each episode finds the host playing records that have informed specific periods of their life."
+            }
+          },
+          {
+            "type": "series",
+            "id": "m001v1bm",
+            "title": "Shygirl",
+            "synopses": {
+              "short": "South London musician and performer Shygirl takes over the residency.",
+              "medium": "South London musician and performer Shygirl takes over the residency.",
+              "long": null
+            }
+          }
+        ],
+        "availability": {
+          "type": "original",
+          "id": "m001st64",
+          "duration": 3600,
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "has_guidance": false,
+          "available_from_date": "2026-08-19T23:00:00Z",
+          "available_to_date": "2026-09-18T23:00:00Z",
+          "status": "available",
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 49000000,
+                "label": "49 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 65000000,
+                "label": "65 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 160000000,
+                "label": "160 MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0h8qv",
+      "start": "2026-08-19T23:00:00Z",
+      "end": "2026-08-20T00:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 3600,
+      "progress": 3600,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m00301jw",
+        "urn": "urn:bbc:radio:episode:m00301jw",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-08-20T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Freak Zone Playlist",
+          "secondary": "Craig Fortnam's Creatures Playlist",
+          "tertiary": null,
+          "entity_title": "Craig Fortnam's Creatures Playlist",
+          "display_title": "Freak Zone Playlist - Craig Fortnam's Creatures Playlist",
+          "primary_title": "Freak Zone Playlist",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Craig Fortnam of the North Sea Radio Orchestra picks an hour of creature-themed music.",
+          "medium": "Craig Fortnam of the North Sea Radio Orchestra picks an hour of creature-themed music. Expects birds, dogs, cats and even a skunk.",
+          "long": "Composer and musician Craig Fortnam of the North Sea Radio Orchestra picks an hour of creature-themed music. Expects birds, dogs, cats and even a skunk.\n\nCraig has been leader of North Sea Radio Orchestra since 2002. He is also a solo artist, 50% of Arch Garrison and part of the current line-up of Cardiacs."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0lt4wkw",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lt4wkw.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "b00rwkjd",
+            "title": "Freak Zone Playlist",
+            "synopses": {
+              "short": "Hand crafted playlists from creators of underground and experimental music.",
+              "medium": "Hand crafted playlists from creators of underground and experimental music.",
+              "long": null
+            }
+          }
+        ],
+        "availability": {
+          "type": "original",
+          "id": "m00301jt",
+          "duration": 3600,
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "has_guidance": false,
+          "available_from_date": "2026-08-20T00:00:00Z",
+          "available_to_date": "2026-09-19T00:00:00Z",
+          "status": "available",
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 49000000,
+                "label": "49 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 65000000,
+                "label": "65 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 160000000,
+                "label": "160 MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0h8qx",
+      "start": "2026-08-20T00:00:00Z",
+      "end": "2026-08-20T01:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 3600,
+      "progress": 3600,
+      "live": false,
+      "blanked": false,
+      "repeat": true,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "b007xvtd",
+        "urn": "urn:bbc:radio:episode:b007xvtd",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2007-09-01T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "6 Music Stories",
+          "secondary": "Blood & Fire: Roots, Reggae and Rastafari",
+          "tertiary": null,
+          "entity_title": "Blood & Fire: Roots, Reggae and Rastafari",
+          "display_title": "6 Music Stories - Blood & Fire: Roots, Reggae and Rastafari",
+          "primary_title": "6 Music Stories",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Don Letts looks at the Rastafari movement and its influence on Jamaican music.",
+          "medium": "Don Letts reveals how the Rastafari movement helped Jamaica recover a lost identity after years of British colonial rule and influenced its music. First broadcast in 2007.",
+          "long": "Don Letts reveals how the Rastafari movement helped Jamaica recover a lost identity after years of British colonial rule and had a profound effect on Jamaican music, culminating in one of the most exciting periods in roots reggae.\n\nAt one time, Jamaica was a place of feelgood sunshine vibes, but as grinding poverty, high crime rates and violence hit the island in the 1970s, the music became darker and introspective. It provided a voice for the poor and the oppressed and became a global phenomenon in the process.\n\nWe all know Bob Marley as the world's most famous Rastafarian, but his story is well documented and often overshadows a wealth of talent from a golden period of roots reggae music. This is the story of other Rastafarian artists and bands like Burning Spear, Max Romeo, Johnnie Clarke, Little Roy, Lee \"Scratch\" Perry, Big Youth, The Mighty Diamonds, Black Uhuru and Culture. And the documentary also covers how the Roots and Rasta message found its way to the UK, spawning British-based reggae bands like Steel Pulse and Matumbi. \n\nThe documentary, first broadcast in 2007, features interviews with reggae legends such as Max Romeo, Johnny Clarke, Stephen Marley, The Abyssinians, The Mighty Diamonds, Steel Pulse, Matumbi, Rankin' Miss P, Rico Rodriguez, Tappa Zukie and Luciano.\n\nFirst broadcast in 2007."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0bw6vyl",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0bw6vyl.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "factual",
+            "key": "factual",
+            "title": "Factual"
+          },
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          },
+          {
+            "type": "format",
+            "id": "documentaries",
+            "key": "documentaries",
+            "title": "Documentaries"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "m001lbww",
+            "title": "6 Music Stories",
+            "synopses": {
+              "short": "Delve deeper into the stories behind your favourite artists.",
+              "medium": "Delve deeper into the stories behind your favourite artists, genres and moments in music history.",
+              "long": "Delve deeper into the stories behind your favourite artists, genres and moments in music history, as we celebrate the names, places and movements that have shaped our lives."
+            }
+          }
+        ],
+        "availability": {
+          "type": "original",
+          "id": "m0010xyd",
+          "duration": 3420,
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "has_guidance": false,
+          "available_from_date": "2026-08-20T01:00:00Z",
+          "available_to_date": "2026-09-19T01:00:00Z",
+          "status": "available",
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 47000000,
+                "label": "47 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 62000000,
+                "label": "62 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 152000000,
+                "label": "152 MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0h8qz",
+      "start": "2026-08-20T01:00:00Z",
+      "end": "2026-08-20T02:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 3600,
+      "progress": 3600,
+      "live": false,
+      "blanked": false,
+      "repeat": true,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "b01m6dls",
+        "urn": "urn:bbc:radio:episode:b01m6dls",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2012-08-26T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "The First Time With...",
+          "secondary": "Jimmy Cliff",
+          "tertiary": null,
+          "entity_title": "Jimmy Cliff",
+          "display_title": "The First Time With... - Jimmy Cliff",
+          "primary_title": "The First Time With...",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Jamaican singer Jimmy Cliff shares his key musical moments with Matt Everitt.",
+          "medium": "Jamaican singer and songwriter Jimmy Cliff shares his key musical moments in conversation with Matt Everitt. First broadcast in 2012.",
+          "long": "Singer and songwriter Jimmy Cliff, star of the film The Harder They Come, shares his key musical moments in conversation with Matt Everitt. They discuss his early influences growing up in Jamaica before his move to London in 1965 at the prompting of Island Records supremo Chris Blackwell. He also talks about his development as a songwriter and staying the course in a career that now stretches back over 50 years.  \n\nThe featured music includes Wonderful World Beautiful People, Vietnam, Wild World and The Harder They Come as well as tracks from The Rolling Stones, Fats Domino, Bruce Springsteen and Paul Simon.  \n\nFirst broadcast in 2012."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0mjh24g",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0mjh24g.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "factual",
+            "key": "factual",
+            "title": "Factual"
+          },
+          {
+            "type": "genre",
+            "id": "factual-lifestories",
+            "key": "lifestories",
+            "title": "Life Stories"
+          },
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          },
+          {
+            "type": "format",
+            "id": "documentaries",
+            "key": "documentaries",
+            "title": "Documentaries"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "b00t3nsw",
+            "title": "The First Time With...",
+            "synopses": {
+              "short": "Interviews with major artists revealing the moments and songs that shaped their careers.",
+              "medium": "6 Music's Matt Everitt presents in-depth, exclusive and revealing interviews with major artists revealing the pivotal moments and songs that shaped their lives and their careers.",
+              "long": null
+            }
+          }
+        ],
+        "availability": {
+          "type": "original",
+          "id": "b01m6dgg",
+          "duration": 3600,
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "has_guidance": false,
+          "available_from_date": "2026-08-20T02:00:00Z",
+          "available_to_date": "2026-09-19T02:00:00Z",
+          "status": "available",
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 49000000,
+                "label": "49 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 65000000,
+                "label": "65 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 160000000,
+                "label": "160 MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0h8r1",
+      "start": "2026-08-20T02:00:00Z",
+      "end": "2026-08-20T03:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 3600,
+      "progress": 3600,
+      "live": false,
+      "blanked": false,
+      "repeat": true,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m000d00g",
+        "urn": "urn:bbc:radio:episode:m000d00g",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2020-01-10T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "6 Music Live Hour",
+          "secondary": "Everything but the Girl, Lorelle Meets the Obsolete and Doo Rag.",
+          "tertiary": null,
+          "entity_title": "Everything but the Girl, Lorelle Meets the Obsolete and Doo Rag.",
+          "display_title": "6 Music Live Hour - Everything but the Girl, Lorelle Meets the Obsolete and Doo Rag.",
+          "primary_title": "6 Music Live Hour",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Everything but the Girl in concert in 1985, plus Lorelle Meets the Obsolete and Doo Rag.",
+          "medium": "Everything but the Girl in concert in London in 1985, plus a session recorded by Lorelle Meets the Obsolete on 10 January 2019 and one by Doo Rag from June 1995.",
+          "long": "Everything but the Girl in concert in London in 1985, plus a session recorded by Lorelle Meets the Obsolete on 10 January 2019 and one by Doo Rag from June 1995. Presented by Chris Hawkins."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0lt43dq",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lt43dq.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          },
+          {
+            "type": "genre",
+            "id": "music-classicpopandrock",
+            "key": "classicpopandrock",
+            "title": "Classic Pop & Rock"
+          },
+          {
+            "type": "genre",
+            "id": "music-rockandindie",
+            "key": "rockandindie",
+            "title": "Rock & Indie"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "b00rwm3t",
+            "title": "6 Music Live Hour",
+            "synopses": {
+              "short": "6 Music presents gems from the vast BBC archive including concerts and live sessions.",
+              "medium": "With gems from the BBC archive, including concerts and live sessions from a variety of artists - from the up-and-coming to the established to the long-forgotten-but-still-loved.",
+              "long": null
+            }
+          }
+        ],
+        "availability": {
+          "type": "original",
+          "id": "m000d00f",
+          "duration": 3600,
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "has_guidance": false,
+          "available_from_date": "2026-08-20T03:00:00Z",
+          "available_to_date": "2026-09-19T03:00:00Z",
+          "status": "available",
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 49000000,
+                "label": "49 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 65000000,
+                "label": "65 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 160000000,
+                "label": "160 MB"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p0h8r3",
+      "start": "2026-08-20T03:00:00Z",
+      "end": "2026-08-20T04:00:00Z",
+      "service_id": "bbc_6music",
+      "duration": 3600,
+      "progress": 3600,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": false,
+      "programme": {
+        "type": "episode",
+        "id": "m00301jy",
+        "urn": "urn:bbc:radio:episode:m00301jy",
+        "network": {
+          "id": "bbc_6music",
+          "key": "6music",
+          "short_title": "Radio 6 Music",
+          "long_title": "BBC Radio 6 Music",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-08-20T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "6 Music's Jukebox",
+          "secondary": "Bob Dylan, Blackalicious, Blondshell and more!",
+          "tertiary": null,
+          "entity_title": "Bob Dylan, Blackalicious, Blondshell and more!",
+          "display_title": "6 Music's Jukebox - Bob Dylan, Blackalicious, Blondshell and more!",
+          "primary_title": "6 Music's Jukebox",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Soundtrack the early hours with back-to-back music, plus exclusive BBC sessions.",
+          "medium": "Soundtrack the early hours with back-to-back music, plus exclusive BBC sessions.",
+          "long": null
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0lt30m5",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lt30m5.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "music",
+            "key": "music",
+            "title": "Music"
+          },
+          {
+            "type": "genre",
+            "id": "music-rockandindie",
+            "key": "rockandindie",
+            "title": "Rock & Indie"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "b00rz6v1",
+            "title": "6 Music's Jukebox",
+            "synopses": {
+              "short": "Chris Hawkins presents back to back music without the chat, plus exclusive BBC sessions.",
+              "medium": "Chris Hawkins takes you through the early hours playing back to back music without the interruptions of chat, plus exclusive BBC sessions and his Spotlight Act.",
+              "long": null
+            }
+          }
+        ],
+        "availability": {
+          "type": "original",
+          "id": "m00301jx",
+          "duration": 3600,
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "has_guidance": false,
+          "available_from_date": "2026-08-20T04:00:00Z",
+          "available_to_date": "2026-09-23T03:00:00Z",
+          "status": "available",
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 49000000,
+                "label": "49 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 65000000,
+                "label": "65 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 160000000,
+                "label": "160 MB"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

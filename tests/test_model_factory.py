@@ -9,17 +9,16 @@ import pytest
 
 from sounds.model_factory import ModelFactory
 from sounds.models import (
-    Category,
     Collection,
-    LiveStation,
+    Category,
     Network,
+    PlayableNetwork,
     Playlist,
     Podcast,
     PodcastEpisode,
     RadioClip,
     RadioShow,
-    Segment,
-    Station,
+    Segment, LiveStation, Station,
 )
 from sounds.parser import Parser
 
@@ -45,11 +44,25 @@ class TestModelFactoryBasicTypes:
                 "type": "playable_item",
                 "id": "m1",
                 "urn": "urn:bbc:radio:episode:m1",
+                "synopses": {"short": "", "medium": "", "long": ""},
+                "titles": {
+                    "primary": "",
+                    "secondary": "",
+                    "tertiary": "",
+                    "entity_title": "",
+                },
             },
             {
                 "type": "playable_item",
                 "id": "m2",
                 "urn": "urn:bbc:radio:episode:m2",
+                "titles": {
+                    "primary": "",
+                    "secondary": "",
+                    "tertiary": "",
+                    "entity_title": "",
+                },
+                "synopses": {},
             },
         ]
         result = Parser().parse_node(nodes)
@@ -62,7 +75,12 @@ class TestModelFactoryBasicTypes:
             "type": "segment_item",
             "id": "seg1",
             "segment_type": "music",
-            "titles": {"primary": "Song Title"},
+            "titles": {
+                "primary": "Song Title",
+                "secondary": None,
+                "tertiary": None,
+                "entity_title": None,
+            },
             "image_url": None,
             "offset": {"start": 0},
             "uris": [],
@@ -100,6 +118,12 @@ class TestEpisodeVsPodcastClassification:
             "type": "playable_item",
             "id": "m001",
             "urn": "urn:bbc:radio:episode:m001",
+            "titles": {
+                "primary": "Title",
+                "secondary": None,
+                "tertiary": None,
+                "entity_title": None,
+            },
         }
         result = Parser().parse_node(node)
         assert isinstance(result, RadioShow)
@@ -111,6 +135,12 @@ class TestEpisodeVsPodcastClassification:
             "urn": "urn:bbc:radio:episode:m002",
             "container": {"id": "brand", "type": "brand"},
             "network": {"id": "bbc_sounds_podcasts"},
+            "titles": {
+                "primary": "Title",
+                "secondary": None,
+                "tertiary": None,
+                "entity_title": None,
+            },
         }
         result = Parser().parse_node(node)
         assert isinstance(result, PodcastEpisode)
@@ -122,6 +152,12 @@ class TestEpisodeVsPodcastClassification:
             "urn": "urn:bbc:radio:episode:m003",
             "container": {"id": "brand", "type": "brand"},
             "network": {"id": "bbc_radio_one"},
+            "titles": {
+                "primary": "Title",
+                "secondary": None,
+                "tertiary": None,
+                "entity_title": None,
+            },
         }
         result = Parser().parse_node(node)
         assert isinstance(result, RadioShow)
@@ -140,6 +176,12 @@ class TestClipVsPodcastClassification:
             "type": "playable_item",
             "id": "m010",
             "urn": "urn:bbc:radio:clip:m010",
+            "titles": {
+                "primary": "Title",
+                "secondary": None,
+                "tertiary": None,
+                "entity_title": None,
+            },
         }
         result = Parser().parse_node(node)
         assert isinstance(result, RadioClip)
@@ -150,6 +192,12 @@ class TestClipVsPodcastClassification:
             "id": "m011",
             "urn": "urn:bbc:radio:clip:m011",
             "container": {"id": "brand", "type": "brand"},
+            "titles": {
+                "primary": "Title",
+                "secondary": None,
+                "tertiary": None,
+                "entity_title": None,
+            },
         }
         result = Parser().parse_node(node)
         assert isinstance(result, PodcastEpisode)
@@ -164,7 +212,13 @@ class TestStationClassification:
             "type": "playable_item",
             "id": "radio1",
             "urn": "urn:bbc:radio:network:radio1",
-            "synopses": {"short": "BBC Radio 1"},
+            "synopses": {"short": "BBC Radio 1", "medium": "", "long": ""},
+            "titles": {
+                "primary": "Title",
+                "secondary": None,
+                "tertiary": None,
+                "entity_title": None,
+            },
         }
         result = Parser().parse_node(node)
         assert type(result) is LiveStation
@@ -179,10 +233,14 @@ class TestStationClassification:
         assert type(result) is Station
 
     def test_network_with_synopses_is_livestation(self):
-        with open("tests/fixtures/api/STATION_PLAYABLE_DETAILS.json") as f:
-            json_data = json.loads(f.read())
-            result = Parser().parse_node(json_data)
-            assert type(result) is LiveStation
+        node = {
+            "type": "playable_item",
+            "id": "radio1",
+            "urn": "urn:bbc:radio:network:radio1",
+            "synopses": {"short": ""}
+        }
+        result = Parser().parse_node(node)
+        assert type(result) is LiveStation
 
 
 class TestPlaylists:
@@ -206,7 +264,12 @@ class TestPlaylists:
                 "medium": "Experience all the highlights from the world’s greatest classical music festival here. To listen on smart speaker just say, “ask BBC Sounds to play The Proms”",
                 "long": "Experience all the highlights from the world’s greatest classical music festival here. To listen on smart speaker just say, “ask BBC Sounds to play The Proms”",
             },
-            "titles": {"primary": "BBC Proms", "secondary": None, "tertiary": None},
+            "titles": {
+                "primary": "BBC Proms",
+                "secondary": None,
+                "tertiary": None,
+                "entity_title": None,
+            },
             "urn": "urn:bbc:radio:curation:m002gj2t",
             "network": None,
             "sub_items": [],

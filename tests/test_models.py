@@ -1,5 +1,7 @@
+import logging
 from datetime import datetime as dt
 from datetime import timedelta
+from logging import Logger
 
 import pytest
 import pytz
@@ -21,6 +23,7 @@ class TestModels:
             "end": "2025-01-15T12:00:00Z",
         }
         item = ScheduleItem(**data)
+        item.post_processing(logging.getLogger())
         assert isinstance(item.start, dt)
         assert isinstance(item.end, dt)
 

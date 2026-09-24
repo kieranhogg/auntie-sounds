@@ -2,7 +2,7 @@ from unittest.mock import AsyncMock, Mock
 
 import pytest
 
-from sounds.endpoints import URLs
+from sounds.endpoints import Endpoints
 from sounds.exceptions import APIResponseError
 from sounds.models import Menu, MenuItem, RecommendedMenuItem
 from sounds.personal import PersonalService
@@ -76,13 +76,13 @@ class TestPersonalService:
         )
 
         menu = await personal_service.construct_uk_menu(
-            listen_live=MenuItem(id="listen_live"),
+            radio=MenuItem(id="listen_live"),
             catch_up=MenuItem(id="catch_up"),
             schedule=MenuItem(id="schedule"),
         )
 
         assert isinstance(menu, Menu)
-        assert len(menu.sub_items) == 6
+        assert len(menu.sub_items) == 7
         assert isinstance(menu.get("recommended"), RecommendedMenuItem)
         assert type(menu.get("regular")) is MenuItem
 
@@ -96,7 +96,7 @@ class TestPersonalService:
         )
 
         menu = await personal_service.construct_uk_menu(
-            listen_live=MenuItem(id="listen_live"),
+            radio=MenuItem(id="listen_live"),
             catch_up=MenuItem(id="catch_up"),
             schedule=MenuItem(id="schedule"),
         )
@@ -124,7 +124,7 @@ class TestPersonalService:
 
         with pytest.raises(APIResponseError):
             await personal_service.construct_uk_menu(
-                listen_live=MenuItem(id="listen_live"),
+                radio=MenuItem(id="listen_live"),
                 catch_up=MenuItem(id="catch_up"),
                 schedule=MenuItem(id="schedule"),
             )
@@ -139,9 +139,9 @@ class TestPersonalService:
         news_json = {"data": [_menu_item_node("news_item", [_playable_child("5")])]}
 
         responses = {
-            URLs.PODCASTS: podcasts_json,
-            URLs.MUSIC: music_json,
-            URLs.NEWS: news_json,
+            Endpoints.PODCASTS: podcasts_json,
+            Endpoints.MUSIC: music_json,
+            Endpoints.NEWS: news_json,
         }
 
         async def fake_get_json(url=None):

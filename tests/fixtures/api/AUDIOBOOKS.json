@@ -1,0 +1,2660 @@
+{
+  "$schema": "https://rms.api.bbc.co.uk/docs/swagger.json#/definitions/PlayableItems",
+  "total": 2555,
+  "limit": 30,
+  "offset": 0,
+  "data": [
+    {
+      "type": "playable_item",
+      "id": "m0031t6x",
+      "urn": "urn:bbc:radio:episode:b00dyc0l",
+      "network": {
+        "id": "bbc_radio_four_extra",
+        "key": "radio4extra",
+        "short_title": "Radio 4 Extra",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four_extra/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Paid Servant by ER Braithwaite",
+        "secondary": "2. Roddy",
+        "tertiary": null,
+        "entity_title": "2. Roddy"
+      },
+      "synopses": {
+        "short": "Braithwaite tries to find a London home for an abandoned boy.",
+        "medium": "The welfare worker tries to find a London home for an abandoned little boy named Roddy. Stars Kwame Kwei-Armah.",
+        "long": "The 1950S welfare worker attempts to locate a London home for an abandoned boy called Roddy.\n\nStars Kwame Kwei-Armah.\n\nER Braithwaite's sequel 'To Sir, With Love' - an autobiographical novel describing his work as a child welfare officer in 1950s London, navigating the discriminatory attitudes of the time.\n\nAbridged by Anne Edyvean.\n\nER Braithwaite .... Kwame Kwei-Armah\nEllesworth / Griffiths .... Nyasha Hatendi\nMiss Coney .... Lisa Stevenson\nMP .... John Rowe\n\nOther parts were played by members of the cast.\n\nDirector: Jessica Dromgoole\n\nFirst broadcast on BBC Radio 4 in June 2008."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p01l2v5t.jpg",
+      "duration": {
+        "value": 900,
+        "label": "15 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "series",
+        "id": "b00dzltq",
+        "urn": "urn:bbc:radio:series:b00dzltq",
+        "title": "Paid Servant by ER Braithwaite",
+        "synopses": {
+          "short": "London, 1958. ER Braithwaite recalls the prejudice for being a black social worker",
+          "medium": "London, 1958. ER Braithwaite remembers being a black social worker in a prejudiced society. Stars Kwame Kwei-Armah.",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 13000000,
+            "label": "13 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 17000000,
+            "label": "17 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 41000000,
+            "label": "41 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-22T08:00:00Z",
+        "to": "2026-10-23T03:00:00Z",
+        "label": "Available for 30 days"
+      },
+      "release": {
+        "date": "2008-06-10T00:00:00Z",
+        "label": "10 Jun 2008"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": {
+          "short": "Contains language which may offend.",
+          "long": "Contains language which some may find offensive."
+        }
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=b00dzltq&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "m00045kz",
+      "urn": "urn:bbc:radio:episode:m00045l0",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "The Diaries of Adrian Mole",
+        "secondary": "Adrian Mole and The Weapons of Mass Destruction",
+        "tertiary": "2. A New Friend",
+        "entity_title": "2. A New Friend"
+      },
+      "synopses": {
+        "short": "Adrian goes to Glenn’s passing-out parade. He furnishes his new apartment on credit.",
+        "medium": "Adrian goes to Glenn’s passing-out parade. He furnishes his new flat on credit and gets to know Marigold. Read by Harry McEntire.",
+        "long": "The fifth book in the series of readings from Adrian’s diaries, written by Sue Townsend. It starts in 2002 with Adrian aged 34 and covers the controversial period of the Iraq War.\n\nAdrian goes to his son Glenn’s passing-out parade and furnishes his new loft apartment on credit.\n\nHis single status is about to change too, putting further strain on his already stretched finances. \n\nHe gets to know Marigold who he met in the bookshop.\n\nAs war looms, Adrian is unwavering in his support for Prime Minister Tony Blair and military action, even though his eldest son Glenn is facing deployment to the Gulf.\n\nFirst published in 1989, Adrian Mole’s diaries were instant bestsellers and Adrian, the remarkably resilient underdog, quickly became a national treasure. While recording the experiences of one individual and showcasing Sue Townsend's fearless and razor sharp wit, the diaries also illustrate how socio-political matters of the time affected the lives of ordinary people.\n\nCopyright Siegfried Sassoon by kind permission of the Estate of George Sassoon\n\nAbridged by Sara Davies.\n\nRead by Harry McEntire.\n\nProducer: Alexa Moore\n\nA Pier Production for BBC Radio 4, first broadcast in April 2019."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p7zyh8.jpg",
+      "duration": {
+        "value": 840,
+        "label": "14 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m0001t9m",
+        "urn": "urn:bbc:radio:brand:m0001t9m",
+        "title": "The Diaries of Adrian Mole",
+        "synopses": {
+          "short": "Harry McEntire reads Sue Townsend's hilarious diaries of Adrian Mole.",
+          "medium": "Radio 4's serialisation of Adrian Mole's hilarious diaries by Sue Townsend, one of our most celebrated comic writers. Read by Harry McEntire.",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 13000000,
+            "label": "13 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 16000000,
+            "label": "16 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 39000000,
+            "label": "39 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-22T07:45:00Z",
+        "to": "2026-10-23T02:45:00Z",
+        "label": "Available for 30 days"
+      },
+      "release": {
+        "date": "2019-04-16T00:00:00Z",
+        "label": "16 Apr 2019"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=m0004598&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "m0031sv2",
+      "urn": "urn:bbc:radio:episode:b00dyb0p",
+      "network": {
+        "id": "bbc_radio_four_extra",
+        "key": "radio4extra",
+        "short_title": "Radio 4 Extra",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four_extra/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Paid Servant by ER Braithwaite",
+        "secondary": "1. Seconded",
+        "tertiary": null,
+        "entity_title": "1. Seconded"
+      },
+      "synopses": {
+        "short": "London, 1958: Teacher ER Braithwaite faces prejudice as a child welfare officer.",
+        "medium": "1958: Teacher ER Braithwaite faces more prejudice as a child welfare officer. 'To Sir With Love' sequel with Kwame Kwei-Armah.",
+        "long": "London, 1958: Teacher ER Braithwaite is seconded to London County Council as a child welfare officer, charged with cases involving \"his people\".\n\nStars Kwame Kwei-Armah.\n\nER Braithwaite's sequel 'To Sir, With Love' - an autobiographical novel describing his work as a child welfare officer in 1950s London, navigating the discriminatory attitudes of the time. \n\nAbridged in five parts by Anne Edyvean.\n\nER Braithwaite .... Kwame Kwei-Armah\nMr Bentham .... Jimmy Akingbola\nMrs Bentham .... Clare Perkins\nMiss Coney .... Lisa Stevenson\nMatron .... Joan Walker\nRoddy .... Cara Halls\n\nDirector: Jessica Dromgoole\n\nFirst broadcast on BBC Radio 4 in June 2008."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p01l2v5t.jpg",
+      "duration": {
+        "value": 900,
+        "label": "15 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "series",
+        "id": "b00dzltq",
+        "urn": "urn:bbc:radio:series:b00dzltq",
+        "title": "Paid Servant by ER Braithwaite",
+        "synopses": {
+          "short": "London, 1958. ER Braithwaite recalls the prejudice for being a black social worker",
+          "medium": "London, 1958. ER Braithwaite remembers being a black social worker in a prejudiced society. Stars Kwame Kwei-Armah.",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 13000000,
+            "label": "13 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 17000000,
+            "label": "17 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 41000000,
+            "label": "41 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-21T08:00:00Z",
+        "to": "2026-10-22T03:00:00Z",
+        "label": "Available for 29 days"
+      },
+      "release": {
+        "date": "2008-06-09T00:00:00Z",
+        "label": "09 Jun 2008"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": {
+          "short": "Contains language which may offend.",
+          "long": "Contains language which some may find offensive."
+        }
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=b00dzltq&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "m00047sz",
+      "urn": "urn:bbc:radio:episode:m00047t0",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "The Diaries of Adrian Mole",
+        "secondary": "Adrian Mole and The Weapons of Mass Destruction",
+        "tertiary": "1. An Unusual Request",
+        "entity_title": "1. An Unusual Request"
+      },
+      "synopses": {
+        "short": "Adrian’s diary restarts in 2002 with the Iraq War looming. He is 34 and single again.",
+        "medium": "4 Extra Debut. Adrian Mole’s diary restarts in 2002 with the Iraq War looming. He is working in a Leicester bookshop. Read by Harry McEntire.",
+        "long": "The fifth book in the series of readings from Adrian’s diaries, written by Sue Townsend. \n\nIt starts in 2002 and covers the controversial period of the Iraq War.\n\nAdrian is 34, working in a bookshop in Leicester and about to become the proud owner of a trendy loft apartment. His single status is about to change too, putting further strain on his already stretched finances. \n\nAs war looms, Adrian is unwavering in his support for Prime Minister Tony Blair and military action, even though his eldest son Glenn is facing deployment to the Gulf.\n\nFirst published in 1989, Adrian Mole’s diaries were instant bestsellers and Adrian, the remarkably resilient underdog, quickly became a national treasure. \n\nWhile recording the experiences of one individual and showcasing Sue Townsend's fearless and razor sharp wit, the diaries also illustrate how socio-political matters of the time affected the lives of ordinary people.\n\nCopyright Siegfried Sassoon by kind permission of the Estate of George Sassoon.\n\nAbridged in ten parts by Sara Davies.\n\nRead by Harry McEntire.\n\nProducer: Alexa Moore\n\nA Pier Production for BBC Radio 4, first broadcast in April 2019."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p7zyh8.jpg",
+      "duration": {
+        "value": 840,
+        "label": "14 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m0001t9m",
+        "urn": "urn:bbc:radio:brand:m0001t9m",
+        "title": "The Diaries of Adrian Mole",
+        "synopses": {
+          "short": "Harry McEntire reads Sue Townsend's hilarious diaries of Adrian Mole.",
+          "medium": "Radio 4's serialisation of Adrian Mole's hilarious diaries by Sue Townsend, one of our most celebrated comic writers. Read by Harry McEntire.",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 13000000,
+            "label": "13 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 16000000,
+            "label": "16 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 39000000,
+            "label": "39 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-21T07:45:00Z",
+        "to": "2026-10-22T02:45:00Z",
+        "label": "Available for 29 days"
+      },
+      "release": {
+        "date": "2019-04-15T00:00:00Z",
+        "label": "15 Apr 2019"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=m0004598&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0p8q5p3",
+      "urn": "urn:bbc:radio:episode:m0031vn6",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "All About My Mother: A Memoir of Diana Rigg by Rachael Stirling",
+        "secondary": "Episode 5",
+        "tertiary": null,
+        "entity_title": "Episode 5"
+      },
+      "synopses": {
+        "short": "Rachael Stirling’s frank, funny and poignant memoir about her mother, actress Diana Rigg.",
+        "medium": "Rachael Stirling reads her frank, funny memoir about her mother, the renowned actress Diana Rigg, and the volatile, loving relationship that bound them.",
+        "long": "\"What’s it like being Diana Rigg’s daughter?\"\n\nFor as long as she can remember, Rachael Stirling has been asked that question. \n\nLegendary actress Diana Rigg was a force – and a mother - to be reckoned with. Her multi-award-winning career took off when she was cast as smart-talking, high-kicking, cat-suited Emma Peel in The Avengers. It was cemented when she played the only Bond girl 007 ever married, and then continued for over 50 years with iconic stage performances in Mother Courage, Jumpers and Medea, and unforgettable TV appearances in Detectorists (in which Rachael played her daughter) and as Lady Tyrell in Game of Thrones.\n\nFor Rachael, her mother’s legacy is \"a lesson in living life to the fullest: in following your instincts, in taking pleasure wherever there is pleasure to be taken, in loving with all your strength and might, in laughing, always at yourself first, and in being curious, now and forever.\" Her book reveals her mother as gloriously straight-talking, uncompromisingly frank, fearless and deeply loving. It’s a riotous account of her mother’s life and spectacular career, and a moving testament to the love between mother and daughter.\n\nRachael Stirling is an acclaimed stage, film and television actress herself, whose appearances include TV’s Tipping the Velvet, Rivals and Detectorists, as well as an episode of Dr Who with her mother.\n\nEpisode 5: The Dame, Doctor Who, and a diagnosis.\n\nAbridged by Libby Spurrier\n\nProduced by Sara Davies\n\nSound design by Matt Bainbridge\n\nProduction Co-ordinator: Dawn Williams\n\nA Pier production for BBC Radio 4"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p80mtc.jpg",
+      "duration": {
+        "value": 820,
+        "label": "13 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "series",
+        "id": "m0031t2v",
+        "urn": "urn:bbc:radio:series:m0031t2v",
+        "title": "All About My Mother: A Memoir of Diana Rigg by Rachael Stirling",
+        "synopses": {
+          "short": "Rachael Stirling's frank, funny and poignant memoir about her mother, actress Diana Rigg.",
+          "medium": "Book of the Week. Rachael Stirling reads her frank, funny memoir about her mother, the renowned actress Diana Rigg, and the volatile, loving relationship that bound them.",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 12000000,
+            "label": "12 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 16000000,
+            "label": "16 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 38000000,
+            "label": "38 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-21T06:00:00Z",
+        "to": "2026-10-25T07:00:00Z",
+        "label": "Available for 32 days"
+      },
+      "release": {
+        "date": "2026-09-25T00:00:00Z",
+        "label": "25 Sep 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=m0031t2v&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0p8q5mt",
+      "urn": "urn:bbc:radio:episode:m0031vk4",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "All About My Mother: A Memoir of Diana Rigg by Rachael Stirling",
+        "secondary": "Episode 4",
+        "tertiary": null,
+        "entity_title": "Episode 4"
+      },
+      "synopses": {
+        "short": "Rachael Stirling’s frank, funny and poignant memoir about her mother, actress Diana Rigg.",
+        "medium": "Rachael Stirling reads her frank, funny memoir about her mother, the renowned actress Diana Rigg, and the volatile, loving relationship that bound them.",
+        "long": "\"What’s it like being Diana Rigg’s daughter?\"\n\nFor as long as she can remember, Rachael Stirling has been asked that question. \n\nLegendary actress Diana Rigg was a force – and a mother - to be reckoned with. Her multi-award-winning career took off when she was cast as smart-talking, high-kicking, cat-suited Emma Peel in The Avengers. It was cemented when she played the only Bond girl 007 ever married, and then continued for over 50 years with iconic stage performances in Mother Courage, Jumpers and Medea, and unforgettable TV appearances in Detectorists (in which Rachael played her daughter) and as Lady Tyrell in Game of Thrones.\n\nFor Rachael, her mother’s legacy is \"a lesson in living life to the fullest: in following your instincts, in taking pleasure wherever there is pleasure to be taken, in loving with all your strength and might, in laughing, always at yourself first, and in being curious, now and forever.\" Her book reveals her mother as gloriously straight-talking, uncompromisingly frank, fearless and deeply loving. It’s a riotous account of her mother’s life and spectacular career, and a moving testament to the love between mother and daughter.\n\nRachael Stirling is an acclaimed stage, film and television actress herself, whose appearances include TV’s Tipping the Velvet, Rivals and Detectorists, as well as an episode of Dr Who with her mother.\n\nEpisode 4: From Medea to Mrs Higgins, and the invention of a cocktail.\n\nAbridged by Libby Spurrier\n\nProduced by Sara Davies\n\nSound design by Matt Bainbridge\n\nProduction Co-ordinator: Dawn Williams\n\nA Pier production for BBC Radio 4"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p80mtc.jpg",
+      "duration": {
+        "value": 790,
+        "label": "13 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "series",
+        "id": "m0031t2v",
+        "urn": "urn:bbc:radio:series:m0031t2v",
+        "title": "All About My Mother: A Memoir of Diana Rigg by Rachael Stirling",
+        "synopses": {
+          "short": "Rachael Stirling's frank, funny and poignant memoir about her mother, actress Diana Rigg.",
+          "medium": "Book of the Week. Rachael Stirling reads her frank, funny memoir about her mother, the renowned actress Diana Rigg, and the volatile, loving relationship that bound them.",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 12000000,
+            "label": "12 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 15000000,
+            "label": "15 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 36000000,
+            "label": "36 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-21T05:55:00Z",
+        "to": "2026-10-25T06:55:00Z",
+        "label": "Available for 32 days"
+      },
+      "release": {
+        "date": "2026-09-24T00:00:00Z",
+        "label": "24 Sep 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=m0031t2v&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0p8q5l6",
+      "urn": "urn:bbc:radio:episode:m0031vb4",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "All About My Mother: A Memoir of Diana Rigg by Rachael Stirling",
+        "secondary": "Episode 3",
+        "tertiary": null,
+        "entity_title": "Episode 3"
+      },
+      "synopses": {
+        "short": "Rachael Stirling’s frank, funny and poignant memoir about her mother, actress Diana Rigg.",
+        "medium": "Rachael Stirling reads her frank, funny memoir about her mother, the renowned actress Diana Rigg, and the volatile, loving relationship that bound them.",
+        "long": "\"What’s it like being Diana Rigg’s daughter?\"\n\nFor as long as she can remember, Rachael Stirling has been asked that question. \n\nLegendary actress Diana Rigg was a force – and a mother - to be reckoned with. Her multi-award-winning career took off when she was cast as smart-talking, high-kicking, cat-suited Emma Peel in The Avengers. It was cemented when she played the only Bond girl 007 ever married, and then continued for over 50 years with iconic stage performances in Mother Courage, Jumpers and Medea, and unforgettable TV appearances in Detectorists (in which Rachael played her daughter) and as Lady Tyrell in Game of Thrones.\n\nFor Rachael, her mother’s legacy is \"a lesson in living life to the fullest: in following your instincts, in taking pleasure wherever there is pleasure to be taken, in loving with all your strength and might, in laughing, always at yourself first, and in being curious, now and forever.\" Her book reveals her mother as gloriously straight-talking, uncompromisingly frank, fearless and deeply loving. It’s a riotous account of her mother’s life and spectacular career, and a moving testament to the love between mother and daughter.\n\nRachael Stirling is an acclaimed stage, film and television actress herself, whose appearances include TV’s Tipping the Velvet, Rivals and Detectorists, as well as an episode of Dr Who with her mother.\n\nEpisode 3: A marriage, motherhood and a divorce.\n\nAbridged by Libby Spurrier\n\nProduced by Sara Davies\n\nSound design by Matt Bainbridge\n\nProduction Co-ordinator: Dawn Williams\n\nA Pier production for BBC Radio 4"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p80mtc.jpg",
+      "duration": {
+        "value": 806,
+        "label": "13 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "series",
+        "id": "m0031t2v",
+        "urn": "urn:bbc:radio:series:m0031t2v",
+        "title": "All About My Mother: A Memoir of Diana Rigg by Rachael Stirling",
+        "synopses": {
+          "short": "Rachael Stirling's frank, funny and poignant memoir about her mother, actress Diana Rigg.",
+          "medium": "Book of the Week. Rachael Stirling reads her frank, funny memoir about her mother, the renowned actress Diana Rigg, and the volatile, loving relationship that bound them.",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 12000000,
+            "label": "12 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 16000000,
+            "label": "16 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 37000000,
+            "label": "37 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-21T05:50:00Z",
+        "to": "2026-10-25T06:50:00Z",
+        "label": "Available for 32 days"
+      },
+      "release": {
+        "date": "2026-09-23T00:00:00Z",
+        "label": "23 Sep 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=m0031t2v&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0p8q5kt",
+      "urn": "urn:bbc:radio:episode:m0031t2t",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "All About My Mother: A Memoir of Diana Rigg by Rachael Stirling",
+        "secondary": "Episode 2",
+        "tertiary": null,
+        "entity_title": "Episode 2"
+      },
+      "synopses": {
+        "short": "Rachael Stirling’s frank, funny and poignant memoir about her mother, actress Diana Rigg.",
+        "medium": "Rachael Stirling reads her frank, funny memoir about her mother, the renowned actress Diana Rigg, and the volatile, loving relationship that bound them.",
+        "long": "\"What’s it like being Diana Rigg’s daughter?\"\n\nFor as long as she can remember, Rachael Stirling has been asked that question. \n\nLegendary actress Diana Rigg was a force – and a mother - to be reckoned with. Her multi-award-winning career took off when she was cast as smart-talking, high-kicking, cat-suited Emma Peel in The Avengers. It was cemented when she played the only Bond girl 007 ever married, and then continued for over 50 years with iconic stage performances in Mother Courage, Jumpers and Medea, and unforgettable TV appearances in Detectorists (in which Rachael played her daughter) and as Lady Tyrell in Game of Thrones.\n\nFor Rachael, her mother’s legacy is \"a lesson in living life to the fullest: in following your instincts, in taking pleasure wherever there is pleasure to be taken, in loving with all your strength and might, in laughing, always at yourself first, and in being curious, now and forever.\" Her book reveals her mother as gloriously straight-talking, uncompromisingly frank, fearless and deeply loving. It’s a riotous account of her mother’s life and spectacular career, and a moving testament to the love between mother and daughter.\n\nRachael Stirling is an acclaimed stage, film and television actress herself, whose appearances include TV’s Tipping the Velvet, Rivals and Detectorists, as well as an episode of Dr Who with her mother.\n\nEpisode 2: Diana Rigg becomes a sex icon of the swinging sixties.\n\nAbridged by Libby Spurrier\n\nProduced by Sara Davies\n\nSound design by Matt Bainbridge\n\nProduction Co-ordinator: Dawn Williams\n\nA Pier production for BBC Radio 4"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p80mtc.jpg",
+      "duration": {
+        "value": 815,
+        "label": "13 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "series",
+        "id": "m0031t2v",
+        "urn": "urn:bbc:radio:series:m0031t2v",
+        "title": "All About My Mother: A Memoir of Diana Rigg by Rachael Stirling",
+        "synopses": {
+          "short": "Rachael Stirling's frank, funny and poignant memoir about her mother, actress Diana Rigg.",
+          "medium": "Book of the Week. Rachael Stirling reads her frank, funny memoir about her mother, the renowned actress Diana Rigg, and the volatile, loving relationship that bound them.",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 12000000,
+            "label": "12 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 16000000,
+            "label": "16 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 37000000,
+            "label": "37 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-21T05:45:00Z",
+        "to": "2026-10-25T06:45:00Z",
+        "label": "Available for 32 days"
+      },
+      "release": {
+        "date": "2026-09-22T00:00:00Z",
+        "label": "22 Sep 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=m0031t2v&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0p8q5kf",
+      "urn": "urn:bbc:radio:episode:m0031t7l",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "All About My Mother: A Memoir of Diana Rigg by Rachael Stirling",
+        "secondary": "Episode 1",
+        "tertiary": null,
+        "entity_title": "Episode 1"
+      },
+      "synopses": {
+        "short": "Rachael Stirling’s frank, funny and poignant memoir about her mother, actress Diana Rigg.",
+        "medium": "Rachael Stirling reads her frank, funny memoir about her mother, the renowned actress Diana Rigg, and the volatile, loving relationship that bound them.",
+        "long": "\"What’s it like being Diana Rigg’s daughter?\"\n\nFor as long as she can remember, Rachael Stirling has been asked that question. \n\nLegendary actress Diana Rigg was a force – and a mother - to be reckoned with. Her multi-award-winning career took off when she was cast as smart-talking, high-kicking, cat-suited Emma Peel in The Avengers. It was cemented when she played the only Bond girl 007 ever married, and then continued for over 50 years with iconic stage performances in Mother Courage, Jumpers and Medea, and unforgettable TV appearances in Detectorists (in which Rachael played her daughter) and as Lady Tyrell in Game of Thrones.\n\nFor Rachael, her mother’s legacy is \"a lesson in living life to the fullest: in following your instincts, in taking pleasure wherever there is pleasure to be taken, in loving with all your strength and might, in laughing, always at yourself first, and in being curious, now and forever.\" Her book reveals her mother as gloriously straight-talking, uncompromisingly frank, fearless and deeply loving. It’s a riotous account of her mother’s life and spectacular career, and a moving testament to the love between mother and daughter.\n\nRachael Stirling is an acclaimed stage, film and television actress herself, whose appearances include TV’s Tipping the Velvet, Rivals and Detectorists, as well as an episode of Dr Who with her mother.\n\nEpisode 1: \"One day you are going to be an actress\". A drama teacher recognises the unprepossessing teenager’s talent.\n\nAbridged by Libby Spurrier\n\nProduced by Sara Davies\n\nSound design by Matt Bainbridge\n\nProduction Co-ordinator: Dawn Williams\n\nA Pier production for BBC Radio 4"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p80mtc.jpg",
+      "duration": {
+        "value": 815,
+        "label": "13 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "series",
+        "id": "m0031t2v",
+        "urn": "urn:bbc:radio:series:m0031t2v",
+        "title": "All About My Mother: A Memoir of Diana Rigg by Rachael Stirling",
+        "synopses": {
+          "short": "Rachael Stirling's frank, funny and poignant memoir about her mother, actress Diana Rigg.",
+          "medium": "Book of the Week. Rachael Stirling reads her frank, funny memoir about her mother, the renowned actress Diana Rigg, and the volatile, loving relationship that bound them.",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 12000000,
+            "label": "12 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 16000000,
+            "label": "16 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 37000000,
+            "label": "37 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-21T05:40:00Z",
+        "to": "2026-10-25T06:40:00Z",
+        "label": "Available for 32 days"
+      },
+      "release": {
+        "date": "2026-09-21T00:00:00Z",
+        "label": "21 Sep 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=m0031t2v&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0pbc2jz",
+      "urn": "urn:bbc:radio:episode:p0pbc2zv",
+      "network": {
+        "id": "bbc_sounds_podcasts",
+        "key": "podcasts",
+        "short_title": "Sounds",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "The Haunted Library",
+        "secondary": "The Strange Case of Dr. Jekyll and Mr. Hyde. Part One.",
+        "tertiary": null,
+        "entity_title": "The Strange Case of Dr. Jekyll and Mr. Hyde. Part One."
+      },
+      "synopses": {
+        "short": "Lawyer Gabriel Utterson hears a troubling tale about a man named Hyde...",
+        "medium": null,
+        "long": "Lawyer Gabriel Utterson hears a troubling tale about a man named Hyde. When he discovers that Hyde stands to inherit the fortune of his esteemed friend Dr Jekyll, a mystery begins to take shape. Who is this unsettling stranger, and what hold does he have over the doctor?\n\nSet in the foggy, cobblestone streets of London, lawyer, John Gabriel Utterson investigates the mysterious relationship between his old friend, Dr. Henry Jekyll, and a sinister man named Edward Hyde. What begins as a troubling mystery surrounding a suspicious will, quickly spirals into a dark exploration of science, morality, and the duality of man. \n\nThe Haunted Library is open. Come in. Stay awhile.\n\nNarrated by Colin Morgan\nWritten by Robert Louis Stevenson\nSound design by Jon Nicholls\nProduced by Lydia Shamah for BBC Studios\nAssociate Producer: Lorna Newman for BBC Studios\nRecording Engineer: Laurence Pearson for ID Audio"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0pbps9w.jpg",
+      "duration": {
+        "value": 2320,
+        "label": "38 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "p0p94l6v",
+        "urn": "urn:bbc:radio:brand:p0p94l6v",
+        "title": "The Haunted Library",
+        "synopses": {
+          "short": "The Haunted Library is open. Come in. Stay a while.",
+          "medium": null,
+          "long": "This library is home to curious things, strange tales, and stories that linger longer than they should.\n\nHosted by Colin Morgan with guest host Katie Leung, The Haunted Library invites you deep into the stacks to hear works of classic horror brought to life, from Gothic novels to pulpy penny dreadfuls.\n\nTwo new episodes every week.\n\nThe Haunted Library is open. Come in. Stay a while.\n\nThe Haunted Library is a BBC Studios production."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 32000000,
+            "label": "32 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 42000000,
+            "label": "42 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 104000000,
+            "label": "104 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-21T05:00:00Z",
+        "to": "2029-09-20T05:00:00Z",
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-09-21T00:00:00Z",
+        "label": "21 Sep 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": {
+          "short": "Contains some violence.",
+          "long": "Contains some violent scenes."
+        }
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=p0p94l6v&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "m00107c1",
+      "urn": "urn:bbc:radio:episode:m00107c2",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "The Good Earth by Pearl S Buck",
+        "secondary": "Episode 2",
+        "tertiary": null,
+        "entity_title": "Episode 2"
+      },
+      "synopses": {
+        "short": "Pearl S Buck's Pulitzer Prize-winning tale of one family's fight for land in rural China.",
+        "medium": "Drought and famine drive Wang Lung and his family from their farm. In the city they are reduced to begging and pulling rickshaws, until a workers' riot offers an unexpected chance.",
+        "long": "Written by Pearl S Buck, dramatised by Mary Cooper with MW Sun.\n\nDrought and famine drive Wang Lung and his family from their farm, and in the city they are reduced to begging and pulling rickshaws to survive. A workers' riot offers them an unexpected chance to return home, where, working the land once more, their fortunes steadily rise. But prosperity awakens desires Wang Lung has never had to reckon with, and he becomes consumed by his obsession with a concubine, Lotus.\n\nWang Lung . . . . . Chris Lew Kum Hoi\nO-Lan . . . . . Chipo Chung\nEarth . . . . . Gana Bayarsaikhan\nFather/Doctor . . . . . Liam Woon\nCuckoo . . . . . Liz Sutherland\nLotus . . . . . Elizabeth Chan\nChing/Rich Man . . . . . Windson Liong\nSon . . . . . Jonathan Raggett\n\nOriginal music composed by Ruth Chan.\nDirected by Shan Ng.\nProduced by Pauline Harris for BBC Audio Drama North."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p09wrz0r.jpg",
+      "duration": {
+        "value": 3420,
+        "label": "57 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "series",
+        "id": "m00101kq",
+        "urn": "urn:bbc:radio:series:m00101kq",
+        "title": "The Good Earth by Pearl S Buck",
+        "synopses": {
+          "short": "Dramatisation of the Pulitzer Prize-winning novel about a farmer's family in China.",
+          "medium": "First audio dramatisation of Buck's Pulitzer Prize-winning novel, telling the historical story of a farmer's family in rural China, driven to desperate action by drought and famine",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 47000000,
+            "label": "47 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 62000000,
+            "label": "62 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 152000000,
+            "label": "152 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-19T15:00:00Z",
+        "to": "2026-10-19T15:00:00Z",
+        "label": "Available for 27 days"
+      },
+      "release": {
+        "date": "2021-10-03T00:00:00Z",
+        "label": "03 Oct 2021"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=m00101kq&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "m0031kqq",
+      "urn": "urn:bbc:radio:episode:m0031kqr",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "BBC National Short Story Award",
+        "secondary": "BBC National Short Story Award 2026",
+        "tertiary": "Two Minutes to Midnight by Laura Beatty",
+        "entity_title": "Two Minutes to Midnight by Laura Beatty"
+      },
+      "synopses": {
+        "short": "Two Minutes to Midnight by Laura Beatty is up for this award for the short story.",
+        "medium": "Two Minutes to Midnight by Laura Beatty is the final story in contention for the 2026 BBC National Short Story Award with Cambridge University. Sian Thomas reads.",
+        "long": "‘Two Minutes to Midnight’ by Laura Beatty is the final story in contention for the 2026 BBC National Short Story Award with the University of Cambridge. Sian Thomas reads.\n\nA doctor grieves for her husband and tries to understand the damage being done to the natural world as human intervention continues to threaten catastrophe.\n\nLaura Beatty is the author of two biographies, two novels, two genre-defying books (a mix of travel, history, memoir and fiction) and, recently, two plays. Her first novel, ‘Pollard’ – which the Observer called a “fierce and wonderful” book – won the Authors’ Club First Novel Award as well as being shortlisted for the Ondaatje prize for books which evoke the spirit of place. Her most recent book, ‘Looking for A’, was shortlisted for the Runciman prize. She has also written various short stories, introductions, and reviews. Oxford educated, she began writing in her twenties, while working in the art world in London and New York. She worked for a long time in the voluntary sector, while bringing up children, and then trained to work as a Place2Be counsellor with children up to age 14. Now, she teaches writing both privately and, as a fellow of the Royal Literary Fund, in the NHS and recovery colleges nationwide.\n\nThe annual BBC National Short Story Award with the University of Cambridge celebrates its 21st anniversary in 2026 with a shortlist of five short stories by multi-award-winning writers and astonishing new talent from across the United Kingdom. Set in locations across the globe, from the Australian bush to Galway Bay, this year’s tender and vivid stories explore the value of human connection across generations and through friendship in a fractured world. \nMarking the awards is Di Speirs, who has judged the BBC National Short Story Award since its launch. She will be joined on the judging panel by 2022 NSSA winner Saba Sams and two former NSSA shortlistees, Tahmima Anam (2016) and Will Eaves (2017), and Costa Best First Novel Award winner, Andrew Micheal Hurley.  \n\nThe BBC National Short Story Award with the University of Cambridge was established to raise the profile of the short form and this year’s all-female shortlist join an impressive list of alumni.\n\nFrom 14 to 18 September, all five of the shortlisted stories can be heard at 3.30pm each afternoon on Radio 4. The winner of the 21st BBC National Short Story Award with the University of Cambridge will be announced live on BBC Radio 4’s Front Row at 7.15pm on Tuesday 29th September 2026.\n\nReader: Sian Thomas\nWriter: Laura Beatty\nAbridged and produced by Elizabeth Allard"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p9l11z.jpg",
+      "duration": {
+        "value": 1680,
+        "label": "28 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "b0079gw3",
+        "urn": "urn:bbc:radio:brand:b0079gw3",
+        "title": "BBC National Short Story Award",
+        "synopses": {
+          "short": "Stories shortlisted for the National Short Story Award",
+          "medium": "Stories shortlisted for the National Short Story Award",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 24000000,
+            "label": "24 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 31000000,
+            "label": "31 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 75000000,
+            "label": "75 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-18T15:00:00Z",
+        "to": "2031-09-17T15:00:00Z",
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-09-18T00:00:00Z",
+        "label": "18 Sep 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=m0031jrs&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0pb9tsm",
+      "urn": "urn:bbc:radio:episode:m0031ssp",
+      "network": {
+        "id": "bbc_radio_ulster",
+        "key": "radioulster",
+        "short_title": "Radio Ulster",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_ulster/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Thought for the Week",
+        "secondary": "Trees, Spiders and Dialects",
+        "tertiary": null,
+        "entity_title": "Trees, Spiders and Dialects"
+      },
+      "synopses": {
+        "short": "Presenter Audrey Carville with a selection of Radio Ulster's Thoughts for the Day.",
+        "medium": "Presenter Audrey Carville with a selection of Radio Ulster's Thoughts for the Day.",
+        "long": "Presenter Audrey Carville with a selection of Radio Ulster's Thoughts for the Day"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0pb1htd.jpg",
+      "duration": {
+        "value": 873,
+        "label": "14 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001lgpk",
+        "urn": "urn:bbc:radio:brand:m001lgpk",
+        "title": "Thought for the Week",
+        "synopses": {
+          "short": "Audrey Carville presents a compilation of reflections from Thought for the Day.",
+          "medium": "Audrey Carville presents a compilation of reflections from Thought for the Day.",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 13000000,
+            "label": "13 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 17000000,
+            "label": "17 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 40000000,
+            "label": "40 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-18T13:04:44Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-09-20T00:00:00Z",
+        "label": "20 Sep 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=m001lgpk&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "b08hqf58",
+      "urn": "urn:bbc:radio:episode:b08hqf5p",
+      "network": {
+        "id": "bbc_radio_four_extra",
+        "key": "radio4extra",
+        "short_title": "Radio 4 Extra",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four_extra/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "The Rule of The Land by Garrett Carr",
+        "secondary": "5. Derry/Londonderry",
+        "tertiary": null,
+        "entity_title": "5. Derry/Londonderry"
+      },
+      "synopses": {
+        "short": "At journey's end, Garrett Carr considers the notion of 'border' in Derry/Londonderry.",
+        "medium": "As his journey ends, Garrett Carr considers the idea of 'border' in the city of Derry/Londonderry. Read by John Paul Connolly.",
+        "long": "Travelling on foot and by canoe, mapmaker Garrett Carr follows the border between the UK and Ireland. \n\nAt the end of his journey, he considers the notion of 'border' in the dual city of Derry/Londonderry. \n\nConcluded by John Paul Connolly.\n\nAbridged by Anna Magnusson.\n\nProducer: Eilidh McCreadie\n\nFirst broadcast on BBC Radio 4 in March 2017."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p04w6h7v.jpg",
+      "duration": {
+        "value": 900,
+        "label": "15 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "series",
+        "id": "b08jprmp",
+        "urn": "urn:bbc:radio:series:b08jprmp",
+        "title": "The Rule of The Land by Garrett Carr",
+        "synopses": {
+          "short": "Mapmaker Garrett Carr follows the border between the UK and Ireland.",
+          "medium": "Mapmaker Garrett Carr follows the border between the UK and Ireland, discovering the landscapes and people who make up this fragile borderland.",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 13000000,
+            "label": "13 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 17000000,
+            "label": "17 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 41000000,
+            "label": "41 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-18T07:45:00Z",
+        "to": "2026-10-19T02:45:00Z",
+        "label": "Available for 26 days"
+      },
+      "release": {
+        "date": "2017-03-17T00:00:00Z",
+        "label": "17 Mar 2017"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=b08jprmp&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "m0031jzx",
+      "urn": "urn:bbc:radio:episode:m0031jzy",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "BBC National Short Story Award",
+        "secondary": "BBC National Short Story Award 2026",
+        "tertiary": "A Second Opinion by Caoilinn Hughes",
+        "entity_title": "A Second Opinion by Caoilinn Hughes"
+      },
+      "synopses": {
+        "short": "Caoilinn Hughes’ moving, humane story is up for the 21st BBC National Short Story Award.",
+        "medium": "Packed with humanity and humour, Caoilinn Hughes is the fourth story up for this year’s BBC National Short Story Award, which celebrates its 21st anniversary.",
+        "long": "A spectacular encounter in a wintry Galway Bay forces a woman to start imagining a new future for herself. Packed with humanity and humour, Caoilinn Hughes’ story is the fourth contender for this year’s BBC National Short Story Award with the University of Cambridge, and explores grief, female friendship, and things we do in the name of love. Cathy Belton reads ‘A Second Opinion’.\n\nCaoilinn Hughes is an award-winning Irish novelist and short story writer. Her novels include 'The Wild Laughter' (2020), which won the RSL’s Encore Award and 'The Alternatives' (2024). Her short stories have won the Irish Book Awards’ Story of the Year, the Moth Short Story Prize, and an O. Henry Prize. Her story, ‘Two Hands’, was shortlisted for the BBC National Short Story Award, 2025. Caoilinn Hughes grew up in Galway and now lives in London.\n\nThe annual BBC National Short Story Award with the University of Cambridge celebrates its 21st anniversary in 2026 with a shortlist of five short stories by multi-award-winning writers and astonishing new talent from across the United Kingdom. Set in locations across the globe, from the Australian bush to Galway Bay, this year’s tender and vivid stories explore the value of human connection across generations and through friendship in a fractured world. \nMarking the awards is Di Speirs, who has judged the BBC National Short Story Award since its launch. She will be joined on the judging panel by 2022 NSSA winner Saba Sams and two former NSSA shortlistees, Tahmima Anam (2016) and Will Eaves (2017), and Costa Best First Novel Award winner, Andrew Micheal Hurley.\n\nThe BBC National Short Story Award with the University of Cambridge was established to raise the profile of the short form and this year’s all-female shortlist join an impressive list of alumni.\n\nFrom 14 to 18 September, all five of the shortlisted stories can be heard at 3.30pm each afternoon on Radio 4. The winner of the 21st BBC National Short Story Award with the University of Cambridge will be announced live on BBC Radio 4’s Front Row at 7.15pm on Tuesday 29 September 2026.\n\nReader: Cathy Belton\nWriter: Caoilinn Hughes\nAbridged and produced by Justine Willett"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p9l10r.jpg",
+      "duration": {
+        "value": 1680,
+        "label": "28 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "b0079gw3",
+        "urn": "urn:bbc:radio:brand:b0079gw3",
+        "title": "BBC National Short Story Award",
+        "synopses": {
+          "short": "Stories shortlisted for the National Short Story Award",
+          "medium": "Stories shortlisted for the National Short Story Award",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 24000000,
+            "label": "24 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 31000000,
+            "label": "31 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 75000000,
+            "label": "75 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-17T15:00:00Z",
+        "to": "2031-09-16T15:00:00Z",
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-09-17T00:00:00Z",
+        "label": "17 Sep 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=m0031jrs&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "b08hpmmc",
+      "urn": "urn:bbc:radio:episode:b08hpmmh",
+      "network": {
+        "id": "bbc_radio_four_extra",
+        "key": "radio4extra",
+        "short_title": "Radio 4 Extra",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four_extra/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "The Rule of The Land by Garrett Carr",
+        "secondary": "4. Lough Derg - Bogland",
+        "tertiary": null,
+        "entity_title": "4. Lough Derg - Bogland"
+      },
+      "synopses": {
+        "short": "Memories rise to the surface against a backdrop of bogs, trees and standing stones.",
+        "medium": "As mapmaker Garrett follows the UK-Irish border, he enters a landscape of bogs and standing stones. Read by John Paul Connolly.",
+        "long": "Travelling on foot and by canoe, mapmaker Garrett Carr follows the border between the UK and Ireland. \n\nIn Donegal, he finds memories rising to the surface against a backdrop of bogs, trees and standing stones.\n\nAbridged by Anna Magnusson\n\nRead by John Paul Connolly\n\nProducer: Eilidh McCreadie\n\nFirst broadcast on BBC Radio 4 in March 2017."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p04w6h7v.jpg",
+      "duration": {
+        "value": 900,
+        "label": "15 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "series",
+        "id": "b08jprmp",
+        "urn": "urn:bbc:radio:series:b08jprmp",
+        "title": "The Rule of The Land by Garrett Carr",
+        "synopses": {
+          "short": "Mapmaker Garrett Carr follows the border between the UK and Ireland.",
+          "medium": "Mapmaker Garrett Carr follows the border between the UK and Ireland, discovering the landscapes and people who make up this fragile borderland.",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 13000000,
+            "label": "13 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 17000000,
+            "label": "17 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 41000000,
+            "label": "41 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-17T07:45:00Z",
+        "to": "2026-10-18T02:45:00Z",
+        "label": "Available for 25 days"
+      },
+      "release": {
+        "date": "2017-03-16T00:00:00Z",
+        "label": "16 Mar 2017"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=b08jprmp&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0p9vvrk",
+      "urn": "urn:bbc:radio:episode:p0p9vvvv",
+      "network": {
+        "id": "bbc_sounds_podcasts",
+        "key": "podcasts",
+        "short_title": "Sounds",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Sherlock Holmes Short Stories",
+        "secondary": "The Adventure of the Missing Three-Quarter: Part One",
+        "tertiary": null,
+        "entity_title": "The Adventure of the Missing Three-Quarter: Part One"
+      },
+      "synopses": {
+        "short": "Sherlock Holmes must find Cambridge's missing rugby player.",
+        "medium": null,
+        "long": "When the Cambridge rugby team’s star player goes missing, on the eve of a critical match against Oxford, it’s up to Sherlock Holmes to track him down. \n\nA ⁠Noiser⁠ podcast production. \n \nNarrated by Hugh Bonneville  \nWritten by Sir Arthur Conan Doyle \nProduced by Duncan Barrett \nScript Supervisor: Chris McDonald \nSound Design and Audio Editing by Tony Onuchukwu \nSound Supervisor: Tom Pink \nCompositions: Dorry Macaulay and Oliver Baines \nMix & Mastering: Josh Latham \nSeries Consultant: Dan Smith \nExecutive Producer: Katrina Hughes"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+      "duration": {
+        "value": 1644,
+        "label": "27 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "p0k9tzr0",
+        "urn": "urn:bbc:radio:brand:p0k9tzr0",
+        "title": "Sherlock Holmes Short Stories",
+        "synopses": {
+          "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+          "medium": null,
+          "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 23000000,
+            "label": "23 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 30000000,
+            "label": "30 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 74000000,
+            "label": "74 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-17T05:00:00Z",
+        "to": "2029-09-16T05:00:00Z",
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-09-17T00:00:00Z",
+        "label": "17 Sep 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "m0031jwv",
+      "urn": "urn:bbc:radio:episode:m0031jww",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "BBC National Short Story Award",
+        "secondary": "BBC National Short Story Award 2026",
+        "tertiary": "Ditto by Cherise Saywell",
+        "entity_title": "Ditto by Cherise Saywell"
+      },
+      "synopses": {
+        "short": "Cherise Saywell’s ‘Ditto’ is up for the prestigious 2026 BBC National Short Story Award.",
+        "medium": "Set in a small town in rural Australia, Cherise Saywell’s ‘Ditto’ is the third story up for the BBC National Short Story Award with the University of Cambridge. Richard Goulding reads.",
+        "long": "Cherise Saywell’s story ‘Ditto’ transports us to a small town in 1990s rural Australia in the third of our shortlisted stories in contention of the 2026 BBC National Short Story Award with the University of Cambridge.\n\nIn this delicately crafted story, we follow our young narrator as he faces indecision and uncertainty, building up the courage to make a very important phone call. Richard Goulding reads this dark tale which, ultimately, has hope and salvation at its heart.\n\nCherise Saywell is a novelist and short-story writer. She was born and brought up in Australia and, after travelling to the UK in 1996, has lived in Scotland ever since. The author of two novels, 'Desert Fish' (2011) and 'Twitcher' (2013), her short stories have been anthologised and won the Pindrop Short Story Award (2016), the Mslexia Short Story Prize (2015), and the V.S. Pritchett prize (2003), as well as being shortlisted for several prizes, including the Bristol Prize and the Asham Award. Cherise has been a Royal Literary Fund (RLF) Fellow at Stirling University and Strathclyde University. She now works on the RLF’s Bridge project in secondary schools, and as an RLF Consultant in universities. Born and raised in Australia, Cherise now lives in Edinburgh, Scotland. \n\nThe annual BBC National Short Story Award with the University of Cambridge celebrates its 21st anniversary in 2026 with a shortlist of five short stories by multi-award-winning writers and astonishing new talent from across the United Kingdom. Set in locations across the globe, from the Australian bush to Galway Bay, this year’s tender and vivid stories explore the value of human connection across generations and through friendship in a fractured world. \nMarking the awards is Di Speirs, who has judged the BBC National Short Story Award since its launch. She will be joined on the judging panel by 2022 NSSA winner Saba Sams and two former NSSA shortlistees, Tahmima Anam (2016) and Will Eaves (2017), and Costa Best First Novel Award winner, Andrew Micheal Hurley.  \n\nThe BBC National Short Story Award with the University of Cambridge was established to raise the profile of the short form and this year’s all-female shortlist join an impressive list of alumni.\n\nFrom 14 to 18 September, all five of the shortlisted stories can be heard at 3.30pm each afternoon on Radio 4. The winner of the 21st BBC National Short Story Award with the University of Cambridge will be announced live on BBC Radio 4’s Front Row at 7.15pm on Tuesday 29 September 2026.\n\nReader: Richard Goulding\nWriter: Cherise Saywell\nAbridged by Elizabeth Allard\nProduced by Bethany Woodhead"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p9l0zz.jpg",
+      "duration": {
+        "value": 1680,
+        "label": "28 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "b0079gw3",
+        "urn": "urn:bbc:radio:brand:b0079gw3",
+        "title": "BBC National Short Story Award",
+        "synopses": {
+          "short": "Stories shortlisted for the National Short Story Award",
+          "medium": "Stories shortlisted for the National Short Story Award",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 24000000,
+            "label": "24 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 31000000,
+            "label": "31 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 75000000,
+            "label": "75 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-16T15:00:00Z",
+        "to": "2031-09-15T15:00:00Z",
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-09-16T00:00:00Z",
+        "label": "16 Sep 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=m0031jrs&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "b08hnpsy",
+      "urn": "urn:bbc:radio:episode:b08hnr6b",
+      "network": {
+        "id": "bbc_radio_four_extra",
+        "key": "radio4extra",
+        "short_title": "Radio 4 Extra",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four_extra/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "The Rule of The Land by Garrett Carr",
+        "secondary": "3. Clones - The Bloody Pass",
+        "tertiary": null,
+        "entity_title": "3. Clones - The Bloody Pass"
+      },
+      "synopses": {
+        "short": "The author risks life and limb on County Fermanagh's narrow roads.",
+        "medium": "Travelling the Irish border, the mapmaker dodges boy racers on County Fermanagh’s twisty lanes. Read by John Paul Connolly.",
+        "long": "Travelling on foot and by canoe, mapmaker Garrett Carr follows the border between the UK and Ireland. \n\nAt the twistiest stretch of the border, the author battles with boy racers on the narrow roads of County Fermanagh.\n\nAbridged by Anna Magnusson\n\nRead by John Paul Connolly\n\nProducer: Eilidh McCreadie\n\nFirst broadcast on BBC Radio 4 in March 2017."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p04w6h7v.jpg",
+      "duration": {
+        "value": 900,
+        "label": "15 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "series",
+        "id": "b08jprmp",
+        "urn": "urn:bbc:radio:series:b08jprmp",
+        "title": "The Rule of The Land by Garrett Carr",
+        "synopses": {
+          "short": "Mapmaker Garrett Carr follows the border between the UK and Ireland.",
+          "medium": "Mapmaker Garrett Carr follows the border between the UK and Ireland, discovering the landscapes and people who make up this fragile borderland.",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 13000000,
+            "label": "13 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 17000000,
+            "label": "17 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 41000000,
+            "label": "41 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-16T07:45:00Z",
+        "to": "2026-10-17T02:45:00Z",
+        "label": "Available for 24 days"
+      },
+      "release": {
+        "date": "2017-03-15T00:00:00Z",
+        "label": "15 Mar 2017"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=b08jprmp&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "b005qzz2",
+      "urn": "urn:bbc:radio:episode:b007jv63",
+      "network": {
+        "id": "bbc_radio_four_extra",
+        "key": "radio4extra",
+        "short_title": "Radio 4 Extra",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four_extra/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Three Country Stories by HE Bates",
+        "secondary": "Series 2",
+        "tertiary": "Loss of Pride",
+        "entity_title": "Loss of Pride"
+      },
+      "synopses": {
+        "short": "Uncle Silas tells his tale of the womanising shoemaker and the baked potato.",
+        "medium": "Uncle Silas tells his tale of the womanising shoemaker and the baked potato. Read by David Neal.",
+        "long": "The tale of the womanising shoemaker and the baked potato.\n\nUncle Silas relates more escapades of his past.\n\nThe last of three more short stories in this popular series.\n\nFeaturing local characters of the Bedfordshire countryside which HE Bates knew and loved so well.\n\nAbridged and read by David Neal.\n\nProducer: Cherry Cookson\n\nFirst broadcast on BBC Radio 4 in December 1987."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p66ysg.jpg",
+      "duration": {
+        "value": 900,
+        "label": "15 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "b00d4z44",
+        "urn": "urn:bbc:radio:brand:b00d4z44",
+        "title": "Three Country Stories by HE Bates",
+        "synopses": {
+          "short": "Tales of local characters of the Bedfordshire countryside.",
+          "medium": "Tales of local characters of the Bedfordshire countryside which HE Bates knew and loved so well",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 13000000,
+            "label": "13 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 17000000,
+            "label": "17 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 41000000,
+            "label": "41 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-15T15:00:00Z",
+        "to": "2026-10-16T05:00:00Z",
+        "label": "Available for 23 days"
+      },
+      "release": {
+        "date": "1987-12-25T00:00:00Z",
+        "label": "25 Dec 1987"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=b00d4z59&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "m0031kkw",
+      "urn": "urn:bbc:radio:episode:m0031kkx",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "BBC National Short Story Award",
+        "secondary": "BBC National Short Story Award 2026",
+        "tertiary": "Little Lands by Lucy Caldwell",
+        "entity_title": "Little Lands by Lucy Caldwell"
+      },
+      "synopses": {
+        "short": "Little Lands by Lucy Caldwell is the second story up for this prestigious award.",
+        "medium": "Little Lands by Lucy Caldwell is the second story up for the 2026 BBC National Short Story Award with Cambridge University. The reader is Anne-Marie Duff.",
+        "long": "Read by Anne-Marie Duff, ‘Little Lands’ by Lucy Caldwell is the second story up for this year's BBC National Short Story Award with the University of Cambridge in its 21st year.\nThis beautifully written story centres on a single scene from one of cinema's most iconic films. Reflecting on the famous dance scene in 'The Sound of Music', this story is a meditation on how the sharing of everyday pleasures can be transformed into precious memories to be recalled and passed on.\nLucy Caldwell was born in Belfast and is the author of four novels, several stage plays and radio dramas, and four collections of short stories: 'Multitudes', 'Intimacies', 'Openings', and most recently, 'Devotions'. Elected a Fellow of the Royal Society of Literature in 2018, she was the editor of 'Being Various: New Irish Short Stories' in 2019. She won the BBC National Short Story Award in 2021 for ‘All the People Were Mean and Bad’. Other awards include the Rooney Prize for Irish Literature, the George Devine Award, the Dylan Thomas Prize, the Walter Scott Prize, and the 2022 E. M. Forster Award from the American Academy of Arts & Letters. She runs a popular online masterclass on the short story for the Faber Academy.\nThe annual BBC National Short Story Award with the University of Cambridge celebrates its 21st anniversary in 2026 with a shortlist of five short stories by multi-award-winning writers and astonishing new talent from across the United Kingdom. Set in locations across the globe, from the Australian bush to Galway Bay, this year’s tender and vivid stories explore the value of human connection across generations and through friendship in a fractured world. \nMarking the awards is Di Speirs, who has judged the BBC National Short Story Award since its launch. She will be joined on the judging panel by 2022 NSSA winner Saba Sams and two former NSSA shortlistees, Tahmima Anam (2016) and Will Eaves (2017), and Costa Best First Novel Award winner, Andrew Micheal Hurley.  \nThe BBC National Short Story Award with the University of Cambridge was established to raise the profile of the short form and this year’s all-female shortlist join an impressive list of alumni.\nFrom 14th to 18th September, all five of the shortlisted stories can be heard at 15:30 each afternoon on Radio 4. The winner of the 21st BBC National Short Story Award with the University of Cambridge will be announced live on BBC Radio 4’s Front Row at 19:15 on Tuesday 29th September 2026.\nReader: Anne-Marie Duff\nWriter: Lucy Caldwell\nAbridged and produced by Elizabeth Allard\n\nImage credit: 'THE SOUND OF MUSIC' ©1965 20th Century Studios, Inc. All rights reserved."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p9pkww.jpg",
+      "duration": {
+        "value": 1680,
+        "label": "28 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "b0079gw3",
+        "urn": "urn:bbc:radio:brand:b0079gw3",
+        "title": "BBC National Short Story Award",
+        "synopses": {
+          "short": "Stories shortlisted for the National Short Story Award",
+          "medium": "Stories shortlisted for the National Short Story Award",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 24000000,
+            "label": "24 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 31000000,
+            "label": "31 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 75000000,
+            "label": "75 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-15T15:00:00Z",
+        "to": "2031-09-14T15:00:00Z",
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-09-15T00:00:00Z",
+        "label": "15 Sep 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=m0031jrs&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "b08hmr11",
+      "urn": "urn:bbc:radio:episode:b08hmr17",
+      "network": {
+        "id": "bbc_radio_four_extra",
+        "key": "radio4extra",
+        "short_title": "Radio 4 Extra",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four_extra/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "The Rule of The Land by Garrett Carr",
+        "secondary": "2. Mile Hill - The Dorsey",
+        "tertiary": null,
+        "entity_title": "2. Mile Hill - The Dorsey"
+      },
+      "synopses": {
+        "short": "Walking the UK-Irish border, Garrett Carr meets the farmers.",
+        "medium": "Garrett Carr journeys along the UK-Irish border and meets those who know the land – the farmers. Read by John Paul Connolly.",
+        "long": "Travelling on foot and by canoe, mapmaker Garrett Carr follows the border between the UK and Ireland. \n\nAs his journey continues he meets the border natives who knows the land better than anyone - the farmers.\n\nAbridged by Anna Magnusson\n\nRead by John Paul Connolly\n\nProducer: Eilidh McCreadie\n\nFirst broadcast on BBC Radio 4 in March 2017."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p04w6h7v.jpg",
+      "duration": {
+        "value": 900,
+        "label": "15 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "series",
+        "id": "b08jprmp",
+        "urn": "urn:bbc:radio:series:b08jprmp",
+        "title": "The Rule of The Land by Garrett Carr",
+        "synopses": {
+          "short": "Mapmaker Garrett Carr follows the border between the UK and Ireland.",
+          "medium": "Mapmaker Garrett Carr follows the border between the UK and Ireland, discovering the landscapes and people who make up this fragile borderland.",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 13000000,
+            "label": "13 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 17000000,
+            "label": "17 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 41000000,
+            "label": "41 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-15T07:45:00Z",
+        "to": "2026-10-16T02:45:00Z",
+        "label": "Available for 23 days"
+      },
+      "release": {
+        "date": "2017-03-14T00:00:00Z",
+        "label": "14 Mar 2017"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=b08jprmp&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "b006m066",
+      "urn": "urn:bbc:radio:episode:b007jyd8",
+      "network": {
+        "id": "bbc_radio_four_extra",
+        "key": "radio4extra",
+        "short_title": "Radio 4 Extra",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four_extra/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Three Country Stories by HE Bates",
+        "secondary": "Series 2",
+        "tertiary": "Great Uncle Crow",
+        "entity_title": "Great Uncle Crow"
+      },
+      "synopses": {
+        "short": "A young boy's eccentric relative has a fondness for moorhen eggs, cress and 'neck oil'.",
+        "medium": "A young boy gets to know his eccentric relative with a fondness for moorhen eggs, cress and 'neck oil'. Read by David Neal.",
+        "long": "A young boy visits his great uncle at his riverside dwelling.\n\nHe gets to know his eccentric relative with a fondness for moorhen eggs, cress and 'neck oil'. \n\nAnother story in this popular series\n\nFeaturing local characters of the Bedfordshire countryside which HE Bates knew and loved so well.\n\nAbridged and read by David Neal.\n\nProducer: Cherry Cookson\n\nFirst broadcast on BBC Radio 4 in December 1987."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p66ysg.jpg",
+      "duration": {
+        "value": 900,
+        "label": "15 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "b00d4z44",
+        "urn": "urn:bbc:radio:brand:b00d4z44",
+        "title": "Three Country Stories by HE Bates",
+        "synopses": {
+          "short": "Tales of local characters of the Bedfordshire countryside.",
+          "medium": "Tales of local characters of the Bedfordshire countryside which HE Bates knew and loved so well",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 13000000,
+            "label": "13 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 17000000,
+            "label": "17 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 41000000,
+            "label": "41 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-14T15:00:00Z",
+        "to": "2026-10-15T05:00:00Z",
+        "label": "Available for 22 days"
+      },
+      "release": {
+        "date": "1987-12-24T00:00:00Z",
+        "label": "24 Dec 1987"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=b00d4z59&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "m0031jrq",
+      "urn": "urn:bbc:radio:episode:m0031jrr",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "BBC National Short Story Award",
+        "secondary": "BBC National Short Story Award 2026",
+        "tertiary": "Burning Bush by Merryn Glover",
+        "entity_title": "Burning Bush by Merryn Glover"
+      },
+      "synopses": {
+        "short": "The first contender for this year’s BBC National Short Story Award by Merryn Glover.",
+        "medium": "Merryn Glover’s heart-rending story set in the Australian bush is the first contender for the 2026 BBC National Short Story Award, which celebrates its 21st anniversary this year.",
+        "long": "Merryn Glover’s heart-rending story about sorrow, love and belonging set in the Australian bush is the first contender for this year’s BBC National Short Story Award with the University of Cambridge, which celebrates its 21st anniversary this year. When an unexpected letter arrives, an elderly man is forced to question his isolated life, surrounded only by animals, birds, and painful memories. Mike Sengelow reads ‘Burning Bush’.\n\nMerryn Glover was born in Nepal, educated in Australia. Her plays and short stories have been broadcast on BBC Radio 4 and Radio Scotland and widely anthologised. Her first novel, 'A House Called Askival' (2014) is set in an Indian hill-station, where she went to school, and her second, 'Of Stone and Sky' (2021), in the Badenoch region of the Cairngorms National Park, is where she now lives. It won Book of the Year at the Bookmark Book Festival, Blairgowrie, and was long-listed for the Highland Book Prize. In 2019, Merryn was the first Writer in Residence for the Cairngorms National Park and has been a regular contributor to the Guardian Country Diary. Her latest book is 'The Hidden Fires: A Cairngorms Journey with Nan Shepherd' (2023).\n\nThe annual BBC National Short Story Award with the University of Cambridge celebrates its 21st anniversary in 2026 with a shortlist of five short stories by multi-award-winning writers and astonishing new talent from across the United Kingdom. Set in locations across the globe, from the Australian bush to Galway Bay, this year’s tender and vivid stories explore the value of human connection across generations and through friendship in a fractured world. \nMarking the awards is Di Speirs, who has judged the BBC National Short Story Award since its launch. She will be joined on the judging panel by 2022 NSSA winner Saba Sams and two former NSSA shortlistees, Tahmima Anam (2016) and Will Eaves (2017), and Costa Best First Novel Award winner, Andrew Micheal Hurley.  \n\nThe BBC National Short Story Award with the University of Cambridge was established to raise the profile of the short form and this year’s all-female shortlist join an impressive list of alumni.\n\nFrom 14 to 18 September, all five of the shortlisted stories can be heard at 3.30pm each afternoon on Radio 4. The winner of the 21st BBC National Short Story Award with the University of Cambridge will be announced live on BBC Radio 4’s Front Row at 7.15pm on Tuesday 29 September 2026.\n\nReader: Mike Sengelow\nWriter: Merryn Glover\nAbridged and produced by Justine Willett"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p965sw.jpg",
+      "duration": {
+        "value": 1680,
+        "label": "28 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "b0079gw3",
+        "urn": "urn:bbc:radio:brand:b0079gw3",
+        "title": "BBC National Short Story Award",
+        "synopses": {
+          "short": "Stories shortlisted for the National Short Story Award",
+          "medium": "Stories shortlisted for the National Short Story Award",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 24000000,
+            "label": "24 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 31000000,
+            "label": "31 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 75000000,
+            "label": "75 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-14T15:00:00Z",
+        "to": "2031-09-13T15:00:00Z",
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-09-14T00:00:00Z",
+        "label": "14 Sep 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=m0031jrs&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "b08hljql",
+      "urn": "urn:bbc:radio:episode:b08hlk9s",
+      "network": {
+        "id": "bbc_radio_four_extra",
+        "key": "radio4extra",
+        "short_title": "Radio 4 Extra",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four_extra/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "The Rule of The Land by Garrett Carr",
+        "secondary": "1. Haulbowline - Slieve Gullion",
+        "tertiary": null,
+        "entity_title": "1. Haulbowline - Slieve Gullion"
+      },
+      "synopses": {
+        "short": "On foot and by canoe, a mapmaker explores the UK's border with Ireland.",
+        "medium": "Mapmaker Garrett Carr follows the fragile borderland between the UK and Ireland. Read by John Paul Connolly.",
+        "long": "Travelling on foot and by canoe, mapmaker Garrett Carr follows the border between the UK and Ireland. \n\nIn search of the landscapes and people who make up this fragile borderland, he finds fresh uncertainty in the wake of the Brexit vote.\n\nAbridged in five parts by Anna Magnusson.\n\nRead by John Paul Connolly\n\nProducer: Eilidh McCreadie\n\nFirst broadcast on BBC Radio 4 in March 2017."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p04w604p.jpg",
+      "duration": {
+        "value": 900,
+        "label": "15 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "series",
+        "id": "b08jprmp",
+        "urn": "urn:bbc:radio:series:b08jprmp",
+        "title": "The Rule of The Land by Garrett Carr",
+        "synopses": {
+          "short": "Mapmaker Garrett Carr follows the border between the UK and Ireland.",
+          "medium": "Mapmaker Garrett Carr follows the border between the UK and Ireland, discovering the landscapes and people who make up this fragile borderland.",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 13000000,
+            "label": "13 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 17000000,
+            "label": "17 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 41000000,
+            "label": "41 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-14T07:45:00Z",
+        "to": "2026-10-15T02:45:00Z",
+        "label": "Available for 22 days"
+      },
+      "release": {
+        "date": "2017-03-13T00:00:00Z",
+        "label": "13 Mar 2017"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=b08jprmp&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0p8kh69",
+      "urn": "urn:bbc:radio:episode:m0031jw9",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Redwood by Ben Macintyre",
+        "secondary": "5. A Reckoning",
+        "tertiary": null,
+        "entity_title": "5. A Reckoning"
+      },
+      "synopses": {
+        "short": "In Ben Macintyre's new book his Cold War story of espionage in 1980s Iran concludes.",
+        "medium": "Ben Macintyre's latest book tells a story of Cold War espionage set against the backdrop of Iran's revolution in the 1980s. Today, there is a reckoning. Read by Jamie Parker.",
+        "long": "Ben Macintyre's latest book tells a story of Cold War espionage set against the backdrop of Iran's revolution in the 1980s. Today, there is a reckoning. Read by Jamie Parker.\n\nThe best-selling historian Ben Macintyre's new book is a timely and remarkable story.\n\nIt's 1981, Ayatollah Ruhollah Khomeini has swept to power and the Soviets are preparing to overthrow his fledgling Islamist regime. If their plans were to succeed, the American response could see the Western superpower resort to nuclear weapons. One double agent sets out to thwart the KGB and change the course of the Cold War. In turning to the MI6, the Soviet spy set in train a series of events that continue to have ramifications in the Middle-East and throughout the world today.\n\nBen Macintyre is the acclaimed author of many best-selling books including several titles which have featured as Book of the Weeks on BBC Radio 4. They include The Siege, Colditz, The Spy and the Traitor and Operation Mincemeat. Many of his books have been adapted for stage and screen. Series three of SAS: Rogue Heroes is in production, and The Siege is being adapted for the screen.  Ben Macintyre is a columnist and Associate Editor at The Times.\n\nJamie Parker is an award-winning English actor and singer known for originating the role of Harry Potter in the West End and Broadway productions of Harry Potter and the Cursed Child. He won the 2017 Laurence Olivier Award for Best Actor and received a Tony Award nomination. He also was in the original cast of The History Boys by Alan Bennet.  Alongside his stage and screen work, he has appeared in numerous radio dramas.\n\nAbridged by Katrin Williams\nProduced by Elizabeth Allard"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p80mmm.jpg",
+      "duration": {
+        "value": 839,
+        "label": "13 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "series",
+        "id": "m0031jr9",
+        "urn": "urn:bbc:radio:series:m0031jr9",
+        "title": "Redwood by Ben Macintyre",
+        "synopses": {
+          "short": "A remarkable story of Cold War espionage set in 1980s Tehran during the Iranian Revolution",
+          "medium": "Book of the Week. The best-selling historian Ben Macintyre's new book is a timely and remarkable story of Cold War espionage set in 1980s Tehran during the Iranian Revolution.",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 13000000,
+            "label": "13 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 16000000,
+            "label": "16 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 38000000,
+            "label": "38 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-14T06:00:00Z",
+        "to": "2026-10-18T06:00:00Z",
+        "label": "Available for 25 days"
+      },
+      "release": {
+        "date": "2026-09-18T00:00:00Z",
+        "label": "18 Sep 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=m0031jr9&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0p8p5hn",
+      "urn": "urn:bbc:radio:episode:m0031vpc",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Exhibition by Alex Hyde",
+        "secondary": "10: Retrospective",
+        "tertiary": null,
+        "entity_title": "10: Retrospective"
+      },
+      "synopses": {
+        "short": "In Brooklyn and working collaboratively again, Rab shepherds a fierce burst of creativity.",
+        "medium": "'Violent works, people say. They read them through your death.' Sharing living space once more in Brooklyn, Rab shepherds a ferocious burst of creativity.",
+        "long": "'Violent works, people say. They read them through your death.'\nSharing living space once more in Brooklyn, Rab shepherds a ferocious burst of creativity.\n\nRead by Maxine Peake\nWritten by Alex Hyde\nAbridged by Siân Preece\nProduced by Eilidh McCreadie\n\nAlex Hyde is an Associate Professor at University College London. Violets, her first novel, a fictional reimagining of her father’s story, was longlisted for the Desmond Elliott Prize, shortlisted for the Gordon Bowker Volcano Prize and was a Radio 4 Book at Bedtime. She lives with her family in South London."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p6t6rw.jpg",
+      "duration": {
+        "value": 844,
+        "label": "14 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "series",
+        "id": "m0031js8",
+        "urn": "urn:bbc:radio:series:m0031js8",
+        "title": "Exhibition by Alex Hyde",
+        "synopses": {
+          "short": "A study of power and obsession, inspired by the world of the Young British Artists.",
+          "medium": "A study of power and intense friendship inspired by the ground-breaking work of the Young British Artists. Read by Maxine Peake.",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 13000000,
+            "label": "13 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 16000000,
+            "label": "16 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 39000000,
+            "label": "39 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-14T06:00:00Z",
+        "to": "2026-10-25T07:00:00Z",
+        "label": "Available for 32 days"
+      },
+      "release": {
+        "date": "2026-09-25T00:00:00Z",
+        "label": "25 Sep 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": {
+          "short": "Contains strong language.",
+          "long": "Contains strong language."
+        }
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=m0031js8&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0p8kh4k",
+      "urn": "urn:bbc:radio:episode:m0031jzc",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Redwood by Ben Macintyre",
+        "secondary": "4. On the Road",
+        "tertiary": null,
+        "entity_title": "4. On the Road"
+      },
+      "synopses": {
+        "short": "In Ben Macintyre's new book a KGB double agent makes a perilous journey.",
+        "medium": "Ben Macintyre's new book centres on an unknown Cold War story set in the wake of the Iranian Revolution. Today, a KGB double agent makes a perilous journey. Read by Jamie Parker.",
+        "long": "Ben Macintyre's new book centres on an unknown Cold War story set in 1980s Tehran. Today, a KGB double agent makes a perilous journey. Read by Jamie Parker.\n\nThe best-selling historian Ben Macintyre's new book is a timely and remarkable story of Cold War espionage set in 1980's Tehran during the Iranian Revolution. \n\nIt's 1981, Ayatollah Ruhollah Khomeini has swept to power and the Soviets are preparing to overthrow his fledgling Islamist regime. If their plans were to succeed, the American response could see the Western superpower resort to nuclear weapons. One double agent sets out to thwart the KGB and change the course of the Cold War. In turning to the MI6, the Soviet spy set in train a series of events that continue to have ramifications in the Middle-East and throughout the world today.\n\nBen Macintyre is the acclaimed author of many best-selling books including several titles which have featured as Book of the Weeks on BBC Radio 4. They include The Siege, Colditz, The Spy and the Traitor and Operation Mincemeat. Many of his books have been adapted for stage and screen. Series three of SAS: Rogue Heroes is in production, and The Siege is being adapted for the screen.  Ben Macintyre is a columnist and Associate Editor at The Times.\n\nJamie Parker is an award-winning English actor and singer known for originating the role of Harry Potter in the West End and Broadway productions of Harry Potter and the Cursed Child. He won the 2017 Laurence Olivier Award for Best Actor and received a Tony Award nomination. He also was in the original cast of The History Boys by Alan Bennet.  Alongside his stage and screen work, he has appeared in numerous radio dramas.\n\nAbridged by Katrin Williams\nProduced by Elizabeth Allard"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p80mmm.jpg",
+      "duration": {
+        "value": 820,
+        "label": "13 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "series",
+        "id": "m0031jr9",
+        "urn": "urn:bbc:radio:series:m0031jr9",
+        "title": "Redwood by Ben Macintyre",
+        "synopses": {
+          "short": "A remarkable story of Cold War espionage set in 1980s Tehran during the Iranian Revolution",
+          "medium": "Book of the Week. The best-selling historian Ben Macintyre's new book is a timely and remarkable story of Cold War espionage set in 1980s Tehran during the Iranian Revolution.",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 12000000,
+            "label": "12 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 16000000,
+            "label": "16 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 38000000,
+            "label": "38 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-14T05:55:00Z",
+        "to": "2026-10-18T05:55:00Z",
+        "label": "Available for 25 days"
+      },
+      "release": {
+        "date": "2026-09-17T00:00:00Z",
+        "label": "17 Sep 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=m0031jr9&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0p8p5h8",
+      "urn": "urn:bbc:radio:episode:m0031vl8",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Exhibition by Alex Hyde",
+        "secondary": "9: The Darkroom",
+        "tertiary": null,
+        "entity_title": "9: The Darkroom"
+      },
+      "synopses": {
+        "short": "History repeats itself as Rab moves in with her friend and they begin to collaborate.",
+        "medium": "'What’s mine is yours...' In New York, history is repeating itself as Rab moves in with her friend and they begin to collaborate.",
+        "long": "\"What’s mine is yours...\"\nIn New York, history is repeating itself as Rab moves in with her friend and they embark on a collaboration, artistic as well as domestic.\n\nRead by Maxine Peake\nWritten by Alex Hyde\nAbridged by Siân Preece\nProduced by Eilidh McCreadie\n\nAlex Hyde is an Associate Professor at University College London. Violets, her first novel, a fictional reimagining of her father’s story, was longlisted for the Desmond Elliott Prize, shortlisted for the Gordon Bowker Volcano Prize and was a Radio 4 Book at Bedtime. She lives with her family in South London."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p6t6rw.jpg",
+      "duration": {
+        "value": 819,
+        "label": "13 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "series",
+        "id": "m0031js8",
+        "urn": "urn:bbc:radio:series:m0031js8",
+        "title": "Exhibition by Alex Hyde",
+        "synopses": {
+          "short": "A study of power and obsession, inspired by the world of the Young British Artists.",
+          "medium": "A study of power and intense friendship inspired by the ground-breaking work of the Young British Artists. Read by Maxine Peake.",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 12000000,
+            "label": "12 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 16000000,
+            "label": "16 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 38000000,
+            "label": "38 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-14T05:55:00Z",
+        "to": "2026-10-25T06:55:00Z",
+        "label": "Available for 32 days"
+      },
+      "release": {
+        "date": "2026-09-24T00:00:00Z",
+        "label": "24 Sep 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=m0031js8&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0p8kh30",
+      "urn": "urn:bbc:radio:episode:m0031kq4",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Redwood by Ben Macintyre",
+        "secondary": "3. Spycraft",
+        "tertiary": null,
+        "entity_title": "3. Spycraft"
+      },
+      "synopses": {
+        "short": "In Ben Macintyre’s new book a KGB spy makes a momentous decision in revolutionary Iran.",
+        "medium": "In Ben Macintyre’s new book it’s 1981 and a KGB spy makes a momentous decision as the Cold War rages in revolutionary Iran.  The reader is Jamie Parker.",
+        "long": "In Ben Macintyre’s new book it’s 1981 and a KGB spy makes a momentous decision as the Cold War rages in revolutionary Iran.  The reader is Jamie Parker.\n\nThe best-selling historian Ben Macintyre's new book is a timely and remarkable story of Cold War espionage set in 1980s Tehran during the Iranian Revolution. Jamie Parker reads.\n\nIt's 1981, Ayatollah Ruhollah Khomeini has swept to power and the Soviets are preparing to overthrow his fledgling Islamist regime. If their plans were to succeed, the American response could see the Western superpower resort to nuclear weapons. One double agent sets out to thwart the KGB and change the course of the Cold War. In turning to the MI6, the Soviet spy set in train a series of events that continue to have ramifications in the Middle-East and throughout the world today.\n\nBen Macintyre is the acclaimed author of many best-selling books including several titles which have featured as Book of the Weeks on BBC Radio 4. They include The Siege, Colditz, The Spy and the Traitor and Operation Mincemeat. Many of his books have been adapted for stage and screen. Series three of SAS: Rogue Heroes is in production, and The Siege is being adapted for the screen.  Ben Macintyre is a columnist and Associate Editor at The Times.\n\nJamie Parker is an award-winning English actor and singer known for originating the role of Harry Potter in the West End and Broadway productions of Harry Potter and the Cursed Child. He won the 2017 Laurence Olivier Award for Best Actor and received a Tony Award nomination. He also was in the original cast of The History Boys by Alan Bennet.  Alongside his stage and screen work, he has appeared in numerous radio dramas.\n\nAbridged by Katrin Williams\nProduced by Elizabeth Allard"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p80mmm.jpg",
+      "duration": {
+        "value": 818,
+        "label": "13 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "series",
+        "id": "m0031jr9",
+        "urn": "urn:bbc:radio:series:m0031jr9",
+        "title": "Redwood by Ben Macintyre",
+        "synopses": {
+          "short": "A remarkable story of Cold War espionage set in 1980s Tehran during the Iranian Revolution",
+          "medium": "Book of the Week. The best-selling historian Ben Macintyre's new book is a timely and remarkable story of Cold War espionage set in 1980s Tehran during the Iranian Revolution.",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 12000000,
+            "label": "12 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 16000000,
+            "label": "16 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 38000000,
+            "label": "38 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-09-14T05:50:00Z",
+        "to": "2026-10-18T05:50:00Z",
+        "label": "Available for 25 days"
+      },
+      "release": {
+        "date": "2026-09-16T00:00:00Z",
+        "label": "16 Sep 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=m0031jr9&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    }
+  ]
+}
