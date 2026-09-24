@@ -1,9 +1,8 @@
 import dataclasses
 import logging
-from collections.abc import Sequence
 from dataclasses import fields
 from enum import StrEnum, auto, unique
-from typing import ClassVar, NamedTuple, TypeVar, Any
+from typing import Any, ClassVar, NamedTuple
 
 from sounds import FEATURE_FLAGS, FeatureFlags
 from sounds.exceptions import ParserError
@@ -20,7 +19,6 @@ from sounds.models import (
     ItemCategory,
     LiveStation,
     MenuItem,
-    NestedSoundsTypes,
     Network,
     Playlist,
     Podcast,

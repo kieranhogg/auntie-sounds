@@ -313,7 +313,6 @@ class Network(SerializableMixin):
             self.default_service_id = self.service.id
 
         self.logo_url = network_logo(NETWORK_LOGO_FORMAT, network_id=self.id)
-        from sounds.stations import StationService
 
         self.description = station_description(self.id)
 
@@ -362,7 +361,6 @@ class PlayableNetwork(Network):
             self.logo_url = network_logo(self.logo_url)
         if self.image_url:
             self.image_url = image_from_recipe(self.image_url)
-        from sounds.stations import StationService
 
         self.description = station_description(self.id)
 

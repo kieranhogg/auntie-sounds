@@ -3,7 +3,7 @@ import logging
 from datetime import datetime as dt
 from datetime import timedelta
 from itertools import chain
-from typing import Literal, Sequence, TYPE_CHECKING
+from typing import TYPE_CHECKING, Literal
 
 from anyio.functools import lru_cache
 
@@ -21,7 +21,6 @@ from sounds.models import (
     PlayableNetwork,
     Schedule,
     Station,
-    Stream,
 )
 from sounds.parser import Parser
 
@@ -29,8 +28,8 @@ logger = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
     from sounds.playback import PlaybackService
-    from sounds.schedule import ScheduleService
     from sounds.requests import RequestManager
+    from sounds.schedule import ScheduleService
 
 
 class StationService:
