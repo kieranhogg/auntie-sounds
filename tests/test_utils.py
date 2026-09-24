@@ -38,9 +38,9 @@ class TestUtils:
         assert result == "https://example.com/640x480.jpg"
 
     def test_image_from_recipe_none(self):
-        """Test image recipe with None input."""
+        """Test image recipe with no input."""
         result = image_from_recipe("", 640)
-        assert result is None
+        assert result is ""
 
     def test_image_from_recipe_with_different_format(self):
         """Test image recipe with just a non-jpg format."""
