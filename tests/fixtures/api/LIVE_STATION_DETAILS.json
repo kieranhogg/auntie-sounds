@@ -1,0 +1,953 @@
+{
+  "$schema": "https://rms.api.bbc.co.uk/docs/swagger.json#/definitions/ExperienceResponse",
+  "data": [
+    {
+      "type": "inline_display_module",
+      "id": "live_play_area",
+      "style": null,
+      "title": "Player",
+      "description": null,
+      "state": "ok",
+      "uris": {
+        "pagination": {
+          "uri": "/v2/broadcasts/sub-services/poll/bbc_radio_fourfm?experience=domestic&offset={offset}&limit={limit}",
+          "offset": 0,
+          "limit": 5,
+          "total": 54
+        },
+        "polling": {
+          "uri": "/v2/broadcasts/sub-services/poll/bbc_radio_fourfm?experience=domestic&offset={offset}&limit={limit}",
+          "wait_before_poll_sec": 1800
+        }
+      },
+      "controls": null,
+      "total": 54,
+      "data": [
+        {
+          "type": "broadcast_summary",
+          "id": "p0p6nq1b",
+          "urn": "urn:bbc:radio:episode:m0031kr0",
+          "start": "2026-09-16T19:00:00Z",
+          "end": "2026-09-16T20:00:00Z",
+          "service_id": "bbc_radio_fourfm",
+          "duration": 3600,
+          "network": {
+            "id": "bbc_radio_four",
+            "key": "radio4",
+            "short_title": "Radio 4",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Moral Maze",
+            "secondary": "16/09/2026",
+            "tertiary": ""
+          },
+          "synopses": {
+            "short": "Live debate examining the moral issues behind one of the week's news stories. #moralmaze",
+            "medium": null,
+            "long": null
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0nmg67x.jpg",
+          "container": {
+            "type": "brand",
+            "id": "b006qk11",
+            "urn": "urn:bbc:radio:brand:b006qk11",
+            "title": "Moral Maze",
+            "activities": []
+          },
+          "playable_item": null
+        },
+        {
+          "type": "broadcast_summary",
+          "id": "p0p6nq1d",
+          "urn": "urn:bbc:radio:episode:m0031kk6",
+          "start": "2026-09-16T20:00:00Z",
+          "end": "2026-09-16T20:30:00Z",
+          "service_id": "bbc_radio_fourfm",
+          "duration": 1800,
+          "network": {
+            "id": "bbc_radio_four",
+            "key": "radio4",
+            "short_title": "Radio 4",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "The Life Scientific",
+            "secondary": "Edith Heard on unravelling the mystery of X-chromosome inactivation",
+            "tertiary": ""
+          },
+          "synopses": {
+            "short": "Epigeneticist Edith Heard on decoding the details of how X chromosomes are expressed.",
+            "medium": "Epigeneticist Edith Heard, director of the Francis Crick Institute, discusses her work unravelling the mysteries of how X chromosomes are switched on and off.",
+            "long": "Imagine looking at a map of a city you thought you knew inside-out, only to discover a collection of tightly knit neighbourhoods that nobody had ever realised existed... Edith Heard has achieved something rather similar with DNA.\n\nEdith is a leading expert in epigenetics: put simply, the science around how our bodies can turn particular genes on or off without actually altering our DNA. She’s spent her career studying the mechanisms that make us who we are and transforming our understanding of how X chromosomes are expressed; notably, how female cells turn off the spare X chromosome.\n\nTalking to Professor Jim Al-Khalili, Edith discusses her journey from a shy and introverted youngster to the cutting edge of European science - including her latest role as Director of London’s prestigious Francis Crick Institute. \n\n\n\nPresented by Jim Al-Khalili\nProduced by Lucy Taylor\nA BBC Studios production"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0m1wsx5.jpg",
+          "container": {
+            "type": "series",
+            "id": "b015sqc7",
+            "urn": "urn:bbc:radio:series:b015sqc7",
+            "title": "The Life Scientific",
+            "activities": []
+          },
+          "playable_item": null
+        },
+        {
+          "type": "broadcast_summary",
+          "id": "p0p6nq1g",
+          "urn": "urn:bbc:radio:episode:m0031kk8",
+          "start": "2026-09-16T20:30:00Z",
+          "end": "2026-09-16T21:00:00Z",
+          "service_id": "bbc_radio_fourfm",
+          "duration": 1800,
+          "network": {
+            "id": "bbc_radio_four",
+            "key": "radio4",
+            "short_title": "Radio 4",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "All in the Mind",
+            "secondary": "All in the Mind Awards launch and how music can impact Parkinson’s",
+            "tertiary": ""
+          },
+          "synopses": {
+            "short": "How can music impact life with Parkinson’s? And the All in the Mind Awards are back.",
+            "medium": "How can music make a difference to life with Parkinson’s disease? And we launch the All in the Mind Awards with a special guest.",
+            "long": "The All in the Mind Awards are back for 2027, and nominations are open now!\n\nClaudia Hammond hears from previous finalists on what the Awards mean to them – and Sir Stephen Fry sends in a special note on why the Awards are so important.\n\nAlso, how can music make a difference to life with Parkinson’s disease? We investigate prompted by one of our listeners, and hear how even just imagining music could have an impact.\n\nAnd Claudia is joined by Daryl O’Connor, professor of psychology at the University of Leeds, who shares new research on how listening to music calms our brains. Plus, Claudia and Daryl try some slow-paced breathing in the studio to help lower stress levels.\n\nIf you would like to nominate someone for the All in the Mind Awards, then head to bbc.co.uk/allinthemindawards. You’ll find the terms and conditions and the privacy notice on the website, and you must be over 18 to send in a nomination. You have until 1pm on Friday the 8th of January 2027 to enter.\n\nPresenter: Claudia Hammond\nProducer: Sophie Ormiston & Gerry Holt\nAssistant producer: Tabitha Taylor Buck\nEditor: Ilan Goodman\nStudio Manager: Tim Heffer\nProduction coordinator: Jana Holesworth"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0m1xjlg.jpg",
+          "container": {
+            "type": "brand",
+            "id": "b006qxx9",
+            "urn": "urn:bbc:radio:brand:b006qxx9",
+            "title": "All in the Mind",
+            "activities": []
+          },
+          "playable_item": null
+        },
+        {
+          "type": "broadcast_summary",
+          "id": "p0p6nq1j",
+          "urn": "urn:bbc:radio:episode:m0031kr2",
+          "start": "2026-09-16T21:00:00Z",
+          "end": "2026-09-16T21:45:00Z",
+          "service_id": "bbc_radio_fourfm",
+          "duration": 2700,
+          "network": {
+            "id": "bbc_radio_four",
+            "key": "radio4",
+            "short_title": "Radio 4",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "The World Tonight",
+            "secondary": "16/09/2026",
+            "tertiary": ""
+          },
+          "synopses": {
+            "short": "In depth reporting, intelligent analysis and breaking news from a global perspective",
+            "medium": "In depth reporting, intelligent analysis and breaking news from a global perspective",
+            "long": null
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0m60d4w.jpg",
+          "container": {
+            "type": "brand",
+            "id": "b006qtl3",
+            "urn": "urn:bbc:radio:brand:b006qtl3",
+            "title": "The World Tonight",
+            "activities": []
+          },
+          "playable_item": null
+        },
+        {
+          "type": "broadcast_summary",
+          "id": "p0p6nq1n",
+          "urn": "urn:bbc:radio:episode:m0031kr4",
+          "start": "2026-09-16T21:45:00Z",
+          "end": "2026-09-16T22:00:00Z",
+          "service_id": "bbc_radio_fourfm",
+          "duration": 900,
+          "network": {
+            "id": "bbc_radio_four",
+            "key": "radio4",
+            "short_title": "Radio 4",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Exhibition by Alex Hyde",
+            "secondary": "3. The Crit",
+            "tertiary": ""
+          },
+          "synopses": {
+            "short": "Rab maintains an iron grip on the art for the New York retrospective.",
+            "medium": "'Portraits of me, taken by you.' Rab maintains an iron grip on the plans for the New York retrospective.",
+            "long": "'Portraits of me, taken by you.'\nRab maintains an iron grip on the plans for the New York retrospective.\n\nRead by Maxine Peake\nWritten by Alex Hyde\nAbridged by Siân Preece\nProduced by Eilidh McCreadie\n\nAlex Hyde is an Associate Professor at University College London. Violets, her first novel, a fictional reimagining of her father’s story, was longlisted for the Desmond Elliott Prize, shortlisted for the Gordon Bowker Volcano Prize and was a Radio 4 Book at Bedtime. She lives with her family in South London."
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p6t6rw.jpg",
+          "container": {
+            "type": "series",
+            "id": "m0031js8",
+            "urn": "urn:bbc:radio:series:m0031js8",
+            "title": "Exhibition by Alex Hyde",
+            "activities": []
+          },
+          "playable_item": null
+        }
+      ],
+      "image_url": null
+    },
+    {
+      "type": "inline_display_module",
+      "id": "recent_tracks",
+      "style": null,
+      "title": "Recent Tracks",
+      "description": "Sorry, we’re having some trouble loading our recent tracks. Come back soon to try again.",
+      "state": "empty",
+      "uris": null,
+      "controls": null,
+      "total": 0,
+      "data": [
+        {
+          "type": "display_item",
+          "id": "recent_tracks_empty",
+          "urn": "bbc:radio:content:recent_tracks_empty",
+          "network": null,
+          "titles": {
+            "primary": "Sorry, we’re having some trouble loading our recent tracks. Come back soon to try again.",
+            "secondary": null,
+            "tertiary": null
+          },
+          "synopses": null,
+          "image_url": null,
+          "uris": [],
+          "cta_text": null,
+          "item": null
+        }
+      ],
+      "image_url": null
+    },
+    {
+      "type": "inline_display_module",
+      "id": "display_promos",
+      "style": null,
+      "title": "More from Radio 4",
+      "description": null,
+      "state": "ok",
+      "uris": null,
+      "controls": null,
+      "total": null,
+      "data": [
+        {
+          "type": "display_item",
+          "id": "p0p7zrfs",
+          "urn": "urn:bbc:radio:promotion:p0p7zrfs",
+          "network": null,
+          "titles": {
+            "primary": "Do the benefits of AI data centres outweigh the environmental costs?",
+            "secondary": null,
+            "tertiary": null
+          },
+          "synopses": {
+            "short": "Experts offer up their own ideas around these competing visions of the future.",
+            "medium": null,
+            "long": null
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p7jdfh.jpg",
+          "uris": [
+            {
+              "type": "link",
+              "id": null,
+              "label": "Link",
+              "uri": "https://www.bbc.co.uk/programmes/articles/24GV3pYgTxYBSqpKy2cHN36/do-the-benefits-of-ai-data-centres-outweigh-the-environmental-costs"
+            }
+          ],
+          "cta_text": null,
+          "item": null
+        },
+        {
+          "type": "display_item",
+          "id": "p0p2f2hk",
+          "urn": "urn:bbc:radio:promotion:p0p2f2hk",
+          "network": null,
+          "titles": {
+            "primary": "Mary Beard reveals five ways the Odyssey is a Genre Skipping Classic",
+            "secondary": null,
+            "tertiary": null
+          },
+          "synopses": {
+            "short": "Martin Scorsese, Uberto Pasolini and Mary Beard on the world of the Odyssey.",
+            "medium": null,
+            "long": null
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p2f226.jpg",
+          "uris": [
+            {
+              "type": "link",
+              "id": null,
+              "label": "Link",
+              "uri": "https://www.bbc.co.uk/programmes/articles/3h1SL2BpGQv36tRyQ62LjQ1/mary-beard-reveals-five-ways-the-odyssey-is-a-genre-skipping-classic"
+            }
+          ],
+          "cta_text": null,
+          "item": null
+        },
+        {
+          "type": "display_item",
+          "id": "p0lnn5b9",
+          "urn": "urn:bbc:radio:promotion:p0lnn5b9",
+          "network": null,
+          "titles": {
+            "primary": "Are these summer essentials worth the money?",
+            "secondary": null,
+            "tertiary": null
+          },
+          "synopses": {
+            "short": "Sliced Bread puts suncream, sunglasses and more to the test.",
+            "medium": null,
+            "long": null
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lnn59q.jpg",
+          "uris": [
+            {
+              "type": "link",
+              "id": null,
+              "label": "Link",
+              "uri": "https://www.bbc.co.uk/programmes/articles/3Mqm9rT7YYmCC1J6DR8NN6V/are-these-essential-summer-products-worth-the-money"
+            }
+          ],
+          "cta_text": null,
+          "item": null
+        },
+        {
+          "type": "display_item",
+          "id": "p0nf28xh",
+          "urn": "urn:bbc:radio:promotion:p0nf28xh",
+          "network": null,
+          "titles": {
+            "primary": "Making Tax Digital: Your questions answered",
+            "secondary": null,
+            "tertiary": null
+          },
+          "synopses": {
+            "short": "Everything you need to know about the new tax system for sole traders and landlords.",
+            "medium": null,
+            "long": null
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0ncr4gq.jpg",
+          "uris": [
+            {
+              "type": "link",
+              "id": null,
+              "label": "Link",
+              "uri": "https://www.bbc.co.uk/programmes/articles/BYVj9CWqKz4c9nPHmN8ZgG/making-tax-digital-your-questions-answered"
+            }
+          ],
+          "cta_text": null,
+          "item": null
+        },
+        {
+          "type": "display_item",
+          "id": "p0n2z6qs",
+          "urn": "urn:bbc:radio:promotion:p0n2z6qs",
+          "network": null,
+          "titles": {
+            "primary": "John Keats – How did the romantic poet produce so much brilliant work in his short lifetime?",
+            "secondary": null,
+            "tertiary": null
+          },
+          "synopses": {
+            "short": "How one of the great Romantic poets produced so much in his brilliant but short life.",
+            "medium": null,
+            "long": null
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0n2z4tk.jpg",
+          "uris": [
+            {
+              "type": "link",
+              "id": null,
+              "label": "Link",
+              "uri": "https://www.bbc.co.uk/programmes/articles/3jgWPhJ0J3VJL52rbrDKDkk/john-keats-how-did-the-romantic-poet-produce-so-much-brilliant-work-in-his-short-lifetime"
+            }
+          ],
+          "cta_text": null,
+          "item": null
+        },
+        {
+          "type": "display_item",
+          "id": "p0n1l9l8",
+          "urn": "urn:bbc:radio:promotion:p0n1l9l8",
+          "network": null,
+          "titles": {
+            "primary": "How to manage your finances as a blended family",
+            "secondary": null,
+            "tertiary": null
+          },
+          "synopses": {
+            "short": "From holidays to wills, advice on navigating the pitfalls when your family expands.",
+            "medium": null,
+            "long": null
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0n1frd1.jpg",
+          "uris": [
+            {
+              "type": "link",
+              "id": null,
+              "label": "Link",
+              "uri": "https://www.bbc.co.uk/programmes/articles/2pdPK9MHscb4Nbgg0VQfrhS/how-to-manage-your-finances-as-a-blended-family"
+            }
+          ],
+          "cta_text": null,
+          "item": null
+        }
+      ],
+      "image_url": null
+    },
+    {
+      "type": "inline_display_module",
+      "id": "playable_promos",
+      "style": null,
+      "title": "Highlights",
+      "description": null,
+      "state": "ok",
+      "uris": null,
+      "controls": null,
+      "total": null,
+      "data": [
+        {
+          "type": "playable_item",
+          "id": "p0p2z7tp",
+          "urn": "urn:bbc:radio:episode:m00300hr",
+          "network": {
+            "id": "bbc_radio_four",
+            "key": "radio4",
+            "short_title": "Radio 4",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "What's Up Docs?",
+            "secondary": "Why is it so hard to relax?",
+            "tertiary": null,
+            "entity_title": "Why is it so hard to relax?"
+          },
+          "synopses": {
+            "short": "Drs Chris and Xand van Tulleken explore why we find it so hard to relax?",
+            "medium": "Drs Chris and Xand van Tulleken explore relaxation. We know it’s good for us but why do we find it so hard to do?",
+            "long": "Welcome to What’s Up Docs?, the podcast where doctors and identical twins Chris and Xand van Tulleken explore the ideas shaping our health and wellbeing. \n\nIn this episode, they look at relaxation. We are all aware that relaxation has an importance in our lives, when things get too much we book holidays and time off work. But what does it actually mean to relax and are the activities we chose actually allowing us to escape our stresses?\n\nTo help answer these questions, they’re joined by philosopher and journalist Dr Julian Baggini.\n\nIf you want to get in touch, you can email us at whatsupdocs@bbc.co.uk or WhatsApp us on 08000 665 123.\n\nPresenters: Drs Chris and Xand van Tulleken\nGuest: Dr Julian Baggini\nProducers: Claire Justin and Faye Lyons-White\nExecutive Producers: Jo Rowntree and Rami Tzabar \nResearcher: Claire Justin\nExecutive Producer: Rami Tzabar\nVisual Producer: Leon Gower \nTechnical Lead: Reuben Huxtable\nDigital Lead: Richard Berry\nComposer: Phoebe McFarlane\nSound Design: Melvin Rickarby\n\nAt the BBC:\nAssistant Commissioner: Greg Smith \nCommissioning Editor: Rhian Roberts\n\nA Loftus Media production for BBC Radio 4"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p11p7t.jpg",
+          "duration": {
+            "value": 1735,
+            "label": "28 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "m00298p7",
+            "urn": "urn:bbc:radio:brand:m00298p7",
+            "title": "What's Up Docs?",
+            "synopses": {
+              "short": "Chris and Xand van Tulleken are on a mission to help us take better care of ourselves.",
+              "medium": "Drs Chris and Xand van Tulleken are on a mission to help us take better care of ourselves.",
+              "long": "In this BBC Radio 4 podcast, Drs Chris and Xand van Tulleken are on a mission to help us take better care of ourselves.\n\nAlthough they are identical twins, Chris and Xand are very different and they never stop thinking and arguing about science and health. They want to lead healthy, happy lives and as doctors, they want this for everyone. Yet they tussle over how best to get there.\n\nWhen it comes to looking after our own health, it can be confusing. Medicine and science produce amazing new treatments and diagnostics every day and we are bombarded with so many headlines and pieces of advice; but how are we supposed to know what's really best for us and then successfully apply it to our lives?\n\nDrs Chris and Xand van Tulleken embrace this challenge; even as they marvel at the scientific breakthroughs, they grapple with the competing claims about health, wellbeing and how to live.\n\nFrom understanding testosterone therapies to microplastics in our diets, and the concept of 'hangriness' to the power of saying no - this podcast deals with the health stresses we all face every day, while taking on board how the decisions by corporations and governments affect all our health.\n\nEach episode, Chris and Xand are joined by an expert guest to examine the latest research, psychological insights, and data, to help listeners navigate the overwhelming amount of information and advice out there. They talk about the trials and tribulations in their own lives in their characteristically witty way - each teasing the other as they search for solutions. Xand has trouble sleeping , Chris has noisy knees, one of them has got an embarrassing itch. They have different ways of looking at things and find it really helpful to get the other one's point of view. These doctors are trying their best and encouraging listeners to do the same.\n\nEmail: whatsupdocs@bbc.co.uk\nWhatsapp: 08000 665123\n\nA Loftus Media production for BBC Radio 4."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "non_drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 128,
+                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0p2z7tp.mp3",
+                "file_size": 28000000,
+                "label": "28 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0p2z7tp.mp3",
+                "file_size": 28000000,
+                "label": "28 MB"
+              },
+              "high": {
+                "bitrate": 128,
+                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0p2z7tp.mp3",
+                "file_size": 28000000,
+                "label": "28 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-08-11T07:15:00Z",
+            "to": null,
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-08-11T00:00:00Z",
+            "label": "11 Aug 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=m00298p7&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0p6ts0g",
+          "urn": "urn:bbc:radio:episode:m0030x8p",
+          "network": {
+            "id": "bbc_radio_four",
+            "key": "radio4",
+            "short_title": "Radio 4",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Intrigue",
+            "secondary": "A 9/11 Story",
+            "tertiary": "1. Neighbours",
+            "entity_title": "1. Neighbours"
+          },
+          "synopses": {
+            "short": "A neighbour offers help when two Saudi men want to rent a flat in San Diego.",
+            "medium": "When two Saudi men with no English and no income want to rent a flat in San Diego, an Arabic-speaking neighbour offers help.",
+            "long": "In early 2000, two young Saudis arrive in San Diego. They had never been to America, speak almost no English, and have no idea how to open a bank account or rent a flat. \n\nBut one Arabic-speaking neighbour offers help, putting his name on the lease to secure their tenancy.  \n\nA BBC News Long Form Audio production.\n\nHost: Jane McMullen \n\nSeries producer: Neal Razzell \n\nAdditional production: Sally Abrahams, Keiligh Baker, Nik Sindle \n\nEditor: Matt Willis  \n\nMusic: Thomas Ross-Fitzsimons \n\nSound design: Charlie Brandon-King  \n\nProduction management: Phoebe Lomas  \n\nRadio 4 commissioning executive: Tracy Williams\n\nRadio 4 commissioning editor: Dan Clarke"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p62hlv.jpg",
+          "duration": {
+            "value": 858,
+            "label": "14 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "m0000nfh",
+            "urn": "urn:bbc:radio:brand:m0000nfh",
+            "title": "Intrigue",
+            "synopses": {
+              "short": "Jane McMullen asks why thousands of grieving families are still fighting for answers.",
+              "medium": "Twenty-five years on from the deadliest terror attack in history, Jane McMullen asks why thousands of grieving families are still fighting for answers.",
+              "long": "Twenty-five years on from the deadliest terror attack in history, BBC investigative journalist Jane McMullen asks why thousands of grieving families are still fighting for answers.  \n \nIn early 2000, two young Saudis arrived in San Diego. They had never been to America, spoke almost no English, and had no idea how to open a bank account or rent a flat. Within weeks they had done all of it. Twenty months later they hijacked a plane and crashed it into the Pentagon. \n \nMcMullen investigates the hidden story of a man who helped two of the hijackers - and reveals a story that the US and Saudi governments have fought to keep secret."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 13000000,
+                "label": "13 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 17000000,
+                "label": "17 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 39000000,
+                "label": "39 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-08-28T15:00:00Z",
+            "to": null,
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-08-31T00:00:00Z",
+            "label": "31 Aug 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=m0030x8q&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0p5n3fs",
+          "urn": "urn:bbc:radio:episode:m0030lz9",
+          "network": {
+            "id": "bbc_radio_four",
+            "key": "radio4",
+            "short_title": "Radio 4",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "History's Heroes",
+            "secondary": "History's Secret Heroes - Series 4",
+            "tertiary": "Elvira Chaudoir: D-Day’s Double Crossing Agent",
+            "entity_title": "Elvira Chaudoir: D-Day’s Double Crossing Agent"
+          },
+          "synopses": {
+            "short": "Can a playgirl turned double agent deceive the Nazis?",
+            "medium": "Elvira Chaudoir is a socialite with all the right connections. She’s also a double agent, locked in a dangerous game of deception with the Nazis.",
+            "long": "Elvira Chaudoir is a Peruvian playgirl with all the right connections… and a gambling debt. She’s also a double agent, locked in a dangerous game of deception. With D-Day on the horizon, can she convince the Germans that the Allied invasion is happening in the southwest of France, and not in Normandy? \n\nWith author and historian Ben Macintyre and Sophie Stewart from the National Archives. \n\nHelena Bonham Carter shines a light on extraordinary stories from World War II. Join her for incredible tales of deception, acts of resistance and courage.\n\nA BBC Studios production for BBC Radio 4 and BBC Sounds. \n\nProducer: Lorna Reader \nExecutive Producer: Paul Smith \nWritten by Alex von Tunzelmann \nCommissioning editor for Radio 4: Rhian Roberts"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p4zr7y.jpg",
+          "duration": {
+            "value": 1723,
+            "label": "28 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "m001mcbp",
+            "urn": "urn:bbc:radio:brand:m001mcbp",
+            "title": "History's Heroes",
+            "synopses": {
+              "short": "Helena Bonham Carter shines a light on extraordinary stories from World War Two in S4.",
+              "medium": "Helena Bonham Carter shines a light on extraordinary stories from World War Two. Join her for tales of deception, resistance and courage in History's Secret Heroes Series 4.",
+              "long": "Helena Bonham Carter shines a light on extraordinary stories from World War Two. Join her for tales of deception, resistance and courage in History's Secret Heroes Series 4.\n\nHistory's Heroes: the BBC's breathtaking, high stakes, story-led history podcast feed that shines a light on extraordinary people from across history. \n \nSeries include 'History's Heroes' with narration from Historian Alex von Tunzelmann, 'History's Toughest Heroes' with narration from Ray Winstone, 'History's Youngest Heroes' with narration from Nicola Coughlan and 'History's Secret Heroes' with narration from Helena Bonham Carter.\n \nIn History's Heroes, Historian Alex von Tunzelmann (Radio 4's The History Podcast: The Lucan Obsession/writer of all the History's Heroes series) shines a light on the inspiring and unusual stories of courage, pioneering and people who used their voice to spark change. Heroes covered include groundbreaking surgeon Harold Gillies, composers Rodgers and Hammerstein and swimming champion Gertrude Ederle. Join Alex for stories of bold voices, with brave ideas and the courage to stand alone.\n\nIn History's Toughest Heroes, Ray Winstone reveals wild, true stories of adventurers, rebels and survivors. Heroes covered include arctic explorer Peter Freuchen, Hollywood stunt woman Kitty O'Neil and medieval knight William Marshal. Join Ray for tales of fearsome heroes who lived life on the edge.\n \nIn History's Youngest Heroes, actress Nicola Coughlan (Bridgerton, Derry Girls) tells twelve true stories of rebellion, risk and the radical power of youth. Before she became a Hollywood star, how did the young Audrey Hepburn take on the Nazis during World War Two? As a young activist, how did Nelson Mandela attempt to overthrow the South African government to end apartheid? Did Queen of England, Lady Jane Grey give up her faith or face the executioner's axe? Why did Terry Fox, a young man with a prosthetic leg, set out to run the length of Canada? Join Nicola to hear inspiring tales of young heroes both famous and forgotten, whose bravery demonstrates how young people can change history.\n \nIn History's Secret Heroes, Helena Bonham Carter recounts untold stories of heroes from World War Two whose acts of resistance, deception and courage helped defeat fascism. In each episode, Helena shines a light on the spies, Royal Air Force pilots, army officers, prisoners of war and double agents who risked their lives to save others. Learn all about forgotten stories of survival, bravery and espionage - from the opera singers who helped dozens of Jewish people escape Nazi Germany, to the woman that Winston Churchill would go on to call his favourite spy. \n \nPrevious episodes have looked at the story of the American actor George Takei (Star Trek), who was imprisoned without trial along with 12,000 other Japanese Americans, and Bela Hazan, a young Jewish woman who went undercover at the Gestapo headquarters to fight against the Nazis. From secret missions behind enemy lines in occupied Europe, to underground resistance movements across Germany, France, Poland, Great Britain and beyond, History's Secret Heroes reveals how ordinary people can make an extraordinary impact.\n \nJoin Alex, Ray, Nicola and Helena for tales of deception, rebellion, risk and courage."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 24000000,
+                "label": "24 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 32000000,
+                "label": "32 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 77000000,
+                "label": "77 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-08-25T04:00:00Z",
+            "to": null,
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-08-25T00:00:00Z",
+            "label": "25 Aug 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=m0030zk5&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0p0zhgx",
+          "urn": "urn:bbc:radio:episode:m002zjd3",
+          "network": {
+            "id": "bbc_radio_four",
+            "key": "radio4",
+            "short_title": "Radio 4",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Scam Secrets",
+            "secondary": "How To Spot A Deepfake",
+            "tertiary": null,
+            "entity_title": "How To Spot A Deepfake"
+          },
+          "synopses": {
+            "short": "Unmasking scammers' fake faces with Jim Browning.",
+            "medium": "Scam Secrets is back - and Jim Browning joins the regulars to talk everything deepfakes.",
+            "long": "Scam Secrets is back with a close look at deepfakes. Lots of the stories we hear involve victims being lured into scams by fake videos or photos of trusted people. Shari Vahl, Dr Lis Carter and Alex Wood hear what happened when a listener confronted the man stealing from her mother during a live video call where he was pretending to be her lover. YouTube scam-baiter Jim Browning joins the programme to talk about the techniques he uses to unmask criminals hiding behind deepfakes - and give a scary glimpse into the future.\n\nRemember you can email the show at scamsecrets@bbc.co.uk\n\nPRESENTER: SHARI VAHL\n\nPRODUCER: TOM MOSELEY"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0ls7wg6.jpg",
+          "duration": {
+            "value": 1800,
+            "label": "30 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "m002h2gt",
+            "urn": "urn:bbc:radio:brand:m002h2gt",
+            "title": "Scam Secrets",
+            "synopses": {
+              "short": "Exposing the secret techniques criminals use to steal your money.",
+              "medium": "Dissecting the techniques criminals use to steal your money - with fraud investigator Shari Vahl, criminologist Dr Elisabeth Carter and ex-criminal Alex Wood.",
+              "long": "It might look like a perfectly ordinary message. It could come from someone you thought you trusted. Or it could be a phone call that catches you off guard. Whatever the method, the goal is the same. They want your money.\n\nBut if you know their secrets, you can spot the red flags before it is too late.\n\nShari Vahl, who has investigated fraud for the BBC for 20 years, is joined by the criminologist and forensic linguist, Dr Elisabeth Carter, and Alex Wood - a former criminal who now tries to stop scams - to dissect the shadiest techniques criminals use to steal your cash. \n\nIn each episode, they dig deep into a different scam, with first-hand accounts from the people targeted, forensic analysis of the techniques and mind games being used - and even secret recordings of the scammers themselves. \n \nGot a scam you want us to investigate? Email the team: scamsecrets@bbc.co.uk"
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 25000000,
+                "label": "25 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 33000000,
+                "label": "33 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 81000000,
+                "label": "81 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-07-30T05:00:00Z",
+            "to": null,
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-07-30T00:00:00Z",
+            "label": "30 Jul 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=m002h2gt&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0p0knb6",
+          "urn": "urn:bbc:radio:episode:m002q2r5",
+          "network": {
+            "id": "bbc_radio_four",
+            "key": "radio4",
+            "short_title": "Radio 4",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Human Intelligence",
+            "secondary": "Recluses",
+            "tertiary": "Emily Brontë",
+            "entity_title": "Emily Brontë"
+          },
+          "synopses": {
+            "short": "How did the writing of accomplished author Emily Brontë benefit from her reclusive nature?",
+            "medium": "Emily Brontë’s Wuthering Heights sent shock waves through Victorian society, and it is still a hugely debated and much-loved novel. What can we learn from the mind that wrote it?",
+            "long": "Naomi Alderman returns with her series that explores the minds of the greatest thinkers in history. From political theorists to scientists to inventors, authors and artists. Our world is based on their ideas and innovations. How did they do their work, what did they struggle with, where did they find their dedication, creativity and inspiration?\n\nEmily Brontë’s novel Wuthering Heights sent shock waves through Victorian society when it was published, and it is a novel that continues to stir debate and discussion today. What can we learn of the mind that conjured up such a piece of work? And how did her reclusive nature bring greater depth and focus to her writing?\n\nSpecial thanks to Dr Claire O’Callaghan, Senior Lecturer in Victorian Literature at Loughborough University.\n\nProduced by BBC Studios in partnership with The Open University.\n\nPresenter: Naomi Alderman\nExecutive Editor: Philip Sellars\nProduction Co-ordinator: Amelia Paul\nResearchers: Harry Burton, Martha Owen and Victoria Brignell\nMix Engineer: Nigel Appleton\nSeries Producer: Anishka Sharma\nProduction Manager: Jo Kyle"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0ml8k39.jpg",
+          "duration": {
+            "value": 850,
+            "label": "14 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "m0026njq",
+            "urn": "urn:bbc:radio:brand:m0026njq",
+            "title": "Human Intelligence",
+            "synopses": {
+              "short": "Great minds don't think alike. Naomi Alderman investigates brilliant thinkers.",
+              "medium": "Great minds don't think alike. Naomi Alderman investigates brilliant thinkers with 50 stories that celebrate the human mind.",
+              "long": "In Human Intelligence, Naomi Alderman dissects the minds of brilliant thinkers from the past; examining the myriad ways in which humans think and realising that great minds don't, in fact, think alike."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "non_drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 128,
+                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0p0knb6.mp3",
+                "file_size": 14000000,
+                "label": "14 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0p0knb6.mp3",
+                "file_size": 14000000,
+                "label": "14 MB"
+              },
+              "high": {
+                "bitrate": 128,
+                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0p0knb6.mp3",
+                "file_size": 14000000,
+                "label": "14 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-08-10T05:00:00Z",
+            "to": null,
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-08-10T00:00:00Z",
+            "label": "10 Aug 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=m00303zt&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "m002zrz7",
+          "urn": "urn:bbc:radio:episode:m002zrz8",
+          "network": {
+            "id": "bbc_radio_four",
+            "key": "radio4",
+            "short_title": "Radio 4",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Behind the Crime",
+            "secondary": "Pieter",
+            "tertiary": null,
+            "entity_title": "Pieter"
+          },
+          "synopses": {
+            "short": "The story of a man who spent years in an Ecuadorian prison for drug trafficking.",
+            "medium": "Sally and Kerensa meet Pieter, whose small-scale drug dealing at music festivals escalated into an international trafficking operation and a long prison sentence in Ecuador.",
+            "long": "Pieter grew up in Gloucestershire and began attending music festivals as a teenager. Surrounded by drug use, the move into drug dealing was easy for Pieter. Becoming a student, the opportunities opened themselves up to him and his criminal enterprise quickly escalated.\n\nIn this remarkable interview, Pieter takes us through the story, explaining his mindset and revealing why he made the choices he did – choices that led him to spend several years in a violent, lawless prison in Ecuador.\n\nDr Sally Tilt and Dr Kerensa Hocken are forensic psychologists who work in prisons. Their job is to help people who have committed crimes to understand the harm they’ve caused, identify why it happened and work out how to make changes to prevent further harm after they’ve been released.\n\nIn Behind the Crime, they take the time to understand the life of someone whose crimes have led to harm and prison. Through this extended interview, we get to the heart of Pieter’s motivations.\n\nFor details of organisations that can provide help and support, visit bbc.co.uk/actionline\n\nProducer: Andrew Wilkie\nAssistant Producer: Sam Taylor\nEditor: Clare Fordham \n \nBehind the Crime is a co-production between BBC Long Form Audio and the Prison Radio Association."
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0mjpjr5.jpg",
+          "duration": {
+            "value": 2520,
+            "label": "42 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "m0019r5c",
+            "urn": "urn:bbc:radio:brand:m0019r5c",
+            "title": "Behind the Crime",
+            "synopses": {
+              "short": "Is it possible to prevent crime by understanding the root causes of offending behaviour?",
+              "medium": "Two forensic psychologists talk to people who have received court sentences for their crimes to understand what drove them to offend, and crucially, what might help them change.",
+              "long": "As a society, we send close to 100,000 people to prison each year. Criminal behaviour costs the country around £60 billion every year, according to Home Office research. \n\nIs it possible to prevent crime by understanding the root causes of offending behaviour?\n\nSally Tilt and Dr Kerensa Hocken are forensic psychologists who work in prisons.\n\nTheir role is to help people in prison to look at the harm they've caused to other people, understand why it happened and work out how to make changes to prevent further harm after they've been released.\n\nIn Behind the Crime, they take the time to understand the life of someone whose crimes have led to harm and, in some cases, imprisonment."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 35000000,
+                "label": "35 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 46000000,
+                "label": "46 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 112000000,
+                "label": "112 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-08-03T10:45:00Z",
+            "to": null,
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-08-03T00:00:00Z",
+            "label": "03 Aug 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=m0019r5c&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        }
+      ],
+      "image_url": null
+    }
+  ]
+}

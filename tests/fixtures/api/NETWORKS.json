@@ -1,0 +1,1226 @@
+{
+  "$schema": "https://rms.api.bbc.co.uk/docs/swagger.json#/definitions/NetworksResponse",
+  "total": 66,
+  "limit": 70,
+  "offset": 0,
+  "data": [
+    {
+      "type": "network",
+      "id": "bbc_radio_one",
+      "coverage": "national",
+      "key": "radio1",
+      "short_title": "Radio 1",
+      "long_title": "BBC Radio 1",
+      "default_service_id": "bbc_radio_one",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_one",
+          "pid": "p00fzl86",
+          "short_title": "Radio 1"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_one_anthems",
+      "coverage": "national",
+      "key": "radio1anthems",
+      "short_title": "Radio 1 Anthems",
+      "long_title": "BBC Radio 1 Anthems",
+      "default_service_id": "bbc_radio_one_anthems",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_one_anthems",
+          "pid": "p0hyc2r0",
+          "short_title": "Radio 1 Anthems"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_one_dance",
+      "coverage": "national",
+      "key": "radio1dance",
+      "short_title": "Radio 1 Dance",
+      "long_title": "BBC Radio 1 Dance",
+      "default_service_id": "bbc_radio_one_dance",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_one_dance",
+          "pid": "p080kbtk",
+          "short_title": "Radio 1 Dance"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_1xtra",
+      "coverage": "national",
+      "key": "1xtra",
+      "short_title": "Radio 1Xtra",
+      "long_title": "BBC Radio 1Xtra",
+      "default_service_id": "bbc_1xtra",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_1xtra",
+          "pid": "p00fzl64",
+          "short_title": "Radio 1Xtra"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_two",
+      "coverage": "national",
+      "key": "radio2",
+      "short_title": "Radio 2",
+      "long_title": "BBC Radio 2",
+      "default_service_id": "bbc_radio_two",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_two",
+          "pid": "p00fzl8v",
+          "short_title": "Radio 2"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_three",
+      "coverage": "national",
+      "key": "radio3",
+      "short_title": "Radio 3",
+      "long_title": "BBC Radio 3",
+      "default_service_id": "bbc_radio_three",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_three",
+          "pid": "p00fzl8t",
+          "short_title": "Radio 3"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_three_unwind",
+      "coverage": "national",
+      "key": "radio3unwind",
+      "short_title": "Radio 3 Unwind",
+      "long_title": "BBC Radio 3 Unwind",
+      "default_service_id": "bbc_radio_three_unwind",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_three_unwind",
+          "pid": "p0hyc31m",
+          "short_title": "Radio 3 Unwind"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_four",
+      "coverage": "national",
+      "key": "radio4",
+      "short_title": "Radio 4",
+      "long_title": "BBC Radio 4",
+      "default_service_id": "bbc_radio_fourfm",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_fourfm",
+          "pid": "p00fzl7j",
+          "short_title": "Radio 4 FM"
+        },
+        {
+          "type": "service",
+          "id": "bbc_radio_fourlw",
+          "pid": "p00fzl7k",
+          "short_title": "Radio 4 LW"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_four_extra",
+      "coverage": "national",
+      "key": "radio4extra",
+      "short_title": "Radio 4 Extra",
+      "long_title": "BBC Radio 4 Extra",
+      "default_service_id": "bbc_radio_four_extra",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_four_extra",
+          "pid": "p00fzl7l",
+          "short_title": "Radio 4 Extra"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_five_live",
+      "coverage": "national",
+      "key": "5live",
+      "short_title": "Radio 5 Live",
+      "long_title": "BBC Radio 5 Live",
+      "default_service_id": "bbc_radio_five_live",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_five_live",
+          "pid": "p00fzl7g",
+          "short_title": "Radio 5 Live"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_five_live_sports_extra",
+      "coverage": "national",
+      "key": "5livesportsextra",
+      "short_title": "Radio 5 Sports Extra",
+      "long_title": "BBC Radio 5 Sports Extra",
+      "default_service_id": "bbc_radio_five_live_sports_extra",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_five_live_sports_extra",
+          "pid": "p00fzl7h",
+          "short_title": "Radio 5 Sports Extra"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_five_sports_extra_2",
+      "coverage": "national",
+      "key": "radio5sportsextra2",
+      "short_title": "Radio 5 Sports Extra 2",
+      "long_title": "BBC Radio 5 Sports Extra 2",
+      "default_service_id": "bbc_radio_five_sports_extra_2",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_five_sports_extra_2",
+          "pid": "p0kpw9wk",
+          "short_title": "Radio 5 Sports Extra 2"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_five_sports_extra_3",
+      "coverage": "national",
+      "key": "radio5sportsextra3",
+      "short_title": "Radio 5 Sports Extra 3",
+      "long_title": "BBC Radio 5 Sports Extra 3",
+      "default_service_id": "bbc_radio_five_sports_extra_3",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_five_sports_extra_3",
+          "pid": "p0kpw9z6",
+          "short_title": "Radio 5 Sports Extra 3"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_6music",
+      "coverage": "national",
+      "key": "6music",
+      "short_title": "Radio 6 Music",
+      "long_title": "BBC Radio 6 Music",
+      "default_service_id": "bbc_6music",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_6music",
+          "pid": "p00fzl65",
+          "short_title": "Radio 6 Music"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_six_indie_forever",
+      "coverage": "national",
+      "key": "radio6indieforever",
+      "short_title": "Radio 6 Indie Forever",
+      "long_title": "BBC Radio 6 Indie Forever",
+      "default_service_id": "bbc_radio_six_indie_forever",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_six_indie_forever",
+          "pid": "p0nkl37k",
+          "short_title": "Radio 6 Indie Forever"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_asian_network",
+      "coverage": "national",
+      "key": "asiannetwork",
+      "short_title": "Asian Network",
+      "long_title": "BBC Asian Network",
+      "default_service_id": "bbc_asian_network",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_asian_network",
+          "pid": "p00fzl68",
+          "short_title": "Asian Network"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_world_service",
+      "coverage": "national",
+      "key": "worldserviceradio",
+      "short_title": "World Service",
+      "long_title": "BBC World Service",
+      "default_service_id": "bbc_world_service",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_world_service",
+          "pid": "p00fzl9p",
+          "short_title": "World Service Online"
+        },
+        {
+          "type": "service",
+          "id": "bbc_world_service_americas",
+          "pid": "p02y9hr1",
+          "short_title": "World Service Americas and the Caribbean"
+        },
+        {
+          "type": "service",
+          "id": "bbc_world_service_australasia",
+          "pid": "p02y9px0",
+          "short_title": "World Service Australasia"
+        },
+        {
+          "type": "service",
+          "id": "bbc_world_service_east_africa",
+          "pid": "p02y9rxx",
+          "short_title": "World Service East and Southern Africa"
+        },
+        {
+          "type": "service",
+          "id": "bbc_world_service_east_asia",
+          "pid": "p02y9rvj",
+          "short_title": "World Service East Asia"
+        },
+        {
+          "type": "service",
+          "id": "bbc_world_service_europe",
+          "pid": "p02y9rgr",
+          "short_title": "World Service Europe and the Middle East"
+        },
+        {
+          "type": "service",
+          "id": "bbc_world_service_news_internet",
+          "pid": "p02y9sgt",
+          "short_title": "World Service News Internet"
+        },
+        {
+          "type": "service",
+          "id": "bbc_world_service_south_asia",
+          "pid": "p02y9rlv",
+          "short_title": "World Service South Asia"
+        },
+        {
+          "type": "service",
+          "id": "bbc_world_service_uk",
+          "pid": "p02zbmb3",
+          "short_title": "World Service UK DAB/Freeview"
+        },
+        {
+          "type": "service",
+          "id": "bbc_world_service_west_africa",
+          "pid": "p02y9s47",
+          "short_title": "World Service West and Central Africa"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_sounds_news",
+      "coverage": "national",
+      "key": "soundslivenews",
+      "short_title": "Live News",
+      "long_title": "Live News",
+      "default_service_id": "bbc_sounds_news",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_sounds_news",
+          "pid": "p0h7380w",
+          "short_title": "Live News"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_scotland",
+      "coverage": "regional",
+      "key": "radioscotland",
+      "short_title": "Radio Scotland",
+      "long_title": "BBC Radio Scotland",
+      "default_service_id": "bbc_radio_scotland_fm",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_orkney",
+          "pid": "p00fzl8b",
+          "short_title": "Radio Orkney"
+        },
+        {
+          "type": "service",
+          "id": "bbc_radio_scotland_fm",
+          "pid": "p00fzl8d",
+          "short_title": "Radio Scotland FM"
+        },
+        {
+          "type": "service",
+          "id": "bbc_radio_scotland_highlands_and_islands",
+          "pid": "p00fzl8f",
+          "short_title": "Radio Scotland Highlands and Islands"
+        },
+        {
+          "type": "service",
+          "id": "bbc_radio_scotland_mw",
+          "pid": "p00fzl8g",
+          "short_title": "Radio Scotland Extra"
+        },
+        {
+          "type": "service",
+          "id": "bbc_radio_shetland",
+          "pid": "p00fzl8j",
+          "short_title": "Radio Shetland"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_nan_gaidheal",
+      "coverage": "regional",
+      "key": "radionangaidheal",
+      "short_title": "Radio nan GÃ idheal",
+      "long_title": "BBC Radio nan GÃ idheal",
+      "default_service_id": "bbc_radio_nan_gaidheal",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_nan_gaidheal",
+          "pid": "p00fzl81",
+          "short_title": "Radio nan GÃ idheal"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_ulster",
+      "coverage": "regional",
+      "key": "radioulster",
+      "short_title": "Radio Ulster",
+      "long_title": "BBC Radio Ulster",
+      "default_service_id": "bbc_radio_ulster",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_ulster",
+          "pid": "p00fzl8w",
+          "short_title": "Radio Ulster"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_foyle",
+      "coverage": "regional",
+      "key": "radiofoyle",
+      "short_title": "Radio Foyle",
+      "long_title": "BBC Radio Foyle",
+      "default_service_id": "bbc_radio_foyle",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_foyle",
+          "pid": "p00fzl7m",
+          "short_title": "Radio Foyle"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_wales",
+      "coverage": "regional",
+      "key": "radiowales",
+      "short_title": "Radio Wales",
+      "long_title": "BBC Radio Wales",
+      "default_service_id": "bbc_radio_wales_fm",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_wales_am",
+          "pid": "p00fzl8x",
+          "short_title": "Radio Wales Extra"
+        },
+        {
+          "type": "service",
+          "id": "bbc_radio_wales_fm",
+          "pid": "p00fzl8y",
+          "short_title": "Radio Wales FM"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_cymru",
+      "coverage": "regional",
+      "key": "radiocymru",
+      "short_title": "Radio Cymru",
+      "long_title": "BBC Radio Cymru",
+      "default_service_id": "bbc_radio_cymru",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_cymru",
+          "pid": "p00fzl7b",
+          "short_title": "Radio Cymru"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_cymru_2",
+      "coverage": "regional",
+      "key": "radiocymru2",
+      "short_title": "Radio Cymru 2",
+      "long_title": "BBC Radio Cymru 2",
+      "default_service_id": "bbc_radio_cymru_2",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_cymru_2",
+          "pid": "p05pkt1d",
+          "short_title": "Radio Cymru 2"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "cbeebies_radio",
+      "coverage": "national",
+      "key": "cbeebiesradio",
+      "short_title": "CBeebies Radio",
+      "long_title": "CBeebies Radio",
+      "default_service_id": "cbeebies_radio",
+      "services": [
+        {
+          "type": "service",
+          "id": "cbeebies_radio",
+          "pid": "p02jf21y",
+          "short_title": "CBeebies Radio"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_berkshire",
+      "coverage": "local",
+      "key": "radioberkshire",
+      "short_title": "Radio Berkshire",
+      "long_title": "BBC Radio Berkshire",
+      "default_service_id": "bbc_radio_berkshire",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_berkshire",
+          "pid": "p00fzl74",
+          "short_title": "Radio Berkshire"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_bristol",
+      "coverage": "local",
+      "key": "radiobristol",
+      "short_title": "Radio Bristol",
+      "long_title": "BBC Radio Bristol",
+      "default_service_id": "bbc_radio_bristol",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_bristol",
+          "pid": "p00fzl75",
+          "short_title": "Radio Bristol"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_cambridge",
+      "coverage": "local",
+      "key": "radiocambridgeshire",
+      "short_title": "Radio Cambridgeshire",
+      "long_title": "BBC Radio Cambridgeshire",
+      "default_service_id": "bbc_radio_cambridge",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_cambridge",
+          "pid": "p00fzl76",
+          "short_title": "Radio Cambridgeshire"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_cornwall",
+      "coverage": "local",
+      "key": "radiocornwall",
+      "short_title": "Radio Cornwall",
+      "long_title": "BBC Radio Cornwall",
+      "default_service_id": "bbc_radio_cornwall",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_cornwall",
+          "pid": "p00fzl77",
+          "short_title": "Radio Cornwall"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_coventry_warwickshire",
+      "coverage": "local",
+      "key": "bbccoventryandwarwickshire",
+      "short_title": "CWR",
+      "long_title": "BBC CWR",
+      "default_service_id": "bbc_radio_coventry_warwickshire",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_coventry_warwickshire",
+          "pid": "p00fzl78",
+          "short_title": "Coventry & Warwickshire"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_cumbria",
+      "coverage": "local",
+      "key": "radiocumbria",
+      "short_title": "Radio Cumbria",
+      "long_title": "BBC Radio Cumbria",
+      "default_service_id": "bbc_radio_cumbria",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_cumbria",
+          "pid": "p00fzl79",
+          "short_title": "Radio Cumbria"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_derby",
+      "coverage": "local",
+      "key": "radioderby",
+      "short_title": "Radio Derby",
+      "long_title": "BBC Radio Derby",
+      "default_service_id": "bbc_radio_derby",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_derby",
+          "pid": "p00fzl7c",
+          "short_title": "Radio Derby"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_devon",
+      "coverage": "local",
+      "key": "radiodevon",
+      "short_title": "Radio Devon",
+      "long_title": "BBC Radio Devon",
+      "default_service_id": "bbc_radio_devon",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_devon",
+          "pid": "p00fzl7d",
+          "short_title": "Radio Devon"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_essex",
+      "coverage": "local",
+      "key": "bbcessex",
+      "short_title": "Essex",
+      "long_title": "BBC Essex",
+      "default_service_id": "bbc_radio_essex",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_essex",
+          "pid": "p00fzl7f",
+          "short_title": "Essex"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_gloucestershire",
+      "coverage": "local",
+      "key": "radiogloucestershire",
+      "short_title": "Radio Gloucestershire",
+      "long_title": "BBC Radio Gloucestershire",
+      "default_service_id": "bbc_radio_gloucestershire",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_gloucestershire",
+          "pid": "p00fzl7n",
+          "short_title": "Radio Gloucestershire"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_guernsey",
+      "coverage": "local",
+      "key": "radioguernsey",
+      "short_title": "Radio Guernsey",
+      "long_title": "BBC Radio Guernsey",
+      "default_service_id": "bbc_radio_guernsey",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_guernsey",
+          "pid": "p00fzl7p",
+          "short_title": "Radio Guernsey"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_hereford_worcester",
+      "coverage": "local",
+      "key": "bbcherefordandworcester",
+      "short_title": "Hereford & Worcester",
+      "long_title": "BBC Hereford & Worcester",
+      "default_service_id": "bbc_radio_hereford_worcester",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_hereford_worcester",
+          "pid": "p00fzl7q",
+          "short_title": "Hereford & Worcester"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_humberside",
+      "coverage": "local",
+      "key": "radiohumberside",
+      "short_title": "Radio Humberside",
+      "long_title": "BBC Radio Humberside",
+      "default_service_id": "bbc_radio_humberside",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_humberside",
+          "pid": "p00fzl7r",
+          "short_title": "Radio Humberside"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_jersey",
+      "coverage": "local",
+      "key": "radiojersey",
+      "short_title": "Radio Jersey",
+      "long_title": "BBC Radio Jersey",
+      "default_service_id": "bbc_radio_jersey",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_jersey",
+          "pid": "p00fzl7s",
+          "short_title": "Radio Jersey"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_kent",
+      "coverage": "local",
+      "key": "radiokent",
+      "short_title": "Radio Kent",
+      "long_title": "BBC Radio Kent",
+      "default_service_id": "bbc_radio_kent",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_kent",
+          "pid": "p00fzl7t",
+          "short_title": "Radio Kent"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_lancashire",
+      "coverage": "local",
+      "key": "radiolancashire",
+      "short_title": "Radio Lancashire",
+      "long_title": "BBC Radio Lancashire",
+      "default_service_id": "bbc_radio_lancashire",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_lancashire",
+          "pid": "p00fzl7v",
+          "short_title": "Radio Lancashire"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_leeds",
+      "coverage": "local",
+      "key": "radioleeds",
+      "short_title": "Radio Leeds",
+      "long_title": "BBC Radio Leeds",
+      "default_service_id": "bbc_radio_leeds",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_leeds",
+          "pid": "p00fzl7w",
+          "short_title": "Radio Leeds"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_leicester",
+      "coverage": "local",
+      "key": "radioleicester",
+      "short_title": "Radio Leicester",
+      "long_title": "BBC Radio Leicester",
+      "default_service_id": "bbc_radio_leicester",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_leicester",
+          "pid": "p00fzl7x",
+          "short_title": "Radio Leicester"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_lincolnshire",
+      "coverage": "local",
+      "key": "radiolincolnshire",
+      "short_title": "Radio Lincolnshire",
+      "long_title": "BBC Radio Lincolnshire",
+      "default_service_id": "bbc_radio_lincolnshire",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_lincolnshire",
+          "pid": "p00fzl7y",
+          "short_title": "Radio Lincolnshire"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_london",
+      "coverage": "local",
+      "key": "radiolondon",
+      "short_title": "Radio London",
+      "long_title": "BBC Radio London",
+      "default_service_id": "bbc_london",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_london",
+          "pid": "p00fzl6f",
+          "short_title": "Radio London"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_manchester",
+      "coverage": "local",
+      "key": "radiomanchester",
+      "short_title": "Radio Manchester",
+      "long_title": "BBC Radio Manchester",
+      "default_service_id": "bbc_radio_manchester",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_manchester",
+          "pid": "p00fzl7z",
+          "short_title": "Radio Manchester"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_merseyside",
+      "coverage": "local",
+      "key": "radiomerseyside",
+      "short_title": "Radio Merseyside",
+      "long_title": "BBC Radio Merseyside",
+      "default_service_id": "bbc_radio_merseyside",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_merseyside",
+          "pid": "p00fzl80",
+          "short_title": "Radio Merseyside"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_newcastle",
+      "coverage": "local",
+      "key": "bbcnewcastle",
+      "short_title": "Radio Newcastle",
+      "long_title": "BBC Radio Newcastle",
+      "default_service_id": "bbc_radio_newcastle",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_newcastle",
+          "pid": "p00fzl82",
+          "short_title": "Newcastle"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_norfolk",
+      "coverage": "local",
+      "key": "radionorfolk",
+      "short_title": "Radio Norfolk",
+      "long_title": "BBC Radio Norfolk",
+      "default_service_id": "bbc_radio_norfolk",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_norfolk",
+          "pid": "p00fzl83",
+          "short_title": "Radio Norfolk"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_northampton",
+      "coverage": "local",
+      "key": "radionorthampton",
+      "short_title": "Radio Northampton",
+      "long_title": "BBC Radio Northampton",
+      "default_service_id": "bbc_radio_northampton",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_northampton",
+          "pid": "p00fzl84",
+          "short_title": "Radio Northampton"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_nottingham",
+      "coverage": "local",
+      "key": "radionottingham",
+      "short_title": "Radio Nottingham",
+      "long_title": "BBC Radio Nottingham",
+      "default_service_id": "bbc_radio_nottingham",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_nottingham",
+          "pid": "p00fzl85",
+          "short_title": "Radio Nottingham"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_oxford",
+      "coverage": "local",
+      "key": "radiooxford",
+      "short_title": "Radio Oxford",
+      "long_title": "BBC Radio Oxford",
+      "default_service_id": "bbc_radio_oxford",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_oxford",
+          "pid": "p00fzl8c",
+          "short_title": "Radio Oxford"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_sheffield",
+      "coverage": "local",
+      "key": "radiosheffield",
+      "short_title": "Radio Sheffield",
+      "long_title": "BBC Radio Sheffield",
+      "default_service_id": "bbc_radio_sheffield",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_sheffield",
+          "pid": "p00fzl8h",
+          "short_title": "Radio Sheffield"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_shropshire",
+      "coverage": "local",
+      "key": "radioshropshire",
+      "short_title": "Radio Shropshire",
+      "long_title": "BBC Radio Shropshire",
+      "default_service_id": "bbc_radio_shropshire",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_shropshire",
+          "pid": "p00fzl8k",
+          "short_title": "Radio Shropshire"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_solent",
+      "coverage": "local",
+      "key": "radiosolent",
+      "short_title": "Radio Solent",
+      "long_title": "BBC Radio Solent",
+      "default_service_id": "bbc_radio_solent",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_solent",
+          "pid": "p00fzl8l",
+          "short_title": "Radio Solent"
+        },
+        {
+          "type": "service",
+          "id": "bbc_radio_solent_west_dorset",
+          "pid": "p0356spd",
+          "short_title": "Radio Solent Dorset"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_somerset_sound",
+      "coverage": "local",
+      "key": "bbcsomerset",
+      "short_title": "Radio Somerset",
+      "long_title": "BBC Radio Somerset",
+      "default_service_id": "bbc_radio_somerset_sound",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_somerset_sound",
+          "pid": "p00fzl8m",
+          "short_title": "Somerset"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_stoke",
+      "coverage": "local",
+      "key": "radiostoke",
+      "short_title": "Radio Stoke",
+      "long_title": "BBC Radio Stoke",
+      "default_service_id": "bbc_radio_stoke",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_stoke",
+          "pid": "p00fzl8n",
+          "short_title": "Radio Stoke"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_suffolk",
+      "coverage": "local",
+      "key": "radiosuffolk",
+      "short_title": "Radio Suffolk",
+      "long_title": "BBC Radio Suffolk",
+      "default_service_id": "bbc_radio_suffolk",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_suffolk",
+          "pid": "p00fzl8p",
+          "short_title": "Radio Suffolk"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_surrey",
+      "coverage": "local",
+      "key": "bbcsurrey",
+      "short_title": "Radio Surrey",
+      "long_title": "BBC Radio Surrey",
+      "default_service_id": "bbc_radio_surrey",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_surrey",
+          "pid": "p00fzl8q",
+          "short_title": "Surrey"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_sussex",
+      "coverage": "local",
+      "key": "bbcsussex",
+      "short_title": "Radio Sussex",
+      "long_title": "BBC Radio Sussex",
+      "default_service_id": "bbc_radio_sussex",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_sussex",
+          "pid": "p00fzl8r",
+          "short_title": "Sussex"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_tees",
+      "coverage": "local",
+      "key": "bbctees",
+      "short_title": "Radio Tees",
+      "long_title": "BBC Radio Tees",
+      "default_service_id": "bbc_tees",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_tees",
+          "pid": "p00fzl93",
+          "short_title": "Tees"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_three_counties_radio",
+      "coverage": "local",
+      "key": "threecountiesradio",
+      "short_title": "Three Counties Radio",
+      "long_title": "BBC Three Counties Radio",
+      "default_service_id": "bbc_three_counties_radio",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_three_counties_radio",
+          "pid": "p00fzl96",
+          "short_title": "Three Counties Radio"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_wiltshire",
+      "coverage": "local",
+      "key": "bbcwiltshire",
+      "short_title": "Radio Wiltshire",
+      "long_title": "BBC Radio Wiltshire",
+      "default_service_id": "bbc_radio_wiltshire",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_wiltshire",
+          "pid": "p00fzl8z",
+          "short_title": "Wiltshire"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_wm",
+      "coverage": "local",
+      "key": "wm",
+      "short_title": "Radio WM",
+      "long_title": "BBC Radio WM",
+      "default_service_id": "bbc_wm",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_wm",
+          "pid": "p00fzl9f",
+          "short_title": "WM 95.6"
+        }
+      ]
+    },
+    {
+      "type": "network",
+      "id": "bbc_radio_york",
+      "coverage": "local",
+      "key": "radioyork",
+      "short_title": "Radio York",
+      "long_title": "BBC Radio York",
+      "default_service_id": "bbc_radio_york",
+      "services": [
+        {
+          "type": "service",
+          "id": "bbc_radio_york",
+          "pid": "p00fzl90",
+          "short_title": "Radio York"
+        }
+      ]
+    }
+  ]
+}
