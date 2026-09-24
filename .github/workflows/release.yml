@@ -7,7 +7,7 @@ on:
         description: Version bump level
         required: true
         type: choice
-        options: [ patch, minor, major ]
+        options: [ patch, minor, major, beta ]
         default: patch
 
 permissions:
@@ -107,7 +107,12 @@ jobs:
         run: uv run pytest
 
       - name: Bump version (Beta)
-        run: uv version --bump ${{ inputs.bump }} --bump beta
+        run: |
+          if [ "${{ inputs.bump }}" = "beta" ]; then
+            uv version --bump prerelease
+          else
+            uv version --bump ${{ inputs.bump }} --bump beta
+          fi
 
       - name: Read new version
         id: v
