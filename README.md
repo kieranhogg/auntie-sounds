@@ -28,14 +28,19 @@ import asyncio
 from sounds import exceptions
 from sounds.client import SoundsClient
 
+
 async def main():
     try:
         client = SoundsClient(username="username", password="password")
         if await client.login():
             stations = await client.stations.get_stations()
-            schedule = await client.schedules.get_schedule("bbc_6music", date="2025-10-26")
-            bbc_6music = await client.stations.get_station("bbc_6music", include_stream=True)
-            
+            schedule = await client.schedules.get_schedule(
+                "bbc_6music", date="2025-10-26"
+            )
+            bbc_6music = await client.stations.get_station(
+                "bbc_6music", include_stream=True
+            )
+
     except exceptions.LoginFailedError:
         ...
     except exceptions.APIResponseError:
@@ -43,9 +48,10 @@ async def main():
     except exceptions.NetworkError:
         ...
 
+
 asyncio.run(main())
 ```
 
 ### Documentation
 
-Further documentation can be found in the documentation: https://auntie-sounds.readthedocs.io/en/stable/
+Further documentation can be found in the documentation: https://auntie-sounds.readthedocs.io/en/main/
