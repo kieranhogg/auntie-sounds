@@ -21,28 +21,38 @@ def network_logo(
     logo_recipe: str,
     img_type: ImageType = ImageType.COLOUR,
     size: int = 450,
+    network_id: str | None = None,
     file_extension: str = "png",
 ) -> str | None:
-    """
+    """),
     Formats a network logo based on the current recipe
 
     :param logo_recipe e.g. http://example.com/{type}/{size}_{size}.{format}
     :param img_type An accepted image type
     :param size The required image size in pixels
+    :param network_id The network id
     :param file_extension The expected file extension
     :return the full image URL as a string
 
     """
     if not logo_recipe:
         return None
-    return logo_recipe.format(
-        type=img_type, size=f"{size}x{size}", format=file_extension
-    )
+    if "network_id" in logo_recipe and network_id:
+        return logo_recipe.format(
+            type=img_type,
+            size=f"{size}x{size}",
+            format=file_extension,
+            network_id=network_id,
+        )
+    else:
+        return logo_recipe.format(
+            type=img_type, size=f"{size}x{size}", format=file_extension
+        )
 
 
 def image_from_recipe(
     image_recipe: str,
-    size: int,
+    size: int = 400,
     height: int | None = None,
     file_extension: str | None = None,
     img_type: ImageType | None = None,

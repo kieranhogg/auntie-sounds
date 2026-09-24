@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, Literal
 import aiofiles
 import aiohttp
 
-from sounds.endpoints import URLs
+from sounds.endpoints import Endpoints, URLs
 from sounds.exceptions import (
     APIResponseError,
     InvalidArgumentsError,
@@ -26,26 +26,40 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 DEFAULT_TIMEOUT = aiohttp.ClientTimeout(total=10)
+DEFAULT_LIMIT = 100
+URL_BASE = "https://rms.api.bbc.co.uk"
 
 
 def build_url(
-    url: URLs | str,
+    url: Endpoints | URLs | str,
     url_args: dict | None = None,
 ) -> str:
-    if isinstance(url, URLs):
+    default_args = {"limit": DEFAULT_LIMIT}
+    if isinstance(url, Endpoints):
         url = url.value
-    url_str: str = url.value if isinstance(url, URLs) else url
+    url_str: str = url.value if isinstance(url, (Endpoints, URLs)) else url
+    if not url_args:
+        url_args = {}
+
     pattern = re.compile(r".*(\{.*}).*")
     parameters_required = re.findall(pattern, url_str)
+
     for keyword in parameters_required:
         keyword = keyword.replace("{", "").replace("}", "")
-        if not url_args or keyword not in url_args:
+        if keyword not in url_args and keyword not in default_args:
             raise InvalidArgumentsError(
                 f"{keyword} is a required parameter for the URL, but it is not in url_args."
             )
+        # We didn't receive an argument, but we have a default set so use that
+        elif keyword not in url_args and keyword in default_args:
+            url_args.update({keyword: default_args.get(keyword)})
     if parameters_required and url_args:
-        return url_str.format(**url_args)
-    return url_str
+        return (
+            URL_BASE + url_str.format(**url_args)
+            if "https://" not in url_str
+            else url_str.format(**url_args)
+        )
+    return URL_BASE + url_str if "https://" not in url_str else url_str
 
 
 def build_headers(referer: str | None = None) -> dict:
@@ -53,7 +67,7 @@ def build_headers(referer: str | None = None) -> dict:
     base_headers = {
         "Accept-Language": "en-GB,en;q=0.9",
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
-        "Origin": URLs.LOGIN_BASE.value,
+        "Origin": URLs.LOGIN_BASE,
         "Cache-Control": "max-age=0",
     }
     if referer:
@@ -83,12 +97,15 @@ class RequestManager:
         mock_data: bool = False,
         login_details_provided: bool = False,
         reauth_handler: Callable | None = None,
+        **kwargs,
     ):
         self._session: ClientSession = session
         self.timeout: ClientTimeout = timeout
         self.mock_data: bool = mock_data
         self.login_details_provided: bool = login_details_provided
         self.reauth_handler: Callable | None = reauth_handler
+        self.count_requests: bool = False
+        self.request_counter: int = 0
 
     async def run(self, call):
         """Runs `call`, falling back to `reauth_handler`, if set, to retry auth.
@@ -120,7 +137,7 @@ class RequestManager:
     async def make_request(
         self,
         method: Literal["GET", "POST"],
-        url: URLs | str,
+        url: Endpoints | URLs | str,
         url_args: dict | None = None,
         login_required: bool = False,
         **kwargs,
@@ -131,13 +148,15 @@ class RequestManager:
         kwargs.setdefault("ssl", True)
         kwargs.setdefault("allow_redirects", True)
         # kwargs.setdefault("headers", build_headers())
-
-        if isinstance(url, URLs):
+        logger.debug("Preparing to request %s", url)
+        if isinstance(url, Endpoints):
             # If we have a endpoint, we can check if it's an authenticated one
             login_required = url.login_required
             url = build_url(url, url_args)
+        elif isinstance(url, URLs):
+            url = build_url(url, url_args)
         else:
-            if url in URLs:
+            if url in Endpoints:
                 raise InvalidArgumentsError(
                     "URL passed a string, use a URL instance instead."
                 )
@@ -150,6 +169,9 @@ class RequestManager:
             else:
                 resp = await self._request_or_raise(method, url, **kwargs)
             logger.debug(f"HTTP {method} {url} - Status {resp.status}")
+            if self.count_requests and self.request_counter is not None:
+                self.request_counter += 1
+                logger.debug("%s requests made", self.request_counter)
             resp.raise_for_status()
             return resp
         except aiohttp.ClientConnectorDNSError as e:
@@ -164,7 +186,7 @@ class RequestManager:
 
     async def get_json_response(
         self,
-        url: URLs,
+        url: Endpoints | URLs,
         url_args: dict | None = None,
         **kwargs,
     ) -> dict:
@@ -188,7 +210,7 @@ class RequestManager:
 
     async def get_html_response(
         self,
-        url: URLs | str,
+        url: Endpoints | URLs | str,
         url_args: dict | None = None,
         method: Literal["GET", "POST"] = "GET",
         **kwargs,

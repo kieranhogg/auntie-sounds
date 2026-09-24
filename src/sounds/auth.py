@@ -2,7 +2,7 @@
 
 There is no public or private API available for authentication, which is the exception. This service therefore
 implements logging in by logging in via HTTP requests, which unfortunately makes this process brittle and
-highly-coupled to the URLs and HTML content of the pages requested.
+highly-coupled to the URLs .and HTML content of the pages requested.
 """
 
 import logging
@@ -10,7 +10,7 @@ from pathlib import Path
 
 from bs4 import BeautifulSoup, Tag
 
-from sounds import VERBOSE_LOG_LEVEL, endpoints
+from sounds import VERBOSE_LOG_LEVEL
 from sounds.cookies import CookieStore
 from sounds.endpoints import URLs
 from sounds.exceptions import (
@@ -136,7 +136,7 @@ class AuthService:
     async def renew_session(self) -> bool:
         """Renew a session which has expired, but user is logged in."""
         try:
-            url = build_url(url=endpoints.URLs.RENEW_SESSION)
+            url = build_url(url=URLs.RENEW_SESSION)
             await self.requests.make_request("GET", url)
             return True
         except UnauthorisedError:
@@ -199,7 +199,7 @@ class AuthService:
             raise LoginFailedError(error_msg) from e
 
         logger.debug(f"Found username form target: {username_form_action}")
-        return URLs.LOGIN_BASE.value + username_form_action
+        return URLs.LOGIN_BASE + username_form_action
 
     async def _submit_username(self, url: str, username: str) -> str:
         """Post username to get to the next login step"""
@@ -209,7 +209,7 @@ class AuthService:
             url=url,
             method="POST",
             data=data,
-            headers=build_headers(referer=URLs.LOGIN_START.value),
+            headers=build_headers(referer=URLs.LOGIN_START),
         )
         soup = BeautifulSoup(html_contents, "html.parser")
         error_el = soup.select_one(f".{self.ERROR_CLASS}")
@@ -222,7 +222,7 @@ class AuthService:
         password_form_action = _get_form_action(html_contents)
         if password_form_action is None:
             raise LoginFailedError("Could not find password form URL")
-        password_url = URLs.LOGIN_BASE.value + password_form_action
+        password_url = URLs.LOGIN_BASE + password_form_action
         logger.debug(f"Found password form target: {password_url}")
         return password_url
 

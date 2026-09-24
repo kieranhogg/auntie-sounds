@@ -79,16 +79,20 @@ class SoundsClient:
 
         logger.debug("Creating new SoundsClient")
 
-        self.username = username
-        self.password = password
+        self.username: str | None = username
+        self.password: str | None = password
 
         self.current_station: Station | None = None
         self.current_stream: Stream | None = None
         self.current_segment: Segment | None = None
-        self.mock_data = mock_data
-        self.debug_login = debug_login
+        self.mock_data: bool = mock_data
+        self.debug_login: bool = debug_login
+        self.count_requests: bool = False
+        if kwargs.get("count_requests"):
+            self.count_requests = True
+            self.num_requests = 0
         if timezone:
-            self.timezone = timezone
+            self.timezone: tzinfo = timezone
         else:
             logger.warning(
                 "No timezone provided, assuming UTC so any time calculations for the schedules may be incorrect"
@@ -97,19 +101,19 @@ class SoundsClient:
 
         if session:
             logger.debug("Reusing provided aiohttp session.")
-            self._session = session
+            self._session: aiohttp.ClientSession = session
         else:
             logger.debug("No provided aiohttp session, creating a new one.")
             self._session = aiohttp.ClientSession()
-        self.managing_session = session is None
-        login_details_provided = bool(self.username and self.password)
+        self.managing_session: bool = session is None
+        login_details_provided: bool = bool(self.username and self.password)
 
         if not isinstance(self._session.cookie_jar, (HttpCookieJar, aiohttp.CookieJar)):
             raise TypeError(
                 "SoundsClient requires aiohttp.CookieJar for cookie persistence"
             )
 
-        self.cookie_store = CookieStore(
+        self.cookie_store: CookieStore = CookieStore(
             session=self._session, cookie_file_location=cookie_file_location
         )
 
@@ -122,11 +126,15 @@ class SoundsClient:
             self.cookie_store.clear()
             self.cookie_store.save()
 
-        self.requests = RequestManager(
+        self.requests: RequestManager = RequestManager(
             session=self._session,
             mock_data=self.mock_data,
             login_details_provided=login_details_provided,
         )
+        if self.count_requests:
+            self.requests.count_requests = True
+            self.requests.request_counter = self.num_requests
+
         self.auth = AuthService(
             requests=self.requests,
             cookie_store=self.cookie_store,
@@ -217,24 +225,28 @@ class SoundsClient:
         include_recommendations: bool = True,
     ) -> Menu:
         """Get the main Sounds menu."""
-        listen_live, schedule, catch_up = await asyncio.gather(
-            self.stations.get_listen_live_menu(include_local=include_local_stations),
-            self.stations.get_schedule_menu(include_local=include_local_stations),
-            self.stations.get_catch_up_menu(include_local=include_local_stations),
+        radio, schedule, catch_up = await asyncio.gather(
+            self.stations.get_radio_menu(include_local_stations=include_local_stations),
+            self.stations.get_schedule_menu(
+                include_local_stations=include_local_stations, depth=2
+            ),
+            self.stations.get_catch_up_menu(
+                include_local_stations=include_local_stations
+            ),
         )
         if (
             self.user.login_details_provided
             and await self.user.is_uk_account_and_location()
         ):
             return await self.personal.construct_uk_menu(
-                listen_live=listen_live,
+                radio=radio,
                 catch_up=catch_up,
                 schedule=schedule,
                 include_recommendations=include_recommendations,
             )
         else:
             return await self.personal.construct_international_menu(
-                listen_live=listen_live,
+                radio=radio,
                 catch_up=catch_up,
                 schedule=schedule,
             )
@@ -249,7 +261,6 @@ class SoundsClient:
         logger.debug("Session close explicitly requested.")
         if self._session and self.managing_session:
             await self._session.close()
-        self.cookie_store.save()
 
     async def __aenter__(self):
         return self

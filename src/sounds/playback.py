@@ -3,9 +3,10 @@ from enum import StrEnum
 from typing import Literal
 
 from sounds import VERBOSE_LOG_LEVEL
-from sounds.endpoints import URLs
-from sounds.exceptions import APIResponseError
+from sounds.endpoints import Endpoints, URLs
+from sounds.exceptions import APIResponseError, InvalidArgumentsError
 from sounds.requests import RequestManager
+from sounds.stations import StationService
 
 logger = logging.getLogger(__name__)
 
@@ -36,26 +37,44 @@ class PlaybackService:
     def __init__(self, requests: RequestManager, **kwargs):
         self.requests = requests
 
-    async def get_stream_token(self, station_id):
+    async def get_stream_token(self, station_id, international: bool = False):
         """Requests a JWT token for a given station.
 
         For now, this also works for non-UK listeners, returning a non-UK stream when used.
         """
-        json = await self.requests.get_json_response(
-            url=URLs.JWT, url_args={"station_id": station_id}
-        )
+        url_args = {"id": StationService.station_id_to_service_id(station_id)}
+        url = URLs.JWT
+        if international:
+            url = URLs.INTL_JWT
+            url_args = {"id_type": "serviceId", "id": station_id}
+        json = await self.requests.get_json_response(url=url, url_args=url_args)
         if "token" not in json:
             raise APIResponseError(f"Couldn't get JWT token: {json}")
         return json.get("token")
 
     async def get_live_stream(
-        self, station_id: str, stream_format: Literal["hls", "dash"] = "hls"
+        self,
+        station_id: str,
+        stream_format: Literal["hls", "dash"] = "hls",
+        international: bool = False,
     ) -> str | None:
-        jwt_token = await self.get_stream_token(station_id)
+        if not station_id:
+            raise InvalidArgumentsError("station_id is required.")
 
+        jwt_token = await self.get_stream_token(station_id, international=international)
+        if not jwt_token:
+            raise APIResponseError("No JWT token received.")
+        url = URLs.MEDIASET
+        url_args = {
+            "id": StationService.station_id_to_service_id(station_id),
+            "jwt_auth_token": jwt_token,
+        }
+        if international:
+            url = URLs.I18N_MEDIASET
+            url_args = {"id": station_id}
         json_resp = await self.requests.get_json_response(
-            url=URLs.MEDIASET,
-            url_args={"station_id": station_id, "jwt_auth_token": jwt_token},
+            url=url,
+            url_args=url_args,
             headers={"Bearer": jwt_token},
         )
         stream = None
@@ -101,7 +120,7 @@ class PlaybackService:
 
     async def get_heartbeat_details(self, pid):
         json_resp = await self.requests.get_json_response(
-            url=URLs.PID_DETAILS, url_args={"pid": pid}
+            url=Endpoints.PID_DETAILS, url_args={"pid": pid}
         )
         logger.debug(f"Heartbeat details response: {json_resp}")
         try:
@@ -127,7 +146,7 @@ class PlaybackService:
             "version_pid": vpid,
         }
         resp = await self.requests.make_request(
-            method="POST", url=URLs.PLAYS, json=data
+            method="POST", url=Endpoints.PLAYS, json=data
         )
         if resp.status != 202:
             raise APIResponseError(resp)

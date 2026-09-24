@@ -4,7 +4,7 @@ from collections.abc import Sequence
 from enum import StrEnum, auto
 
 from sounds.auth import AuthService
-from sounds.endpoints import URLs
+from sounds.endpoints import Endpoints
 from sounds.exceptions import APIResponseError
 from sounds.models import Menu, MenuItem, PlayableItem, RecommendedMenuItem
 from sounds.parser import Parser
@@ -38,15 +38,16 @@ class PersonalService:
 
     async def construct_uk_menu(
         self,
-        listen_live: MenuItem,
+        radio: MenuItem,
         catch_up: MenuItem,
         schedule: MenuItem,
         include_recommendations: bool = True,
     ) -> Menu:
         """Gets the main Sounds menu for UK-based users."""
 
-        json_resp = await self.requests.get_json_response(url=URLs.EXPERIENCE_MENU)
+        json_resp = await self.requests.get_json_response(url=Endpoints.EXPERIENCE_MENU)
         menu = self.parser.parse_menu(json_resp)
+
         if not isinstance(menu, Menu) or not menu or len(menu.sub_items) == 0:
             raise APIResponseError("Menu not converted correctly.")
         if include_recommendations:
@@ -62,17 +63,39 @@ class PersonalService:
                     and type(item) is not RecommendedMenuItem
                 )
             ]
+
+        # Remove the API's listen_live to replace with ours (as it's better)
         menu.sub_items = [
-            listen_live,
+            obj
+            for obj in menu.sub_items
+            if obj.id not in ["listen_live", "continue_listening"]
+        ]
+
+        latest, bookmarks, subscribed, continue_listening = await asyncio.gather(
+            self.get_latest_menu(),
+            self.get_bookmarks_menu(),
+            self.get_subscriptions_menu(),
+            self.get_continue_listening_menu(),
+        )
+
+        my_sounds = MenuItem(
+            title="My Sounds",
+            id="my_sounds",
+            sub_items=[continue_listening, subscribed, latest, bookmarks],
+        )
+
+        menu.sub_items = [
+            radio,
             catch_up,
             schedule,
+            my_sounds,
             *menu.sub_items,
             await self.get_explore_all(),
         ]
         return menu
 
     async def get_recommendations(self) -> Sequence[RecommendedMenuItem]:
-        json_resp = await self.requests.get_json_response(url=URLs.EXPERIENCE_MENU)
+        json_resp = await self.requests.get_json_response(url=Endpoints.EXPERIENCE_MENU)
         menu = self.parser.parse_menu(json_resp)
         return [
             recommendation
@@ -82,7 +105,7 @@ class PersonalService:
 
     async def construct_international_menu(
         self,
-        listen_live: MenuItem,
+        radio: MenuItem,
         catch_up: MenuItem,
         schedule: MenuItem,
     ) -> Menu:
@@ -90,18 +113,15 @@ class PersonalService:
 
         return Menu(
             sub_items=[
-                listen_live,
+                radio,
                 catch_up,
                 schedule,
                 await self.get_explore_all(),
             ]
         )
 
-    def get_listen_live(self):
-        return MenuItem(title="Listen Live", id="listen_live", sub_items=self.sta)
-
     async def get_podcasts_menu_item(self) -> MenuItem:
-        json = await self.requests.get_json_response(URLs.PODCASTS)
+        json = await self.requests.get_json_response(Endpoints.PODCASTS)
         return MenuItem(
             id="podcasts",
             title="Podcasts",
@@ -113,7 +133,7 @@ class PersonalService:
             id="music",
             title="Music",
             sub_items=self.parser.parse_menu(
-                await self.requests.get_json_response(URLs.MUSIC)
+                await self.requests.get_json_response(Endpoints.MUSIC)
             ).sub_items,
         )
 
@@ -122,7 +142,7 @@ class PersonalService:
             id="news",
             title="News",
             sub_items=self.parser.parse_menu(
-                await self.requests.get_json_response(URLs.NEWS)
+                await self.requests.get_json_response(Endpoints.NEWS)
             ).sub_items,
         )
 
@@ -136,23 +156,56 @@ class PersonalService:
         return MenuItem(title="Explore All", id="explore", sub_items=explore_items)
 
     async def get_latest(self):
-        return self.parser.parse_container(
-            await self.requests.get_json_response(url=URLs.LATEST)
+        latest_items = self.parser.parse_container(
+            await self.requests.get_json_response(url=Endpoints.LATEST)
         )
+        if not latest_items or type(latest_items) is not list:
+            return []
+        return [
+            item
+            for item in latest_items
+            if latest_items and isinstance(item, PlayableItem)
+        ]
+
+    async def get_latest_menu(self):
+        latest_items = await self.get_latest()
+        return MenuItem(title="Latest", id="latest", sub_items=latest_items)
 
     async def get_subscriptions(self):
-        return self.parser.parse_container(
-            await self.requests.get_json_response(url=URLs.SUBSCRIBED)
+        subscriptions = self.parser.parse_container(
+            await self.requests.get_json_response(url=Endpoints.SUBSCRIBED)
+        )
+        return subscriptions or []
+
+    async def get_subscriptions_menu(self):
+        subscriptions = await self.get_subscriptions()
+        return MenuItem(
+            title="Subscriptions", id="subscriptions", sub_items=subscriptions
         )
 
     async def get_bookmarks(self):
-        return self.parser.parse_container(
-            await self.requests.get_json_response(url=URLs.BOOKMARKS)
+        bookmarks = self.parser.parse_container(
+            await self.requests.get_json_response(url=Endpoints.BOOKMARKS)
         )
+        if not bookmarks or type(bookmarks) is not list:
+            return []
+        return [item for item in bookmarks if isinstance(item, PlayableItem)]
+
+    async def get_bookmarks_menu(self):
+        bookmarks = await self.get_bookmarks()
+        return MenuItem(title="Bookmarks", id="bookmarks", sub_items=bookmarks)
 
     async def get_continue_listening(self) -> list[PlayableItem] | None:
-        json_response = await self.requests.get_json_response(url=URLs.CONTINUE)
+        json_response = await self.requests.get_json_response(url=Endpoints.CONTINUE)
         container = self.parser.parse_container(json_response)
         if isinstance(container, list):
             return [item for item in container if isinstance(item, PlayableItem)]
         return None
+
+    async def get_continue_listening_menu(self) -> MenuItem:
+        continue_listening_items = await self.get_continue_listening()
+        return MenuItem(
+            title="Continue Listening",
+            id="continue_listening",
+            sub_items=continue_listening_items,
+        )

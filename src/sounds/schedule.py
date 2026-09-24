@@ -5,11 +5,12 @@ from datetime import datetime as dt
 from datetime import timedelta, tzinfo
 
 from sounds import endpoints
-from sounds.endpoints import URLs
+from sounds.endpoints import Endpoints
 from sounds.exceptions import APIResponseError, InvalidFormatError
-from sounds.models import LiveProgramme, Schedule, Segment
+from sounds.models import LiveStation, Schedule, Segment
 from sounds.parser import Parser
 from sounds.requests import RequestManager
+from sounds.stations import StationService
 
 logger = logging.getLogger(__name__)
 
@@ -42,11 +43,11 @@ class ScheduleService:
         self, station_id: str, date: str | None = None
     ) -> Schedule | None:
         """Get a Schedule item for a given station_id."""
-        url = URLs.SCHEDULE
-        url_args = {"station_id": station_id}
+        url = Endpoints.SCHEDULE
+        url_args = {"service_id": station_id}
 
         if date:
-            url = URLs.SCHEDULE_DATE
+            url = Endpoints.SCHEDULE_DATE
             url_args.update({"date": date})
             try:
                 _ = dt.strptime(date, "%Y-%m-%d").replace(tzinfo=self.timezone)
@@ -101,8 +102,10 @@ class ScheduleService:
         )
         return [schedule for schedule in schedules if isinstance(schedule, Schedule)]
 
-    async def current_programme(self, station_id: str) -> LiveProgramme | None:
-        json_resp = await self.requests.get_json_response(url=endpoints.URLs.STATIONS)
+    async def current_programme(self, station_id: str) -> LiveStation | None:
+        json_resp = await self.requests.get_json_response(
+            url=endpoints.Endpoints.STATIONS
+        )
         try:
             stations_data = json_resp["data"][0]["data"]
         except IndexError, KeyError:
@@ -116,13 +119,16 @@ class ScheduleService:
             ),
             None,
         )
-        return listing if type(listing) is LiveProgramme else None
+        return listing if type(listing) is LiveStation else None
 
     async def recently_played_items(self, station_id: str, results=10) -> list[Segment]:
         """Gets the recent playing items on this station"""
         json_resp = await self.requests.get_json_response(
-            url=URLs.NOW_PLAYING,
-            url_args={"station_id": station_id, "limit": results},
+            url=Endpoints.NOW_PLAYING,
+            url_args={
+                "service_id": StationService.station_id_to_service_id(station_id),
+                "limit": results,
+            },
         )
         segments = self.parser.parse_container(json_resp)
         if isinstance(segments, list):
