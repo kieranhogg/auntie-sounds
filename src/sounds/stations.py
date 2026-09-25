@@ -165,47 +165,45 @@ class StationService:
                 requested_stations = national_stations
             elif include_local_stations:
                 requested_stations = local_stations
+        stations_list = []
 
-        stations_list: list[LiveStation | Station] = []
-        if len(requested_stations) > 0:
-            parsed_stations = self.parser.parse_node(requested_stations)
-            if isinstance(parsed_stations, list):
-                stations_list = [
-                    s for s in parsed_stations if isinstance(s, (Station, LiveStation))
+        parsed_stations = self.parser.parse_node(requested_stations)
+        if isinstance(parsed_stations, list):
+            stations_list.extend([
+                s for s in parsed_stations if isinstance(s, (Station, LiveStation))
+            ])
+        if include_international_stations:
+            i18n_stations = await self.get_networks(international_only=True)
+            stations_list.extend(
+                [
+                    network.service
+                    for network in i18n_stations
+                    if network.service is not None
                 ]
+            )
 
-            if include_international_stations:
-                i18n_stations = await self.get_networks(international_only=True)
-                stations_list.extend(
-                    [
-                        network.service
-                        for network in i18n_stations
-                        if network.service is not None
-                    ]
-                )
 
-            if include_streams and isinstance(stations_list, list):
-                # Parallelise the requests to improve speed, one to watch for API rates in future
-                needs_stream = [
-                    s
-                    for s in stations_list
-                    if not s.stream and isinstance(s, (Station, LiveStation))
-                ]
-                streams = await asyncio.gather(
-                    *(self.playback.get_live_stream(s.id) for s in needs_stream)
-                )
-                for station, stream in zip(needs_stream, streams):
-                    station.stream = stream
+        if include_streams and isinstance(stations_list, list):
+            # Parallelise the requests to improve speed, one to watch for API rates in future
+            needs_stream = [
+                s
+                for s in stations_list
+                if not s.stream and isinstance(s, (Station, LiveStation))
+            ]
+            streams = await asyncio.gather(
+                *(self.playback.get_live_stream(s.id) for s in needs_stream)
+            )
+            for station, stream in zip(needs_stream, streams):
+                station.stream = stream
 
-            if include_schedules and isinstance(stations_list, list):
-                needs_schedule = [s for s in stations_list if not s.schedule]
-                schedules = await asyncio.gather(
-                    *(self.schedules.get_schedule(s.id) for s in needs_schedule)
-                )
-                for station, schedule in zip(needs_schedule, schedules):
-                    station.schedule = schedule
-            return stations_list
-        return []
+        if include_schedules and isinstance(stations_list, list):
+            needs_schedule = [s for s in stations_list if not s.schedule]
+            schedules = await asyncio.gather(
+                *(self.schedules.get_schedule(s.id) for s in needs_schedule)
+            )
+            for station, schedule in zip(needs_schedule, schedules):
+                station.schedule = schedule
+        return stations_list
 
     async def get_station(
         self,
