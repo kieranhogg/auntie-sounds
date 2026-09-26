@@ -124,9 +124,12 @@ class AuthService:
         except UnauthorisedError:
             if not self.username or not self.password:
                 raise UnauthorisedError("No username and/or password provided.")
-            if self.cookie_store.has_session_cookie:
-                if await self.renew_session():
+            if self.cookie_store.has_session_cookie and await self.renew_session():
+                try:
                     return await call()
+                except UnauthorisedError:
+                    logger.error("Still not re-authorised, trying full login...")
+            else:
                 logger.error("Session renewal failed, trying full login...")
             await self.login(username=self.username, password=self.password)
             return await call()
