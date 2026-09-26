@@ -1,3 +1,4 @@
+import datetime
 import json
 from logging import DEBUG
 from pathlib import Path
@@ -53,7 +54,7 @@ def _mock_cookie_store(mock_session):
 @pytest.fixture(name="mock_schedule")
 def _mock_schedule(mock_session, mock_requests):
     return ScheduleService(
-        timezone="UTC",
+        timezone=datetime.UTC,
         requests=mock_requests,
     )
 

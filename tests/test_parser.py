@@ -94,6 +94,7 @@ class TestParserNestedObjects:
         parser = Parser()
         result = parser.parse_node(data)
         for nested_object in ModelFactory.nested_objects:
-            assert hasattr(result, nested_object.source_key) or hasattr(
-                result.network, nested_object.source_key
+            assert hasattr(result, nested_object.source_key) or (
+                hasattr(result, "network")
+                and hasattr(result.network, nested_object.source_key)
             )  # For network->services

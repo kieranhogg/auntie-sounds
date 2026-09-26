@@ -226,8 +226,8 @@ class ModelFactory:
         self,
         original_object: dict,
         parent_network: dict | SoundsTypes | None = None,
-        type_hint: type[Any] | None = None,
-    ):
+        type_hint: type[SoundsTypes] | None = None,
+    ) -> Any:
         new_type: type[Any]
         if type_hint:
             new_type = type_hint

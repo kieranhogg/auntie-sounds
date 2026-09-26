@@ -15,7 +15,9 @@ from sounds.utils import image_from_recipe, network_logo
 NETWORK_LOGO_FORMAT = "https://sounds.files.bbci.co.uk/3.12.0/networks/{network_id}/{type}_{size}.{format}"
 
 type SoundsTypes = (
-    CategoryItemContainer
+    AudiobookEpisode
+    | Audiobook
+    | CategoryItemContainer
     | CollectionItemContainer
     | Container
     | Collection
@@ -94,7 +96,7 @@ def station_description(station_id):
         "bbc_pashto_radio": "بي بي سي د افغانستان لپاره کورني، سیمه ییز او نړیوال وروستي او کره خبرونه د هر اړخېزو څېړونو او شننو سره تاسې ته وړاندې کوي",
         "bbc_uzbek_radio": "O’zbekiston, mintaqa va dunyo yangiliklari O’zbek tilida",
         "bbc_somali_radio": "Wararka iyo xaaladda taagan ee dunida oo dhan, faallo, muusig, madadaallo iyo cayaaro.",
-        "bbc_swahili_radio": "Habari za kimataifa, michezo na uchambuzi kutoka kwa idhaa ya dunia."
+        "bbc_swahili_radio": "Habari za kimataifa, michezo na uchambuzi kutoka kwa idhaa ya dunia.",
     }
     return descriptions_dict.get(station_id, None)
 
@@ -102,11 +104,12 @@ def station_description(station_id):
 ###### Mixins ##################################################################
 class SerializableMixin:
     def to_dict(self) -> dict[str, Any]:
-        return asdict(self)  # type: ignore
+        return asdict(self)  # type: ignore[call-overload, ty:invalid-argument-type]
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> Self:
-        return cls(**data)  # type: ignore
+        # noinspection argument-list
+        return cls(**data)
 
     def __str__(self):
         return pformat(self)

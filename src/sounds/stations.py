@@ -52,7 +52,7 @@ class StationService:
         self.international_networks: list[str] = [
             "bbc_afrique_radio",
             "bbc_arabic_radio",
-            "bbc_burmese_radio", #"p0gwwsz2"
+            "bbc_burmese_radio",  # "p0gwwsz2"
             "bbc_dari_radio",
             "bbc_hindi_radio",
             "bbc_gahuza_radio",
@@ -149,9 +149,9 @@ class StationService:
 
         parsed_stations = self.parser.parse_node(requested_stations)
         if isinstance(parsed_stations, list):
-            stations_list.extend([
-                s for s in parsed_stations if isinstance(s, (Station, LiveStation))
-            ])
+            stations_list.extend(
+                [s for s in parsed_stations if isinstance(s, (Station, LiveStation))]
+            )
         if include_international_stations:
             i18n_stations = await self.get_networks(international_only=True)
             stations_list.extend(
@@ -161,7 +161,6 @@ class StationService:
                     if network.service is not None
                 ]
             )
-
 
         if include_streams and isinstance(stations_list, list):
             # Parallelise the requests to improve speed, one to watch for API rates in future

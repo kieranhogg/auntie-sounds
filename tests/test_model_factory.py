@@ -168,6 +168,7 @@ class TestEpisodeVsPodcastClassification:
         with open("tests/fixtures/api/podcast_news.json") as node_file:
             node = json.loads(node_file.read())
             result = Parser().parse_node(node)
+            assert type(result) is PodcastEpisode
             assert isinstance(result.container, Podcast)
 
 

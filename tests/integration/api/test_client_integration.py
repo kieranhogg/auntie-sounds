@@ -56,4 +56,4 @@ class TestClientMenu:
         assert len(menu.sub_items) == 14
 
         menu_ids = [item.id for item in menu.sub_items]
-        assert sum(id.startswith(news_prefix) for id in menu_ids) == 1
+        assert sum(str(id).startswith(news_prefix) for id in menu_ids) == 1

@@ -44,7 +44,7 @@ class Parser:
         self,
         node: dict | list,
         parent_network: dict | None = None,
-        type_hint: SoundsTypes | None = None,
+        type_hint: type[SoundsTypes] | None = None,
     ) -> SoundsTypes | list[SoundsTypes] | None:
         """
         Recursively parses a node. A node with a 'data' key is a container, otherwise,
@@ -114,7 +114,7 @@ class Parser:
         return schedule
 
     def parse_container(
-        self, json_data: dict, type_hint: SoundsTypes | None = None
+        self, json_data: dict, type_hint: type[SoundsTypes] | None = None
     ) -> SoundsTypes | list[SoundsTypes] | None:
         if not json_data:
             return None

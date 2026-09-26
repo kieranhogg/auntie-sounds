@@ -145,7 +145,7 @@ class TestPersonalService:
         }
 
         async def fake_get_json(url=None):
-            return responses[url]
+            return responses[url]  # type: ignore[ty:invalid-argument-type]
 
         monkeypatch.setattr(request_manager, "get_json_response", fake_get_json)
 

@@ -21,7 +21,7 @@ class TestModels:
             "start": "2025-01-15T10:00:00Z",
             "end": "2025-01-15T12:00:00Z",
         }
-        item = ScheduleItem(**data)
+        item = ScheduleItem(**data)  # type: ignore[ty:invalid-argument-type]
         item.post_processing(logging.getLogger())
         assert isinstance(item.start, dt)
         assert isinstance(item.end, dt)

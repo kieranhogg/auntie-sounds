@@ -70,7 +70,7 @@ class TestScheduleService:
 
     async def test_get_schedule_invalid_date_format(self):
         """Test get_schedule with invalid date format"""
-        service = ScheduleService(timezone="UTC", requests=Mock())
+        service = ScheduleService(timezone=datetime.UTC, requests=Mock())
 
         with pytest.raises(InvalidFormatError):
             await service.get_schedule("bbc_radio_one", date="2025/01/15")

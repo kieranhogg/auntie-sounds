@@ -22,7 +22,7 @@ class TestHTTP:
     async def test_make_request_non_authenticated_endpoint(self, client):
         resp = await client.requests.make_request(
             method="GET",
-            url=Endpoints.LIVE_STATION_DETAILS,
+            url=Endpoints.LIVE_STATION,
             url_args={"service_id": "bbc_radio_one"},
         )
         assert resp.status == 200

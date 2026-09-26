@@ -6,7 +6,6 @@ from sounds.endpoints import Endpoints
 from sounds.exceptions import APIResponseError, InvalidFormatError, NotFoundError
 from sounds.models import (
     Audiobook,
-    AudiobookEpisode,
     Collection,
     Container,
     ItemCategory,
@@ -186,7 +185,7 @@ class ContentService:
             url=Endpoints.URN_CONTAINER, url_args={"urn": urn}
         )
         container = self.parser.parse_container(json_resp)
-        if type(container) is list and len(container) == 1:
+        if isinstance(container, list) and len(container) == 1:
             return container[0]
         if not container:
             return []
@@ -212,10 +211,8 @@ class ContentService:
         json_resp = await self.requests.get_json_response(
             url=Endpoints.POPULAR_AUDIOBOOKS
         )
-        return cast(
-            "Audiobook",
-            self.parser.parse_container(json_resp, type_hint=AudiobookEpisode),
-        )
+        container = self.parser.parse_container(json_resp)
+        return container
 
     async def get_playlist_contents(self, pid) -> list[SoundsTypes]:
         """Gets a curation/playlist."""

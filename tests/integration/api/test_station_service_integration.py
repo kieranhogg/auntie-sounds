@@ -70,7 +70,7 @@ class TestStationServiceIntegration:
         today = dt.now(tz=real_sounds_client.timezone).date().strftime("%Y-%m-%d")
         assert type(station) is LiveStation
         assert type(station.schedule) is Schedule
-        assert len(station.schedule.sub_items) > 0
+        assert station.schedule.sub_items and len(station.schedule.sub_items) > 0
         assert station.schedule.title == today
 
     async def test_get_station_schedule_date(self, real_sounds_client: SoundsClient):
@@ -84,5 +84,5 @@ class TestStationServiceIntegration:
         )
         assert type(station) is LiveStation
         assert type(station.schedule) is Schedule
-        assert len(station.schedule.sub_items) > 0
+        assert station.schedule.sub_items and len(station.schedule.sub_items) > 0
         assert station.schedule.title == yesterday
