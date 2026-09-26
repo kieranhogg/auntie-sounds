@@ -7,9 +7,7 @@ from pathlib import Path
 
 import aiohttp
 import pytz
-from colorlog import ColoredFormatter
 
-from sounds import VERBOSE_LOG_LEVEL
 from sounds.auth import AuthService
 from sounds.content import ContentService
 from sounds.cookies import CookieStore
@@ -26,6 +24,7 @@ from sounds.utils import _get_data_dir
 COOKIE_FILE = Path(_get_data_dir(), "sounds_jar")
 
 logger = logging.getLogger(__name__)
+
 
 class SoundsClient:
     """A client to interact with the Sounds API."""
