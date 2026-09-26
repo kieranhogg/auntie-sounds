@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+## PRE-RELEASE [2.1.0b3] - 2026-09-26
 ## PRE-RELEASE [2.1.0b2] - 2026-09-25
 ## PRE-RELEASE [2.1.0b1] - 2026-09-24
 * New feature: added international radio stations
