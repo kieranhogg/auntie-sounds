@@ -54,24 +54,16 @@ class StationService:
         self.international_networks: list[str] = [
             "bbc_afrique_radio",
             "bbc_arabic_radio",
-            "bbc_bangla_radio",
-            "bbc_burmese_radio",
-            "bbc_cantonese_radio",
+            "bbc_burmese_radio", #"p0gwwsz2"
             "bbc_dari_radio",
             "bbc_hindi_radio",
             "bbc_gahuza_radio",
             "bbc_hausa_radio",
-            "bbc_indonesian_radio",
-            "bbc_kyrgyz_radio",
             "bbc_nepali_radio",
             "bbc_pashto_radio",
-            "bbc_persian_radio",
-            "bbc_urdu_radio",
             "bbc_uzbek_radio",
-            "bbc_sinhala_radio",
             "bbc_somali_radio",
             "bbc_swahili_radio",
-            "bbc_tamil_radio",
         ]
 
     @lru_cache(maxsize=1)
@@ -110,6 +102,7 @@ class StationService:
                 continue
             if network.id in self.international_networks:
                 network.international = True
+            network.service.international = True
         return [
             network
             for network in networks

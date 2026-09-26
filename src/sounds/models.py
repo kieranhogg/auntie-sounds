@@ -83,6 +83,18 @@ def station_description(station_id):
         "bbc_radio_cymru_2": "Tiwns trwy'r dydd.",
         "cbeebies_radio": "Songs, stories, and fun. It's CBeebies for your ears.",
         "local": "The sound of where you live.",
+        "bbc_afrique_radio": "Infos, musique et sports",
+        "bbc_arabic_radio": "خدمة إخبارية على مدار الساعة و برامج حوارية وتفاعلية تناقش قضايا المنطقة والعالم وباقة من البرامج المنوعة من إذاعة بي بي سي",
+        "bbc_burmese_radio": "",
+        "bbc_dari_radio": "بی بی سی برای افغانستان تازه ترین و دقیق ترین خبرهای افغانستان ، منطقه و جهان را با تحلیل های همه جانبه ارایه می کند",
+        "bbc_hindi_radio": "",
+        "bbc_gahuza_radio": "Amakuru y’amahanga, ubusesenguzi, amakuru y’akarere k’ibiyaga bigari, ikinamico, ubuzima, imibereho y’abagore",
+        "bbc_hausa_radio": "Labaran duniya da sharhi da kuma bayanai kan al'amuran yau da kullum daga sashin Hausa na BBC.",
+        "bbc_nepali_radio": "नेपाली भाषामा बीबीसी विश्व सेवाको राष्ट्रिय तथा अन्तर्राष्ट्रिय समाचार तथा समसामयिक चर्चा, राष्ट्रिय तथा अन्तर्राष्ट्रिय समाचार विश्लेषण, समाचारमा रहेका व्यक्तित्वहरुसंगको अन्तर्वार्ता, साप्ताहिक बहस तथा छलफल, विज्ञान, स्वास्थ्य.",
+        "bbc_pashto_radio": "بي بي سي د افغانستان لپاره کورني، سیمه ییز او نړیوال وروستي او کره خبرونه د هر اړخېزو څېړونو او شننو سره تاسې ته وړاندې کوي",
+        "bbc_uzbek_radio": "O’zbekiston, mintaqa va dunyo yangiliklari O’zbek tilida",
+        "bbc_somali_radio": "Wararka iyo xaaladda taagan ee dunida oo dhan, faallo, muusig, madadaallo iyo cayaaro.",
+        "bbc_swahili_radio": "Habari za kimataifa, michezo na uchambuzi kutoka kwa idhaa ya dunia."
     }
     return descriptions_dict.get(station_id, None)
 
@@ -457,14 +469,12 @@ class PlayableItem(BaseObject, IdentifiableMixin):
             self.pid = self.urn.rsplit(":", 1)[-1]
 
         if not self.container and self.ancestors:
-            if len(self.ancestors) > 1:
-                logger.warning(
-                    "%s contains more than one ancestor, so not able to choose: %s",
-                    self,
-                    self.ancestors,
-                )
-                return
-            self.container = self.ancestors[0]
+            # ancestors run top-down (brand, then series); the immediate
+            # parent is the most specific one, not the first.
+            self.container = next(
+                (a for a in self.ancestors if a.type == "series"),
+                self.ancestors[-1],
+            )
 
     def is_live(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo) -> bool:
         if self.start and self.end:
