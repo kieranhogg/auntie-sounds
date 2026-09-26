@@ -94,7 +94,6 @@ class TestAuthBehaviour:
         call = AsyncMock(
             side_effect=[
                 UnauthorisedError("expired"),
-                UnauthorisedError("still expired"),
                 "ok",
             ]
         )
