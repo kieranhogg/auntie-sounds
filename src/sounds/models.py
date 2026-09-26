@@ -324,12 +324,12 @@ class Network(SerializableMixin):
                 None,
             )
 
+        self.description = station_description(self.id)
         if self.service:
             self.default_service_id = self.service.id
+            self.service.description = self.description
 
         self.logo_url = network_logo(NETWORK_LOGO_FORMAT, network_id=self.id)
-
-        self.description = station_description(self.id)
 
 
 @dataclass(kw_only=True)
