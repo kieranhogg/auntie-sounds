@@ -27,39 +27,6 @@ COOKIE_FILE = Path(_get_data_dir(), "sounds_jar")
 
 logger = logging.getLogger(__name__)
 
-
-def setLogger(log_level=None):
-    logging.addLevelName(VERBOSE_LOG_LEVEL, "VERBOSE")
-    if not log_level:
-        log_level = logging.WARNING
-    logging.basicConfig(
-        level=log_level,
-        format="%(asctime)s -%(levelname)s -on line: %(lineno)d -%(message)s",
-    )
-    log_fmt = (
-        "%(asctime)s.%(msecs)03d %(levelname)s (%(threadName)s) [%(name)s] %(message)s"
-    )
-    colorfmt = f"%(log_color)s{log_fmt}%(reset)s"
-    logging.getLogger().handlers[0].setFormatter(
-        ColoredFormatter(
-            colorfmt,
-            reset=True,
-            log_colors={
-                "VERBOSE": "light_black",
-                "DEBUG": "cyan",
-                "INFO": "green",
-                "WARNING": "yellow",
-                "ERROR": "red",
-                "CRITICAL": "red",
-            },
-        )
-    )
-    if log_level:
-        logger.setLevel(log_level)
-    else:
-        logger.setLevel(VERBOSE_LOG_LEVEL)
-
-
 class SoundsClient:
     """A client to interact with the Sounds API."""
 
@@ -75,8 +42,8 @@ class SoundsClient:
         debug_login: bool = False,
         **kwargs,
     ) -> None:
-        setLogger(log_level)
-
+        if log_level:
+            logger.setLevel(log_level)
         logger.debug("Creating new SoundsClient")
 
         self.username: str | None = username
