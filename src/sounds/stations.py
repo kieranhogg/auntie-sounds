@@ -98,11 +98,12 @@ class StationService:
         if type(networks) is not list:
             return []
         for network in networks:
-            if type(network) is not Network:
+            if not network or type(network) is not Network:
                 continue
             if network.id in self.international_networks:
                 network.international = True
-            network.service.international = True
+                if network.service:
+                    network.service.international = True
         return [
             network
             for network in networks
