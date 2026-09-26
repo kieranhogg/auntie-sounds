@@ -49,8 +49,6 @@ class StationService:
         self.schedules: ScheduleService = schedules
         self.requests: RequestManager = requests
         self.parser: Parser = Parser()
-        self.local_networks: list[str] = []
-        self.national_networks: list[str] = []
         self.international_networks: list[str] = [
             "bbc_afrique_radio",
             "bbc_arabic_radio",
@@ -65,18 +63,6 @@ class StationService:
             "bbc_somali_radio",
             "bbc_swahili_radio",
         ]
-
-    @lru_cache(maxsize=1)
-    def _is_local_network(self, network_id):
-        if not self.local_networks:
-            raise AttributeError("No local_networks.")
-        return network_id in self.local_networks
-
-    @lru_cache(maxsize=1)
-    def _is_national_network(self, network_id):
-        if not self.national_networks:
-            raise AttributeError("No national_networks.")
-        return network_id in self.national_networks
 
     @lru_cache(maxsize=19)
     def _is_international_network(self, network_id):
