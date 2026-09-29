@@ -151,9 +151,10 @@ class AuthService:
 
         if self._on_login_success:
             try:
-                self._on_login_success()
+                await self._on_login_success()
             except Exception:
-                # The session is valid; failing here would discard it
+                # The session is valid so don't fail at this stage if there is anything
+                # wrong with _on_login_success
                 logger.warning("on_login_success callback failed", exc_info=True)
 
         return True
@@ -238,6 +239,7 @@ class AuthService:
             if not force_login and self.cookie_store.has_session_cookie:
                 if await self.renew_session():
                     self._auth_generation += 1
+                    self.cookie_store.save()
                     return self._auth_generation
                 logger.warning("Session renewal failed, trying full login...")
             if not (self.username and self.password):
