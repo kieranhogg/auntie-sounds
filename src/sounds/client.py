@@ -235,12 +235,14 @@ class SoundsClient:
         logger.debug("Logged out.")
 
     async def close(self):
+        if not self._started:
+            return
         logger.debug("Closing session...")
         await self.save_cookies()
-        if self._session:
+        if self._external_session is None:
             await self._session.close()
-        logger.debug("Session closed.")
         self._started = False
+        logger.debug("Session closed.")
 
     async def __aenter__(self):
         await self.start()
