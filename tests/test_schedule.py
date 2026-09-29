@@ -4,7 +4,6 @@ from unittest.mock import Mock
 
 import pytest
 
-from sounds.client import SoundsClient
 from sounds.exceptions import InvalidFormatError
 from sounds.schedule import ScheduleService, _get_date_range
 
@@ -75,10 +74,13 @@ class TestScheduleService:
         with pytest.raises(InvalidFormatError):
             await service.get_schedule("bbc_radio_one", date="2025/01/15")
 
-    async def test_get_schedule_valid_date_format(self, mock_session):
+    async def test_get_schedule_valid_date_format(
+        self, mock_api, real_anonymous_client
+    ):
         """Test get_schedule with valid date format"""
-        client = SoundsClient(mock_data=True)
         try:
-            await client.schedules.get_schedule("bbc_radio_one", date="2025-01-15")
+            await real_anonymous_client.schedules.get_schedule(
+                "bbc_radio_one", date="2025-01-15"
+            )
         except InvalidFormatError:
             pytest.fail("Valid date format raised InvalidFormatError")

@@ -29,30 +29,26 @@ class TestIDs:
         "bbc_radio_wales_fm",
     ]
 
-    async def test_ids_with_get_networks(self, sounds_client_with_mock_data):
-        networks = await sounds_client_with_mock_data.stations._get_networks()
+    async def test_ids_with_get_networks(self, mock_client):
+        networks = await mock_client.stations._get_networks()
         network_ids = {network.id for network in networks}
         assert set(self.NETWORK_IDS_TO_CHECK).issubset(network_ids)
         assert set(self.SERVICE_IDS_TO_CHECK).isdisjoint(network_ids)
 
-    async def test_id_from_network_object_is_correct_for_get_network(
-        self, sounds_client_with_mock_data
-    ):
-        networks = await sounds_client_with_mock_data.stations.get_networks()
+    async def test_id_from_network_object_is_correct_for_get_network(self, mock_client):
+        networks = await mock_client.stations.get_networks()
         radio_four = next(
             (network for network in networks if network.id == "bbc_radio_four"),
             None,
         )
         assert type(radio_four) is Network
 
-        network = await sounds_client_with_mock_data.stations.get_network(radio_four.id)
+        network = await mock_client.stations.get_network(radio_four.id)
         assert network.id == radio_four.id
 
-    async def test_check_network_ids_against_methods(
-        self, sounds_client_with_mock_data
-    ):
+    async def test_check_network_ids_against_methods(self, mock_client):
         network_id = "bbc_radio_four"
-        await sounds_client_with_mock_data.stations.get_station(network_id)
-        menu = await sounds_client_with_mock_data.stations.get_radio_menu()
+        await mock_client.stations.get_station(network_id)
+        menu = await mock_client.stations.get_radio_menu()
         ids = [item.id for item in menu.sub_items]
         assert network_id in ids

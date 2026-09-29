@@ -51,21 +51,17 @@ class TestClientMenu:
         user_service.is_uk_account_and_location = AsyncMock(return_value=False)
         return user_service
 
-    async def test_uk_menu_is_created_for_uk_users(
-        self, sounds_client_with_mock_data, uk_user_service
-    ):
-        sounds_client_with_mock_data.user = uk_user_service
-        sounds_client_with_mock_data.personal.construct_uk_menu = AsyncMock()
-        sounds_client_with_mock_data.personal.construct_international_menu = AsyncMock()
+    async def test_uk_menu_is_created_for_uk_users(self, mock_client, uk_user_service):
+        mock_client.user = uk_user_service
+        mock_client.personal.construct_uk_menu = AsyncMock()
+        mock_client.personal.construct_international_menu = AsyncMock()
 
-        await sounds_client_with_mock_data.get_menu()
+        await mock_client.get_menu()
 
-        sounds_client_with_mock_data.personal.construct_uk_menu.assert_awaited_once()
-        sounds_client_with_mock_data.personal.construct_international_menu.assert_not_awaited()
+        mock_client.personal.construct_uk_menu.assert_awaited_once()
+        mock_client.personal.construct_international_menu.assert_not_awaited()
 
-    async def test_uk_menu_is_created(
-        self, sounds_client_with_mock_data, uk_user_service
-    ):
+    async def test_uk_menu_is_created(self, mock_client, uk_user_service):
         manual_menu_ids = ["listen_live", "schedule", "catch_up"]
         api_menu_ids = [
             "continue_listening",
@@ -78,9 +74,9 @@ class TestClientMenu:
             "categories",
             "explore",
         ]
-        sounds_client_with_mock_data.user = uk_user_service
+        mock_client.user = uk_user_service
 
-        menu = await sounds_client_with_mock_data.get_menu()
+        menu = await mock_client.get_menu()
         assert menu is not None
         assert len(menu.sub_items) == 14
 
@@ -94,13 +90,13 @@ class TestClientMenu:
             assert id in menu_ids
 
     async def test_international_menu_is_created_for_international_users(
-        self, sounds_client_with_mock_data, international_user_service
+        self, mock_client, international_user_service
     ):
-        sounds_client_with_mock_data.user = international_user_service
-        sounds_client_with_mock_data.personal.construct_uk_menu = AsyncMock()
-        sounds_client_with_mock_data.personal.construct_international_menu = AsyncMock()
+        mock_client.user = international_user_service
+        mock_client.personal.construct_uk_menu = AsyncMock()
+        mock_client.personal.construct_international_menu = AsyncMock()
 
-        await sounds_client_with_mock_data.get_menu()
+        await mock_client.get_menu()
 
-        sounds_client_with_mock_data.personal.construct_international_menu.assert_awaited_once()
-        sounds_client_with_mock_data.personal.construct_uk_menu.assert_not_awaited()
+        mock_client.personal.construct_international_menu.assert_awaited_once()
+        mock_client.personal.construct_uk_menu.assert_not_awaited()

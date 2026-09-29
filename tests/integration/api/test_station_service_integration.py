@@ -5,6 +5,7 @@ from datetime import timedelta
 import pytest
 
 from sounds.client import SoundsClient
+from sounds.exceptions import ConfigurationError, NotFoundError
 from sounds.models import LiveStation, Schedule
 
 pytestmark = pytest.mark.anyio
@@ -12,17 +13,32 @@ pytestmark = pytest.mark.anyio
 
 @pytest.fixture
 def username():
-    return os.getenv("USER")
+    username = os.getenv("USER")
+    if not username:
+        raise ConfigurationError("No username environment variable found.")
+    return username
 
 
 @pytest.fixture
 def password():
-    return os.getenv("PASS")
+    password = os.getenv("PASS")
+    if not password:
+        raise ConfigurationError("No password environment variable found.")
+    return password
 
 
 @pytest.fixture
 async def logged_in_client(username, password):
-    yield SoundsClient(username=username, password=password)
+    client = SoundsClient(username=username, password=password)
+    await client.start()
+    yield client
+
+
+@pytest.fixture
+async def anonymous_client(username, password):
+    client = SoundsClient()
+    await client.start()
+    yield client
 
 
 @pytest.mark.api
@@ -86,3 +102,37 @@ class TestStationServiceIntegration:
         assert type(station.schedule) is Schedule
         assert station.schedule.sub_items and len(station.schedule.sub_items) > 0
         assert station.schedule.title == yesterday
+
+
+class TestRadioFourIDConsistency:
+    async def test_id_integration(self, anonymous_client, logged_in_client):
+        """Test the flow of BBC Radio Four's IDs across the endpoints.
+
+        Sounds API has the concept of Networks and Services/Stations. For almost all
+        stations, these are the same. Radio Four is a notable exception, so this tests
+        the flow of those IDs across the various endpoints to ensure we are expecting
+        the rights ones.
+        """
+        stations = await anonymous_client.stations.get_stations()
+        radio_four_from_stations = next(
+            (station for station in stations if "bbc_radio_four" in station.id), None
+        )
+        assert radio_four_from_stations is not None
+        assert radio_four_from_stations.id == "bbc_radio_fourfm"
+
+        try:
+            radio_four = await anonymous_client.stations.get_station(
+                radio_four_from_stations.id, include_stream=True
+            )
+        except NotFoundError:
+            pytest.fail()
+
+        try:
+            stream = await logged_in_client.playback.get_live_stream(
+                station_id=radio_four.id
+            )
+        except NotFoundError:
+            pytest.fail()
+
+        assert stream is not None
+        assert "m3u8" in stream

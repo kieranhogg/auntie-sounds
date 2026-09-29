@@ -3,7 +3,7 @@ from logging import Logger
 
 import pytest
 
-from sounds.model_factory import ModelFactory
+from sounds.model_factory import NESTED_OBJECTS
 from sounds.models import Menu, Podcast, PodcastEpisode, RadioShow, SearchResults
 from sounds.parser import Parser
 
@@ -93,7 +93,7 @@ class TestParserNestedObjects:
         }
         parser = Parser()
         result = parser.parse_node(data)
-        for nested_object in ModelFactory.nested_objects:
+        for nested_object in NESTED_OBJECTS:
             assert hasattr(result, nested_object.source_key) or (
                 hasattr(result, "network")
                 and hasattr(result.network, nested_object.source_key)

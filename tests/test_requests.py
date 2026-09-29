@@ -5,14 +5,14 @@ import pytest
 
 from sounds.auth import AuthService
 from sounds.client import SoundsClient
-from sounds.exceptions import UnauthorisedError
+from sounds.exceptions import NetworkError, UnauthorisedError
 from sounds.requests import RequestManager
 
 pytestmark = pytest.mark.anyio
 
 
 def _make_manager(has_session_cookie: bool, username="user", password="pass"):
-    client = SoundsClient(mock_data=True)
+    client = SoundsClient()
     client.cookie_store = Mock()
     client.cookie_store.has_session_cookie = has_session_cookie
     client.auth = Mock()
@@ -63,3 +63,23 @@ class TestRequestManager:
 
         with pytest.raises(UnauthorisedError):
             await manager.run(call)
+
+
+class TestMakeRequestErrors:
+    async def test_total_timeout_is_wrapped_as_network_error(self):
+        session = Mock(spec=aiohttp.ClientSession)
+        session.request = AsyncMock(side_effect=TimeoutError)
+        manager = RequestManager(session=session)
+
+        with pytest.raises(NetworkError):
+            await manager.make_request("GET", "https://example.com/")
+
+    async def test_401_response_is_released(self):
+        resp = Mock(status=401, reason="Unauthorized")
+        session = Mock(spec=aiohttp.ClientSession)
+        session.request = AsyncMock(return_value=resp)
+        manager = RequestManager(session=session)
+
+        with pytest.raises(UnauthorisedError):
+            await manager.make_request("GET", "https://example.com/")
+        resp.release.assert_called_once()

@@ -92,3 +92,71 @@ class TestCookieStore:
 
         # Should still have the in-memory cookie, not the empty on-disk one.
         assert store.has_session_cookie is True
+
+    async def test_load_refuses_foreign_account_session(self, tmp_path):
+        """A cookie file saved for one account_id must not be loaded by a
+        CookieStore configured for a different account_id, even if they
+        share the same cookie_file_location."""
+        cookie_path = tmp_path / "sounds_jar"
+        CookieStore(
+            session=Mock(cookie_jar=_jar_with_session_cookie()),
+            cookie_file_location=cookie_path,
+            account_id="account-a",
+        ).save()
+
+        store_b = CookieStore(
+            session=Mock(cookie_jar=aiohttp.CookieJar()),
+            cookie_file_location=cookie_path,
+            account_id="account-b",
+        )
+        store_b.load()
+
+        assert store_b.has_session_cookie is False
+
+    async def test_load_accepts_matching_account_session(self, tmp_path):
+        """The same account_id loading its own saved cookies should still work."""
+        cookie_path = tmp_path / "sounds_jar"
+        CookieStore(
+            session=Mock(cookie_jar=_jar_with_session_cookie()),
+            cookie_file_location=cookie_path,
+            account_id="account-a",
+        ).save()
+
+        store_again = CookieStore(
+            session=Mock(cookie_jar=aiohttp.CookieJar()),
+            cookie_file_location=cookie_path,
+            account_id="account-a",
+        )
+        store_again.load()
+
+        assert store_again.has_session_cookie is True
+
+    async def test_load_populates_owner_for_legacy_file_without_marker(self, tmp_path):
+        """A cookie file saved before per-account existed is still
+        trusted once, matching prior behaviour, but a marker is
+        written to protect future loads."""
+        cookie_path = tmp_path / "sounds_jar"
+        # Simulate a legacy save: persist cookies with no CookieStore
+        # involved in the write, so no .owner marker is created.
+        legacy_jar = _jar_with_session_cookie()
+        legacy_jar.save(str(cookie_path))
+        assert not (tmp_path / "sounds_jar.owner").exists()
+
+        store = CookieStore(
+            session=Mock(cookie_jar=aiohttp.CookieJar()),
+            cookie_file_location=cookie_path,
+            account_id="account-a",
+        )
+        store.load()
+
+        assert store.has_session_cookie is True
+        assert (tmp_path / "sounds_jar.owner").read_text() == "account-a"
+
+        # A different account must now be refused against this same path.
+        store_b = CookieStore(
+            session=Mock(cookie_jar=aiohttp.CookieJar()),
+            cookie_file_location=cookie_path,
+            account_id="account-b",
+        )
+        store_b.load()
+        assert store_b.has_session_cookie is False
