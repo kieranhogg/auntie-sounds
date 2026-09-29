@@ -51,7 +51,7 @@ def _parse_datetime(value):
     return dt.fromisoformat(value) if isinstance(value, str) else value
 
 
-def station_description(station_id):
+def station_description(station_id, is_local: bool = False):
     descriptions_dict = {
         "bbc_radio_one": "The biggest new pop & all day vibes.",
         "bbc_radio_one_anthems": "All day anthems from the 00s to now.",
@@ -98,7 +98,11 @@ def station_description(station_id):
         "bbc_somali_radio": "Wararka iyo xaaladda taagan ee dunida oo dhan, faallo, muusig, madadaallo iyo cayaaro.",
         "bbc_swahili_radio": "Habari za kimataifa, michezo na uchambuzi kutoka kwa idhaa ya dunia.",
     }
-    return descriptions_dict.get(station_id, None)
+    return (
+        descriptions_dict.get("local")
+        if is_local
+        else descriptions_dict.get(station_id, None)
+    )
 
 
 ###### Mixins ##################################################################
@@ -543,6 +547,10 @@ class Station(Container, IdentifiableMixin):
     international: bool = False
     stream: str | None = None
     schedule: Schedule | None = None
+    description: str | None = None
+
+    def post_processing(self, logger: Logger) -> None:
+        self.description = station_description(self.pid, self.local)
 
 
 @dataclass(kw_only=True)
@@ -592,7 +600,7 @@ class LiveStation(PlayableItem, IdentifiableMixin, ImageMixin):
     def post_processing(self, logger: Logger) -> None:
         super().post_processing(logger)
         self.process_image()
-        self.description = station_description(self.pid)
+        self.description = station_description(self.pid, self.local)
 
 
 @dataclass(kw_only=True)

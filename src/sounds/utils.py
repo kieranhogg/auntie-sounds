@@ -2,7 +2,6 @@ from datetime import datetime
 from enum import StrEnum, auto
 from pathlib import Path
 
-from aiohttp import request
 from appdirs import AppDirs
 
 
@@ -74,15 +73,6 @@ def image_from_recipe(
         return image_recipe.format(type=img_type, recipe=img_size)
 
     return image_recipe.format(recipe=img_size)
-
-
-async def image_from_spotify(url: str) -> str | None:
-    spotify_url = "https://open.spotify.com/oembed?url={url}"
-    async with request("GET", spotify_url.format(url=url)) as resp:
-        json_resp = await resp.json()
-        if json_resp.get("thumbnail_url"):
-            return json_resp.get("thumbnail_url")
-    return None
 
 
 def _get_data_dir() -> Path:

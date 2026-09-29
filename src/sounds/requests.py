@@ -1,12 +1,9 @@
-import json
 import logging
-import os
 import re
 from collections.abc import Callable
 from functools import partial
-from typing import TYPE_CHECKING, Literal
+from typing import Literal
 
-import aiofiles
 import aiohttp
 
 from sounds.endpoints import Endpoints, URLs
@@ -18,10 +15,6 @@ from sounds.exceptions import (
     SoundsException,
     UnauthorisedError,
 )
-from sounds.testing_support import FIXTURES_FOLDER
-
-if TYPE_CHECKING:
-    from aiohttp import ClientSession, ClientTimeout
 
 logger = logging.getLogger(__name__)
 
@@ -67,7 +60,7 @@ def build_headers(referer: str | None = None) -> dict:
     base_headers = {
         "Accept-Language": "en-GB,en;q=0.9",
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
-        "Origin": URLs.LOGIN_BASE,
+        "Origin": URLs.LOGIN_BASE.value,
         "Cache-Control": "max-age=0",
     }
     if referer:
@@ -92,16 +85,14 @@ def _raise_for_api_errors(json_resp: dict) -> None:
 class RequestManager:
     def __init__(
         self,
-        session: ClientSession,
-        timeout: ClientTimeout = DEFAULT_TIMEOUT,
-        mock_data: bool = False,
+        session: aiohttp.ClientSession,
+        timeout: aiohttp.ClientTimeout = DEFAULT_TIMEOUT,
         login_details_provided: bool = False,
         reauth_handler: Callable | None = None,
         **kwargs,
     ):
-        self._session: ClientSession = session
-        self.timeout: ClientTimeout = timeout
-        self.mock_data: bool = mock_data
+        self._session: aiohttp.ClientSession = session
+        self.timeout: aiohttp.ClientTimeout = timeout
         self.login_details_provided: bool = login_details_provided
         self.reauth_handler: Callable | None = reauth_handler
         self.count_requests: bool = False
@@ -129,8 +120,19 @@ class RequestManager:
         To do this we need intercept 401s and raise an UnauthorisedError so it can
         be retried
         """
-        resp = await self._session.request(method, url, **kwargs)
+        try:
+            resp = await self._session.request(method, url, **kwargs)
+            logger.debug("Final URL requested: %s", resp.url)
+        except (
+            aiohttp.ClientResponseError,
+            aiohttp.ServerConnectionError,
+            aiohttp.ClientConnectorDNSError,
+        ) as e:
+            raise NetworkError(str(e)) from e
+        except aiohttp.ContentTypeError as e:
+            raise APIResponseError(str(e)) from e
         if resp.status == 401:
+            resp.release()
             raise UnauthorisedError(resp.reason)
         return resp
 
@@ -157,8 +159,12 @@ class RequestManager:
             url = build_url(url, url_args)
         else:
             if url in Endpoints:
-                raise InvalidArgumentsError(
-                    "URL passed a string, use a URL instance instead."
+                logger.warning(
+                    "URL used a string found in Endpoints enum, use that directly instead."
+                )
+            elif url in URLs:
+                logger.warning(
+                    "URL used a string found in URLs enum, use that directly instead."
                 )
         logger.debug(f"Making HTTP {method} request to {url}")
         try:
@@ -177,6 +183,10 @@ class RequestManager:
         except aiohttp.ClientConnectorDNSError as e:
             logger.error(f"HTTP request failed: {method} {url} - {e}")
             raise NetworkError(f"Connection failed: {e}") from e
+        except TimeoutError as e:
+            # Total timeouts raise a bare TimeoutError, not a ClientError
+            logger.error(f"HTTP request timed out: {method} {url}")
+            raise NetworkError(f"Request timed out: {method} {url}") from e
         except aiohttp.ContentTypeError as e:
             logger.error(f"HTTP request failed: {method} {url} - {e}")
             raise SoundsException(f"Invalid response type: {e}") from e
@@ -191,22 +201,15 @@ class RequestManager:
         **kwargs,
     ) -> dict:
         """Gets JSON response from an endpoint."""
-        # built_url = build_url(url=url, url_args=url_args)
-
-        if not self.mock_data:
-            resp = await self.make_request(
-                method="GET", url=url, url_args=url_args, **kwargs
-            )
+        resp = await self.make_request(
+            method="GET", url=url, url_args=url_args, **kwargs
+        )
+        try:
             json_resp: dict = await resp.json()
-            _raise_for_api_errors(json_resp)
-            return json_resp
-        else:
-            try:
-                json_file = os.path.join(FIXTURES_FOLDER, url.name + ".json")
-                async with aiofiles.open(json_file) as file_reader:
-                    return json.loads(await file_reader.read())
-            except FileNotFoundError:
-                raise InvalidArgumentsError(f"No matching fixture for {url}")
+        except aiohttp.ContentTypeError as e:
+            raise APIResponseError(f"{e.message}. URL: {url}") from e
+        _raise_for_api_errors(json_resp)
+        return json_resp
 
     async def get_html_response(
         self,
@@ -221,7 +224,7 @@ class RequestManager:
             resp = await self.make_request(method, built_url, **kwargs)
         except aiohttp.ClientResponseError as e:
             if e.status == 401:
-                raise UnauthorisedError(e) from e
+                raise UnauthorisedError(e.message, 401) from e
             raise APIResponseError(f"Request failed: {e}") from e
         return await resp.text()
 

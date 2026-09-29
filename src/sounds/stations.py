@@ -5,8 +5,6 @@ from datetime import timedelta
 from itertools import chain
 from typing import TYPE_CHECKING, Literal
 
-from anyio.functools import lru_cache
-
 from sounds import VERBOSE_LOG_LEVEL
 from sounds.endpoints import Endpoints
 from sounds.exceptions import (
@@ -64,7 +62,6 @@ class StationService:
             "bbc_swahili_radio",
         ]
 
-    @lru_cache(maxsize=19)
     def _is_international_network(self, network_id):
         """Check if the network is classed as an international network.
 
@@ -72,7 +69,6 @@ class StationService:
         but are nevertheless available to request a stream via an international endpoint."""
         return network_id in self.international_networks
 
-    @lru_cache(maxsize=1)
     async def get_networks(
         self,
         international_only: bool = False,
@@ -136,11 +132,12 @@ class StationService:
             try:
                 national_stations = json_resp["data"][0]["data"]
                 local_stations = json_resp["data"][1]["data"]
-            except KeyError, IndexError:
-                raise APIResponseError("Station list response not as expected.")
+                local_station_ids = [s["id"] for s in local_stations]
+            except (KeyError, IndexError) as e:
+                raise APIResponseError("Station list response not as expected.") from e
 
             if include_local_stations and include_national_stations:
-                requested_stations = list(chain([national_stations, local_stations]))
+                requested_stations = list(chain(national_stations, local_stations))
             elif include_national_stations:
                 requested_stations = national_stations
             elif include_local_stations:
@@ -152,6 +149,11 @@ class StationService:
             stations_list.extend(
                 [s for s in parsed_stations if isinstance(s, (Station, LiveStation))]
             )
+
+        if include_local_stations:
+            for station in stations_list:
+                if station.id in local_station_ids:
+                    station.local = True
         if include_international_stations:
             i18n_stations = await self.get_networks(international_only=True)
             stations_list.extend(
@@ -172,7 +174,7 @@ class StationService:
             streams = await asyncio.gather(
                 *(self.playback.get_live_stream(s.id) for s in needs_stream)
             )
-            for station, stream in zip(needs_stream, streams):
+            for station, stream in zip(needs_stream, streams, strict=True):
                 station.stream = stream
 
         if include_schedules and isinstance(stations_list, list):
@@ -207,6 +209,8 @@ class StationService:
             )
             station.international = True
             return station
+
+        station_id = self.service_id_to_station_id(station_id)
 
         json_response = await self.requests.get_json_response(
             url=Endpoints.STATION_PLAYABLE_DETAILS,

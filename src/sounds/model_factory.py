@@ -2,9 +2,8 @@ import dataclasses
 import logging
 from dataclasses import fields
 from enum import StrEnum, auto, unique
-from typing import Any, ClassVar, NamedTuple
+from typing import Any, ClassVar, Final, NamedTuple
 
-from sounds import FEATURE_FLAGS, FeatureFlags
 from sounds.exceptions import ParserError
 from sounds.models import (
     AudiobookEpisode,
@@ -45,6 +44,19 @@ class NestedObject(NamedTuple):
     source_key: str
     replacement_model: type[Any]
     concrete_class: bool = True
+
+
+NESTED_OBJECTS: Final[tuple[NestedObject, ...]] = (
+    NestedObject("network", Network),
+    NestedObject("container", Container, False),
+    NestedObject("titles", Titles),
+    NestedObject("progress", Progress),
+    NestedObject("duration", Duration),
+    NestedObject("synopses", Synopses),
+    NestedObject("services", Station),
+    NestedObject("ancestors", Container),
+    NestedObject("categories", ItemCategory),
+)
 
 
 def _podcast_or_series(
@@ -201,17 +213,6 @@ class ModelFactory:
         BaseSoundsTypes.CONTAINER_ITEMS: CollectionItemContainer,
         BaseSoundsTypes.CONTAINER_ITEMS_PAGINATED_RESPONSE: CollectionItemContainer,
     }
-    nested_objects: ClassVar[list[NestedObject]] = [
-        NestedObject("network", Network),
-        NestedObject("container", Container, False),
-        NestedObject("titles", Titles),
-        NestedObject("progress", Progress),
-        NestedObject("duration", Duration),
-        NestedObject("synopses", Synopses),
-        NestedObject("services", Station),
-        NestedObject("ancestors", Container),
-        NestedObject("categories", ItemCategory),
-    ]
 
     def _programme_episode(self, original_object) -> tuple[type, dict]:
         """Reads contents from PROGRAMME_FROM_PID, decides its type and extracts the episode"""
@@ -356,17 +357,15 @@ class ModelFactory:
         if hasattr(new_object, "post_processing"):
             new_object.post_processing(logger=logger)
         if type_hint and type(new_object) is not type_hint:
-            raise ParserError(
-                "%s requested, but %s received", type_hint, type(new_object)
-            )
+            raise ParserError(f"{type_hint} requested, but {type(new_object)} received")
         return new_object
 
 
 def convert_between_types(original_object, new_type):
     try:
         required_fields = {f.name for f in fields(new_type)}
-    except TypeError:
-        raise ParserError("Unexpected field when creating object: %s", new_type)
+    except TypeError as e:
+        raise ParserError(f"Unexpected field when creating object: {new_type}") from e
 
     attrs = {}
 
@@ -382,17 +381,20 @@ def convert_between_types(original_object, new_type):
         attrs = {k: v for k, v in original_object.items() if k in required_fields}
     else:
         pass
-    new_object = new_type(**attrs)
+    try:
+        new_object = new_type(**attrs)
+    except TypeError as e:
+        raise ParserError(
+            "Not all required fields present.\n"
+            "Required fields: {required_fields}\n"
+            "Available fields: {attrs}"
+        ) from e
     new_object = parse_nested_objects(new_object)
     return new_object
 
 
 def parse_nested_objects(node: SoundsTypes) -> SoundsTypes:
-
-    if FEATURE_FLAGS.get(FeatureFlags.SINGLE_ITEM_PROMO):
-        ModelFactory.nested_objects.append(NestedObject("item", Container))
-
-    for nested_object in ModelFactory.nested_objects:
+    for nested_object in NESTED_OBJECTS:
         value = getattr(node, nested_object.source_key, None)
         if not value:
             continue

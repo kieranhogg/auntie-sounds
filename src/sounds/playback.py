@@ -42,12 +42,18 @@ class PlaybackService:
 
         For now, this also works for non-UK listeners, returning a non-UK stream when used.
         """
-        url_args = {"id": StationService.station_id_to_service_id(station_id)}
-        url = URLs.JWT
         if international:
-            url = URLs.INTL_JWT
-            url_args = {"id_type": "serviceId", "id": station_id}
-        json = await self.requests.get_json_response(url=url, url_args=url_args)
+            id_type = "serviceId"
+            id = station_id
+            params = {id_type: id}
+            json = await self.requests.get_json_response(
+                url=URLs.INTL_JWT, params=params
+            )
+        else:
+            url_args = {"id": StationService.station_id_to_service_id(station_id)}
+            json = await self.requests.get_json_response(
+                url=URLs.JWT, url_args=url_args
+            )
         if "token" not in json:
             raise APIResponseError(f"Couldn't get JWT token: {json}")
         return json.get("token")
@@ -60,23 +66,30 @@ class PlaybackService:
     ) -> str | None:
         if not station_id:
             raise InvalidArgumentsError("station_id is required.")
+        station_id = StationService.service_id_to_station_id(station_id)
 
         jwt_token = await self.get_stream_token(station_id, international=international)
         if not jwt_token:
             raise APIResponseError("No JWT token received.")
-        url = URLs.MEDIASET
-        url_args = {
-            "id": StationService.station_id_to_service_id(station_id),
-            "jwt_auth_token": jwt_token,
-        }
+
         if international:
-            url = URLs.I18N_MEDIASET
-            url_args = {"id": station_id}
-        json_resp = await self.requests.get_json_response(
-            url=url,
-            url_args=url_args,
-            headers={"Bearer": jwt_token},
-        )
+            json_resp = await self.requests.get_json_response(
+                url=URLs.I18N_MEDIASET,
+                url_args={"id": station_id},
+                headers={"Bearer": jwt_token},
+            )
+        else:
+            params = {
+                "jwt_auth": jwt_token,
+            }
+            url_args = {"id": StationService.station_id_to_service_id(station_id)}
+
+            json_resp = await self.requests.get_json_response(
+                url=URLs.MEDIASET,
+                url_args=url_args,
+                params=params,
+                headers={"Bearer": jwt_token},
+            )
         stream = None
         try:
             streams = json_resp["media"][0]["connection"]
@@ -84,10 +97,10 @@ class PlaybackService:
             logger.debug(str(streams))
             stream = get_best_stream(streams, prefer_type=stream_format)
             logger.debug(f"Found stream: {stream}")
-        except StopIteration, KeyError:
+        except (IndexError, TypeError) as e:
             logger.error("No valid stream found")
             logger.debug(json_resp)
-            raise RuntimeError("No valid stream found")
+            raise APIResponseError(f"No valid stream found for {station_id}") from e
 
         return stream
 
@@ -114,8 +127,8 @@ class PlaybackService:
             logger.debug(str(streams))
             stream = get_best_stream(streams, prefer_type=stream_format)
             logger.debug(f"Found stream: {stream}")
-        except StopIteration, KeyError:
-            raise RuntimeError("No valid stream found")
+        except (StopIteration, KeyError) as e:
+            raise RuntimeError("No valid stream found") from e
         return stream
 
     async def get_heartbeat_details(self, pid):
@@ -123,11 +136,14 @@ class PlaybackService:
             url=Endpoints.PID_DETAILS, url_args={"pid": pid}
         )
         logger.debug(f"Heartbeat details response: {json_resp}")
+        vpid: str
         try:
             vpid = json_resp["defaultAvailableVersion"]["smpConfig"]["items"][0]["vpid"]
             item_type = json_resp["statsObject"]["parentPIDType"]
-        except APIResponseError, KeyError, TypeError:
-            raise APIResponseError(f"Couldn't get heartbeat details for PID {pid}")
+        except (IndexError, KeyError, TypeError) as e:
+            raise APIResponseError(
+                f"Couldn't get heartbeat details for PID {pid}"
+            ) from e
         return vpid, item_type
 
     async def update_play_status(
@@ -149,7 +165,7 @@ class PlaybackService:
             method="POST", url=Endpoints.PLAYS, json=data
         )
         if resp.status != 202:
-            raise APIResponseError(resp)
+            raise APIResponseError(await resp.json(), resp.status)
         return True
 
 

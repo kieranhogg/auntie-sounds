@@ -8,11 +8,11 @@ class URLs(StrEnum):
     # resolves to: https://account.bbc.com/auth/identifier/signin?realm=%2F&clientId=Account&context=iplayerradio&ptrt=https%3A%2F%2Fwww.bbc.co.uk%2Fsounds&userOrigin=sounds&mvtUserId=<hash>&isCasso=false&action=sign-in&sequenceId=&redirectUri=https%3A%2F%2Fsession.bbc.co.uk%2Fsession%2Fcallback%3Frealm%3D%2F&service=IdSignInService&nonce=<nonce>
 
     JWT = "/v2/sign/token/{id}"
-    INTL_JWT = "https://web-cdn.api.bbci.co.uk/xd/media-token?{id_type}={id}"
+    INTL_JWT = "https://web-cdn.api.bbci.co.uk/xd/media-token"  # ?{id_type}={id}"
     USER_INFO = "https://www.bbc.co.uk/userinfo"
 
     # Streaming URLs
-    MEDIASET = "https://open.live.bbc.co.uk/mediaselector/6/select/version/2.0/mediaset/pc/vpid/{id}/format/json?jwt_auth={jwt_auth_token}"
+    MEDIASET = "https://open.live.bbc.co.uk/mediaselector/6/select/version/2.0/mediaset/pc/vpid/{id}/format/json"  # ?jwt_auth={jwt_auth_token}"
     I18N_MEDIASET = "https://open.live.bbc.co.uk/mediaselector/6/select/version/3.0/mediaset/pc/cvid/urn:bbc:pips:pid:{id}/format/json"
     EPISODE_MEDIASET = "https://open.live.bbc.co.uk/mediaselector/6/select/version/2.0/mediaset/pc/vpid/{episode_id}"
 
@@ -50,13 +50,13 @@ class Endpoints(Enum):
         "NetworksResponse",
     )
     NETWORKS = (
-        "/v2/networks?limit={limit}",
+        "/v2/networks",  # ?limit={limit}
         False,
         "NetworksResponse",
         None,
     )
     NETWORK_SERVICES = (
-        "/v2/networks/services?limit={limit}",
+        "/v2/networks/services",  # ?limit={limit}
         False,
         "ServicesResponse",
     )
@@ -94,18 +94,14 @@ class Endpoints(Enum):
 
     # Segments & Schedules
     BROADCASTS = ("/v2/broadcasts?service={service_id}&sort=-start_at", False)
-    BROADCASTS_LATEST = (
-        "/v2/broadcasts/latest?service={service_id*}&sort=-start_at",
-        False,
-    )
     CURRENT_PROGRAMME = (
-        "/v2/broadcasts/latest?on_air=now",
+        "/v2/broadcasts/latest",  # ?on_air=now | service={service_id}&sort=-start_at
         False,
     )
     BROADCAST_SCHEDULE = ("/v2/broadcasts/schedules/{service_id}/{date}", False)
     LATEST_TRACKS = ("/v2/services/{station_id}/tracks/latest/playable", False)
     NOW_PLAYING = (
-        "/v2/services/{service_id}/segments/latest?limit={limit}",
+        "/v2/services/{service_id}/segments/latest",  # ?limit={limit}
         False,
     )
     SCHEDULE = (
@@ -121,15 +117,7 @@ class Endpoints(Enum):
 
     # Episodes, programmes, series etc.
     PLAYABLE_ITEMS_CONTAINER = (
-        "/v2/programmes/playable?container={pid}&sort=sequential",
-        False,
-    )
-    CATEGORY_LATEST = (
-        "/v2/programmes/playable?category={category}&sort=-release_date&experience=domestic",
-        False,
-    )
-    CATEGORY_POPULAR = (
-        "/v2/programmes/playable?category={category}&sort=popular&experience=domestic",
+        "/v2/programmes/playable",  # ?container={pid}&sort=sequential | sort=popular | sort=-release_date
         False,
     )
     BROADCAST = ("/v2/broadcasts/{pid}", False)
@@ -146,31 +134,27 @@ class Endpoints(Enum):
 
     # This endpoint gets extra details from a pid such as vpid and parent pid
     PID_DETAILS = ("https://www.bbc.co.uk/programmes/{pid}/playlist.json", False)
-    COLLECTIONS_FULL = (
-        "/v2/collections/{pid}/members/container?experience=domestic&offset={offset}&limit={limit}",
-        False,
-    )
     COLLECTIONS = (
-        "/v2/collections/{pid}/members/container?experience=domestic",
+        "/v2/collections/{pid}/members/container",
         False,
     )
     CURATIONS = (
-        "/v2/curations/{pid}/members/playable?experience=domestic",
+        "/v2/curations/{pid}/members/playable",
         False,
     )
     # Options: focus feel_good_tunes dance fresh_new_music greatest_hits
     TAGGED = ("/v2/tagged/{tag}/playable", False)
     # Menu, search, etc.
     SEARCH_URL = (
-        "/v2/experience/inline/search?q={search}",
+        "/v2/experience/inline/search",
         False,
     )
     SHOW_SEARCH_URL = (
-        "/v2/programmes/search/container?q={search}",
+        "/v2/programmes/search/container",
         False,
     )
     EPISODE_SEARCH_URL = (
-        "/v2/programmes/search/playable?q={search}",
+        "/v2/programmes/search/playable",
         False,
     )
     PODCASTS = ("/v2/experience/inline/speech", False)
@@ -181,7 +165,7 @@ class Endpoints(Enum):
     )
     AUDIOBOOKS = "", False
     POPULAR_AUDIOBOOKS = (
-        "/v2/programmes/playable?category=audiobooks&sort=popular&experience=domestic",
+        "/v2/programmes/playable?category=audiobooks&sort=popular",
         False,
     )
     # Authenticated URLs

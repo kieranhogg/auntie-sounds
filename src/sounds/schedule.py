@@ -108,8 +108,10 @@ class ScheduleService:
         )
         try:
             stations_data = json_resp["data"][0]["data"]
-        except IndexError, KeyError:
-            raise APIResponseError("Station listing data not in expected format.")
+        except (TypeError, KeyError) as e:
+            raise APIResponseError(
+                "Station listing data not in expected format."
+            ) from e
 
         listing = next(
             (
@@ -126,9 +128,9 @@ class ScheduleService:
         json_resp = await self.requests.get_json_response(
             url=Endpoints.NOW_PLAYING,
             url_args={
-                "service_id": StationService.station_id_to_service_id(station_id),
-                "limit": results,
+                "service_id": StationService.station_id_to_service_id(station_id)
             },
+            params={"limit": results},
         )
         segments = self.parser.parse_container(json_resp)
         if isinstance(segments, list):
@@ -142,6 +144,6 @@ class ScheduleService:
             try:
                 if recently_played[0].offset["now_playing"]:
                     return recently_played[0]
-            except IndexError, KeyError:
+            except TypeError, KeyError:
                 pass
         return None

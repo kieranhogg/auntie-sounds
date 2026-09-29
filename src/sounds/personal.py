@@ -57,11 +57,7 @@ class PersonalService:
             menu.sub_items = [
                 item
                 for item in menu.sub_items
-                if item
-                and (
-                    not include_recommendations
-                    and type(item) is not RecommendedMenuItem
-                )
+                if item and type(item) is not RecommendedMenuItem
             ]
 
         # Remove the API's listen_live to replace with ours (as it's better)
@@ -161,11 +157,7 @@ class PersonalService:
         )
         if not latest_items or type(latest_items) is not list:
             return []
-        return [
-            item
-            for item in latest_items
-            if latest_items and isinstance(item, PlayableItem)
-        ]
+        return [item for item in latest_items if isinstance(item, PlayableItem)]
 
     async def get_latest_menu(self):
         latest_items = await self.get_latest()

@@ -1,28 +1,41 @@
 """AuthService handles authentication with BBC Sounds.
 
-There is no public or private API available for authentication, which is the exception. This service therefore
-implements logging in by logging in via HTTP requests, which unfortunately makes this process brittle and
-highly-coupled to the URLs .and HTML content of the pages requested.
+There is no public or private API available for authentication, which is the exception.
+This service therefore implements logging in by logging in via HTTP requests, which
+unfortunately makes this process brittle and highly-coupled to the URLs and HTML content
+of the pages requested.
 """
 
+import asyncio
 import logging
+import math
+import time
 from pathlib import Path
 
+import aiohttp
 from bs4 import BeautifulSoup, Tag
+from yarl import URL
 
 from sounds import VERBOSE_LOG_LEVEL
 from sounds.cookies import CookieStore
 from sounds.endpoints import URLs
 from sounds.exceptions import (
+    CredentialsRejectedError,
+    InvalidArgumentsError,
     LoginFailedError,
     MultipleObjectsFound,
+    NetworkError,
     NotFoundError,
+    SoundsException,
     UnauthorisedError,
 )
 from sounds.requests import RequestManager, build_headers, build_url
 from sounds.utils import _get_data_dir
 
 logger = logging.getLogger(__name__)
+
+# Errors a login or renewal attempt can raise; anything else is a bug and propagates
+_AUTH_ERRORS = (SoundsException, aiohttp.ClientError, TimeoutError)
 
 
 def _get_form_action(html: str) -> str:
@@ -69,6 +82,13 @@ class AuthService:
     PASSWORD_TOO_EASY_ERROR_MSG = (
         "Sorry, that password isn't valid. Make sure it's hard to guess."
     )
+    # Minimum time after a successful full login before another automatic
+    # re-authentication; a 401 inside this window is treated as not auth-related.
+    MIN_LOGIN_INTERVAL = 60.0
+    # Backoff after a transient login failure (network, page structure)
+    FAILURE_BACKOFF_INITIAL = 30.0
+    FAILURE_BACKOFF_MAX = 900.0
+
     PASSWORD_NUMBER_SYMBOL_ERROR_MSG = "Sorry, that password isn't valid. Please include something that isn't a letter."
 
     def __init__(
@@ -77,7 +97,6 @@ class AuthService:
         cookie_store: CookieStore,
         username: str | None = None,
         password: str | None = None,
-        mock_data: bool = False,
         debug_login: bool = False,
         on_login_success=None,
     ):
@@ -86,67 +105,192 @@ class AuthService:
         self.cookie_store = cookie_store
         self.username = username
         self.password = password
-        self.mock_data = mock_data
         self.debug_login = debug_login
         self._on_login_success = on_login_success
+        self._reauth_lock = asyncio.Lock()
+        self._auth_generation = 0
+        self._login_generation = -1
+        self._clock = time.monotonic
+        self._last_login: float | None = None
+        # Last login failure, the credentials it was for, and when to allow a retry
+        self._failure: SoundsException | None = None
+        self._failure_credentials: tuple[str | None, str | None] | None = None
+        self._blocked_until = 0.0
+        self._backoff = self.FAILURE_BACKOFF_INITIAL
 
-        if self.mock_data:
-            return
         if self.debug_login:
             logger.info("Saving login pages to file as requested")
 
     async def login(self, username: str, password: str) -> bool:
         """
+        Try to do a full login via the BBC website, which is a two-step process.
 
-        :raises LoginFailedError: if we didn't get to the second part of the login process
+        :raises LoginFailedError: if a failure is encountered
         """
+        self.cookie_store.clear()
+
         username_url = await self._get_login_form()
         password_url = await self._submit_username(url=username_url, username=username)
+
         if password_url == username_url:
             error = "Login did not succeed to stage 2 successfully"
             logger.error(error)
             raise LoginFailedError(error)
-        ok = await self._do_login(
+
+        logged_in = await self._do_login(
             url=password_url,
             username=username,
             password=password,
             referrer_url=username_url,
         )
-        return ok
+
+        if not (logged_in and self.cookie_store.has_session_cookie):
+            error = "Login failed at final stage attempting to log in."
+            logger.error(error)
+            raise LoginFailedError(error)
+
+        if self._on_login_success:
+            try:
+                self._on_login_success()
+            except Exception:
+                # The session is valid; failing here would discard it
+                logger.warning("on_login_success callback failed", exc_info=True)
+
+        return True
 
     async def retry_with_reauth(self, call):
-        """Runs `call`, transparently renewing/re-logging-in on a 401.
+        """Runs `call`, renewing the session or logging in on a 401, then retrying.
 
-        This can be used to handle authentication failures encountered in services.
-        E.g. RequestManager uses this as its login_required retry hook."""
+        Escalates at most once: renewal, then full login. A 401 after a full login
+        is raised. Used as RequestManager's reauth handler for login_required endpoints.
+
+        :raises InvalidArgumentsError: if a login is needed but no credentials are set
+        """
+        seen = self._auth_generation
         try:
             return await call()
         except UnauthorisedError:
-            if not self.username or not self.password:
-                raise UnauthorisedError("No username and/or password provided.")
-            if self.cookie_store.has_session_cookie and await self.renew_session():
-                try:
-                    return await call()
-                except UnauthorisedError:
-                    logger.error("Still not re-authorised, trying full login...")
-            else:
-                logger.error("Session renewal failed, trying full login...")
-            await self.login(username=self.username, password=self.password)
+            pass
+
+        generation = await self._reauthenticate(seen)
+        try:
             return await call()
+        except UnauthorisedError:
+            if self._login_generation == generation:
+                raise
+
+        await self._reauthenticate(generation, force_login=True)
+        return await call()
+
+    async def authenticate(self) -> None:
+        """Ensure a usable session: renew if a session cookie exists, else log in.
+
+        Shares the re-authentication lock, so it's safe to call alongside requests
+        already being retried.
+
+        :raises InvalidArgumentsError: if a login is needed but no credentials are set
+        :raises LoginFailedError: if logging in fails
+        """
+        await self._reauthenticate(self._auth_generation, explicit=True)
 
     async def renew_session(self) -> bool:
-        """Renew a session which has expired, but user is logged in."""
+        """Renew a session which has expired, but user is logged in.
+
+        Returns True if the renewal request succeeded, False otherwise. Success
+        doesn't guarantee the session is valid; retry_with_reauth escalates to
+        a full login if the next request is still unauthorised."""
         try:
             url = build_url(url=URLs.RENEW_SESSION)
             await self.requests.make_request("GET", url)
             return True
-        except UnauthorisedError:
-            logger.error("Failed to renew session")
+        except _AUTH_ERRORS as e:
+            logger.warning("Failed to renew session: %s", e)
             return False
 
-    async def _get_login_form(self) -> str:
+    async def _reauthenticate(
+        self, seen: int, force_login: bool = False, explicit: bool = False
+    ) -> int:
+        """Renew or log in once on behalf of all callers that saw generation `seen`.
+
+        Without this, concurrent requests invalidated together would each
+        re-authenticate independently.
+
+        Automatic (non-explicit) attempts are limited so a misbehaving endpoint
+        or bad credentials can't cause repeated logins:
+        - after a login failure, attempts raise that failure until a backoff
+          expires; a credential rejection blocks until the credentials change
+        - within MIN_LOGIN_INTERVAL of a successful login, a 401 is raised
+          rather than renewing or logging in again
         """
-        :raises LoginFailedError: if the login page, or form, cannot be located
+        async with self._reauth_lock:
+            self._raise_if_blocked(explicit)
+            if self._auth_generation != seen:
+                # someone else has already re-authenticated
+                return self._auth_generation
+            if (
+                not explicit
+                and self._last_login is not None
+                and self._clock() - self._last_login < self.MIN_LOGIN_INTERVAL
+            ):
+                raise UnauthorisedError(
+                    "Still unauthorised shortly after logging in; not re-authenticating"
+                )
+            if not force_login and self.cookie_store.has_session_cookie:
+                if await self.renew_session():
+                    self._auth_generation += 1
+                    return self._auth_generation
+                logger.warning("Session renewal failed, trying full login...")
+            if not (self.username and self.password):
+                raise InvalidArgumentsError("Login required but no credentials set")
+            try:
+                await self.login(username=self.username, password=self.password)
+            except _AUTH_ERRORS as e:
+                failure = e if isinstance(e, SoundsException) else NetworkError(repr(e))
+                self._record_failure(failure)
+                if failure is e:
+                    raise
+                raise failure from e
+            self._clear_failure()
+            self._last_login = self._clock()
+            self._auth_generation += 1
+            self._login_generation = self._auth_generation
+            return self._auth_generation
+
+    def _record_failure(self, failure: SoundsException) -> None:
+        self._failure = failure
+        self._failure_credentials = (self.username, self.password)
+        if isinstance(failure, CredentialsRejectedError):
+            self._blocked_until = math.inf
+            logger.error("Credentials rejected; not retrying until they change")
+            return
+        self._blocked_until = self._clock() + self._backoff
+        logger.warning("Login failed; retrying in %.0fs", self._backoff)
+        self._backoff = min(self._backoff * 2, self.FAILURE_BACKOFF_MAX)
+
+    def _clear_failure(self) -> None:
+        self._failure = None
+        self._failure_credentials = None
+        self._blocked_until = 0.0
+        self._backoff = self.FAILURE_BACKOFF_INITIAL
+
+    def _raise_if_blocked(self, explicit: bool) -> None:
+        """Re-raise the last login failure while retries are blocked."""
+        if self._failure is None:
+            return
+        if explicit or self._failure_credentials != (self.username, self.password):
+            self._clear_failure()
+            return
+        if self._clock() >= self._blocked_until:
+            return
+        raise type(self._failure)(str(self._failure)) from self._failure
+
+    async def _get_login_form(self, max_redirects=5) -> str:
+        """Get the initial form to log in with.
+
+        There are a few conditions we need to handle with in this process, we can't
+        just rely on getting a fixed URL to log in with.
+
+        :raises LoginFailedError: if the login page, or suitable form, cannot be located
         """
         logger.debug("Getting initial login page")
 
@@ -159,13 +303,24 @@ class AuthService:
         )
 
         # Intercept the redirection flow
+        redirects = 0
         while request.status in [301, 302, 303, 307, 308]:
+            if redirects == max_redirects:
+                msg = (
+                    f"Hit the maximum number of redirects allowed ({max_redirects}) "
+                    "when fetching the login form. Either it couldn't be found, or "
+                    "consider increasing `max_redirects`."
+                )
+                logger.error(msg)
+                raise LoginFailedError(msg)
             logger.debug(
                 f"Redirected with status {request.status} to {request.headers.get('Location')}"
             )
             location = request.headers.get("Location")
             if not location:
                 break
+            # Location may be relative; resolve against the URL that sent it
+            location = str(request.url.join(URL(location)))
 
             # Ensure we don't get the magic link signin page
             if "/identifier/signin?" in location:
@@ -178,6 +333,7 @@ class AuthService:
                 headers=build_headers(),
                 allow_redirects=False,
             )
+            redirects += 1
 
         if not request.ok:
             error = "Failed to get initial login page"
@@ -203,7 +359,9 @@ class AuthService:
         return URLs.LOGIN_BASE + username_form_action
 
     async def _submit_username(self, url: str, username: str) -> str:
-        """Post username to get to the next login step"""
+        """Post username to get to the next login step.
+
+        :raises LoginFailedError if the password (second stage) form isn't found."""
         logger.debug("Submitting username")
         data = {"username": username}
         html_contents = await self.requests.get_html_response(
@@ -216,7 +374,7 @@ class AuthService:
         error_el = soup.select_one(f".{self.ERROR_CLASS}")
         if error_el:
             logger.error(f"Login failed: {error_el.text}")
-            raise LoginFailedError(error_el.text)
+            raise CredentialsRejectedError(error_el.text)
         self._save_file_if_needed(html_contents, "password_form.html")
 
         # Grab the form target for the password page
@@ -234,7 +392,7 @@ class AuthService:
         password: str,
         referrer_url: str,
     ) -> bool:
-        """Send both username and password to authenticate.
+        """Send both username and password to the user/pass form to authenticate.
 
         :raises LoginFailedError: if we find a recognised error message on the page
         """
@@ -254,7 +412,7 @@ class AuthService:
         error = soup.find("div", attrs={"class": "sb-form-message--error"})
         if error:
             logger.error(f"Login failed: {error.text}")
-            raise LoginFailedError(error.text)
+            raise CredentialsRejectedError(error.text)
         self._save_file_if_needed(response_text, "login_response.html")
 
         if not resp.ok:
@@ -262,12 +420,11 @@ class AuthService:
             logger.error(error_string)
             raise LoginFailedError(error_string)
         else:
-            if self._on_login_success:
-                self._on_login_success()
             logger.debug("Authenticated successfully")
             return True
 
     def _save_file_if_needed(self, html: str | bytes, filename: str):
+        """Save the login pages to aid with debugging, if requested."""
         if self.debug_login:
             with open(Path(_get_data_dir(), filename), "w") as page:
                 html = BeautifulSoup(html, features="html.parser").prettify()

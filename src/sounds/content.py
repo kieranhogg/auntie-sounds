@@ -23,7 +23,6 @@ from sounds.parser import Parser
 from sounds.playback import PlaybackService
 from sounds.requests import RequestManager
 from sounds.user import UserService
-from sounds.utils import image_from_spotify
 
 if TYPE_CHECKING:
     from sounds.models import SoundsTypes
@@ -47,6 +46,16 @@ class ContentService:
         self.requests: RequestManager = requests
         self.playback: PlaybackService = playback
         self.parser = Parser()
+
+    async def image_from_spotify(self, url: str) -> str | None:
+        spotify_url = "https://open.spotify.com/oembed?url={url}"
+        resp = await self.requests.make_request(
+            method="GET", url=spotify_url.format(url=url)
+        )
+        json_resp = await resp.json()
+        if json_resp.get("thumbnail_url"):
+            return json_resp.get("thumbnail_url")
+        return None
 
     async def get_podcasts(self) -> Menu:
         podcasts = self.parser.parse_menu(
@@ -168,7 +177,8 @@ class ContentService:
 
     async def get_pid_container(self, pid) -> list[PlayableItem] | None:
         json_resp = await self.requests.get_json_response(
-            url=Endpoints.PLAYABLE_ITEMS_CONTAINER, url_args={"pid": pid}
+            url=Endpoints.PLAYABLE_ITEMS_CONTAINER,
+            params={"container": pid, "sort": "sequential"},
         )
         container = self.parser.parse_container(json_resp)
         if isinstance(container, list):
@@ -193,7 +203,8 @@ class ContentService:
 
     async def get_category(self, category) -> ItemCategory:
         json_resp = await self.requests.get_json_response(
-            url=Endpoints.CATEGORY_LATEST, url_args={"category": category}
+            url=Endpoints.PLAYABLE_ITEMS_CONTAINER,
+            params={"category": category, "sort": "-release_date"},
         )
         return cast("ItemCategory", self.parser.parse_node(json_resp))
 
@@ -221,8 +232,6 @@ class ContentService:
         )
         if not json_resp:
             return []
-        if not json_resp:
-            return []
         container = self.parser.parse_container(json_resp)
         if isinstance(container, list):
             return container
@@ -230,7 +239,7 @@ class ContentService:
 
     async def search(self, query) -> SearchResults:
         json_resp = await self.requests.get_json_response(
-            url=Endpoints.SEARCH_URL, url_args={"search": query}
+            url=Endpoints.SEARCH_URL, params={"q": query}
         )
         return self.parser.parse_search(json_resp)
 
@@ -249,6 +258,8 @@ class ContentService:
                     and fetch_missing_images
                     and segment.spotify_url
                 ):
-                    segment.image_url = await image_from_spotify(segment.spotify_url)
+                    segment.image_url = await self.image_from_spotify(
+                        segment.spotify_url
+                    )
             return segments
         return []
