@@ -5,7 +5,7 @@ import pytest
 
 from sounds.auth import AuthService
 from sounds.client import SoundsClient
-from sounds.exceptions import NetworkError, UnauthorisedError
+from sounds.exceptions import NetworkError, NotFoundError, UnauthorisedError
 from sounds.requests import RequestManager
 
 pytestmark = pytest.mark.anyio
@@ -83,3 +83,12 @@ class TestMakeRequestErrors:
         with pytest.raises(UnauthorisedError):
             await manager.make_request("GET", "https://example.com/")
         resp.release.assert_called_once()
+
+    async def test_404_response_is_raised_correctly(self):
+        resp = AsyncMock(status=404, reason="Not Found")
+        session = Mock(spec=aiohttp.ClientSession)
+        session.request = AsyncMock(return_value=resp)
+        manager = RequestManager(session=session)
+
+        with pytest.raises(NotFoundError):
+            await manager.make_request("GET", "https://example.com/")

@@ -35,6 +35,16 @@ def load_fixture(name: str) -> dict:
     return json.loads((FIXTURES_FOLDER / name).read_text())
 
 
+def make_response(status=200, json=None, text="", reason="OK"):
+    resp = Mock(
+        spec=aiohttp.ClientResponse, status=status, reason=reason, ok=status < 400
+    )
+    resp.json = AsyncMock(return_value=json)
+    resp.text = AsyncMock(return_value=text)
+    resp.read = AsyncMock(return_value=text.encode())
+    return resp
+
+
 @pytest.fixture
 def mock_api(monkeypatch):
     """Hijacks any json requests and replaces them with the fixture response."""

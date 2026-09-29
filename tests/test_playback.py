@@ -4,6 +4,7 @@ import pytest
 
 from sounds.exceptions import APIResponseError
 from sounds.playback import get_best_stream
+from tests.conftest import make_response
 
 pytestmark = pytest.mark.anyio
 
@@ -35,7 +36,7 @@ class TestPlaybackService:
     async def test_invalid_pid(self, mock_user, mock_session, mock_content):
         """Test get_pid with an invalid PID."""
         mock_session.request = AsyncMock()
-        mock_response = AsyncMock()
+        mock_response = make_response()
 
         mock_response.json = AsyncMock(
             return_value={

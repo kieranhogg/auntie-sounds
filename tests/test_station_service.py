@@ -2,6 +2,8 @@ from unittest.mock import AsyncMock
 
 import pytest
 
+from tests.conftest import make_response
+
 pytestmark = pytest.mark.anyio
 
 
@@ -21,7 +23,7 @@ class TestStationService:
 
     async def test_get_stations_exclude_local(self, mock_session, mock_station):
         """Test getting stations excluding local stations."""
-        mock_response = AsyncMock()
+        mock_response = make_response()
         mock_response.json = AsyncMock(
             return_value={
                 "data": [
@@ -51,7 +53,7 @@ class TestStationService:
 
     async def test_get_stations_include_local(self, mock_session, mock_station):
         """Test getting stations including local stations."""
-        mock_response = AsyncMock()
+        mock_response = make_response()
         mock_response.json = AsyncMock(
             return_value={
                 "data": [

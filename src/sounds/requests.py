@@ -13,6 +13,7 @@ from sounds.exceptions import (
     NetworkError,
     NotFoundError,
     SoundsException,
+    SoundsHttpException,
     UnauthorisedError,
 )
 
@@ -21,6 +22,28 @@ logger = logging.getLogger(__name__)
 DEFAULT_TIMEOUT = aiohttp.ClientTimeout(total=10)
 DEFAULT_LIMIT = 100
 URL_BASE = "https://rms.api.bbc.co.uk"
+
+# Specific status codes we care enough to map to specific exceptions
+_STATUS_ERRORS: dict[int, type[SoundsHttpException]] = {
+    401: UnauthorisedError,
+    404: NotFoundError,
+}
+
+
+async def _error_message(resp: aiohttp.ClientResponse) -> str:
+    """Attempt to get error message(s), if any."""
+    try:
+        body = await resp.json(content_type=None)
+        return body["errors"][0]["message"]
+    except (
+        ValueError,
+        KeyError,
+        IndexError,
+        TypeError,
+        aiohttp.ClientError,
+        TimeoutError,
+    ):
+        return resp.reason or str(resp.status)
 
 
 def build_url(
@@ -129,11 +152,13 @@ class RequestManager:
             aiohttp.ClientConnectorDNSError,
         ) as e:
             raise NetworkError(str(e)) from e
-        except aiohttp.ContentTypeError as e:
-            raise APIResponseError(str(e)) from e
-        if resp.status == 401:
+        if resp.status >= 400:
+            message = await _error_message(resp)
             resp.release()
-            raise UnauthorisedError(resp.reason)
+            logger.debug("HTTP %s from %s: %s", resp.status, resp.url, message)
+            raise _STATUS_ERRORS.get(resp.status, APIResponseError)(
+                message, status_code=resp.status
+            )
         return resp
 
     async def make_request(
@@ -178,7 +203,6 @@ class RequestManager:
             if self.count_requests and self.request_counter is not None:
                 self.request_counter += 1
                 logger.debug("%s requests made", self.request_counter)
-            resp.raise_for_status()
             return resp
         except aiohttp.ClientConnectorDNSError as e:
             logger.error(f"HTTP request failed: {method} {url} - {e}")
@@ -220,12 +244,7 @@ class RequestManager:
     ) -> str:
         """Gets raw text/HTML response."""
         built_url = build_url(url=url, url_args=url_args)
-        try:
-            resp = await self.make_request(method, built_url, **kwargs)
-        except aiohttp.ClientResponseError as e:
-            if e.status == 401:
-                raise UnauthorisedError(e.message, 401) from e
-            raise APIResponseError(f"Request failed: {e}") from e
+        resp = await self.make_request(method, built_url, **kwargs)
         return await resp.text()
 
     def set_reauth_handler(self, call: Callable):
