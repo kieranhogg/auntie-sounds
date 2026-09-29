@@ -1,5 +1,9 @@
 import datetime
+import itertools
 import json
+import os
+import shutil
+from contextlib import AsyncExitStack
 from logging import DEBUG
 from pathlib import Path
 from unittest.mock import AsyncMock, Mock
@@ -7,13 +11,15 @@ from unittest.mock import AsyncMock, Mock
 import aiohttp
 import pytest
 import pytz
+from aioresponses import aioresponses
 from yarl import URL
 
 from sounds.auth import AuthService
-from sounds.client import SoundsClient
+from sounds.client import COOKIE_FILE, SoundsClient
 from sounds.content import ContentService
 from sounds.cookies import COOKIE_ID, CookieStore
 from sounds.endpoints import URLs
+from sounds.personal import PersonalService
 from sounds.playback import PlaybackService
 from sounds.requests import RequestManager
 from sounds.schedule import ScheduleService
@@ -22,25 +28,35 @@ from sounds.user import UserService
 
 pytestmark = pytest.mark.anyio
 
+FIXTURES_FOLDER = Path(__file__).resolve().parent / "fixtures" / "api"
+
+
+def load_fixture(name: str) -> dict:
+    return json.loads((FIXTURES_FOLDER / name).read_text())
+
 
 @pytest.fixture
+def mock_api(monkeypatch):
+    """Hijacks any json requests and replaces them with the fixture response."""
+
+    async def fake_request(self, url, *args, **kwargs):
+        return json.loads((FIXTURES_FOLDER / f"{url.name}.json").read_text())
+
+    monkeypatch.setattr(
+        "sounds.requests.RequestManager.get_json_response", fake_request
+    )
+
+
+@pytest.fixture(scope="session")
 def anyio_backend():
+    # Session scope so session-scoped async fixtures (seed_jar) can run.
     return "asyncio"
 
 
-@pytest.fixture(name="cookie_jar")
-async def _cookie_jar():
-    jar = aiohttp.CookieJar()
-    jar.update_cookies(
-        {COOKIE_ID: "test"}, response_url=URL(URLs.COOKIE_BASE_I18N.value)
-    )
-    return jar
-
-
 @pytest.fixture(name="mock_session")
-def _mock_session(cookie_jar):
+def _mock_session():
     session = Mock(spec=aiohttp.ClientSession)
-    session.cookie_jar = cookie_jar
+    session.cookie_jar = AsyncMock(spec=aiohttp.CookieJar)
     session.request = AsyncMock()
     session.close = AsyncMock()
     return session
@@ -66,7 +82,11 @@ def mock_auth_service(mock_requests, mock_cookie_store):
 
 @pytest.fixture(name="mock_requests")
 def _mock_requests(mock_session):
-    return RequestManager(session=mock_session, login_details_provided=True)
+    return RequestManager(
+        session=mock_session,
+        username="user",
+        password="password",
+    )
 
 
 @pytest.fixture(name="mock_user")
@@ -99,6 +119,17 @@ def _mock_playback(
     )
 
 
+@pytest.fixture(name="mock_personal")
+def _mock_personal(
+    mock_auth_service,
+    mock_requests,
+):
+    return PersonalService(
+        auth=mock_auth_service,
+        requests=mock_requests,
+    )
+
+
 @pytest.fixture(name="mock_content")
 def _mock_content(
     mock_session,
@@ -112,6 +143,22 @@ def _mock_content(
         user=mock_user,
         requests=mock_requests,
         playback=mock_playback,
+    )
+
+
+@pytest.fixture(name="mock_personal_service")
+def _mock_personal_service(
+    mock_session,
+    mock_auth_service,
+    mock_schedule,
+    mock_user,
+    mock_requests,
+    mock_playback,
+    mock_content,
+):
+    return PersonalService(
+        auth=mock_auth_service,
+        requests=mock_requests,
     )
 
 
@@ -133,22 +180,14 @@ def _mock_station(
 
 
 @pytest.fixture(name="sounds_client")
-async def _sounds_client(mock_session):
-    client = SoundsClient(
-        session=mock_session, timezone=pytz.timezone("UTC"), log_level=DEBUG
-    )
-    yield client
-    await client.close()
-
-
-@pytest.fixture(name="sounds_client_with_mock_data")
-async def _sounds_client_with_mock_data(mock_session):
+async def _sounds_client(mock_session, tmp_path):
     client = SoundsClient(
         session=mock_session,
-        mock_data=True,
+        cookie_file_location=tmp_path / "sounds_jar",
         timezone=pytz.timezone("UTC"),
         log_level=DEBUG,
     )
+    await client.start()
     yield client
     await client.close()
 
@@ -192,3 +231,119 @@ def sample_playable_item():
 @pytest.fixture
 def sample_menu_data():
     return json.loads(open("tests/fixtures/api/EXPERIENCE_MENU.json").read())
+
+
+##### Client fixtures ##################################################################
+FAKE_CREDENTIALS = ("fake-user", "fake-password")
+
+
+@pytest.fixture(autouse=True)
+def _forbid_default_jar(monkeypatch):
+    """Fail if any test would touch the real user-data cookie jar."""
+    for name in ("load", "save"):
+        original = getattr(CookieStore, name)
+
+        def guarded(self, _original=original, _name=name):
+            if self.path is None or Path(self.path) == COOKIE_FILE:
+                pytest.fail(f"CookieStore.{_name}() on default jar {COOKIE_FILE}")
+            return _original(self)
+
+        monkeypatch.setattr(CookieStore, name, guarded)
+
+
+@pytest.fixture(scope="session")
+def credentials() -> tuple[str, str]:
+    username = os.getenv("SOUNDS_USERNAME")
+    password = os.getenv("SOUNDS_PASSWORD")
+    if not (username and password):
+        pytest.skip("SOUNDS_USERNAME / SOUNDS_PASSWORD not set")
+    return username, password
+
+
+@pytest.fixture(scope="session")
+async def seed_jar(credentials, tmp_path_factory) -> Path:
+    """Log in once per session. Read-only: clients get copies."""
+    path = tmp_path_factory.mktemp("seed") / "sounds_jar"
+    username, password = credentials
+    async with SoundsClient(
+        username=username,
+        password=password,
+        cookie_file_location=path,
+        timezone=pytz.UTC,
+    ) as client:
+        await client.login()
+    return path
+
+
+@pytest.fixture
+async def fake_jar(tmp_path) -> Path:
+    """A jar file holding a syntactically valid but bogus session cookie."""
+    path = tmp_path / "fake_seed_jar"
+    jar = aiohttp.CookieJar()
+    jar.update_cookies(
+        {COOKIE_ID: "fake-session"}, response_url=URL(URLs.COOKIE_BASE.value)
+    )
+    jar.save(path)
+    return path
+
+
+@pytest.fixture
+def no_network():
+    """Any request escaping the mock layer raises ClientConnectionError."""
+    with aioresponses() as mocked:
+        yield mocked
+
+
+@pytest.fixture
+async def make_client(tmp_path):
+    """Every client gets its own jar path to prevent jar collisions in testing."""
+    counter = itertools.count()
+
+    async with AsyncExitStack() as stack:
+
+        async def _make(
+            *,
+            credentials: tuple[str | None, str | None] = (None, None),
+            seed: Path | None = None,
+            mock: bool = False,
+            session: aiohttp.ClientSession | None = None,
+        ) -> SoundsClient:
+            path = tmp_path / f"sounds_jar_{next(counter)}"
+            if seed is not None:
+                shutil.copy(seed, path)
+            username, password = credentials
+            client = SoundsClient(
+                username=username,
+                password=password,
+                session=session,
+                cookie_file_location=path,
+                timezone=pytz.UTC,
+            )
+            return await stack.enter_async_context(client)
+
+        yield _make
+
+
+@pytest.fixture(name="real_client")
+async def _real_client(make_client, credentials, seed_jar) -> SoundsClient:
+    return await make_client(credentials=credentials, seed=seed_jar)
+
+
+@pytest.fixture(name="real_anonymous_client")
+async def _real_anonymous_client(make_client) -> SoundsClient:
+    return await make_client()
+
+
+@pytest.fixture
+async def real_client_fake_jar(make_client, fake_jar) -> SoundsClient:
+    return await make_client(credentials=FAKE_CREDENTIALS, seed=fake_jar)
+
+
+@pytest.fixture
+async def mock_client(make_client) -> SoundsClient:
+    return await make_client(mock=True)
+
+
+@pytest.fixture
+async def mock_client_fake_jar(make_client, fake_jar, no_network) -> SoundsClient:
+    return await make_client(credentials=FAKE_CREDENTIALS, seed=fake_jar, mock=True)
