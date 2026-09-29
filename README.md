@@ -16,7 +16,6 @@ A library for interacting with BBC radio stations via an interface to BBC Sounds
 
 ❌ Pausing or rewinding live radio<br />
 
-
 ## Notes
 - It is written as an async library
 - A BBC account is not required for most actions, but as BBC region-locks streams and is turning off non-UK access soon, is it the supported way to use it
@@ -28,18 +27,18 @@ import asyncio
 from sounds import exceptions
 from sounds.client import SoundsClient
 
-
 async def main():
     try:
-        client = SoundsClient(username="username", password="password")
-        if await client.login():
-            stations = await client.stations.get_stations()
-            schedule = await client.schedules.get_schedule(
-                "bbc_6music", date="2025-10-26"
-            )
-            bbc_6music = await client.stations.get_station(
-                "bbc_6music", include_stream=True
-            )
+        # As a logged-in context manager:
+        async with SoundsClient(username="username", password="password") as client:
+            if await client.login():
+                stations = await client.stations.get_stations()
+                schedule = await client.schedules.get_schedule(
+                    "bbc_6music", date="2025-10-26"
+                )
+                bbc_6music = await client.stations.get_station(
+                    "bbc_6music", include_stream=True
+                )
 
     except exceptions.LoginFailedError:
         ...
@@ -48,7 +47,11 @@ async def main():
     except exceptions.NetworkError:
         ...
 
-
+    # Or, without a context manager and not logged-in:
+    client = SoundsClient()
+    print([station for station in client.stations.get_stations()])
+    client.close()
+    
 asyncio.run(main())
 ```
 
