@@ -333,7 +333,9 @@ class Network(SerializableMixin):
             self.default_service_id = self.service.id
             self.service.description = self.description
 
-        self.logo_url = network_logo(NETWORK_LOGO_FORMAT, network_id=self.id)
+        self.logo_url = network_logo(
+            self.logo_url or NETWORK_LOGO_FORMAT, network_id=self.id
+        )
 
 
 @dataclass(kw_only=True)
