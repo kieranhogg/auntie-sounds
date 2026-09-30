@@ -422,9 +422,7 @@ def parse_nested_objects(node: SoundsTypes) -> SoundsTypes:
                     parent_network=getattr(node, "network", None) or node,
                 )
             if out_object is None or type(out_object) is dict:
-                msg = f"Failed to parse object: {source_dict}"
-                logger.error(msg)
-                raise ParserError(msg)
+                logger.error("Failed to parse nested object: %s", source_dict)
             out_objects.append(out_object)
 
         setattr(
