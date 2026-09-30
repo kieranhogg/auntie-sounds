@@ -17,7 +17,7 @@ from yarl import URL
 from sounds.auth import AuthService
 from sounds.client import COOKIE_FILE, SoundsClient
 from sounds.content import ContentService
-from sounds.cookies import COOKIE_ID, CookieStore
+from sounds.cookies import ID_COOKIE, CookieStore
 from sounds.endpoints import URLs
 from sounds.personal import PersonalService
 from sounds.playback import PlaybackService
@@ -291,7 +291,7 @@ async def fake_jar(tmp_path) -> Path:
     path = tmp_path / "fake_seed_jar"
     jar = aiohttp.CookieJar()
     jar.update_cookies(
-        {COOKIE_ID: "fake-session"}, response_url=URL(URLs.COOKIE_BASE.value)
+        {ID_COOKIE: "fake-session"}, response_url=URL(URLs.COOKIE_BASE.value)
     )
     jar.save(path)
     return path

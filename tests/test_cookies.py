@@ -5,7 +5,7 @@ import aiohttp
 import pytest
 from yarl import URL
 
-from sounds.cookies import COOKIE_ID, CookieStore
+from sounds.cookies import ID_COOKIE, CookieStore
 from sounds.endpoints import URLs
 
 pytestmark = pytest.mark.anyio
@@ -13,49 +13,49 @@ pytestmark = pytest.mark.anyio
 
 def _jar_with_session_cookie() -> aiohttp.CookieJar:
     jar = aiohttp.CookieJar()
-    jar.update_cookies({COOKIE_ID: "abc123"}, response_url=URL(URLs.COOKIE_BASE.value))
+    jar.update_cookies({ID_COOKIE: "abc123"}, response_url=URL(URLs.COOKIE_BASE.value))
     return jar
 
 
 class TestCookieStore:
     """Tests for CookieStore."""
 
-    async def test_has_session_cookie_true_when_present(self, tmp_path):
+    async def test_is_signed_in_true_when_present(self, tmp_path):
         store = CookieStore(
             session=Mock(cookie_jar=_jar_with_session_cookie()),
             cookie_file_location=tmp_path / "cookies",
         )
-        assert store.has_session_cookie is True
+        assert store.is_signed_in is True
 
-    async def test_has_session_cookie_false_when_empty(self, tmp_path):
+    async def test_is_signed_in_false_when_empty(self, tmp_path):
         store = CookieStore(
             session=Mock(cookie_jar=aiohttp.CookieJar()),
             cookie_file_location=tmp_path / "cookies",
         )
-        assert store.has_session_cookie is False
+        assert store.is_signed_in is False
 
     async def test_clear_removes_session_cookie(self, tmp_path):
         store = CookieStore(
             session=Mock(cookie_jar=_jar_with_session_cookie()),
             cookie_file_location=tmp_path / "cookies",
         )
-        assert store.has_session_cookie is True
+        assert store.is_signed_in is True
 
         store.clear()
 
-        assert store.has_session_cookie is False
+        assert store.is_signed_in is False
 
     async def test_load_warns_but_does_not_raise_when_file_missing(
         self, tmp_path, caplog
     ):
+        caplog.set_level(logging.WARNING, logger="sounds.cookies")
         store = CookieStore(
             session=Mock(cookie_jar=aiohttp.CookieJar()),
             cookie_file_location=tmp_path / "does_not_exist",
         )
         store.load()  # must not raise
-        for record in caplog.records:
-            assert record.levelno == logging.WARNING
-        assert "Cookie location does not exist." in caplog.text
+        warnings = [r for r in caplog.records if r.levelno >= logging.WARNING]
+        assert [r.getMessage() for r in warnings] == ["Cookie location does not exist."]
 
     async def test_save_then_load_round_trip(self, tmp_path):
         """save() should persist cookies that a fresh load() into an empty jar can restore."""
@@ -73,7 +73,7 @@ class TestCookieStore:
         )
         store_b.load()
 
-        assert store_b.has_session_cookie is True
+        assert store_b.is_signed_in is True
 
     async def test_load_skips_when_jar_already_populated(self, tmp_path):
         """If the in-memory jar already has cookies, load() should not overwrite them from disk."""
@@ -91,7 +91,7 @@ class TestCookieStore:
         store.load()
 
         # Should still have the in-memory cookie, not the empty on-disk one.
-        assert store.has_session_cookie is True
+        assert store.is_signed_in is True
 
     async def test_load_refuses_foreign_account_session(self, tmp_path):
         """A cookie file saved for one account_id must not be loaded by a
@@ -111,7 +111,7 @@ class TestCookieStore:
         )
         store_b.load()
 
-        assert store_b.has_session_cookie is False
+        assert store_b.is_signed_in is False
 
     async def test_load_accepts_matching_account_session(self, tmp_path):
         """The same account_id loading its own saved cookies should still work."""
@@ -129,7 +129,7 @@ class TestCookieStore:
         )
         store_again.load()
 
-        assert store_again.has_session_cookie is True
+        assert store_again.is_signed_in is True
 
     async def test_load_populates_owner_for_legacy_file_without_marker(self, tmp_path):
         """A cookie file saved before per-account existed is still
@@ -149,7 +149,7 @@ class TestCookieStore:
         )
         store.load()
 
-        assert store.has_session_cookie is True
+        assert store.is_signed_in is True
         assert (tmp_path / "sounds_jar.owner").read_text() == "account-a"
 
         # A different account must now be refused against this same path.
@@ -159,4 +159,4 @@ class TestCookieStore:
             account_id="account-b",
         )
         store_b.load()
-        assert store_b.has_session_cookie is False
+        assert store_b.is_signed_in is False

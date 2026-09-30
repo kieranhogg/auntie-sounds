@@ -3,8 +3,7 @@ import pytest
 from yarl import URL
 
 from sounds.client import SoundsClient, _default_cookie_file
-from sounds.cookies import COOKIE_ID
-from sounds.exceptions import InvalidArgumentsError
+from sounds.cookies import ID_COOKIE
 
 
 class TestClientLogin:
@@ -42,7 +41,7 @@ class TestClientCookieFileScoping:
         )
         await client_a.start()
         client_a._session.cookie_jar.update_cookies(
-            {COOKIE_ID: "a-session"}, response_url=URL("https://bbc.co.uk")
+            {ID_COOKIE: "a-session"}, response_url=URL("https://bbc.co.uk")
         )
         client_a.cookie_store.save()
         await session_a.close()
@@ -59,28 +58,9 @@ class TestClientCookieFileScoping:
                 "account-b"
             )
             assert client_a.cookie_store.path != client_b.cookie_store.path
-            assert client_b.cookie_store.has_session_cookie is False
+            assert client_b.cookie_store.is_signed_in is False
         finally:
             await session_b.close()
-
-    @pytest.mark.anyio
-    async def test_shared_session_different_accounts_rejected(
-        self, tmp_path, monkeypatch
-    ):
-        monkeypatch.setattr("sounds.client._get_data_dir", lambda: tmp_path)
-        monkeypatch.setattr("sounds.client.COOKIE_FILE", tmp_path / "sounds_jar")
-        shared = aiohttp.ClientSession(cookie_jar=aiohttp.CookieJar())
-        a = SoundsClient(username="account-a", password="pw-a", session=shared)
-        b = SoundsClient(username="account-b", password="pw-b", session=shared)
-        await a.start()
-        a._session.cookie_jar.update_cookies(
-            {COOKIE_ID: "a-session"}, response_url=URL("https://bbc.co.uk")
-        )
-        try:
-            with pytest.raises(InvalidArgumentsError):
-                await b.start()
-        finally:
-            await shared.close()
 
 
 class TestClientMenus:

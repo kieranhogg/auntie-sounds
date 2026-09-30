@@ -11,10 +11,10 @@ from sounds.requests import RequestManager
 pytestmark = pytest.mark.anyio
 
 
-def _make_manager(has_session_cookie: bool, username="user", password="pass"):
+def _make_manager(is_signed_in: bool, username="user", password="pass"):
     client = SoundsClient()
     client.cookie_store = Mock()
-    client.cookie_store.has_session_cookie = has_session_cookie
+    client.cookie_store.is_signed_in = is_signed_in
     client.auth = Mock()
     client.auth.renew_session = AsyncMock()
     client.auth.login = AsyncMock()
@@ -29,7 +29,7 @@ class TestRequestManager:
     """Tests for RequestManager.run()'s delegation to reauth_handler."""
 
     async def test_run_delegates_to_reauth_handler_when_set(self):
-        manager, _ = _make_manager(has_session_cookie=True)
+        manager, _ = _make_manager(is_signed_in=True)
         call = AsyncMock(return_value="ok")
         manager.reauth_handler = AsyncMock(return_value="ok")
 
@@ -41,7 +41,7 @@ class TestRequestManager:
         result = await manager.run(call)
 
     async def test_run_calls_call_directly_when_no_reauth_handler(self):
-        manager, _ = _make_manager(has_session_cookie=True)
+        manager, _ = _make_manager(is_signed_in=True)
         manager.reauth_handler = None
         call = AsyncMock(return_value="ok")
 
@@ -50,14 +50,14 @@ class TestRequestManager:
         call.assert_awaited_once()
 
     async def test_run_propagates_errors_from_reauth_handler(self):
-        manager, _ = _make_manager(has_session_cookie=True)
+        manager, _ = _make_manager(is_signed_in=True)
         call = AsyncMock()
         manager.reauth_handler = AsyncMock(side_effect=UnauthorisedError("still bad"))
         with pytest.raises(UnauthorisedError):
             await manager.run(call)
 
     async def test_run_propagates_errors_without_reauth_handler(self):
-        manager, _ = _make_manager(has_session_cookie=True)
+        manager, _ = _make_manager(is_signed_in=True)
         manager.reauth_handler = None
         call = AsyncMock(side_effect=UnauthorisedError("expired"))
 

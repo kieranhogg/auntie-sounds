@@ -16,9 +16,9 @@ class TestAuth:
         password = os.getenv("SOUNDS_PASSWORD")
         client = SoundsClient(username=username, password=password)
         client.clear_cookies()
-        assert not client.cookie_store.has_session_cookie
+        assert not client.cookie_store.is_signed_in
         await client.login()
-        assert client.cookie_store.has_session_cookie
+        assert client.cookie_store.is_signed_in
 
     async def test_incorrect_login(self):
         client = SoundsClient(username="example@example.com", password="snfmseio374n")
