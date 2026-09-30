@@ -212,11 +212,19 @@ class StationService:
 
         station_id = self.service_id_to_station_id(station_id)
 
-        json_response = await self.requests.get_json_response(
-            url=Endpoints.STATION_PLAYABLE_DETAILS,
-            url_args={"station_id": station_id},
-        )
-        station = self.parser.parse_node(json_response)
+        try:
+            json_response = await self.requests.get_json_response(
+                url=Endpoints.STATION_PLAYABLE_DETAILS,
+                url_args={"station_id": station_id},
+            )
+            station = self.parser.parse_node(json_response)
+        except NotFoundError:
+            # Service-only IDs (e.g. bbc_radio_orkney, bbc_radio_scotland_mw) have
+            # no network endpoint, but are listed in the stations list and stream.
+            stations = await self.get_stations(
+                include_national_stations=True, include_local_stations=True
+            )
+            station = next((s for s in stations if s.id == station_id), None)
 
         if not isinstance(station, LiveStation):
             return None
@@ -367,19 +375,7 @@ class StationService:
 
     @staticmethod
     def station_id_to_service_id(station_id):
-        """
-        'bbc_radio_wales_fm', 'bbc_radio_wales_am',
-         'bbc_radio_scotland_fm', 'bbc_radio_scotland_mw',
-        # [
-        #     (URLs.STATIONS, ("bbc_radio_fourfm"),
-        #     (URLs.LIVE_STATION_DETAILS, ("bbc_radio_fourfm"),
-        #     (URLs.NETWORK_DETAILS, ("bbc_radio_four"),
-        #     (URLs.NETWORK_PLAYABLE_DETAILS, ("bbc_radio_four"),
-        #     (URLs.NOW_PLAYING, ("bbc_radio_fourfm"),
-        #     (URLs.SCHEDULE, ("bbc_radio_fourfm"),
-        #     (URLs.SCHEDULE_DATE, ("bbc_radio_fourfm"),
-        # ]
-        """
+
         return "bbc_radio_fourfm" if station_id == "bbc_radio_four" else station_id
 
     @staticmethod
