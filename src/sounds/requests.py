@@ -5,6 +5,7 @@ from functools import partial
 from typing import Literal
 
 import aiohttp
+from aiohttp import ClientConnectionError
 
 from sounds.endpoints import Endpoints, URLs
 from sounds.exceptions import (
@@ -146,11 +147,7 @@ class RequestManager:
         try:
             resp = await self._session.request(method, url, **kwargs)
             logger.debug("Final URL requested: %s", resp.url)
-        except (
-            aiohttp.ClientResponseError,
-            aiohttp.ServerConnectionError,
-            aiohttp.ClientConnectorDNSError,
-        ) as e:
+        except ClientConnectionError as e:
             raise NetworkError(str(e)) from e
         if resp.status >= 400:
             message = await _error_message(resp)
