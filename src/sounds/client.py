@@ -84,12 +84,14 @@ class SoundsClient:
         if self._started:
             logger.info("Client already started.")
             return
-
-        self._session = (
-            self._external_session
-            if self._external_session is not None
-            else aiohttp.ClientSession(cookie_jar=aiohttp.CookieJar())
-        )
+        if self._external_session is not None:
+            self._session = aiohttp.ClientSession(
+                connector=self._external_session.connector,
+                connector_owner=False,
+                cookie_jar=aiohttp.CookieJar(),
+            )
+        else:
+            self._session = aiohttp.ClientSession(cookie_jar=aiohttp.CookieJar())
         if not isinstance(self._session.cookie_jar, aiohttp.CookieJar):
             raise TypeError(
                 "SoundsClient requires an aiohttp.CookieJar for persistence"
@@ -189,9 +191,9 @@ class SoundsClient:
         await asyncio.to_thread(self.cookie_store.save)
 
     @property
-    def has_session_cookie(self) -> bool:
+    def is_signed_in(self) -> bool:
         """Check if we have a cookie present."""
-        return self.cookie_store.has_session_cookie
+        return self.cookie_store.is_signed_in
 
     async def get_recommendation_folders(self) -> Sequence[MenuItem]:
         return await self.personal.get_recommendations()
@@ -239,8 +241,8 @@ class SoundsClient:
             return
         logger.debug("Closing session...")
         await self.save_cookies()
-        if self._external_session is None:
-            await self._session.close()
+        # if self._external_session is None:
+        await self._session.close()
         self._started = False
         logger.debug("Session closed.")
 

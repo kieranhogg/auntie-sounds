@@ -8,7 +8,8 @@ import aiohttp
 logger = logging.getLogger(__name__)
 
 # This is the ID of the cookie we use to check we have a valid session
-COOKIE_ID = "ckns_id"
+ID_COOKIE = "ckns_id"
+ACCESS_TOKEN_COOKIE = "ckns_atkn"
 
 # Special value for cookie owner when initial per-account cookie store
 _ANONYMOUS_OWNER = "\0anonymous"
@@ -33,38 +34,6 @@ class CookieStore:
         self.mock_session = mock_session
         self.session = session
         self.account_id = account_id
-
-    @property
-    def _owner_path(self) -> Path | None:
-        if self.path is None:
-            return None
-        return self.path.with_name(self.path.name + ".owner")
-
-    def _read_owner(self) -> str | None:
-        """Return the account_id recorded for the on-disk cookie file.
-
-        Returns None if there is no marker file at all (a cookie file
-        saved before this tracking existed, or not created by us).
-        """
-        owner_path = self._owner_path
-        if owner_path is None or not owner_path.exists():
-            return None
-        try:
-            return owner_path.read_text(encoding="utf-8").strip()
-        except OSError:
-            logger.warning(
-                "Could not read cookie owner marker, so treating as untracked."
-            )
-            return None
-
-    def _write_owner(self) -> None:
-        owner_path = self._owner_path
-        if owner_path is None:
-            return
-        owner_path.write_text(
-            self.account_id if self.account_id is not None else _ANONYMOUS_OWNER,
-            encoding="utf-8",
-        )
 
     def load(self) -> None:
         logger.debug("Loading cookies from disk...")
@@ -107,26 +76,12 @@ class CookieStore:
         self._write_owner()
 
     @property
-    def has_session_cookie(self) -> bool:
-        """Check if we have a cookie present."""
-        logger.debug("Checking if we are logged in...")
-        if self.mock_session:
-            logger.debug("mock_session=True")
-        existing_cookies = self._get_filtered_cookies()
-        if len(existing_cookies) > 0:
-            logger.debug("Existing cookie found.")
-            return True
-        logger.debug("No cookies found.")
-        return False
+    def is_signed_in(self) -> bool:
+        return self._has_cookie(ID_COOKIE)
 
-    def _get_filtered_cookies(self) -> list:
-        filtered_cookies = [
-            cookie
-            for cookie in cast(aiohttp.CookieJar, self.session.cookie_jar)
-            if cookie.key == COOKIE_ID
-        ]
-        logger.debug([m.key for m in filtered_cookies])
-        return filtered_cookies
+    @property
+    def has_access_token(self) -> bool:
+        return self._has_cookie(ACCESS_TOKEN_COOKIE)
 
     def clear(self) -> None:
         logger.debug("Clearing cookies...")
@@ -134,4 +89,51 @@ class CookieStore:
         logger.debug(self._get_filtered_cookies())
         for base in self._COOKIE_CLEAR_DOMAINS:
             self.session.cookie_jar.clear_domain(base)
-        logger.debug([m.key for m in self._get_filtered_cookies() if m])
+
+    def _has_cookie(self, name: str) -> bool:
+        # aiohttp drops expired cookies before we check
+        return any(
+            c.key == name and c["domain"].endswith("bbc.co.uk")
+            for c in self.session.cookie_jar
+        )
+
+    @property
+    def _owner_path(self) -> Path | None:
+        if self.path is None:
+            return None
+        return self.path.with_name(self.path.name + ".owner")
+
+    def _get_filtered_cookies(self) -> list:
+        filtered_cookies = [
+            cookie
+            for cookie in cast(aiohttp.CookieJar, self.session.cookie_jar)
+            if cookie.key == ID_COOKIE
+        ]
+        logger.debug([m.key for m in filtered_cookies])
+        return filtered_cookies
+
+    def _read_owner(self) -> str | None:
+        """Return the account_id recorded for the on-disk cookie file.
+
+        Returns None if there is no marker file at all (a cookie file
+        saved before this tracking existed, or not created by us).
+        """
+        owner_path = self._owner_path
+        if owner_path is None or not owner_path.exists():
+            return None
+        try:
+            return owner_path.read_text(encoding="utf-8").strip()
+        except OSError:
+            logger.warning(
+                "Could not read cookie owner marker, so treating as untracked."
+            )
+            return None
+
+    def _write_owner(self) -> None:
+        owner_path = self._owner_path
+        if owner_path is None:
+            return
+        owner_path.write_text(
+            self.account_id if self.account_id is not None else _ANONYMOUS_OWNER,
+            encoding="utf-8",
+        )

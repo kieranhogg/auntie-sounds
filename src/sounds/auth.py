@@ -29,7 +29,7 @@ from sounds.exceptions import (
     SoundsException,
     UnauthorisedError,
 )
-from sounds.requests import RequestManager, build_headers, build_url
+from sounds.requests import RequestManager, build_headers
 from sounds.utils import _get_data_dir
 
 logger = logging.getLogger(__name__)
@@ -144,7 +144,7 @@ class AuthService:
             referrer_url=username_url,
         )
 
-        if not (logged_in and self.cookie_store.has_session_cookie):
+        if not (logged_in and self.cookie_store.is_signed_in):
             error = "Login failed at final stage attempting to log in."
             logger.error(error)
             raise LoginFailedError(error)
@@ -168,6 +168,8 @@ class AuthService:
         :raises InvalidArgumentsError: if a login is needed but no credentials are set
         """
         seen = self._auth_generation
+        if self.cookie_store.is_signed_in and not self.cookie_store.has_access_token:
+            seen = await self._reauthenticate(seen)
         try:
             return await call()
         except UnauthorisedError:
@@ -192,6 +194,8 @@ class AuthService:
         :raises InvalidArgumentsError: if a login is needed but no credentials are set
         :raises LoginFailedError: if logging in fails
         """
+        if self.cookie_store.has_access_token:
+            return
         await self._reauthenticate(self._auth_generation, explicit=True)
 
     async def renew_session(self) -> bool:
@@ -201,12 +205,11 @@ class AuthService:
         doesn't guarantee the session is valid; retry_with_reauth escalates to
         a full login if the next request is still unauthorised."""
         try:
-            url = build_url(url=URLs.RENEW_SESSION)
-            await self.requests.make_request("GET", url)
-            return True
+            await self.requests.make_request("GET", URLs.RENEW_SESSION)
         except _AUTH_ERRORS as e:
             logger.warning("Failed to renew session: %s", e)
             return False
+        return self.cookie_store.has_access_token
 
     async def _reauthenticate(
         self, seen: int, force_login: bool = False, explicit: bool = False
@@ -236,7 +239,7 @@ class AuthService:
                 raise UnauthorisedError(
                     "Still unauthorised shortly after logging in; not re-authenticating"
                 )
-            if not force_login and self.cookie_store.has_session_cookie:
+            if not force_login and self.cookie_store.is_signed_in:
                 if await self.renew_session():
                     self._auth_generation += 1
                     self.cookie_store.save()
@@ -263,7 +266,10 @@ class AuthService:
         self._failure_credentials = (self.username, self.password)
         if isinstance(failure, CredentialsRejectedError):
             self._blocked_until = math.inf
-            logger.error("Credentials rejected; not retrying until they change")
+            logger.error(
+                "Credentials rejected. Automatic re-authentication is paused until "
+                "they change or login() is called explicitly"
+            )
             return
         self._blocked_until = self._clock() + self._backoff
         logger.warning("Login failed; retrying in %.0fs", self._backoff)
