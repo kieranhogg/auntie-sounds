@@ -30,7 +30,7 @@ class CookieStore:
             self.path = Path(cookie_file_location)
         else:
             self.path = cookie_file_location
-
+        logger.debug("Cookie jar location: %s", self.path)
         self.mock_session = mock_session
         self.session = session
         self.account_id = account_id
