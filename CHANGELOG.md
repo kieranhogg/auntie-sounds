@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+## PRE-RELEASE [2.1.0b7] - 2026-10-01
 ## PRE-RELEASE [2.1.0b6] - 2026-10-01
 ## PRE-RELEASE [2.1.0b5] - 2026-09-30
 ## PRE-RELEASE [2.1.0b4] - 2026-09-30
