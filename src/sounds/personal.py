@@ -6,7 +6,14 @@ from enum import StrEnum, auto
 from sounds.auth import AuthService
 from sounds.endpoints import Endpoints
 from sounds.exceptions import APIResponseError
-from sounds.models import Menu, MenuItem, PlayableItem, RecommendedMenuItem
+from sounds.models import (
+    Menu,
+    MenuItem,
+    PlayableItem,
+    Podcast,
+    RadioSeries,
+    RecommendedMenuItem,
+)
 from sounds.parser import Parser
 from sounds.requests import RequestManager
 
@@ -142,7 +149,7 @@ class PersonalService:
             ).sub_items,
         )
 
-    async def get_explore_all(self):
+    async def get_explore_all(self) -> MenuItem:
         explore_items = await asyncio.gather(
             self.get_podcasts_menu_item(),
             self.get_music_menu_item(),
@@ -151,7 +158,7 @@ class PersonalService:
 
         return MenuItem(title="Explore All", id="explore", sub_items=explore_items)
 
-    async def get_latest(self):
+    async def get_latest(self) -> list[PlayableItem]:
         latest_items = self.parser.parse_container(
             await self.requests.get_json_response(url=Endpoints.LATEST)
         )
@@ -159,23 +166,27 @@ class PersonalService:
             return []
         return [item for item in latest_items if isinstance(item, PlayableItem)]
 
-    async def get_latest_menu(self):
+    async def get_latest_menu(self) -> MenuItem:
         latest_items = await self.get_latest()
         return MenuItem(title="Latest", id="latest", sub_items=latest_items)
 
-    async def get_subscriptions(self):
+    async def get_subscriptions(self) -> list[Podcast | RadioSeries]:
         subscriptions = self.parser.parse_container(
             await self.requests.get_json_response(url=Endpoints.SUBSCRIBED)
         )
-        return subscriptions or []
+        if not subscriptions or type(subscriptions) is not list:
+            return []
+        return [
+            item for item in subscriptions if isinstance(item, (Podcast, RadioSeries))
+        ]
 
-    async def get_subscriptions_menu(self):
+    async def get_subscriptions_menu(self) -> MenuItem:
         subscriptions = await self.get_subscriptions()
         return MenuItem(
             title="Subscriptions", id="subscriptions", sub_items=subscriptions
         )
 
-    async def get_bookmarks(self):
+    async def get_bookmarks(self) -> list[PlayableItem]:
         bookmarks = self.parser.parse_container(
             await self.requests.get_json_response(url=Endpoints.BOOKMARKS)
         )
@@ -183,7 +194,7 @@ class PersonalService:
             return []
         return [item for item in bookmarks if isinstance(item, PlayableItem)]
 
-    async def get_bookmarks_menu(self):
+    async def get_bookmarks_menu(self) -> MenuItem:
         bookmarks = await self.get_bookmarks()
         return MenuItem(title="Bookmarks", id="bookmarks", sub_items=bookmarks)
 

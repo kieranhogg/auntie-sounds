@@ -89,9 +89,11 @@ class SoundsClient:
                 connector=self._external_session.connector,
                 connector_owner=False,
                 cookie_jar=aiohttp.CookieJar(),
+                headers=self._external_session.headers,
             )
         else:
             self._session = aiohttp.ClientSession(cookie_jar=aiohttp.CookieJar())
+        self._started = True
         if not isinstance(self._session.cookie_jar, aiohttp.CookieJar):
             raise TypeError(
                 "SoundsClient requires an aiohttp.CookieJar for persistence"
@@ -109,7 +111,6 @@ class SoundsClient:
         )
         await asyncio.to_thread(self.cookie_store.load)
         self._create_services()
-        self._started = True
 
     def _create_services(self) -> None:
         login_details_provided: bool = bool(self.username and self.password)
@@ -180,13 +181,13 @@ class SoundsClient:
         await self.user.refresh()
         return True
 
-    async def save_cookies(self):
+    async def save_cookies(self) -> None:
         await asyncio.to_thread(self.cookie_store.save)
 
-    async def load_cookies(self):
+    async def load_cookies(self) -> None:
         await asyncio.to_thread(self.cookie_store.load)
 
-    async def clear_cookies(self):
+    async def clear_cookies(self) -> None:
         await asyncio.to_thread(self.cookie_store.clear)
         await asyncio.to_thread(self.cookie_store.save)
 
@@ -230,13 +231,13 @@ class SoundsClient:
                 schedule=schedule,
             )
 
-    async def logout(self):
+    async def logout(self) -> None:
         logger.debug("Logging out...")
         await self.clear_cookies()
         await self.save_cookies()
         logger.debug("Logged out.")
 
-    async def close(self):
+    async def close(self) -> None:
         if not self._started:
             return
         logger.debug("Closing session...")
