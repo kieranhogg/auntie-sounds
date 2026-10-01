@@ -1,49 +1,18 @@
 from collections.abc import Sequence
 from copy import copy
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass, field
 from datetime import datetime as dt
 from logging import Logger
-from pprint import pformat
-from typing import Any, Literal, Self
+from typing import Any, Literal
 from warnings import deprecated
 from zoneinfo import ZoneInfo
 
+import mashumaro
 import pytz
 
 from sounds.utils import image_from_recipe, network_logo
 
 NETWORK_LOGO_FORMAT = "https://sounds.files.bbci.co.uk/3.12.0/networks/{network_id}/{type}_{size}.{format}"
-
-type SoundsTypes = (
-    AudiobookEpisode
-    | Audiobook
-    | CategoryItemContainer
-    | CollectionItemContainer
-    | Container
-    | Collection
-    | DisplayItem
-    | LiveProgramme
-    | LiveStation
-    | MenuItem
-    | Network
-    | PlayableItem
-    | PlayableNetwork
-    | Podcast
-    | PodcastEpisode
-    | PromoItem
-    | RadioClip
-    | RadioSeries
-    | RadioShow
-    | RecommendedMenuItem
-    | SearchResults
-    | Segment
-    | Schedule
-    | ScheduleItem
-    | Station
-    | StationSearchResult
-)
-"""Types we expect to find within other SoundsTypes."""
-type NestedSoundsTypes = ItemCategory | Titles | Synopses | Duration | Progress
 
 
 ###### Helpers ##################################################################
@@ -106,22 +75,8 @@ def station_description(station_id, is_local: bool = False):
 
 
 ###### Mixins ##################################################################
-class SerializableMixin:
-    def to_dict(self) -> dict[str, Any]:
-        return asdict(self)  # type: ignore[call-overload, ty:invalid-argument-type]
-
-    @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> Self:
-        # noinspection argument-list
-        return cls(**data)
-
-    def __str__(self):
-        return pformat(self)
-
-    def __repr__(self):
-        if hasattr(self, "id"):
-            return f"{type(self).__name__}({self.id})"
-        return super().__repr__()
+class SerializableMixin(mashumaro.DataClassDictMixin):
+    pass
 
 
 class IdentifiableMixin:
@@ -770,3 +725,35 @@ class SearchResults(SerializableMixin):
 @dataclass(kw_only=True)
 class Header(BaseObject):
     pass
+
+
+type SoundsTypes = (
+    AudiobookEpisode
+    | Audiobook
+    | CategoryItemContainer
+    | CollectionItemContainer
+    | Container
+    | Collection
+    | DisplayItem
+    | LiveProgramme
+    | LiveStation
+    | MenuItem
+    | Network
+    | PlayableItem
+    | PlayableNetwork
+    | Podcast
+    | PodcastEpisode
+    | PromoItem
+    | RadioClip
+    | RadioSeries
+    | RadioShow
+    | RecommendedMenuItem
+    | SearchResults
+    | Segment
+    | Schedule
+    | ScheduleItem
+    | Station
+    | StationSearchResult
+)
+"""Types we expect to find within other SoundsTypes."""
+type NestedSoundsTypes = ItemCategory | Titles | Synopses | Duration | Progress
