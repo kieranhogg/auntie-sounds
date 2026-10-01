@@ -65,7 +65,8 @@ class CookieStore:
             if recorded_owner is None:
                 # Legacy cookie file with no owner marker <v2.1.0
                 self._write_owner()
-        logger.warning("Cookie location does not exist.")
+        else:
+            logger.warning("Cookie location does not exist.")
 
     def save(self) -> None:
         if self.path is None:
