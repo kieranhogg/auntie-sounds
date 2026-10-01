@@ -103,6 +103,7 @@ class ScheduleService:
         return [schedule for schedule in schedules if isinstance(schedule, Schedule)]
 
     async def current_programme(self, station_id: str) -> LiveStation | None:
+        station_id = StationService.station_id_to_service_id(station_id)
         json_resp = await self.requests.get_json_response(
             url=endpoints.Endpoints.STATIONS
         )
