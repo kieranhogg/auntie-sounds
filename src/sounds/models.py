@@ -3,12 +3,13 @@ from copy import copy
 from dataclasses import dataclass, field
 from datetime import datetime as dt
 from logging import Logger
-from typing import Any, Literal
+from typing import Annotated, Any, Final, Literal
 from warnings import deprecated
 from zoneinfo import ZoneInfo
 
 import mashumaro
 import pytz
+from mashumaro.types import Discriminator
 
 from sounds.utils import image_from_recipe, network_logo
 
@@ -74,9 +75,29 @@ def station_description(station_id, is_local: bool = False):
     )
 
 
+###### Serialisation ###########################################################
+MODEL_TAG: Final = "_model"
+"""Key to identify the concrete class.
+
+Without this, base types would de-serialise to accepted, but not neccessarily 
+the correct class.
+"""
+
+# Fields which can be polymorphic get this to keep their concrete type."""
+
+_POLYMORPHIC = Discriminator(
+    field=MODEL_TAG,
+    include_supertypes=True,
+    include_subtypes=True,
+    variant_tagger_fn=lambda cls: cls.__name__,
+)
+
+
 ###### Mixins ##################################################################
 class SerializableMixin(mashumaro.DataClassDictMixin):
-    pass
+    def __post_serialize__(self, d: dict[Any, Any]) -> dict[Any, Any]:
+        d[MODEL_TAG] = type(self).__name__
+        return d
 
 
 class IdentifiableMixin:
@@ -147,7 +168,7 @@ class ItemCategory:
     id: str
     key: str | None = None
     title: str | None = None
-    type: int
+    type: str
 
 
 @dataclass(kw_only=True)
@@ -219,20 +240,17 @@ class Segment(SerializableMixin, ImageMixin):
 @dataclass(kw_only=True)
 class Service:
     id: str
-    title: str | None = None  # present in NETWORKS_DETAILED
-    pid: str | None = None  # present in NETWORK_SERVICES
+    title: str | None = None
+    pid: str | None = None
     short_title: str
     type: str
-    region: str | None = None  # present in NETWORKS_DETAILED
-    coverage: Literal["local", "regional", "national"] = (
-        "national"  # present in NETWORKS_DETAILED
-    )
-    active: str | None = None  # present in NETWORKS_DETAILED
-    date_ranges: dict = field(default_factory=dict)  # present in NETWORKS_DETAILED
-    default_language: Literal["en", "gd", "ga", "cy"] = (
-        "en"  # present in NETWORKS_DETAILED
-    )
-    default: bool | None = None  # present in NETWORKS_DETAILED
+    region: str | None = None
+    coverage: Literal["local", "regional", "national"] = "national"
+    active: str | None = None
+    # present in NETWORKS_DETAILED
+    date_ranges: list[dict[str, Any]] = field(default_factory=list)
+    default_language: Literal["en", "gd", "ga", "cy"] = "en"
+    default: bool | None = None
 
 
 ###### Base types ##############################################################
@@ -241,7 +259,9 @@ class BaseObject(SerializableMixin):
     """Base class for all objects with common functionality."""
 
     type: str | None = None
-    uris: dict = field(default_factory=dict)
+    # List of URIs e.g. [{"type":"latest"...}] or the pagination and polling
+    # URLs, e.g. {"pagination": ..., "polling": ...}
+    uris: list[dict[str, Any]] | dict[str, Any] | None = field(default_factory=list)
     recommendation: dict | None = None
 
     def post_processing(self, logger: Logger) -> None:
@@ -269,8 +289,8 @@ class Network(SerializableMixin):
     active: bool = True
     coverage: Literal["national", "regional", "local"] | None = None
     international: bool = True
-    promoted_category_summaries: dict = field(default_factory=dict)
-    date_ranges: dict = field(default_factory=dict)
+    promoted_category_summaries: list[dict[str, Any]] = field(default_factory=list)
+    date_ranges: list[dict[str, Any]] = field(default_factory=list)
     logo_url: str | None = None
 
     def post_processing(self, logger: Logger) -> None:
@@ -320,7 +340,7 @@ class PlayableNetwork(Network):
     release: dict | None = None
     availability: dict | None = None
     stream: str | None = None
-    network: Network | None = None
+    network: Annotated[Network, _POLYMORPHIC] | None = None
 
     def post_processing(self, logger: Logger) -> None:
 
@@ -364,8 +384,8 @@ class Container(BaseObject, IdentifiableMixin):
         )
     )
     urn: str | None = None
-    network: Network | None = None
-    sub_items: Sequence[SoundsTypes] | None = None
+    network: Annotated[Network, _POLYMORPHIC] | None = None
+    sub_items: Sequence[Annotated[SoundsTypes, _POLYMORPHIC]] | None = None
 
 
 @dataclass(kw_only=True)
@@ -407,7 +427,8 @@ class PlayableItem(BaseObject, IdentifiableMixin):
     urn: str | None = None
     pid: str | None = None
     type: str | None = None
-    duration: Duration | None = None
+    # Duration object normally; plain seconds on broadcast summaries
+    duration: Duration | int | None = None
     progress: Progress | None = None
     image_url: str | None = None
     titles: Titles = field(
@@ -416,9 +437,9 @@ class PlayableItem(BaseObject, IdentifiableMixin):
         )
     )
     synopses: Synopses | None = None
-    network: Network | None = None
-    container: Container | None = None
-    ancestors: list[Container] | None = None
+    network: Annotated[Network, _POLYMORPHIC] | None = None
+    container: Annotated[Container, _POLYMORPHIC] | None = None
+    ancestors: list[Annotated[Container, _POLYMORPHIC]] | None = None
     categories: list[ItemCategory] | None = None
     start: dt | None = None
     end: dt | None = None
@@ -523,8 +544,8 @@ class StationSearchResult(SerializableMixin, IdentifiableMixin):
     station_name: str
     title: str
     short_synopsis: str
-    progress: dict[int, str]
-    duration: dict[int, str]
+    progress: Progress | None
+    duration: Duration | None
 
     def post_processing(self, logger: Logger) -> None:
         if self.station_image_url:
@@ -566,7 +587,7 @@ class Schedule(Container):
 
     id: str
     # title is the date of the schedule
-    sub_items: Sequence[ScheduleItem] | None = None
+    sub_items: Sequence[Annotated[ScheduleItem | RadioShow, _POLYMORPHIC]] | None = None
 
     def get_current_item(
         self,
@@ -659,7 +680,7 @@ class CategoryItemContainer(SerializableMixin):
     total: int
     limit: int
     offset: int
-    sub_items: Sequence[SoundsTypes] | None = None
+    sub_items: Sequence[Annotated[SoundsTypes, _POLYMORPHIC]] | None = None
 
 
 @dataclass(kw_only=True)
@@ -694,7 +715,7 @@ class RecommendedMenuItem(MenuItem):
 class Menu(SerializableMixin):
     """Represents a menu container with items."""
 
-    sub_items: list[MenuItem]
+    sub_items: list[Annotated[MenuItem, _POLYMORPHIC]]
 
     def get(self, key: str) -> MenuItem | RecommendedMenuItem | None:
         """Get a menu item by ID."""
@@ -707,19 +728,19 @@ class Menu(SerializableMixin):
 
 @dataclass(kw_only=True)
 class DisplayItem(Container):
-    item: PlayableItem | None = None
+    item: Annotated[PlayableItem, _POLYMORPHIC] | None = None
 
 
 @dataclass(kw_only=True)
 class PromoItem(Container):
-    item: PlayableItem
+    item: Annotated[PlayableItem, _POLYMORPHIC]
 
 
 @dataclass(kw_only=True)
 class SearchResults(SerializableMixin):
-    stations: list[LiveStation | StationSearchResult]
-    shows: list[Podcast | RadioShow]
-    episodes: list[PodcastEpisode | RadioClip | RadioShow]
+    stations: list[Annotated[LiveStation | StationSearchResult, _POLYMORPHIC]]
+    shows: list[Annotated[Podcast | RadioShow, _POLYMORPHIC]]
+    episodes: list[Annotated[PodcastEpisode | RadioClip | RadioShow, _POLYMORPHIC]]
 
 
 @dataclass(kw_only=True)
