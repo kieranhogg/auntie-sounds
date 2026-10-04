@@ -2,20 +2,29 @@
 
 ## [Unreleased]
 
-## PRE-RELEASE [2.1.0b9] - 2026-10-01
-## PRE-RELEASE [2.1.0b8] - 2026-10-01
-## PRE-RELEASE [2.1.0b7] - 2026-10-01
-## PRE-RELEASE [2.1.0b6] - 2026-10-01
-## PRE-RELEASE [2.1.0b5] - 2026-09-30
-## PRE-RELEASE [2.1.0b4] - 2026-09-30
-## PRE-RELEASE [2.1.0b3] - 2026-09-26
-## PRE-RELEASE [2.1.0b2] - 2026-09-25
-## PRE-RELEASE [2.1.0b1] - 2026-09-24
 * New feature: added international radio stations
+* New feature: podcast and radio series seasons. `Podcast.seasons` / `RadioSeries.seasons` hold `Season`
+  containers; with `include_episodes=True`, episodes are grouped into their season and any that don't belong
+  to one stay in `sub_items`
+* New feature: `PlayableItem.series_pid`, the episode's series where it differs from its brand
+* New feature: `Segment.apple_music_url` and `Segment.record_id`
+* New feature: `sounds.parse()` parses a raw API response without a client
+* New feature: `RequestManager.get_json_response()` can page through results with `fetch_all_items` or `max_items`
+* New feature: `DateOutOfRangeError` (a subclass of `APIResponseError`) is raised when a schedule is requested
+  outside the range the API serves
+* Fix: podcasts with a single episode no longer raise `NotFoundError`
+* Fix: podcasts with more than 30 episodes are no longer truncated
 * Fix: ensure the correct Radio 4 ID is used across all endpoints
- 
+
 ### API Changes
 
+* `ContentService.get_podcast()` now defaults to `include_episodes=False`
+* An episode's `container` is now always its brand, whichever endpoint it came from. Its series is in `series_pid`
+* `RadioSeries` now subclasses `Podcast`
+* `Segment.uris` is now a required `list[URI]`, not a list of dicts. `Segment.spotify_url` now matches on the
+  URI `id` (`commercial-music-service-spotify`) instead of the `Spotify` label
+* `ContentService.get_podcast_episodes()` always returns a list (never `None`)
+* `APIResponseError` raised from an API error body now carries `status_code`
 * `Client.get_menu(MenuRecommendationOptions.ONLY)` is no longer supported, use `Client.get_recommendation_folders()`
   instead
 * The `logger` parameter has been removed from `SoundsClient.__init__()`
