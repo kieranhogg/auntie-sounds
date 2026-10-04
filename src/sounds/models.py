@@ -498,6 +498,27 @@ class PlayableItem(BaseObject, IdentifiableMixin):
     images: list[dict] | None = None
     stream: str | None = None
 
+    @property
+    def is_promo(self):
+        promo_keywords = [
+            "coming soon",
+            "coming up",
+            "is back",
+            "returns",
+            "new series",
+            "new episodes",
+            "stand by",
+        ]
+        # Title is exactly Trailer, or contains a promo word and is <5 mins
+        return self.titles.entity_title == "Trailer" or (
+            self.titles.entity_title is not None
+            and any(keyword in self.titles.entity_title for keyword in promo_keywords)
+            and (
+                (type(self.duration) is int and self.duration < (5 * 60))
+                or (type(self.duration) is Duration and self.duration.value < (5 * 60))
+            )
+        )
+
     def post_processing(self, logger: Logger) -> None:
         # Subclasses run process_image() after this, which fills in the recipe
         if not self.image_url and self.images:
@@ -544,9 +565,12 @@ class PlayableItem(BaseObject, IdentifiableMixin):
                 self.version_pid = self.id
 
         # Programmes responses (e.g. get_by_pid) only give the length under availability
-        if self.duration is None and self.availability:
-            if (seconds := self.availability.get("duration")) is not None:
-                self.duration = Duration(label=f"{seconds // 60} mins", value=seconds)
+        if (
+            self.duration is None
+            and self.availability
+            and (seconds := self.availability.get("duration")) is not None
+        ):
+            self.duration = Duration(label=f"{seconds // 60} mins", value=seconds)
 
     def is_live(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo) -> bool:
         if self.start and self.end:
