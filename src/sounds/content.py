@@ -61,6 +61,16 @@ def assign_seasons(
     podcast.sub_items = list(chain.from_iterable(by_series.values())) or None
 
 
+def _ancestor_id(programme: dict, kind: str) -> str | None:
+    """Return the id of the first ancestor of the given type, e.g. 'brand' or 'series'.
+
+    Standalone clips have an empty ancestors list, so this returns None for them.
+    """
+    return next(
+        (a["id"] for a in programme.get("ancestors") or [] if a.get("type") == kind),
+        None,
+    )
+
 class ContentService:
     """Resolving IDs (pids/urns) and browsing the catalog: podcasts, radio
     series, categories, collections, playlists, and search.
@@ -77,6 +87,42 @@ class ContentService:
         self.requests: RequestManager = requests
         self.playback: PlaybackService = playback
         self.parser = Parser()
+        self._programme_cache: dict[str, asyncio.Task[dict]] = {}
+
+    async def _get_programme(self, pid: str) -> dict:
+        """Fetch PROGRAMME_FROM_PID once per pid and return the single programme in it."""
+        task = self._programme_cache.get(pid)
+        if task is None:
+            task = asyncio.create_task(
+                self.requests.get_json_response(
+                    url=Endpoints.PROGRAMME_FROM_PID, url_args={"pid": pid}
+                )
+            )
+            self._programme_cache[pid] = task
+        try:
+            json_resp = await task
+        except Exception:
+            # Forget the failed lookup so the next call tries again
+            if self._programme_cache.get(pid) is task:
+                del self._programme_cache[pid]
+            raise
+        if not json_resp or not json_resp.get("data"):
+            self._programme_cache.pop(pid, None)
+            raise NotFoundError(f"Couldn't get item with PID {pid}")
+        return json_resp["data"][0]
+
+    async def get_urn_from_pid(self, pid: str) -> str | None:
+        return (await self._get_programme(pid)).get("urn")
+
+    async def get_vpid_from_pid(self, pid: str) -> str | None:
+        availability = (await self._get_programme(pid)).get("availability") or {}
+        return availability.get("id")
+
+    async def get_parent_pid(self, pid: str) -> str | None:
+        return _ancestor_id(await self._get_programme(pid), "brand")
+
+    async def get_series_pid(self, pid: str) -> str | None:
+        return _ancestor_id(await self._get_programme(pid), "series")
 
     async def image_from_spotify(self, url: str) -> str | None:
         spotify_url = "https://open.spotify.com/oembed?url={url}"
@@ -180,8 +226,10 @@ class ContentService:
             raise APIResponseError(f"Couldn't get item with PID {pid}")
 
         if include_stream:
+            if not playable_item.vpid:
+                raise APIResponseError(f"No available version for PID {pid}")
             playable_item.stream = await self.playback.get_episode_stream(
-                episode_id=playable_item.id, stream_format=stream_format
+                episode_id=playable_item.vpid, prefer_type=stream_format
             )
         return playable_item
 
@@ -281,3 +329,14 @@ class ContentService:
                     )
             return segments
         return []
+
+
+    async def get_heartbeat_details(self, pid):
+        """Get the details (vpid, resource_type) required to send a heartbeat request."""
+        item = await self._get_programme(pid)
+        episode = item["data"][0]
+        vpid = episode["availability"]["id"]
+        # e.g. urn:bbc:radio:episode:m00321tk
+        # where the 4th part matches playlist.json's parentPIDType
+        resource_type = episode["urn"].split(":")[3]
+        return vpid, resource_type
