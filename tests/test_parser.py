@@ -98,3 +98,11 @@ class TestParserNestedObjects:
                 hasattr(result, "network")
                 and hasattr(result.network, nested_object.source_key)
             )  # For network->services
+
+    def test_programme_from_pid_container_is_typed(self):
+        """Containers taken from ancestors must be a Podcast/RadioSeries, not a bare Container"""
+        with open("tests/fixtures/api/PROGRAMME_FROM_PID.json") as json_file:
+            result = Parser().parse_node(json.load(json_file))
+        assert isinstance(result, PodcastEpisode)
+        assert isinstance(result.container, Podcast)
+        assert result.container.type == "brand"

@@ -58,7 +58,7 @@ NESTED_OBJECTS: Final[tuple[NestedObject, ...]] = (
     NestedObject("duration", Duration),
     NestedObject("synopses", Synopses),
     NestedObject("services", Station),
-    NestedObject("ancestors", Container),
+    NestedObject("ancestors", Container, False),
     NestedObject("categories", ItemCategory),
     NestedObject("uris", URI, list_only=True),
     NestedObject("urn", URN),
@@ -357,8 +357,10 @@ class ModelFactory:
                 ):
                     new_type = _podcast_or_series(original_object, urn, parent_network)
                 else:
-                    logger.warning(f"Unknown container type: {object_type}")
+                    logger.warning(f"Unknown container type: {object_type}.")
+                    logger.warning("Defaulting to bare Container.")
                     logger.debug(original_object)
+                    new_type = Container
                 # This is a station or network
             elif original_object.get("network_type"):
                 new_type = Network
