@@ -14,6 +14,12 @@ class URLs(StrEnum):
     # Streaming URLs
     MEDIASET = "https://open.live.bbc.co.uk/mediaselector/6/select/version/2.0/mediaset/pc/vpid/{id}/format/json"  # ?jwt_auth={jwt_auth_token}"
     I18N_MEDIASET = "https://open.live.bbc.co.uk/mediaselector/6/select/version/3.0/mediaset/pc/cvid/urn:bbc:pips:pid:{id}/format/json"
+
+    """
+    Takes: a vpid.
+    Returns: stream connections.
+    Used by: get_episode_stream.
+    """
     EPISODE_MEDIASET = "https://open.live.bbc.co.uk/mediaselector/6/select/version/2.0/mediaset/pc/vpid/{episode_id}"
 
     # Auth URLs
@@ -115,28 +121,68 @@ class Endpoints(Enum):
     SEGMENTS = ("/v2/versions/{vpid}/segments", False)
     TRACKS = ("/v2/versions/{vpid}/tracks", False)
 
-    # Episodes, programmes, series etc.
+    ####### Episodes, programmes, series etc. ##########################################
+
+    """
+    Takes: a brand or series pid.
+    Returns: a list of container_items
+    Useful fields: id, urn, and uris[latest], which links to the episode listing.
+    Used by: get_podcast.
+    """
     CONTAINER_FROM_PIDS = ("/v2/programmes/container/{pids}", False)
+
+    """
+    Takes: a brand pid.
+    Returns: the seasons.
+    Used by: get_podcast.
+    """
     SERIES_CONTAINER = ("/v2/programmes/container", False)
     SERIES_EPISODES = ("/v2/programmes/playable/{pids}", False)
 
+    """
+    Takes: a brand or series pid.
+    Returns: a list of playable_items.
+    Used by: get_pid_container.
+    """
     PLAYABLE_ITEMS_CONTAINER = (
         "/v2/programmes/playable",  # ?container={pid}&sort=sequential | sort=popular | sort=-release_date
         False,
     )
     BROADCAST = ("/v2/broadcasts/{pid}", False)
+
     # Despite the name, this returns a single programme
+    """
+    Radio episode:
+        Returns a Programmes response with total: 1 and a single episode.
+        id is the same as the urn pid.
+        ancestors holds the brand and the series.
+        There's no vpid.
+    Podcast episode:
+        Returns the brand's page, the same shape as URN_CONTAINER.
+        The episode with the requested pid is in there somewhere
+    """
     PROGRAMME_FROM_PID = ("/v2/programmes/{pid}", False)
     PROGRAMME_FROM_PID_PLAYABLE = (
         "/v2/programmes/{pid}/playable",
         False,
     )
+
+    """
+    Takes: a container urn.
+    Returns: a page with two parts: a header module holding the brand, and a 
+        container_list holding all the episodes as playable_items
+    Used by: get_container and get_radio_series.
+    """
     URN_CONTAINER = (
         "/v2/experience/inline/container/{urn}",
         False,
     )
 
-    # This endpoint gets extra details from a pid such as vpid and parent pid
+    """
+    Takes: an episode pid.
+    Returns: the vpid and statsObject.parentPIDType.
+    Used by: the heartbeat.
+    """
     PID_DETAILS = ("https://www.bbc.co.uk/programmes/{pid}/playlist.json", False)
     COLLECTIONS = (
         "/v2/collections/{pid}/members/container",
