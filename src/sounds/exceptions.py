@@ -60,3 +60,7 @@ class ParserError(SoundsException):
 
 class ConfigurationError(SoundsException):
     pass
+
+
+class DateOutOfRangeError(APIResponseError):
+    """Schedule requested outside the window the API serves."""

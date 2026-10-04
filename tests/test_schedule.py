@@ -1,10 +1,14 @@
 import datetime
 from datetime import datetime as dt
-from unittest.mock import Mock
+from unittest.mock import AsyncMock, Mock
 
 import pytest
 
-from sounds.exceptions import InvalidFormatError
+from sounds.exceptions import (
+    APIResponseError,
+    DateOutOfRangeError,
+    InvalidFormatError,
+)
 from sounds.schedule import ScheduleService, _get_date_range
 
 pytestmark = pytest.mark.anyio
@@ -84,3 +88,33 @@ class TestScheduleService:
             )
         except InvalidFormatError:
             pytest.fail("Valid date format raised InvalidFormatError")
+
+
+class TestScheduleDateOutOfRange:
+    async def test_out_of_range_date_raises_specific_error(self):
+        requests = Mock()
+        requests.get_json_response = AsyncMock(
+            side_effect=APIResponseError(
+                "Acceptable date must be between 30 days in the past and 7 days in the future",
+                status_code=400,
+            )
+        )
+        service = ScheduleService(timezone=datetime.UTC, requests=requests)
+
+        with pytest.raises(DateOutOfRangeError) as exc:
+            await service.get_schedule("bbc_radio_one", date="2000-01-01")
+
+        assert "2000-01-01" in str(exc.value)
+        assert exc.value.status_code == 400
+        # Existing handlers for APIResponseError still catch it
+        assert isinstance(exc.value, APIResponseError)
+
+    async def test_other_api_errors_pass_through(self):
+        requests = Mock()
+        requests.get_json_response = AsyncMock(side_effect=APIResponseError("nope"))
+        service = ScheduleService(timezone=datetime.UTC, requests=requests)
+
+        with pytest.raises(APIResponseError) as exc:
+            await service.get_schedule("bbc_radio_one", date="2000-01-01")
+
+        assert type(exc.value) is APIResponseError

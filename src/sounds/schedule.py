@@ -6,7 +6,7 @@ from datetime import timedelta, tzinfo
 
 from sounds import endpoints
 from sounds.endpoints import Endpoints
-from sounds.exceptions import APIResponseError, InvalidFormatError
+from sounds.exceptions import APIResponseError, DateOutOfRangeError, InvalidFormatError
 from sounds.models import LiveStation, Schedule, Segment
 from sounds.parser import Parser
 from sounds.requests import RequestManager
@@ -55,7 +55,17 @@ class ScheduleService:
                 raise InvalidFormatError(
                     "Invalid date specified, must be in the format YYYY-MM-DD"
                 )
-        json_resp = await self.requests.get_json_response(url=url, url_args=url_args)
+        try:
+            json_resp = await self.requests.get_json_response(
+                url=url, url_args=url_args
+            )
+        except APIResponseError as e:
+            # e.g. "Acceptable date must be between 30 days in the past and 7 days in the future"
+            if date and "acceptable date" in (e.message or "").lower():
+                raise DateOutOfRangeError(
+                    f"{e.message}. Date requested: {date}.", status_code=e.status_code
+                ) from e
+            raise
         schedule = self.parser.parse_schedule(json_resp)
         return schedule if isinstance(schedule, Schedule) else None
 
@@ -141,10 +151,10 @@ class ScheduleService:
     async def currently_playing_song(self, station_id) -> Segment | None:
         """Gets the currently playing song, if one is playing."""
         recently_played = await self.recently_played_items(station_id)
-        if recently_played:
-            try:
-                if recently_played[0].offset["now_playing"]:
-                    return recently_played[0]
-            except TypeError, KeyError:
-                pass
+        if (
+            recently_played
+            and (offset := recently_played[0].offset)
+            and offset.get("now_playing")
+        ):
+            return recently_played[0]
         return None
