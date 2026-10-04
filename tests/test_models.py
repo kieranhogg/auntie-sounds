@@ -98,3 +98,57 @@ class TestModels:
         menu = Menu(sub_items=[MenuItem(id="item1", title="Item 1")])
         result = menu.get("nonexistent")
         assert result is None
+
+
+class TestSegmentMusicServices:
+    """Segment uris are parsed into URI objects and matched on id.
+
+    NOTE: the uri entries below are hand-written, not captured from the API.
+    Replace with a real /segments payload containing music-service links.
+    """
+
+    @staticmethod
+    def _segment(uris):
+        from sounds.models import Segment
+        from sounds.parser import Parser
+
+        data = {
+            "type": "segment_item",
+            "id": "p0pbhqfh",
+            "urn": "urn:bbc:radio:segment:music:n9pdgz",
+            "segment_type": "music",
+            "titles": {"primary": "Artist", "secondary": "Track"},
+            "image_url": None,
+            "offset": {"start": 0, "end": 180, "now_playing": True},
+            "uris": uris,
+        }
+        segment = Parser().parse_container({"data": [data]})
+        assert isinstance(segment, list)
+        assert isinstance(segment[0], Segment)
+        return segment[0]
+
+    def test_spotify_and_apple_urls(self):
+        segment = self._segment(
+            [
+                {
+                    "type": "commercial-music-service",
+                    "id": "commercial-music-service-spotify",
+                    "label": "Spotify",
+                    "uri": "https://open.spotify.com/track/abc",
+                },
+                {
+                    "type": "commercial-music-service",
+                    "id": "commercial-music-service-apple",
+                    "label": "Apple Music",
+                    "uri": "https://music.apple.com/gb/album/xyz",
+                },
+            ]
+        )
+        assert segment.spotify_url == "https://open.spotify.com/track/abc"
+        assert segment.apple_music_url == "https://music.apple.com/gb/album/xyz"
+        assert segment.record_id == "n9pdgz"
+
+    def test_no_music_services(self):
+        segment = self._segment([])
+        assert segment.spotify_url is None
+        assert segment.apple_music_url is None

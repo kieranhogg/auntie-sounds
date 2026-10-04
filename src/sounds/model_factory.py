@@ -6,6 +6,8 @@ from typing import Any, ClassVar, Final, NamedTuple
 
 from sounds.exceptions import ParserError
 from sounds.models import (
+    URI,
+    URN,
     AudiobookEpisode,
     BasicContainer,
     Category,
@@ -44,6 +46,8 @@ class NestedObject(NamedTuple):
     source_key: str
     replacement_model: type[Any]
     concrete_class: bool = True
+    # Leave dicts alone for this key
+    list_only: bool = False
 
 
 NESTED_OBJECTS: Final[tuple[NestedObject, ...]] = (
@@ -56,6 +60,8 @@ NESTED_OBJECTS: Final[tuple[NestedObject, ...]] = (
     NestedObject("services", Station),
     NestedObject("ancestors", Container),
     NestedObject("categories", ItemCategory),
+    NestedObject("uris", URI, list_only=True),
+    NestedObject("urn", URN),
 )
 
 
@@ -406,6 +412,9 @@ def parse_nested_objects(node: SoundsTypes) -> SoundsTypes:
         elif type(value) is list and all(type(item) is dict for item in value):
             source_dicts, is_list = value, True
         else:
+            continue
+
+        if nested_object.list_only and type(value) is dict:
             continue
 
         out_objects = []

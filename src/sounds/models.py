@@ -4,6 +4,7 @@ from dataclasses import dataclass, field
 from datetime import datetime as dt
 from logging import Logger
 from typing import Annotated, Any, Final, Literal
+from urllib.parse import parse_qs, urlparse
 from warnings import deprecated
 from zoneinfo import ZoneInfo
 
@@ -196,25 +197,46 @@ class Stream(TimedContent, SerializableMixin, ImageMixin):
 class Segment(SerializableMixin, ImageMixin):
     """Represents a segment within a stream."""
 
+    # Unique ID
     id: str
+    # Song identifier, identical each time
     segment_type: str
+    uris: list[URI]
+    urn: str | None = None
     titles: Titles = field(
         default_factory=lambda: Titles(
             primary=None, secondary=None, tertiary=None, entity_title=None
         )
     )
     image_url: str | None
-    offset: dict
-    uris: list[dict[str, str]]
+    offset: dict | None
+
+    @property
+    def record_id(self):
+        if self.urn:
+            return self.urn.rsplit(":", 1)[-1]
+        return None
+
+    def music_service_uri(self, platform: Literal["spotify", "apple"]):
+        service_found = next(
+            (
+                uri
+                for uri in self.uris
+                if uri.id == f"commercial-music-service-{platform}"
+            ),
+            None,
+        )
+        if service_found:
+            return service_found.uri
+        return None
 
     @property
     def spotify_url(self):
-        spotify = next(
-            (uri for uri in self.uris if uri.get("label") == "Spotify"), None
-        )
-        if spotify:
-            return spotify.get("uri")
-        return None
+        return self.music_service_uri("spotify")
+
+    @property
+    def apple_music_url(self):
+        return self.music_service_uri("apple")
 
 
 """:param
@@ -253,6 +275,28 @@ class Service:
     default: bool | None = None
 
 
+@dataclass(kw_only=True)
+class URI(SerializableMixin):
+    type: str
+    uri: str
+    id: str | None = None
+    label: str | None = None
+
+    def query_param(self, name: str) -> str | None:
+        return parse_qs(urlparse(self.uri).query).get(name, [None])[0]
+
+
+@dataclass(kw_only=True)
+class Release(SerializableMixin):
+    date: str
+    label: str
+
+
+@dataclass(kw_only=True)
+class URN(SerializableMixin):
+    urn: str
+
+
 ###### Base types ##############################################################
 @dataclass(kw_only=True)
 class BaseObject(SerializableMixin):
@@ -261,7 +305,7 @@ class BaseObject(SerializableMixin):
     type: str | None = None
     # List of URIs e.g. [{"type":"latest"...}] or the pagination and polling
     # URLs, e.g. {"pagination": ..., "polling": ...}
-    uris: list[dict[str, Any]] | dict[str, Any] | None = field(default_factory=list)
+    uris: list[URI] | dict[str, Any] | None = field(default_factory=list)
     recommendation: dict | None = None
 
     def post_processing(self, logger: Logger) -> None:
@@ -282,7 +326,6 @@ class Network(SerializableMixin):
     short_title: str | None = None
     sort: int | None = None
     description: str | None = None
-    # current_programme: LiveProgramme | None = None
     services: list[Station] | None = None
     service: Station | None = None
     default_service_id: str | None = None
@@ -362,7 +405,7 @@ class PlayableNetwork(Network):
 
 
 @dataclass(kw_only=True)
-class BasicContainer:
+class BasicContainer(IdentifiableMixin):
     """Just a bare wrapper for items, e.g. PlayableItemsResponse."""
 
     sub_items: Sequence[SoundsTypes] | None = None
@@ -605,12 +648,8 @@ class Schedule(Container):
 
 # Specific content types
 @dataclass(kw_only=True)
-class RadioShow(PlayableItem, TimedContent, ImageMixin, IdentifiableMixin):
-    """Represents a playable radio show."""
-
-    @property
-    def item_id(self):
-        return self.pid
+class RadioClip(PlayableItem, TimedContent, ImageMixin, IdentifiableMixin):
+    """Represents a playable radio clip."""
 
     def post_processing(self, logger: Logger) -> None:
         super().post_processing(logger)
