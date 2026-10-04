@@ -11,6 +11,14 @@ from sounds.stations import StationService
 logger = logging.getLogger(__name__)
 
 
+def _extract_stream(json_resp: dict, prefer_type) -> str | None:
+    try:
+        streams = json_resp["media"][0]["connection"]
+    except (KeyError, IndexError, TypeError) as e:
+        raise APIResponseError("No valid stream found") from e
+    return get_best_stream(streams, prefer_type=prefer_type)
+
+
 def get_best_stream(
     streams: list[dict], prefer_type: Literal["hls", "dash"] = "hls"
 ) -> str | None:
@@ -61,7 +69,7 @@ class PlaybackService:
     async def get_live_stream(
         self,
         station_id: str,
-        stream_format: Literal["hls", "dash"] = "hls",
+        prefer_type: Literal["hls", "dash"] = "hls",
         international: bool = False,
     ) -> str | None:
         if not station_id:
@@ -90,76 +98,36 @@ class PlaybackService:
                 params=params,
                 headers={"Bearer": jwt_token},
             )
-        stream = None
-        try:
-            streams = json_resp["media"][0]["connection"]
-            logger.debug("Found streams:")
-            logger.debug(str(streams))
-            stream = get_best_stream(streams, prefer_type=stream_format)
-            logger.debug(f"Found stream: {stream}")
-        except (IndexError, TypeError) as e:
-            logger.error("No valid stream found")
-            logger.debug(json_resp)
-            raise APIResponseError(f"No valid stream found for {station_id}") from e
-
-        return stream
+        return _extract_stream(json_resp, prefer_type=prefer_type)
 
     async def get_episode_stream(
         self,
         episode_id: str,
-        stream_format: Literal["hls", "dash"] = "hls",
+        prefer_type: Literal["hls", "dash"] = "hls",
     ) -> str | None:
         """
         Gets the stream for a specified episode.
-
-        :param episode_id: str
-        :returns: Stream object of stream information
-        :rtype: str | None
         """
         json_resp = await self.requests.get_json_response(
             url=URLs.EPISODE_MEDIASET, url_args={"episode_id": episode_id}
         )
-
-        streams = None
-        try:
-            streams = json_resp["media"][0]["connection"]
-            logger.debug("Found streams:")
-            logger.debug(str(streams))
-            stream = get_best_stream(streams, prefer_type=stream_format)
-            logger.debug(f"Found stream: {stream}")
-        except (StopIteration, KeyError) as e:
-            raise RuntimeError("No valid stream found") from e
-        return stream
-
-    async def get_heartbeat_details(self, pid):
-        json_resp = await self.requests.get_json_response(
-            url=Endpoints.PID_DETAILS, url_args={"pid": pid}
-        )
-        logger.debug(f"Heartbeat details response: {json_resp}")
-        vpid: str
-        try:
-            vpid = json_resp["defaultAvailableVersion"]["smpConfig"]["items"][0]["vpid"]
-            item_type = json_resp["statsObject"]["parentPIDType"]
-        except (IndexError, KeyError, TypeError) as e:
-            raise APIResponseError(
-                f"Couldn't get heartbeat details for PID {pid}"
-            ) from e
-        return vpid, item_type
+        return _extract_stream(json_resp, prefer_type=prefer_type)
 
     async def update_play_status(
         self,
         pid: str,
         elapsed_time: int,
         action: PlayStatus,
+        vpid: str,
+        resource_type: str,
     ):
-        vpid, resource_type = await self.get_heartbeat_details(pid)
         data = {
             "action": action,
             "elapsed_time": elapsed_time,
             "pid": pid,
             "play_mode": "ondemand",
-            "resource_type": resource_type,
             "version_pid": vpid,
+            "resource_type": resource_type,
         }
         resp = await self.requests.make_request(
             method="POST", url=Endpoints.PLAYS, json=data

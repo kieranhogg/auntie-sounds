@@ -71,6 +71,7 @@ def _ancestor_id(programme: dict, kind: str) -> str | None:
         None,
     )
 
+
 class ContentService:
     """Resolving IDs (pids/urns) and browsing the catalog: podcasts, radio
     series, categories, collections, playlists, and search.
@@ -329,7 +330,6 @@ class ContentService:
                     )
             return segments
         return []
-
 
     async def get_heartbeat_details(self, pid):
         """Get the details (vpid, resource_type) required to send a heartbeat request."""
