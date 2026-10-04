@@ -494,9 +494,18 @@ class PlayableItem(BaseObject, IdentifiableMixin):
     end: dt | None = None
     release: dict | None = None
     availability: dict | None = None
+    # Only on PROGRAMME_FROM_PID, in place of image_url
+    images: list[dict] | None = None
     stream: str | None = None
 
     def post_processing(self, logger: Logger) -> None:
+        # Subclasses run process_image() after this, which fills in the recipe
+        if not self.image_url and self.images:
+            standard = next(
+                (i for i in self.images if i.get("type") == "standard"), self.images[0]
+            )
+            self.image_url = standard.get("url")
+
         # Set dates
         self.start = _parse_datetime(self.start)
         self.end = _parse_datetime(self.end)
@@ -533,6 +542,11 @@ class PlayableItem(BaseObject, IdentifiableMixin):
                 self.version_pid = self.availability["id"]
             elif self.pid and self.id != self.pid:
                 self.version_pid = self.id
+
+        # Programmes responses (e.g. get_by_pid) only give the length under availability
+        if self.duration is None and self.availability:
+            if (seconds := self.availability.get("duration")) is not None:
+                self.duration = Duration(label=f"{seconds // 60} mins", value=seconds)
 
     def is_live(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo) -> bool:
         if self.start and self.end:

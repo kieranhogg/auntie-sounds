@@ -1,3 +1,4 @@
+import copy
 import logging
 from datetime import datetime as dt
 from datetime import timedelta
@@ -6,7 +7,16 @@ import pytest
 import pytz
 from pytest import MarkDecorator
 
-from sounds.models import Container, Menu, MenuItem, PlayableItem, ScheduleItem
+from sounds import parse
+from sounds.models import (
+    Container,
+    Duration,
+    Menu,
+    MenuItem,
+    PlayableItem,
+    ScheduleItem,
+)
+from tests.conftest import load_fixture
 
 pytestmark: MarkDecorator = pytest.mark.anyio
 
@@ -152,3 +162,37 @@ class TestSegmentMusicServices:
         segment = self._segment([])
         assert segment.spotify_url is None
         assert segment.apple_music_url is None
+
+
+class TestPlayableItemDuration:
+    """Programmes responses (e.g. get_by_pid) only carry the length under availability."""
+
+    @staticmethod
+    def _programme() -> dict:
+        # Return a copy so we can manipulate the json between tests
+        return copy.deepcopy(load_fixture("PROGRAMME_FROM_PID.json")["data"][0])
+
+    def test_duration_falls_back_to_availability(self):
+        data = self._programme()
+        assert "duration" not in data
+
+        item = parse(data)
+
+        assert isinstance(item.duration, Duration)
+        assert item.duration.value == data["availability"]["duration"]
+
+    def test_top_level_duration_wins(self):
+        data = self._programme()
+        data["duration"] = {"label": "1 min", "value": 60}
+
+        item = parse(data)
+
+        assert item.duration.value == 60
+
+    def test_no_duration_anywhere_stays_none(self):
+        data = self._programme()
+        del data["availability"]["duration"]
+
+        item = parse(data)
+
+        assert item.duration is None
