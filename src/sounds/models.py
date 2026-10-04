@@ -473,6 +473,7 @@ class PlayableItem(BaseObject, IdentifiableMixin):
     id: str
     urn: str | None = None
     pid: str | None = None
+    version_pid: str | None = None
     series_pid: str | None = None
     type: str | None = None
     # Duration object normally; plain seconds on broadcast summaries
@@ -496,8 +497,11 @@ class PlayableItem(BaseObject, IdentifiableMixin):
     stream: str | None = None
 
     def post_processing(self, logger: Logger) -> None:
+        # Set dates
         self.start = _parse_datetime(self.start)
         self.end = _parse_datetime(self.end)
+
+        # Get PID from URN
         if self.urn:
             self.pid = self.urn.rsplit(":", 1)[-1]
 
@@ -522,6 +526,13 @@ class PlayableItem(BaseObject, IdentifiableMixin):
         # A series that is also the container is a flat brand
         if series_pid and series_pid != getattr(self.container, "id", None):
             self.series_pid = series_pid
+
+        # Derive VPID
+        if not self.version_pid:
+            if self.availability and self.availability.get("id"):
+                self.version_pid = self.availability["id"]
+            elif self.pid and self.id != self.pid:
+                self.version_pid = self.id
 
     def is_live(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo) -> bool:
         if self.start and self.end:
