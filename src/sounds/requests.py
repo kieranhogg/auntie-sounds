@@ -103,7 +103,7 @@ def _raise_for_api_errors(json_resp: dict) -> None:
         raise UnauthorisedError(message)
     elif code == 404:
         raise NotFoundError(message)
-    raise APIResponseError(message)
+    raise APIResponseError(message, status_code=code)
 
 
 class RequestManager:
@@ -164,6 +164,8 @@ class RequestManager:
         url: Endpoints | URLs | str,
         url_args: dict | None = None,
         login_required: bool = False,
+        offset: int | None = None,
+        limit: int | None = None,
         **kwargs,
     ) -> aiohttp.ClientResponse:
         """Makes an HTTP request using the shared session, applying defaults
@@ -172,13 +174,23 @@ class RequestManager:
         kwargs.setdefault("ssl", True)
         kwargs.setdefault("allow_redirects", True)
         # kwargs.setdefault("headers", build_headers())
+
+        params = dict(kwargs.get("params") or {})
+
+        if offset is not None:
+            params["offset"] = offset
+        if limit is not None:
+            params["limit"] = limit
+        if params:
+            kwargs["params"] = params
+
         logger.debug("Preparing to request %s", url)
         if isinstance(url, Endpoints):
             # If we have a endpoint, we can check if it's an authenticated one
             login_required = url.login_required
-            url = build_url(url, url_args)
+            url = build_url(url=url, url_args=url_args)
         elif isinstance(url, URLs):
-            url = build_url(url, url_args)
+            url = build_url(url=url, url_args=url_args)
         else:
             if url in Endpoints:
                 logger.warning(
@@ -197,9 +209,6 @@ class RequestManager:
             else:
                 resp = await self._request_or_raise(method, url, **kwargs)
             logger.debug(f"HTTP {method} {url} - Status {resp.status}")
-            if self.count_requests and self.request_counter is not None:
-                self.request_counter += 1
-                logger.debug("%s requests made", self.request_counter)
             return resp
         except aiohttp.ClientConnectorDNSError as e:
             logger.error(f"HTTP request failed: {method} {url} - {e}")
@@ -219,18 +228,66 @@ class RequestManager:
         self,
         url: Endpoints | URLs,
         url_args: dict | None = None,
+        fetch_all_items: bool = False,
+        max_items: int | None = None,
+        page_size: int = DEFAULT_LIMIT,
         **kwargs,
     ) -> dict:
         """Gets JSON response from an endpoint."""
+        if fetch_all_items and max_items is not None:
+            raise InvalidArgumentsError("Pass fetch_all_items or max_items, not both")
+
+        paging = fetch_all_items or max_items is not None
+        # Only send `limit` when paging, so callers' own params (and endpoints
+        # that don't take a limit) are left alone.
+        first_limit = min(page_size, max_items) if max_items is not None else page_size
+
         resp = await self.make_request(
-            method="GET", url=url, url_args=url_args, **kwargs
+            method="GET",
+            url=url,
+            url_args=url_args,
+            limit=first_limit if paging else None,
+            **kwargs,
         )
-        try:
-            json_resp: dict = await resp.json()
-        except aiohttp.ContentTypeError as e:
-            raise APIResponseError(f"{e.message}. URL: {url}") from e
-        _raise_for_api_errors(json_resp)
-        return json_resp
+        first_page: dict = await self._read_json(resp, url)
+
+        if not paging or "total" not in first_page:
+            return first_page
+
+        key_to_build = next((k for k in ("data", "results") if k in first_page), None)
+        if key_to_build is None:
+            logger.debug("Paged response from %s has no data/results key", url)
+            return first_page
+
+        logger.debug("Continuing to get paged response, if needed")
+        total = int(first_page["total"])
+        items: list = list(first_page.get(key_to_build) or [])
+
+        target = total if max_items is None else min(total, max_items)
+        offset = int(first_page.get("offset") or 0) + len(items)
+        server_page_size = int(first_page.get("limit") or page_size)
+
+        while len(items) < target:
+            logger.debug(
+                "Fetching page at offset %s (%s/%s)", offset, len(items), target
+            )
+            resp = await self.make_request(
+                method="GET",
+                url=url,
+                url_args=url_args,
+                offset=offset,
+                limit=server_page_size,
+                **kwargs,
+            )
+            page_items = (await self._read_json(resp, url)).get(key_to_build) or []
+            if not page_items:
+                break
+
+            items.extend(page_items)
+            offset += len(page_items)
+
+        first_page[key_to_build] = items[:target]
+        return first_page
 
     async def get_html_response(
         self,
@@ -246,3 +303,11 @@ class RequestManager:
 
     def set_reauth_handler(self, call: Callable):
         self.reauth_handler = call
+
+    async def _read_json(self, resp, url) -> dict:
+        try:
+            body: dict = await resp.json()
+        except aiohttp.ContentTypeError as e:
+            raise APIResponseError(f"{e.message}. URL: {url}") from e
+        _raise_for_api_errors(body)
+        return body

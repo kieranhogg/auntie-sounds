@@ -5,6 +5,7 @@ import pytest
 
 from sounds.auth import AuthService
 from sounds.client import SoundsClient
+from sounds.endpoints import Endpoints
 from sounds.exceptions import NetworkError, NotFoundError, UnauthorisedError
 from sounds.requests import RequestManager
 
@@ -92,3 +93,63 @@ class TestMakeRequestErrors:
 
         with pytest.raises(NotFoundError):
             await manager.make_request("GET", "https://example.com/")
+
+
+def _json_response(body: dict):
+    resp = Mock(status=200, reason="OK")
+    resp.json = AsyncMock(return_value=body)
+    return resp
+
+
+class TestGetJsonResponseParams:
+    """limit/offset should only be sent when the caller asks for paging."""
+
+    async def test_no_limit_sent_when_not_paging(self):
+        session = Mock(spec=aiohttp.ClientSession)
+        session.request = AsyncMock(return_value=_json_response({"data": []}))
+        manager = RequestManager(session=session)
+
+        await manager.get_json_response(url=Endpoints.NETWORKS)
+
+        assert "params" not in session.request.await_args.kwargs
+
+    async def test_caller_limit_is_not_overridden(self):
+        session = Mock(spec=aiohttp.ClientSession)
+        session.request = AsyncMock(return_value=_json_response({"data": []}))
+        manager = RequestManager(session=session)
+
+        await manager.get_json_response(url=Endpoints.NETWORKS, params={"limit": 5})
+
+        assert session.request.await_args.kwargs["params"] == {"limit": 5}
+
+    async def test_fetch_all_items_pages_until_total(self):
+        pages = [
+            {"total": 3, "offset": 0, "limit": 2, "data": [1, 2]},
+            {"total": 3, "offset": 2, "limit": 2, "data": [3]},
+        ]
+        session = Mock(spec=aiohttp.ClientSession)
+        session.request = AsyncMock(side_effect=[_json_response(p) for p in pages])
+        manager = RequestManager(session=session)
+
+        result = await manager.get_json_response(
+            url=Endpoints.NETWORKS, fetch_all_items=True, page_size=2
+        )
+
+        assert result["data"] == [1, 2, 3]
+        sent = [c.kwargs["params"] for c in session.request.await_args_list]
+        assert sent == [{"limit": 2}, {"offset": 2, "limit": 2}]
+
+    async def test_max_items_caps_results(self):
+        session = Mock(spec=aiohttp.ClientSession)
+        session.request = AsyncMock(
+            return_value=_json_response(
+                {"total": 10, "offset": 0, "limit": 2, "data": [1, 2]}
+            )
+        )
+        manager = RequestManager(session=session)
+
+        result = await manager.get_json_response(url=Endpoints.NETWORKS, max_items=2)
+
+        assert result["data"] == [1, 2]
+        session.request.assert_awaited_once()
+        assert session.request.await_args.kwargs["params"] == {"limit": 2}
