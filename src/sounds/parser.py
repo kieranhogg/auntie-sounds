@@ -15,6 +15,7 @@ from sounds.models import (
     RadioShow,
     RecommendedMenuItem,
     SearchResults,
+    Season,
     SoundsTypes,
     StationSearchResult,
 )
@@ -171,3 +172,13 @@ class Parser:
                     episodes = []
         results = SearchResults(stations=stations, shows=shows, episodes=episodes)
         return results
+
+    def parse_seasons(self, json_data: dict) -> list[Season]:
+        """Brand->series. Numbered by API order only at present which seems to hold."""
+        parsed = self.parse_container(json_data, type_hint=Season)
+        seasons = (
+            [s for s in parsed if isinstance(s, Season)]
+            if isinstance(parsed, list)
+            else []
+        )
+        return seasons

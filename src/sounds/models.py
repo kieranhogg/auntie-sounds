@@ -1,9 +1,9 @@
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from copy import copy
 from dataclasses import dataclass, field
 from datetime import datetime as dt
 from logging import Logger
-from typing import Annotated, Any, Final, Literal
+from typing import Annotated, Any, ClassVar, Final, Literal
 from urllib.parse import parse_qs, urlparse
 from warnings import deprecated
 from zoneinfo import ZoneInfo
@@ -302,6 +302,9 @@ class URN(SerializableMixin):
 class BaseObject(SerializableMixin):
     """Base class for all objects with common functionality."""
 
+    # Sounds key -> library key mapping
+    API_FIELD_MAP: ClassVar[Mapping[str, str]] = {}
+
     type: str | None = None
     # List of URIs e.g. [{"type":"latest"...}] or the pagination and polling
     # URLs, e.g. {"pagination": ..., "polling": ...}
@@ -408,6 +411,7 @@ class PlayableNetwork(Network):
 class BasicContainer(IdentifiableMixin):
     """Just a bare wrapper for items, e.g. PlayableItemsResponse."""
 
+    series_pid: str | None = None
     sub_items: Sequence[SoundsTypes] | None = None
 
 
@@ -469,6 +473,7 @@ class PlayableItem(BaseObject, IdentifiableMixin):
     id: str
     urn: str | None = None
     pid: str | None = None
+    series_pid: str | None = None
     type: str | None = None
     # Duration object normally; plain seconds on broadcast summaries
     duration: Duration | int | None = None
@@ -497,12 +502,26 @@ class PlayableItem(BaseObject, IdentifiableMixin):
             self.pid = self.urn.rsplit(":", 1)[-1]
 
         if not self.container and self.ancestors:
-            # ancestors run top-down (brand, then series); the immediate
-            # parent is the most specific one, not the first.
+            # ancestors run top-down (brand, then series). The container is
+            # always the brand so its identity doesn't depend on the endpoint
+            # the item came from; the series is tracked in series_pid.
             self.container = next(
-                (a for a in self.ancestors if a.type == "series"),
-                self.ancestors[-1],
+                (a for a in self.ancestors if a.type == "brand"),
+                self.ancestors[0],
             )
+
+        series = next((a for a in self.ancestors or [] if a.type == "series"), None)
+        series_pid = None
+        # broadcasts / by-pid items
+        if series:
+            series_pid = series.id
+        # playable-endpoint items
+        elif isinstance(self.uris, list):
+            latest = next((u for u in self.uris if u.type == "latest"), None)
+            series_pid = latest.query_param("container") if latest else None
+        # A series that is also the container is a flat brand
+        if series_pid and series_pid != getattr(self.container, "id", None):
+            self.series_pid = series_pid
 
     def is_live(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo) -> bool:
         if self.start and self.end:
@@ -656,19 +675,31 @@ class RadioClip(PlayableItem, TimedContent, ImageMixin, IdentifiableMixin):
         self.process_image()
 
 
-# Specific content types
 @dataclass(kw_only=True)
-class RadioClip(PlayableItem, TimedContent, ImageMixin, IdentifiableMixin):
-    """Represents a playable radio clip."""
+class PodcastEpisode(PlayableItem, ImageMixin, IdentifiableMixin):
+    """Represents a playable podcast episode."""
+
+    @property
+    def item_id(self):
+        return self.pid
 
     def post_processing(self, logger: Logger) -> None:
         super().post_processing(logger)
         self.process_image()
 
 
+# Not a PodcastEpisode subclass: consumers dispatch on isinstance and check
+# PodcastEpisode before RadioShow.
 @dataclass(kw_only=True)
-class PodcastEpisode(PlayableItem, ImageMixin, IdentifiableMixin):
-    """Represents a playable podcast episode."""
+class RadioShow(PlayableItem, ImageMixin, IdentifiableMixin):
+    """Represents a playable radio show."""
+
+    service_id: str | None = None
+    version_pid: str | None = None
+
+    @property
+    def item_id(self):
+        return self.pid
 
     def post_processing(self, logger: Logger) -> None:
         super().post_processing(logger)
@@ -690,6 +721,8 @@ class AudiobookEpisode(PodcastEpisode):
 class Podcast(ImageContainer):
     """Represents a podcast container (holds episodes)."""
 
+    seasons: list[Season] | None = None
+
 
 @dataclass(kw_only=True)
 class Audiobook(Podcast):
@@ -697,7 +730,7 @@ class Audiobook(Podcast):
 
 
 @dataclass(kw_only=True)
-class RadioSeries(ImageContainer):
+class RadioSeries(Podcast):
     """Represents a radio series container (holds episodes)."""
 
 
@@ -787,6 +820,15 @@ class Header(BaseObject):
     pass
 
 
+@dataclass(kw_only=True)
+class Season(ImageContainer):
+    API_FIELD_MAP: ClassVar[Mapping[str, str]] = {"tlec_urn": "brand_urn"}
+    brand_urn: str | None = None
+    sub_items: Sequence[Annotated[EpisodeTypes, _POLYMORPHIC]] | None = None
+
+
+EpisodeTypes = PodcastEpisode | RadioShow | RadioClip
+
 type SoundsTypes = (
     AudiobookEpisode
     | Audiobook
@@ -809,6 +851,7 @@ type SoundsTypes = (
     | RadioShow
     | RecommendedMenuItem
     | SearchResults
+    | Season
     | Segment
     | Schedule
     | ScheduleItem

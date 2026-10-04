@@ -1,4 +1,8 @@
+import asyncio
 import logging
+from collections import defaultdict
+from collections.abc import Sequence
+from itertools import chain
 from typing import TYPE_CHECKING, Literal, cast
 
 from sounds import endpoints
@@ -8,15 +12,16 @@ from sounds.models import (
     Audiobook,
     Collection,
     Container,
+    EpisodeTypes,
     ItemCategory,
     Menu,
     PlayableItem,
     Podcast,
     PodcastEpisode,
-    RadioClip,
     RadioSeries,
     RadioShow,
     SearchResults,
+    Season,
     Segment,
 )
 from sounds.parser import Parser
@@ -28,6 +33,32 @@ if TYPE_CHECKING:
     from sounds.models import SoundsTypes
 
 logger = logging.getLogger(__name__)
+
+
+def assign_seasons(
+    podcast: Podcast | RadioSeries, episodes: Sequence[EpisodeTypes]
+) -> None:
+    if not podcast.seasons:
+        return
+    by_series: defaultdict[str | None, list[EpisodeTypes]] = defaultdict(list)
+    for episode in episodes:
+        by_series[episode.series_pid].append(episode)
+
+    def first_release(season: Season) -> str:
+        return min(
+            (e.release["date"] for e in by_series.get(season.item_id, ()) if e.release),
+            default="9999",
+        )
+
+    podcast.seasons.sort(key=first_release)
+    for season in podcast.seasons:
+        # Container.pid isn't populated from the urn, so use item_id
+        season.sub_items = (
+            by_series.pop(season.item_id, None) if season.item_id else None
+        )
+
+    # anything left matched no season (including series_pid=None)
+    podcast.sub_items = list(chain.from_iterable(by_series.values())) or None
 
 
 class ContentService:
@@ -64,68 +95,46 @@ class ContentService:
         return podcasts
 
     async def get_podcast(
-        self, urn=None, pid=None, include_episodes=True
+        self, urn=None, pid=None, include_episodes=False
     ) -> Podcast | RadioSeries:
-        podcast = None
         if not urn and not pid:
             raise InvalidFormatError("Must be called with one of: urn, pid")
         if urn:
-            # If we have the URN we can look up the podcast container
-            podcast_container = await self.get_container(urn=urn)
-            if podcast_container and type(podcast_container) is list:
-                podcast = next(
-                    (
-                        podcast
-                        for podcast in podcast_container
-                        if isinstance(podcast, (Podcast, RadioSeries))
-                    ),
-                    None,
-                )
-            else:
-                podcast = (
-                    podcast_container
-                    if isinstance(podcast_container, (Podcast, RadioSeries))
-                    else None
-                )
-            if podcast and not include_episodes and getattr(podcast, "sub_items", None):
-                podcast.sub_items = []
-        elif pid:
-            # If we only have the PID, we can grab the episodes and parse out the podcast or radio series
-            podcast_episodes = await self.get_pid_container(pid=pid)
-            length = len(podcast_episodes) if podcast_episodes else 0
-            logger.debug("Received %s episodes for podcast", length)
-            if (
-                podcast_episodes
-                and len(podcast_episodes) > 1
-                and podcast_episodes[0].container
-            ):
-                inferred_type = type(podcast_episodes[0].container)
-                logger.debug(f"Inferred type of podcast is {inferred_type}")
-                if inferred_type is Podcast:
-                    return await self.get_podcast(urn=podcast_episodes[0].container.urn)
-                elif inferred_type is RadioSeries:
-                    return await self.get_radio_series(
-                        urn=podcast_episodes[0].container.urn
-                    )
-                raise NotFoundError(
-                    "Incorrect type found for podcast - urn: {urn}, pid: {pid}"
-                )
+            pid = urn.rsplit(":", 1)[-1]
 
-        if not podcast or not isinstance(podcast, (Podcast, RadioSeries)):
-            raise NotFoundError(f"Couldn't get podcast - urn: {urn}, pid: {pid}")
+        # We get the seasons, if there are any, as well as the overall container
+        series_json, brand_json = await asyncio.gather(
+            self.requests.get_json_response(
+                url=Endpoints.SERIES_CONTAINER,
+                params={"parent": pid, "type": "series"},
+            ),
+            self.requests.get_json_response(
+                url=Endpoints.CONTAINER_FROM_PIDS, url_args={"pids": pid}
+            ),
+        )
+        brand = self.parser.parse_container(brand_json)
+        podcast = brand[0] if isinstance(brand, list) and brand else None
+        if not isinstance(podcast, (Podcast, RadioSeries)):
+            raise NotFoundError(f"Couldn't get podcast - pid: {pid}")
+        podcast.seasons = self.parser.parse_seasons(series_json) or None
+        if include_episodes:
+            episodes = await self.get_podcast_episodes(pid, fetch_all_items=True)
+            if not podcast.seasons:
+                podcast.sub_items = episodes
+            else:
+                assign_seasons(podcast, episodes)
         return podcast
 
     async def get_podcast_episodes(
-        self, pid
-    ) -> list[PodcastEpisode | RadioShow | RadioClip] | None:
-        podcast_container = await self.get_pid_container(pid)
-        if podcast_container and type(podcast_container) is list:
-            return [
-                episode
-                for episode in podcast_container
-                if isinstance(episode, (PodcastEpisode, RadioShow, RadioClip))
-            ]
-        return []
+        self,
+        pid,
+        fetch_all_items: bool = False,
+        max_items: int | None = None,
+    ) -> list[EpisodeTypes]:
+        items = await self.get_pid_container(
+            pid=pid, fetch_all_items=fetch_all_items, max_items=max_items
+        )
+        return [i for i in items or [] if isinstance(i, EpisodeTypes)]
 
     async def get_podcast_episode(self, pid, include_stream=False) -> PodcastEpisode:
         show = await self.get_by_pid(pid=pid, include_stream=include_stream)
@@ -175,10 +184,18 @@ class ContentService:
             )
         return playable_item
 
-    async def get_pid_container(self, pid) -> list[PlayableItem] | None:
+    async def get_pid_container(
+        self,
+        pid,
+        sort: str = "sequential",
+        fetch_all_items: bool = False,
+        max_items: int | None = None,
+    ) -> list[PlayableItem] | None:
         json_resp = await self.requests.get_json_response(
             url=Endpoints.PLAYABLE_ITEMS_CONTAINER,
-            params={"container": pid, "sort": "sequential"},
+            params={"container": pid, "sort": sort},
+            fetch_all_items=fetch_all_items,
+            max_items=max_items,
         )
         container = self.parser.parse_container(json_resp)
         if isinstance(container, list):

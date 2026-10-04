@@ -1,0 +1,43 @@
+{
+  "$schema": "https://rms.api.bbc.co.uk/docs/swagger.json#/definitions/ContainerItems",
+  "total": 1,
+  "limit": 30,
+  "offset": 0,
+  "data": [
+    {
+      "type": "container_item",
+      "id": "p0jtptvc",
+      "urn": "urn:bbc:radio:brand:p0jtptvc",
+      "network": {
+        "id": "bbc_sounds_podcasts",
+        "key": "podcasts",
+        "short_title": "Sounds",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Death of an Artist",
+        "secondary": null,
+        "tertiary": null
+      },
+      "synopses": {
+        "short": "A beloved author and her husband’s suicide leaves friends and family divided by grief.",
+        "medium": null,
+        "long": "In February 2024, celebrated children’s book author and illustrator Petra Mathers and her husband, photographer Michael Mathers, mailed letters to dozens of friends and family members to let them know they had died by suicide. Petra and Michael were by all accounts healthy, happy, and in love. Why did they choose to die together? And what did that decision do to the people left to mourn them?\n\nIn season 3 of Death of an Artist, journalists Leon Neyfakh and Alice Gregory set out to interview everyone who got one of Petra and Michael’s letters—as one married couple trying to understand another. Through intimate conversations with Petra and Michael’s friends and family about their own relationships to aging, grief, death, and the friends they thought they knew,  Death of an Artist weaves together a portrait of a community grappling with the Mathers’ deaths and the final words they left behind.  \n\nListen back to season 2, where Katy Hessel offers an inside look at how Jackson Pollock and his wife, Lee Krasner, changed everything about the landscape of modern art. \n\nAnd in season 1, host Helen Molesworth revisits the artist Ana Mendieta’s death and the trial that followed - interrogating both the silence and the protest that have accompanied her story ever since."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p664rl.jpg",
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=p0jtptvc&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "tlec_urn": "urn:bbc:radio:brand:p0jtptvc",
+      "playable_count": null,
+      "recommendation": null
+    }
+  ]
+}

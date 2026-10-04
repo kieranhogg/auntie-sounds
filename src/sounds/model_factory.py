@@ -65,6 +65,14 @@ NESTED_OBJECTS: Final[tuple[NestedObject, ...]] = (
 )
 
 
+def _api_field_map(new_type: type) -> dict[str, str]:
+    """Process the Sounds->library key mapping defined on the model."""
+    merged: dict[str, str] = {}
+    for cls in reversed(new_type.__mro__):
+        merged.update(cls.__dict__.get("API_FIELD_MAP", {}))
+    return merged
+
+
 def _podcast_or_series(
     original_object: dict,
     urn: str | None,
@@ -299,8 +307,15 @@ class ModelFactory:
                         ) or original_object.get("on_air"):
                             # Live, or not yet aired
                             new_type = ScheduleItem
-                        elif original_object.get("playable_item") is not None:
+                        elif (
+                            playable := original_object.get("playable_item")
+                        ) is not None:
                             new_type = RadioShow
+                            # On a broadcast summary, playable_item.id is the version pid.
+                            original_object = {
+                                **original_object,
+                                "version_pid": playable.get("id"),
+                            }
                         else:
                             new_type = ScheduleItem
 
@@ -331,7 +346,7 @@ class ModelFactory:
                 elif object_type == BaseSoundsTypes.PLAYABLE_ITEMS_RESPONSE:
                     new_type = BasicContainer
                 elif object_type == ContainerType.BRAND:
-                    new_type = _podcast_or_series(original_object, urn)
+                    new_type = _podcast_or_series(original_object, urn, parent_network)
                 elif object_type in self.CONTAINER_SCHEMA_MAP:
                     new_type = self.CONTAINER_SCHEMA_MAP[object_type]
                 elif object_type == BaseSoundsTypes.PROGRAMMES:
@@ -384,7 +399,9 @@ def convert_between_types(original_object, new_type):
             if f.name in required_fields
         }
     elif isinstance(original_object, dict):
-        attrs = {k: v for k, v in original_object.items() if k in required_fields}
+        renames = _api_field_map(new_type)
+        source = {renames.get(k, k): v for k, v in original_object.items()}
+        attrs = {k: v for k, v in source.items() if k in required_fields}
     else:
         pass
     try:

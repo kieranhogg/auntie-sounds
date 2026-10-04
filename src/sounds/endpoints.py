@@ -116,6 +116,10 @@ class Endpoints(Enum):
     TRACKS = ("/v2/versions/{vpid}/tracks", False)
 
     # Episodes, programmes, series etc.
+    CONTAINER_FROM_PIDS = ("/v2/programmes/container/{pids}", False)
+    SERIES_CONTAINER = ("/v2/programmes/container", False)
+    SERIES_EPISODES = ("/v2/programmes/playable/{pids}", False)
+
     PLAYABLE_ITEMS_CONTAINER = (
         "/v2/programmes/playable",  # ?container={pid}&sort=sequential | sort=popular | sort=-release_date
         False,
