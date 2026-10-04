@@ -230,7 +230,7 @@ class StationService:
             return None
         if include_stream:
             stream = await self.playback.get_live_stream(
-                station_id=station_id, stream_format=stream_format
+                station_id=station_id, prefer_type=stream_format
             )
             if stream:
                 station.stream = stream
@@ -255,7 +255,7 @@ class StationService:
             return None
         if include_stream:
             stream = await self.playback.get_live_stream(
-                station_id=station_id, stream_format=stream_format, international=True
+                station_id=station_id, prefer_type=stream_format, international=True
             )
             if stream:
                 station.stream = stream

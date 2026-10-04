@@ -227,10 +227,10 @@ class ContentService:
             raise APIResponseError(f"Couldn't get item with PID {pid}")
 
         if include_stream:
-            if not playable_item.vpid:
+            if not playable_item.version_pid:
                 raise APIResponseError(f"No available version for PID {pid}")
             playable_item.stream = await self.playback.get_episode_stream(
-                episode_id=playable_item.vpid, prefer_type=stream_format
+                episode_id=playable_item.version_pid, prefer_type=stream_format
             )
         return playable_item
 
