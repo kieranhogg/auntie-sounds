@@ -21,12 +21,10 @@ if not body.strip():
 
 today = datetime.datetime.now(tz=datetime.UTC).date().isoformat()
 if "b" in version:
-    new_text = (
-        f"{before}{marker}\n\n## PRE-RELEASE [{version}] - {today}\n{body}\n{tail}"
-    )
-    body = "!PRE-RELEASE VERSION!\n" + body
+    # Betas don't touch the changelog: notes accumulate in [Unreleased]
+    # until the stable release, and each beta's notes are a snapshot of it.
+    body = f"!PRE-RELEASE VERSION!\n\nChanges since the last stable release:\n\n{body}"
 else:
-    new_text = f"{before}{marker}\n\n## [{version}] - {today}\n{body}\n{tail}"
+    path.write_text(f"{before}{marker}\n\n## [{version}] - {today}\n{body}\n{tail}")
 
-path.write_text(new_text)
 pathlib.Path("release_notes.md").write_text(body + "\n")
