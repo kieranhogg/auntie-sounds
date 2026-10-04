@@ -171,10 +171,11 @@ class ContentService:
         )
 
         logger.debug(json_resp)
-        if not json_resp:
-            logger.debug(json_resp)
+
+        if not json_resp or not json_resp.get("data"):
             raise NotFoundError(f"Couldn't get item with PID {pid}")
         playable_item = self.parser.parse_node(json_resp)
+
         if not isinstance(playable_item, PlayableItem):
             raise APIResponseError(f"Couldn't get item with PID {pid}")
 
