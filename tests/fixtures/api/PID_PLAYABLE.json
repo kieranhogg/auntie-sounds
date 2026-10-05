@@ -1,0 +1,99 @@
+{
+  "$schema": "https://rms.api.bbc.co.uk/docs/swagger.json#/definitions/PlayableItem",
+  "type": "playable_item",
+  "id": "p0nklpkw",
+  "urn": "urn:bbc:radio:episode:m002wx92",
+  "network": {
+    "id": "bbc_radio_four",
+    "key": "radio4",
+    "short_title": "Radio 4",
+    "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+    "network_type": "master_brand"
+  },
+  "titles": {
+    "primary": "Shadow World",
+    "secondary": "Stolen Years",
+    "tertiary": "Trailer",
+    "entity_title": "Trailer"
+  },
+  "synopses": {
+    "short": "Andrew Malkinson versus the justice system that failed him.",
+    "medium": "Andrew Malkinson’s fight for justice and reform. Now the right man is found guilty, what does Malkinson's wrongful conviction reveal about the justice system that failed him?",
+    "long": "Andrew Malkinson’s wrongful conviction of a brutal rape in 2003 has been recognised as one of the worst miscarriages of justice in UK history. He’s angry and says the criminal justice and appeal systems let him down.  Now that the right man has been convicted, he wants answers, and reform. \n \nSo why did he spend all those years in prison while the perpetrator remained free? And what does his case tell us about the justice system that failed him? In Shadow World:  Stolen Years, filmmaker and journalist Jemma Gander (co-director of The Wrong Man: 17 Years Behind Bars) follows the next chapter of this extraordinary case.\n \nAs Andrew tries to rebuild his life, fresh questions emerge about the role of the police, the courts, and the institutions that failed him. “You don’t know what you’re capable of withstanding until you are forced to. But it’s just horrific”.\n \nTwenty three years later, a man is found guilty of the crime Andrew Malkinson was falsely accused of."
+  },
+  "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0nklqcx.jpg",
+  "duration": {
+    "value": 216,
+    "label": "3 mins"
+  },
+  "progress": {
+    "value": 41,
+    "label": "2 mins left"
+  },
+  "container": {
+    "type": "brand",
+    "id": "m001zlz0",
+    "urn": "urn:bbc:radio:brand:m001zlz0",
+    "title": "Shadow World",
+    "synopses": {
+      "short": "What will it take for two London gangsters to turn their lives into a movie?",
+      "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+      "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+    },
+    "activities": []
+  },
+  "download": {
+    "type": "non_drm",
+    "quality_variants": {
+      "low": {
+        "bitrate": 128,
+        "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0nklpkw.mp3",
+        "file_size": 4000000,
+        "label": "4 MB"
+      },
+      "medium": {
+        "bitrate": 128,
+        "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0nklpkw.mp3",
+        "file_size": 4000000,
+        "label": "4 MB"
+      },
+      "high": {
+        "bitrate": 128,
+        "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0nklpkw.mp3",
+        "file_size": 4000000,
+        "label": "4 MB"
+      }
+    }
+  },
+  "availability": {
+    "from": "2026-05-12T07:00:00Z",
+    "to": "2031-05-11T07:00:00Z",
+    "label": "Available for over a year"
+  },
+  "release": {
+    "date": "2026-05-11T00:00:00Z",
+    "label": "11 May 2026"
+  },
+  "guidance": {
+    "competition_warning": false,
+    "warnings": null
+  },
+  "activities": [
+    {
+      "type": "play_activity",
+      "action": "paused",
+      "label": null,
+      "urn": null
+    }
+  ],
+  "uris": [
+    {
+      "type": "latest",
+      "id": null,
+      "label": "Latest",
+      "uri": "/v2/my/programmes/playable?container=m002wx7c&sort=sequential&type=episode&experience=domestic"
+    }
+  ],
+  "play_context": null,
+  "recommendation": null
+}
