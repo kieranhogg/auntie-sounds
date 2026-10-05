@@ -364,7 +364,7 @@ class StationService:
             image_url=station.network.logo_url if station and station.network else None,
         )
         if include_listings:
-            start_date = dt.now(tz=self.schedules.timezone).date()
+            start_date = dt.now(tz=self.schedules.SCHEDULE_TIMEZONE).date()
             if catch_up:
                 end_date = start_date - timedelta(days=30)
             else:
