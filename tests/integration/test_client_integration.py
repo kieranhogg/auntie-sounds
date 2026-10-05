@@ -12,7 +12,7 @@ class TestClientLifecycle:
 
     async def test_client_initialization(self):
         """Test client initialisation"""
-        client = SoundsClient(timezone=pytz.UTC)
+        client = SoundsClient(local_timezone=pytz.UTC)
         assert client.timezone == pytz.UTC
         assert client.auth is not None
         assert client.stations is not None
@@ -24,12 +24,12 @@ class TestClientLifecycle:
 
     async def test_client_context_manager(self):
         """Test context manager."""
-        async with SoundsClient(timezone=pytz.UTC) as client:
+        async with SoundsClient(local_timezone=pytz.UTC) as client:
             assert client is not None
 
     async def test_client_close(self):
         """Closing an already-closed client shouldn't raise an exception."""
-        client = SoundsClient(timezone=pytz.UTC)
+        client = SoundsClient(local_timezone=pytz.UTC)
         await client.close()
         await client.close()
 

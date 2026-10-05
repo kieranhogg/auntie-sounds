@@ -73,7 +73,7 @@ class TestScheduleService:
 
     async def test_get_schedule_invalid_date_format(self):
         """Test get_schedule with invalid date format"""
-        service = ScheduleService(timezone=datetime.UTC, requests=Mock())
+        service = ScheduleService(requests=Mock())
 
         with pytest.raises(InvalidFormatError):
             await service.get_schedule("bbc_radio_one", date="2025/01/15")
@@ -99,7 +99,7 @@ class TestScheduleDateOutOfRange:
                 status_code=400,
             )
         )
-        service = ScheduleService(timezone=datetime.UTC, requests=requests)
+        service = ScheduleService(requests=requests)
 
         with pytest.raises(DateOutOfRangeError) as exc:
             await service.get_schedule("bbc_radio_one", date="2000-01-01")
@@ -112,7 +112,7 @@ class TestScheduleDateOutOfRange:
     async def test_other_api_errors_pass_through(self):
         requests = Mock()
         requests.get_json_response = AsyncMock(side_effect=APIResponseError("nope"))
-        service = ScheduleService(timezone=datetime.UTC, requests=requests)
+        service = ScheduleService(requests=requests)
 
         with pytest.raises(APIResponseError) as exc:
             await service.get_schedule("bbc_radio_one", date="2000-01-01")

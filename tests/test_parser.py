@@ -4,7 +4,14 @@ from logging import Logger
 import pytest
 
 from sounds.model_factory import NESTED_OBJECTS
-from sounds.models import Menu, Podcast, PodcastEpisode, RadioShow, SearchResults
+from sounds.models import (
+    Menu,
+    Podcast,
+    PodcastEpisode,
+    RadioSeries,
+    RadioShow,
+    SearchResults,
+)
 from sounds.parser import Parser
 
 
@@ -99,10 +106,25 @@ class TestParserNestedObjects:
                 and hasattr(result.network, nested_object.source_key)
             )  # For network->services
 
-    def test_programme_from_pid_container_is_typed(self):
+    @pytest.mark.parametrize(
+        ("station_owned", "episode_type", "container_type"),
+        [
+            # Marked by OwnerService: the brand belongs to bbc_sounds_podcasts
+            (False, PodcastEpisode, Podcast),
+            (True, RadioShow, RadioSeries),
+            # Unmarked, so both fall back to the episode's network, Radio 4
+            (None, RadioShow, RadioSeries),
+        ],
+    )
+    def test_programme_from_pid_container_is_typed(
+        self, station_owned, episode_type, container_type
+    ):
         """Containers taken from ancestors must be a Podcast/RadioSeries, not a bare Container"""
         with open("tests/fixtures/api/PROGRAMME_FROM_PID.json") as json_file:
-            result = Parser().parse_node(json.load(json_file))
-        assert isinstance(result, PodcastEpisode)
-        assert isinstance(result.container, Podcast)
+            data = json.load(json_file)
+        if station_owned is not None:
+            data["data"][0]["ancestors"][0]["station_owned"] = station_owned
+        result = Parser().parse_node(data)
+        assert type(result) is episode_type
+        assert type(result.container) is container_type
         assert result.container.type == "brand"

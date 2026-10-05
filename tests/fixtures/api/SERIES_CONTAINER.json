@@ -1,13 +1,48 @@
 {
   "$schema": "https://rms.api.bbc.co.uk/docs/swagger.json#/definitions/ContainerItems",
-  "total": 1,
+  "total": 3,
   "limit": 30,
   "offset": 0,
   "data": [
     {
       "type": "container_item",
-      "id": "p0jtptvc",
-      "urn": "urn:bbc:radio:brand:p0jtptvc",
+      "id": "m0031689",
+      "urn": "urn:bbc:radio:series:m0031689",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "I'm Not A Monster Presents...",
+        "secondary": "Where Is Austin Tice?",
+        "tertiary": null
+      },
+      "synopses": {
+        "short": "Josh Baker investigates one of the biggest missing-person cases of our time.",
+        "medium": "Josh Baker enters a dangerous world of fear, greed and betrayal as he uncovers what happened in one of the biggest missing-person cases of our time - the abduction of Austin Tice.",
+        "long": "Josh Baker enters a dangerous world of fear, greed and betrayal as he uncovers what happened in one of the biggest missing-person cases of our time - the abduction of Austin Tice."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p5j30m.jpg",
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=m0031689&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "tlec_urn": "urn:bbc:radio:brand:p08yblkf",
+      "playable_count": null,
+      "recommendation": null
+    },
+    {
+      "type": "container_item",
+      "id": "p0cxg0p2",
+      "urn": "urn:bbc:radio:series:p0cxg0p2",
       "network": {
         "id": "bbc_sounds_podcasts",
         "key": "podcasts",
@@ -16,26 +51,61 @@
         "network_type": "master_brand"
       },
       "titles": {
-        "primary": "Death of an Artist",
-        "secondary": null,
+        "primary": "I'm Not A Monster Presents...",
+        "secondary": "I'm Not A Monster",
         "tertiary": null
       },
       "synopses": {
-        "short": "A beloved author and her husband’s suicide leaves friends and family divided by grief.",
-        "medium": null,
-        "long": "In February 2024, celebrated children’s book author and illustrator Petra Mathers and her husband, photographer Michael Mathers, mailed letters to dozens of friends and family members to let them know they had died by suicide. Petra and Michael were by all accounts healthy, happy, and in love. Why did they choose to die together? And what did that decision do to the people left to mourn them?\n\nIn season 3 of Death of an Artist, journalists Leon Neyfakh and Alice Gregory set out to interview everyone who got one of Petra and Michael’s letters—as one married couple trying to understand another. Through intimate conversations with Petra and Michael’s friends and family about their own relationships to aging, grief, death, and the friends they thought they knew,  Death of an Artist weaves together a portrait of a community grappling with the Mathers’ deaths and the final words they left behind.  \n\nListen back to season 2, where Katy Hessel offers an inside look at how Jackson Pollock and his wife, Lee Krasner, changed everything about the landscape of modern art. \n\nAnd in season 1, host Helen Molesworth revisits the artist Ana Mendieta’s death and the trial that followed - interrogating both the silence and the protest that have accompanied her story ever since."
+        "short": "How did an American family end up in the heart of the ISIS caliphate?",
+        "medium": "How did an American family end up in the heart of the ISIS caliphate? Over four years, journalist Josh Baker unravels a dangerous story where nothing is as it seems.",
+        "long": "An American mother living in the heart of the ISIS caliphate. Her husband an ISIS sniper. Her 10-year-old son forced to threaten the U.S. president in a propaganda video shown around the world. She claims she was tricked into taking her young children to war-torn Syria, but where does her account end and the truth begin?\n\nFrom BBC Panorama & FRONTLINE PBS."
       },
-      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p664rl.jpg",
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0cy1wqg.jpg",
       "activities": [],
       "uris": [
         {
           "type": "latest",
           "id": null,
           "label": "Latest",
-          "uri": "/v2/programmes/playable?container=p0jtptvc&sort=sequential&type=episode&experience=domestic"
+          "uri": "/v2/programmes/playable?container=p0cxg0p2&sort=sequential&type=episode&experience=domestic"
         }
       ],
-      "tlec_urn": "urn:bbc:radio:brand:p0jtptvc",
+      "tlec_urn": "urn:bbc:radio:brand:p08yblkf",
+      "playable_count": null,
+      "recommendation": null
+    },
+    {
+      "type": "container_item",
+      "id": "p0cxg1j8",
+      "urn": "urn:bbc:radio:series:p0cxg1j8",
+      "network": {
+        "id": "bbc_sounds_podcasts",
+        "key": "podcasts",
+        "short_title": "Sounds",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "I'm Not A Monster Presents...",
+        "secondary": "The Shamima Begum Story",
+        "tertiary": null
+      },
+      "synopses": {
+        "short": "The award-winning series returns to investigate the divisive story of Shamima Begum.",
+        "medium": "Seeking to separate fact from fiction, the multi award-winning series returns to investigate the divisive story of Shamima Begum.",
+        "long": "Seeking to separate fact from fiction, the multi award-winning series returns to investigate the divisive story of Shamima Begum.\n\nWhen three London school girls went missing in 2015, they generated global headlines and the media storm that ensued continues to this day. Back then, investigative journalist Josh Baker was filming at a mosque in the girls' neighbourhood as their families came to seek help; their daughters were on the way to Syria to join the Islamic State group. But it was too late, and they disappeared inside the so-called caliphate.\n\nFor four years, their fate remained a mystery - with only occasional glimpses and sometimes conflicting reports of what they were doing with the terror group being made public. Only one of the girls emerged from the ashes of the so called caliphate - Shamima Begum.\n\nThe new series takes listeners inside Josh's attempts to figure out what really happened, unearthing new information about one of the most talked about stories of our time. He travels from Bethnal Green in East London to the depths of what was ISIS controlled Syria as he challenges Shamima Begum and investigates if the story she tells is true."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0dtdgzm.jpg",
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=p0cxg1j8&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "tlec_urn": "urn:bbc:radio:brand:p08yblkf",
       "playable_count": null,
       "recommendation": null
     }

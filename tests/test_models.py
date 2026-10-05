@@ -44,7 +44,7 @@ class TestModels:
             start=now - timedelta(hours=1),
             end=now + timedelta(hours=1),
         )
-        assert item.is_live(pytz.UTC) is True
+        assert item.is_live is True
 
     def test_schedule_item_is_not_live_before_start(self):
         """Test ScheduleItem.is_live() returns False before the item starts."""
@@ -54,7 +54,7 @@ class TestModels:
             start=now + timedelta(hours=1),
             end=now + timedelta(hours=2),
         )
-        assert item.is_live(pytz.UTC) is False
+        assert item.is_live is False
 
     def test_schedule_item_has_aired(self):
         """Test ScheduleItem.has_already_aired() method."""

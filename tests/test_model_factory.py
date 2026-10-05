@@ -17,6 +17,7 @@ from sounds.models import (
     Podcast,
     PodcastEpisode,
     RadioClip,
+    RadioSeries,
     RadioShow,
     Segment,
     Station,
@@ -188,12 +189,28 @@ class TestClipVsPodcastClassification:
         result = Parser().parse_node(node)
         assert isinstance(result, RadioClip)
 
-    def test_clip_in_brand_container_is_podcast_episode(self):
+    @pytest.mark.parametrize(
+        ("station_owned", "expected", "container_type"),
+        [
+            # In a podcast's listing, a clip is one of its episodes
+            (False, PodcastEpisode, Podcast),
+            # In a station's brand it stays a clip, matching its RadioSeries
+            (True, RadioClip, RadioSeries),
+        ],
+    )
+    def test_clip_follows_its_brand_owner(
+        self, station_owned, expected, container_type
+    ):
         node = {
             "type": "playable_item",
             "id": "m011",
             "urn": "urn:bbc:radio:clip:m011",
-            "container": {"id": "brand", "type": "brand"},
+            "container": {
+                "id": "brand",
+                "type": "brand",
+                "network": {"id": "some_network"},
+                "station_owned": station_owned,
+            },
             "titles": {
                 "primary": "Title",
                 "secondary": None,
@@ -202,7 +219,8 @@ class TestClipVsPodcastClassification:
             },
         }
         result = Parser().parse_node(node)
-        assert isinstance(result, PodcastEpisode)
+        assert type(result) is expected
+        assert type(result.container) is container_type
 
 
 class TestStationClassification:
@@ -281,24 +299,23 @@ class TestPlaylists:
 
 
 class TestProgrammes:
-    def test_programme_podcast_episode(self):
-        """Test the parser for programme endpoint data converts to podcast episode correctly"""
+    @pytest.mark.parametrize(
+        ("owner", "expected"),
+        [
+            # The brand is a podcast, though this episode went out on Radio 4
+            ("bbc_sounds_podcasts", PodcastEpisode),
+            ("bbc_radio_four", RadioShow),
+            # With no mark and no network on the brand, the episode's own is used
+            (None, RadioShow),
+        ],
+    )
+    def test_programme_episode_type_follows_owner(self, owner, expected):
+        """Unmarked by OwnerService, so this is the fallback to the fixed set."""
         with open("tests/fixtures/api/PROGRAMME_FROM_PID.json") as node_file:
             json_data = json.loads(node_file.read())
-            original_object = json_data["data"][0]
-            new_type, new_object = ModelFactory()._programme_episode(json_data)
-            assert new_type is PodcastEpisode
-            assert original_object == new_object
-
-    def test_programme_radio_episode(self):
-        """Test the parser for programme endpoint data converts to radio show correctly"""
-        with open("tests/fixtures/api/PROGRAMME_FROM_PID.json") as node_file:
-            json_data = json.loads(node_file.read())
-            original_object = json_data["data"][0]
-
-            # Remove the podcast type present in the test data
-            del original_object["categories"][4]
-
-            new_type, new_object = ModelFactory()._programme_episode(json_data)
-            assert new_type is RadioShow
-            assert original_object == new_object
+        original_object = json_data["data"][0]
+        if owner:
+            original_object["ancestors"][0]["network"] = {"id": owner}
+        new_type, new_object = ModelFactory()._programme_episode(json_data)
+        assert new_type is expected
+        assert original_object == new_object
