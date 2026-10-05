@@ -73,24 +73,67 @@ def _api_field_map(new_type: type) -> dict[str, str]:
     return merged
 
 
+# Set by OwnerService on brand and series entries: whether the network that
+# owns them is a radio station, i.e. has a live service of its own
+STATION_OWNED: Final = "station_owned"
+
+# Only used for entries OwnerService hasn't marked: when the station list
+# couldn't be fetched, or a response is parsed without a client
+PODCAST_NETWORKS: Final = frozenset({"bbc_sounds_podcasts", "bbc_news"})
+
+
+def _network_id(network: dict | SoundsTypes | None) -> str | None:
+    if isinstance(network, Network):
+        return network.id
+    if isinstance(network, dict):
+        return network.get("id")
+    return None
+
+
 def _podcast_or_series(
     original_object: dict,
     urn: str | None,
     parent_network: dict | SoundsTypes | None = None,
 ) -> type:
-    network_id = None
-    if isinstance(parent_network, Network):
-        network_id = parent_network.id
-    else:
-        network = original_object.get("network") or parent_network
-        if network and type(network) is dict:
-            network_id = network.get("id")
-
-    if (network_id in ("bbc_sounds_podcasts", "bbc_news")) or (
+    """A brand or series owned by a radio station is a RadioSeries. Anything
+    else is a Podcast."""
+    if STATION_OWNED in original_object:
+        return RadioSeries if original_object[STATION_OWNED] else Podcast
+    # Unmarked, so fall back to the fixed set. A container's own network is its
+    # owner, while one nested in an episode has none and uses the episode's,
+    # the same as the episode does.
+    network_id = _network_id(original_object.get("network")) or _network_id(
+        parent_network
+    )
+    if network_id in PODCAST_NETWORKS or (
         not network_id and urn == ItemURN.RADIO_SHOW_OR_PODCAST
     ):
         return Podcast
     return RadioSeries
+
+
+def _in_a_podcast(
+    original_object: dict, parent_network: dict | SoundsTypes | None = None
+) -> bool:
+    """Whether an episode or clip belongs to a Podcast rather than a RadioSeries.
+
+    It's decided by its top-level container, so the item and its container
+    always agree. /playable responses have that as the container, /programmes
+    ones only have ancestors, which run top-down.
+    """
+    top_level = original_object.get("container") or next(
+        iter(original_object.get("ancestors") or []), None
+    )
+    if isinstance(top_level, dict) and STATION_OWNED in top_level:
+        return not top_level[STATION_OWNED]
+    # Unmarked, so fall back to the container's network, then a parent passed
+    # down, and only then the network the item went out on
+    owner = (
+        (_network_id(top_level.get("network")) if isinstance(top_level, dict) else None)
+        or _network_id(parent_network)
+        or _network_id(original_object.get("network"))
+    )
+    return owner in PODCAST_NETWORKS
 
 
 def _is_audiobook_episode(original_object):
@@ -102,27 +145,23 @@ def _is_audiobook_episode(original_object):
     return False
 
 
-def _episode_or_show_or_audiobook_episode(original_object) -> type:
+def _episode_or_show_or_audiobook_episode(
+    original_object: dict, parent_network: dict | SoundsTypes | None = None
+) -> type:
     if _is_audiobook_episode(original_object):
         return AudiobookEpisode
-    categories = {c.get("key") for c in original_object.get("categories", [])}
-    podcast = next((c for c in categories if c == "podcasts"), False)
-    if podcast:
-        return PodcastEpisode
-    container = original_object.get("container")
-    if not container and not podcast:
-        return RadioShow
-    is_brand = ContainerType(container.get("type")) == ContainerType.BRAND
-    is_podcast_network = (original_object.get("network") or {}).get(
-        "id"
-    ) == "bbc_sounds_podcasts"
-    return RadioShow if is_brand and not is_podcast_network else PodcastEpisode
+    return (
+        PodcastEpisode if _in_a_podcast(original_object, parent_network) else RadioShow
+    )
 
 
-def _clip_or_episode(original_object) -> type:
-    # Sometimes these can appear in podcast episodes listings
-    container = original_object.get("container")
-    if container and ContainerType(container.get("type")) == ContainerType.BRAND:
+def _clip_or_episode(
+    original_object: dict, parent_network: dict | SoundsTypes | None = None
+) -> type:
+    # Clips in a podcast's listing are its episodes. Elsewhere they stay clips.
+    if original_object.get("container") and _in_a_podcast(
+        original_object, parent_network
+    ):
         return PodcastEpisode
     return RadioClip
 
@@ -278,11 +317,11 @@ class ModelFactory:
                     case ItemType.PLAYABLE_ITEM:
                         if urn == ItemURN.EPISODE:
                             new_type = _episode_or_show_or_audiobook_episode(
-                                original_object
+                                original_object, parent_network
                             )
                         elif urn == ItemURN.CLIP:
                             # Sometimes these can appear in podcast episodes listings
-                            new_type = _clip_or_episode(original_object)
+                            new_type = _clip_or_episode(original_object, parent_network)
                         elif urn == ItemURN.NETWORK:
                             new_type = _live_station_or_station(original_object)
                         elif urn in self.PLAYABLE_ITEM_URN_MAP:
@@ -332,7 +371,7 @@ class ModelFactory:
 
                     case ItemType.EPISODE:
                         new_type = _episode_or_show_or_audiobook_episode(
-                            original_object
+                            original_object, parent_network
                         )
 
                     case _:
