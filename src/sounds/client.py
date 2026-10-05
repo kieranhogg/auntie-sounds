@@ -2,12 +2,10 @@ import asyncio.constants
 import hashlib
 import logging
 from collections.abc import Sequence
-from datetime import tzinfo
 from http.cookiejar import CookieJar as HttpCookieJar
 from pathlib import Path
 
 import aiohttp
-import pytz
 
 from sounds.auth import AuthService
 from sounds.content import ContentService
@@ -50,7 +48,6 @@ class SoundsClient:
         password=None,
         session=None,
         cookie_file_location=None,
-        timezone=None,
         log_level=None,
         debug_login=False,
     ) -> None:
@@ -66,14 +63,6 @@ class SoundsClient:
         self._session: aiohttp.ClientSession
         self._started = False
         self._cookie_path = cookie_file_location or _default_cookie_file(self.username)
-
-        if timezone:
-            self.timezone: tzinfo = timezone
-        else:
-            logger.warning(
-                "No timezone provided, assuming UTC so any time calculations for the schedules may be incorrect"
-            )
-            self.timezone = pytz.timezone("UTC")
 
     @classmethod
     async def create(cls, *args, **kwargs) -> SoundsClient:
@@ -138,7 +127,6 @@ class SoundsClient:
         self.owners = OwnerService(requests=self.requests)
         self.schedules = ScheduleService(
             requests=self.requests,
-            timezone=self.timezone,
         )
         self.user = UserService(
             cookie_store=self.cookie_store,
@@ -146,7 +134,7 @@ class SoundsClient:
             requests=self.requests,
         )
 
-        self.schedules = ScheduleService(requests=self.requests, timezone=self.timezone)
+        self.schedules = ScheduleService(requests=self.requests)
         self.playback = PlaybackService(
             requests=self.requests,
         )

@@ -2,7 +2,8 @@ import asyncio
 import datetime
 import logging
 from datetime import datetime as dt
-from datetime import timedelta, tzinfo
+from datetime import timedelta
+from zoneinfo import ZoneInfo
 
 from sounds import endpoints
 from sounds.endpoints import Endpoints
@@ -34,7 +35,10 @@ def _get_date_range(start_date: datetime.date, end_date: datetime.date):
 
 
 class ScheduleService:
-    def __init__(self, requests: RequestManager, timezone: tzinfo):
+    # Schedule dates are UK broadcast days
+    SCHEDULE_TIMEZONE = ZoneInfo("Europe/London")
+
+    def __init__(self, requests: RequestManager):
         self.requests = requests
         # Broadcasts are slots on a station and are typed as such, so unlike
         # ContentService and PersonalService this doesn't look up brand owners
@@ -51,7 +55,8 @@ class ScheduleService:
             url = Endpoints.SCHEDULE_DATE
             url_args.update({"date": date})
             try:
-                _ = dt.strptime(date, "%Y-%m-%d").replace(tzinfo=self.timezone)
+                # Try to parse the date string as a valid date format
+                dt.strptime(date, "%Y-%m-%d")  # ruff: ignore[DTZ007]
             except ValueError:
                 raise InvalidFormatError(
                     "Invalid date specified, must be in the format YYYY-MM-DD"

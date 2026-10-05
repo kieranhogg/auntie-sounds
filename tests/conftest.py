@@ -1,4 +1,3 @@
-import datetime
 import itertools
 import json
 import os
@@ -10,7 +9,6 @@ from unittest.mock import AsyncMock, Mock
 
 import aiohttp
 import pytest
-import pytz
 from aioresponses import aioresponses
 from yarl import URL
 
@@ -80,7 +78,6 @@ def _mock_cookie_store(mock_session):
 @pytest.fixture(name="mock_schedule")
 def _mock_schedule(mock_session, mock_requests):
     return ScheduleService(
-        timezone=datetime.UTC,
         requests=mock_requests,
     )
 
@@ -194,7 +191,6 @@ async def _sounds_client(mock_session, tmp_path):
     client = SoundsClient(
         session=mock_session,
         cookie_file_location=tmp_path / "sounds_jar",
-        timezone=pytz.timezone("UTC"),
         log_level=DEBUG,
     )
     await client.start()
@@ -279,7 +275,6 @@ async def seed_jar(credentials, tmp_path_factory) -> Path:
         username=username,
         password=password,
         cookie_file_location=path,
-        timezone=pytz.UTC,
     ) as client:
         await client.login()
     return path
@@ -327,7 +322,6 @@ async def make_client(tmp_path):
                 password=password,
                 session=session,
                 cookie_file_location=path,
-                timezone=pytz.UTC,
             )
             return await stack.enter_async_context(client)
 

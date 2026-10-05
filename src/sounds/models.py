@@ -16,6 +16,8 @@ from sounds.utils import image_from_recipe, network_logo
 
 NETWORK_LOGO_FORMAT = "https://sounds.files.bbci.co.uk/3.12.0/networks/{network_id}/{type}_{size}.{format}"
 
+from datetime import UTC
+
 
 ###### Helpers ##################################################################
 def _parse_datetime(value):
@@ -128,12 +130,11 @@ class ImageMixin:
 class TimedContent:
     """Mixin for content with timing information."""
 
-    def is_live(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo) -> bool:
-        now = dt.now(tz=timezone)
-        return self.start <= now < self.end  # type: ignore
+    def is_live(self) -> bool:
+        return self.start <= dt.now(tz=UTC) < self.end  # type: ignore
 
-    def has_already_aired(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo) -> bool:
-        return dt.now(tz=timezone) > self.end  # type: ignore
+    def has_already_aired(self) -> bool:
+        return dt.now(tz=UTC) > self.end  # type: ignore
 
 
 ###### Sub-types ###############################################################
@@ -572,15 +573,15 @@ class PlayableItem(BaseObject, IdentifiableMixin):
         ):
             self.duration = Duration(label=f"{seconds // 60} mins", value=seconds)
 
-    def is_live(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo) -> bool:
+    @property
+    def is_live(self) -> bool:
         if self.start and self.end:
-            now = dt.now(tz=timezone)
-            return self.start <= now < self.end
+            return self.start <= dt.now(tz=UTC) < self.end
         return False
 
     def has_already_aired(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo) -> bool:
         if self.end:
-            return dt.now(tz=timezone) > self.end
+            return dt.now(tz=UTC) > self.end
         return True
 
 
@@ -620,8 +621,6 @@ class ScheduleItem(ImageMixin, PlayableItem):
 
     def post_processing(self, logger: Logger) -> None:
         super().post_processing(logger)
-        self.start = _parse_datetime(self.start)
-        self.end = _parse_datetime(self.end)
         self.process_image()
 
 
@@ -700,18 +699,16 @@ class Schedule(Container):
     # title is the date of the schedule
     sub_items: Sequence[Annotated[ScheduleItem | RadioShow, _POLYMORPHIC]] | None = None
 
-    def get_current_item(
-        self,
-        timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo | None,
-    ) -> ScheduleItem | None:
+    def get_current_item(self) -> ScheduleItem | None:
         """Get the currently airing schedule item."""
-        if not timezone:
-            timezone = pytz.timezone("UTC")
-        if self.sub_items and isinstance(self.sub_items, list):
-            for item in self.sub_items:
-                if isinstance(item, ScheduleItem) and item.is_live(timezone):
-                    return item
-        return None
+        return next(
+            (
+                item
+                for item in self.sub_items or ()
+                if isinstance(item, ScheduleItem) and item.is_live
+            ),
+            None,
+        )
 
 
 # Specific content types
