@@ -847,8 +847,10 @@ class Audiobook(Podcast):
 
 
 @dataclass(kw_only=True)
-class RadioSeries(Podcast):
+class RadioSeries(ImageContainer):
     """Represents a radio series container (holds episodes)."""
+
+    seasons: list[Season] | None = None
 
 
 @dataclass(kw_only=True)
