@@ -14,6 +14,7 @@ from sounds.content import ContentService
 from sounds.cookies import CookieStore
 from sounds.exceptions import InvalidArgumentsError
 from sounds.models import Menu, MenuItem
+from sounds.owners import OwnerService
 from sounds.personal import PersonalService
 from sounds.playback import PlaybackService
 from sounds.requests import RequestManager
@@ -134,6 +135,7 @@ class SoundsClient:
             on_login_success=self.save_cookies,
         )
         self.requests.set_reauth_handler(self.auth.retry_with_reauth)
+        self.owners = OwnerService(requests=self.requests)
         self.schedules = ScheduleService(
             requests=self.requests,
             timezone=self.timezone,
@@ -152,13 +154,16 @@ class SoundsClient:
             requests=self.requests,
             user=self.user,
             playback=self.playback,
+            owners=self.owners,
         )
         self.stations = StationService(
             playback=self.playback,
             schedules=self.schedules,
             requests=self.requests,
         )
-        self.personal = PersonalService(auth=self.auth, requests=self.requests)
+        self.personal = PersonalService(
+            auth=self.auth, requests=self.requests, owners=self.owners
+        )
 
     async def login(self) -> bool:
         """Signs into BBC Sounds.

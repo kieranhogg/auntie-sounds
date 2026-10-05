@@ -24,7 +24,7 @@ from sounds.models import (
     Season,
     Segment,
 )
-from sounds.parser import Parser
+from sounds.owners import OwnerAwareParser, OwnerService
 from sounds.playback import PlaybackService
 from sounds.requests import RequestManager
 from sounds.user import UserService
@@ -82,12 +82,18 @@ class ContentService:
     """
 
     def __init__(
-        self, user: UserService, requests: RequestManager, playback: PlaybackService
+        self,
+        user: UserService,
+        requests: RequestManager,
+        playback: PlaybackService,
+        owners: OwnerService | None = None,
     ):
         self.user: UserService = user
         self.requests: RequestManager = requests
         self.playback: PlaybackService = playback
-        self.parser = Parser()
+        # The client passes in one OwnerService for all its services, so each
+        # owner is looked up once per client
+        self.parser = OwnerAwareParser(owners or OwnerService(requests))
         self._programme_cache: dict[str, asyncio.Task[dict]] = {}
 
     async def _get_programme(self, pid: str) -> dict:
@@ -240,9 +246,16 @@ class ContentService:
         sort: str = "sequential",
         fetch_all_items: bool = False,
         max_items: int | None = None,
-    ) -> list[PlayableItem] | None:
-        json_resp = await self.requests.get_json_response(
-            url=Endpoints.PLAYABLE_ITEMS_CONTAINER,
+    ) -> list[PlayableItem]:
+        # Every item shares this brand, so look its owner up alongside the
+        # listing rather than after it
+        json_resp, _ = await asyncio.gather(
+            self._fetch_playable_items(
+                pid, sort=sort, fetch_all_items=fetch_all_items, max_items=max_items
+            ),
+            self.parser.owners.lookup([pid]),
+        )
+        return await self._parse_playable_items(json_resp)
             params={"container": pid, "sort": sort},
             fetch_all_items=fetch_all_items,
             max_items=max_items,

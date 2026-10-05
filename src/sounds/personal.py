@@ -14,7 +14,7 @@ from sounds.models import (
     RadioSeries,
     RecommendedMenuItem,
 )
-from sounds.parser import Parser
+from sounds.owners import OwnerAwareParser, OwnerService
 from sounds.requests import RequestManager
 
 logger = logging.getLogger(__name__)
@@ -38,10 +38,13 @@ class PersonalService:
         self,
         auth: AuthService,
         requests: RequestManager,
+        owners: OwnerService | None = None,
     ):
         self.auth = auth
         self.requests = requests
-        self.parser = Parser()
+        # The client passes in one OwnerService for all its services, so each
+        # owner is looked up once per client
+        self.parser = OwnerAwareParser(owners or OwnerService(requests))
 
     async def construct_uk_menu(
         self,

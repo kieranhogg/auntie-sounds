@@ -46,6 +46,8 @@ class StationService:
         self.playback: PlaybackService = playback
         self.schedules: ScheduleService = schedules
         self.requests: RequestManager = requests
+        # Broadcasts are slots on a station and are typed as such, so unlike
+        # ContentService and PersonalService this doesn't look up brand owners
         self.parser: Parser = Parser()
         self.international_networks: list[str] = [
             "bbc_afrique_radio",

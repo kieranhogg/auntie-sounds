@@ -36,7 +36,8 @@ def _get_date_range(start_date: datetime.date, end_date: datetime.date):
 class ScheduleService:
     def __init__(self, requests: RequestManager, timezone: tzinfo):
         self.requests = requests
-        self.timezone = timezone
+        # Broadcasts are slots on a station and are typed as such, so unlike
+        # ContentService and PersonalService this doesn't look up brand owners
         self.parser = Parser()
 
     async def get_schedule(
