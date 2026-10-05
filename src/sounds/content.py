@@ -418,19 +418,26 @@ class ContentService:
             url=Endpoints.SEGMENTS, url_args={"vpid": vpid}
         )
         parsed_segments = await self.parser.parse_container(json_resp)
-        if isinstance(parsed_segments, list):
-            segments = [item for item in parsed_segments if isinstance(item, Segment)]
-            for segment in segments:
-                if (
-                    not segment.image_url
-                    and fetch_missing_images
-                    and segment.spotify_url
-                ):
-                    segment.image_url = await self.image_from_spotify(
-                        segment.spotify_url
-                    )
-            return segments
-        return []
+        if not isinstance(parsed_segments, list):
+            return []
+
+        segments = [item for item in parsed_segments if isinstance(item, Segment)]
+
+        # The Sounds API for catch-up media does not contain image URLs
+        if fetch_missing_images:
+            semaphore = asyncio.Semaphore(5)
+
+            async def fetch(segment: Segment) -> str | None:
+                async with semaphore:
+                    return await self.image_from_spotify(segment.spotify_url)
+
+            missing = [s for s in segments if not s.image_url and s.spotify_url]
+            image_urls = await asyncio.gather(*(fetch(s) for s in missing))
+
+            for segment, result in zip(missing, image_urls, strict=True):
+                if not isinstance(result, BaseException):
+                    segment.image_url = result
+        return segments
 
     async def get_heartbeat_details(self, pid):
         """Get the details (vpid, resource_type) required to send a heartbeat request."""
