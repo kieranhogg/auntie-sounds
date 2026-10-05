@@ -142,7 +142,7 @@ class ContentService:
         return None
 
     async def get_podcasts(self) -> Menu:
-        podcasts = self.parser.parse_menu(
+        podcasts = await self.parser.parse_menu(
             await self.requests.get_json_response(url=endpoints.Endpoints.PODCASTS)
         )
         return podcasts
@@ -165,7 +165,10 @@ class ContentService:
                 url=Endpoints.CONTAINER_FROM_PIDS, url_args={"pids": pid}
             ),
         )
-        brand = self.parser.parse_container(brand_json)
+
+        # Parsing the brand records its owner, so the episodes parsed after it
+        # don't need to look it up again
+        brand = await self.parser.parse_container(brand_json)
         podcast = brand[0] if isinstance(brand, list) and brand else None
         if not isinstance(podcast, (Podcast, RadioSeries)):
             raise NotFoundError(f"Couldn't get podcast - pid: {pid}")
@@ -227,7 +230,7 @@ class ContentService:
 
         if not json_resp or not json_resp.get("data"):
             raise NotFoundError(f"Couldn't get item with PID {pid}")
-        playable_item = self.parser.parse_node(json_resp)
+        playable_item = await self.parser.parse_node(json_resp)
 
         if not isinstance(playable_item, PlayableItem):
             raise APIResponseError(f"Couldn't get item with PID {pid}")
@@ -260,13 +263,12 @@ class ContentService:
             fetch_all_items=fetch_all_items,
             max_items=max_items,
         )
-        container = self.parser.parse_container(json_resp)
-        if isinstance(container, list):
-            playable_container: list[PlayableItem] = [
-                item for item in container if isinstance(item, PlayableItem)
-            ]
-            return playable_container
-        return None
+
+    async def _parse_playable_items(self, json_resp: dict) -> list[PlayableItem]:
+        items = await self.parser.parse_container(json_resp)
+        if not isinstance(items, list):
+            return []
+        return [item for item in items if isinstance(item, PlayableItem)]
 
     async def get_container(
         self, urn
@@ -274,7 +276,7 @@ class ContentService:
         json_resp = await self.requests.get_json_response(
             url=Endpoints.URN_CONTAINER, url_args={"urn": urn}
         )
-        container = self.parser.parse_container(json_resp)
+        container = await self.parser.parse_container(json_resp)
         if isinstance(container, list) and len(container) == 1:
             return container[0]
         if not container:
@@ -286,23 +288,23 @@ class ContentService:
             url=Endpoints.PLAYABLE_ITEMS_CONTAINER,
             params={"category": category, "sort": "-release_date"},
         )
-        return cast("ItemCategory", self.parser.parse_node(json_resp))
+        return cast("ItemCategory", await self.parser.parse_node(json_resp))
 
     async def get_collection(self, pid) -> Collection:
         json_resp = await self.requests.get_json_response(
             url=Endpoints.COLLECTIONS, url_args={"pid": pid}
         )
-        return cast("Collection", self.parser.parse_node(json_resp))
+        return cast("Collection", await self.parser.parse_node(json_resp))
 
     async def get_audiobooks(self):
         json_resp = await self.requests.get_json_response(url=Endpoints.AUDIOBOOKS)
-        return cast("Audiobook", self.parser.parse_node(json_resp))
+        return cast("Audiobook", await self.parser.parse_node(json_resp))
 
     async def get_popular_audiobooks(self):
         json_resp = await self.requests.get_json_response(
             url=Endpoints.POPULAR_AUDIOBOOKS
         )
-        container = self.parser.parse_container(json_resp)
+        container = await self.parser.parse_container(json_resp)
         return container
 
     async def get_playlist_contents(self, pid) -> list[SoundsTypes]:
@@ -312,7 +314,7 @@ class ContentService:
         )
         if not json_resp:
             return []
-        container = self.parser.parse_container(json_resp)
+        container = await self.parser.parse_container(json_resp)
         if isinstance(container, list):
             return container
         return [container] if container else []
@@ -321,7 +323,7 @@ class ContentService:
         json_resp = await self.requests.get_json_response(
             url=Endpoints.SEARCH_URL, params={"q": query}
         )
-        return self.parser.parse_search(json_resp)
+        return await self.parser.parse_search(json_resp)
 
     async def get_show_segments(
         self, vpid, fetch_missing_images: bool = False
@@ -329,7 +331,7 @@ class ContentService:
         json_resp = await self.requests.get_json_response(
             url=Endpoints.SEGMENTS, url_args={"vpid": vpid}
         )
-        parsed_segments = self.parser.parse_container(json_resp)
+        parsed_segments = await self.parser.parse_container(json_resp)
         if isinstance(parsed_segments, list):
             segments = [item for item in parsed_segments if isinstance(item, Segment)]
             for segment in segments:
