@@ -8,7 +8,7 @@ from zoneinfo import ZoneInfo
 from sounds import endpoints
 from sounds.endpoints import Endpoints
 from sounds.exceptions import APIResponseError, DateOutOfRangeError, InvalidFormatError
-from sounds.models import LiveStation, Schedule, Segment
+from sounds.models import LiveStation, Schedule, ScheduleItem, Segment
 from sounds.parser import Parser
 from sounds.requests import RequestManager
 from sounds.stations import StationService
@@ -44,6 +44,14 @@ class ScheduleService:
         # ContentService and PersonalService this doesn't look up brand owners
         self.parser = Parser()
 
+    async def on_air(self, station_id) -> ScheduleItem | None:
+        """Get the programme that is currently on air for a station."""
+        schedule = await self.get_schedule(station_id)
+        if not schedule or not schedule.sub_items:
+            return None
+
+        on_air_show = next((s for s in schedule.sub_items if s.is_live), None)
+        return on_air_show if isinstance(on_air_show, ScheduleItem) else None
     async def get_schedule(
         self, station_id: str, date: str | None = None
     ) -> Schedule | None:
