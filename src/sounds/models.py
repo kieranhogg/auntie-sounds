@@ -24,6 +24,11 @@ def _parse_datetime(value):
     return dt.fromisoformat(value) if isinstance(value, str) else value
 
 
+def pid_from_urn(urn: str | None) -> str | None:
+    """The identifier at the end of a urn, e.g. urn:bbc:radio:episode:m002abcd."""
+    return urn.rsplit(":", 1)[-1] if urn else None
+
+
 def station_description(station_id, is_local: bool = False):
     descriptions_dict = {
         "bbc_radio_one": "The biggest new pop & all day vibes.",
@@ -104,13 +109,23 @@ class SerializableMixin(mashumaro.DataClassDictMixin):
 
 
 class IdentifiableMixin:
+    """Gives `item_id`, the one identifier Music Assistant keeps for an item.
+
+    It is the pid at the end of the urn (the episode, clip, brand...), then
+    `pid`, then `id`. For playable items `id` is the version pid, which is
+    what you play but not what the item is, so it comes last. Classes where
+    that is not the right identifier override `item_id`.
+    """
+
     urn: str | None
 
     @property
-    def item_id(self):
-        if self.urn:
-            return self.urn.rsplit(":", 1)[-1]
-        return getattr(self, "pid", None) or getattr(self, "id", None)
+    def item_id(self) -> str | None:
+        return (
+            pid_from_urn(self.urn)
+            or getattr(self, "pid", None)
+            or getattr(self, "id", None)
+        )
 
 
 class ImageMixin:
@@ -155,6 +170,11 @@ class Synopses:
 
 @dataclass(kw_only=True)
 class Progress:
+    """How far the signed-in listener has got. Only on the /my/ endpoints.
+
+    value is seconds played, e.g. 1011 on a 1672s episode is "11 mins left".
+    """
+
     label: str
     value: int
 
@@ -195,7 +215,7 @@ class Stream(TimedContent, SerializableMixin, ImageMixin):
 
 
 @dataclass(kw_only=True)
-class Segment(SerializableMixin, ImageMixin):
+class Segment(SerializableMixin, IdentifiableMixin, ImageMixin):
     """Represents a segment within a stream."""
 
     # Unique ID
@@ -214,9 +234,8 @@ class Segment(SerializableMixin, ImageMixin):
 
     @property
     def record_id(self):
-        if self.urn:
-            return self.urn.rsplit(":", 1)[-1]
-        return None
+        """The music record, the same every time the track is played."""
+        return pid_from_urn(self.urn)
 
     def music_service_uri(self, platform: Literal["spotify", "apple"]):
         service_found = next(
@@ -340,6 +359,11 @@ class Network(SerializableMixin):
     date_ranges: list[dict[str, Any]] = field(default_factory=list)
     logo_url: str | None = None
 
+    @property
+    def item_id(self) -> str:
+        """The network id, e.g. bbc_radio_four."""
+        return self.id
+
     def post_processing(self, logger: Logger) -> None:
         # Set default Service
         if self.services and len(self.services) == 1:
@@ -367,7 +391,9 @@ class PlayableNetwork(Network):
     The `Network` itself is held in the network attribute.
 
     Parameters
-        id: this is the service_id, e.g. bbc_radio_fourfm
+        id: the service id, e.g. bbc_radio_fourfm, until post_processing
+            replaces it with the network id, e.g. bbc_radio_four
+        service_id: the service id once flattened
         urn: the network's urn, e.g. urn:bbc:radio:network:bbc_radio_four
     """
 
@@ -389,6 +415,11 @@ class PlayableNetwork(Network):
     stream: str | None = None
     network: Annotated[Network, _POLYMORPHIC] | None = None
 
+    @property
+    def item_id(self) -> str:
+        """The service id, which is what plays and is unique per stream."""
+        return self.service_id or self.id
+
     def post_processing(self, logger: Logger) -> None:
 
         # Flatten the nested network object
@@ -405,11 +436,11 @@ class PlayableNetwork(Network):
         if self.image_url:
             self.image_url = image_from_recipe(self.image_url)
 
-        self.description = station_description(self.id)
+        self.description = station_description(self.item_id)
 
 
 @dataclass(kw_only=True)
-class BasicContainer(IdentifiableMixin):
+class BasicContainer:
     """Just a bare wrapper for items, e.g. PlayableItemsResponse."""
 
     series_pid: str | None = None
@@ -471,13 +502,17 @@ class PlayableItem(BaseObject, IdentifiableMixin):
         stream:
     """
 
+    # Whether `id` is the version pid when it differs from the episode pid.
+    # Not true of a scheduled item, where `id` is the broadcast.
+    ID_IS_VERSION_PID: ClassVar[bool] = True
+
     id: str
     urn: str | None = None
     pid: str | None = None
     version_pid: str | None = None
     series_pid: str | None = None
     type: str | None = None
-    # Duration object normally; plain seconds on broadcast summaries
+    # Duration object normally, but plain seconds on broadcast summaries
     duration: Duration | int | None = None
     progress: Progress | None = None
     image_url: str | None = None
@@ -534,7 +569,15 @@ class PlayableItem(BaseObject, IdentifiableMixin):
 
         # Get PID from URN
         if self.urn:
-            self.pid = self.urn.rsplit(":", 1)[-1]
+            self.pid = pid_from_urn(self.urn)
+        elif (
+            not self.pid
+            and self.availability
+            and self.availability.get("id") not in (None, self.id)
+        ):
+            # Programme responses have no urn. Their id is the episode pid and
+            # the version is under availability, so id isn't the version here.
+            self.pid = self.id
 
         if not self.container and self.ancestors:
             # ancestors run top-down (brand, then series). The container is
@@ -562,7 +605,7 @@ class PlayableItem(BaseObject, IdentifiableMixin):
         if not self.version_pid:
             if self.availability and self.availability.get("id"):
                 self.version_pid = self.availability["id"]
-            elif self.pid and self.id != self.pid:
+            elif self.ID_IS_VERSION_PID and self.pid and self.id != self.pid:
                 self.version_pid = self.id
 
         # Programmes responses (e.g. get_by_pid) only give the length under availability
@@ -613,11 +656,26 @@ class Broadcast:
 
 
 @dataclass(kw_only=True)
-class ScheduleItem(ImageMixin, PlayableItem):
-    """Represents a scheduled program item."""
+class ScheduleItem(PlayableItem, ImageMixin):
+    """Represents a scheduled program item.
 
-    # overrides the parent version of Duration
+    id: broadcast pid (this airing)
+    urn: episode pid (the programme), which is also the pid and item_id
+    version_pid: the audio you actually play, set from playable_item.id by
+        the parser, or from availability
+    """
+
+    ID_IS_VERSION_PID: ClassVar[bool] = False
+
     duration: int | None = None  # type: ignore[assignment]
+
+    @property
+    def broadcast_pid(self) -> str:
+        return self.id
+
+    @property
+    def vpid(self) -> str | None:
+        return self.version_pid
 
     def post_processing(self, logger: Logger) -> None:
         super().post_processing(logger)
@@ -625,8 +683,11 @@ class ScheduleItem(ImageMixin, PlayableItem):
 
 
 @dataclass(kw_only=True)
-class Station(Container, IdentifiableMixin):
-    """Represents a radio/media station."""
+class Station(Container):
+    """Represents a radio/media station.
+
+    id: the service id, e.g. bbc_radio_fourfm
+    """
 
     id: str
     pid: str | None = None
@@ -637,12 +698,17 @@ class Station(Container, IdentifiableMixin):
     schedule: Schedule | None = None
     description: str | None = None
 
+    @property
+    def item_id(self) -> str:
+        """The service id, which is unique per stream."""
+        return self.id
+
     def post_processing(self, logger: Logger) -> None:
-        self.description = station_description(self.pid, self.local)
+        self.description = station_description(self.id, self.local)
 
 
 @dataclass(kw_only=True)
-class StationSearchResult(SerializableMixin, IdentifiableMixin):
+class StationSearchResult(SerializableMixin):
     """Represents a search result showing a station. Keys are different enough to warrant a separate model"""
 
     id: str
@@ -656,6 +722,11 @@ class StationSearchResult(SerializableMixin, IdentifiableMixin):
     short_synopsis: str
     progress: Progress | None
     duration: Duration | None
+
+    @property
+    def item_id(self) -> str:
+        """The service id, to match LiveStation and Station."""
+        return self.service_id
 
     def post_processing(self, logger: Logger) -> None:
         if self.station_image_url:
@@ -672,8 +743,11 @@ class LiveProgramme(PlayableItem, ImageMixin):
 
 
 @dataclass(kw_only=True)
-class LiveStation(PlayableItem, IdentifiableMixin, ImageMixin):
+class LiveStation(PlayableItem, ImageMixin):
     """Represents a radio station which is also playable.
+
+    id: the service id, e.g. bbc_radio_fourfm, also the item_id and version_pid
+    urn: the network's urn, e.g. urn:bbc:radio:network:bbc_radio_four
 
     Attributes:
         local: e.g. True
@@ -685,10 +759,15 @@ class LiveStation(PlayableItem, IdentifiableMixin, ImageMixin):
     schedule: Schedule | None = None
     description: str | None = None
 
+    @property
+    def item_id(self) -> str:
+        """The service id, not the urn's network id, which services can share."""
+        return self.id
+
     def post_processing(self, logger: Logger) -> None:
         super().post_processing(logger)
         self.process_image()
-        self.description = station_description(self.pid, self.local)
+        self.description = station_description(self.id, self.local)
 
 
 @dataclass(kw_only=True)
@@ -713,7 +792,7 @@ class Schedule(Container):
 
 # Specific content types
 @dataclass(kw_only=True)
-class RadioClip(PlayableItem, TimedContent, ImageMixin, IdentifiableMixin):
+class RadioClip(PlayableItem, ImageMixin):
     """Represents a playable radio clip."""
 
     def post_processing(self, logger: Logger) -> None:
@@ -722,12 +801,8 @@ class RadioClip(PlayableItem, TimedContent, ImageMixin, IdentifiableMixin):
 
 
 @dataclass(kw_only=True)
-class PodcastEpisode(PlayableItem, ImageMixin, IdentifiableMixin):
+class PodcastEpisode(PlayableItem, ImageMixin):
     """Represents a playable podcast episode."""
-
-    @property
-    def item_id(self):
-        return self.pid
 
     def post_processing(self, logger: Logger) -> None:
         super().post_processing(logger)
@@ -737,15 +812,11 @@ class PodcastEpisode(PlayableItem, ImageMixin, IdentifiableMixin):
 # Not a PodcastEpisode subclass: consumers dispatch on isinstance and check
 # PodcastEpisode before RadioShow.
 @dataclass(kw_only=True)
-class RadioShow(PlayableItem, ImageMixin, IdentifiableMixin):
+class RadioShow(PlayableItem, ImageMixin):
     """Represents a playable radio show."""
 
     service_id: str | None = None
     version_pid: str | None = None
-
-    @property
-    def item_id(self):
-        return self.pid
 
     def post_processing(self, logger: Logger) -> None:
         super().post_processing(logger)
