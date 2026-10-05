@@ -32,3 +32,11 @@ repos:
         types: [python]
         require_serial: true
         pass_filenames: false
+
+      - id: test
+        name: test
+        entry: sh scripts/test.sh
+        language: system
+        types: [ python ]
+        require_serial: true
+        pass_filenames: false
