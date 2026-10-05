@@ -132,16 +132,21 @@ class Endpoints(Enum):
     CONTAINER_FROM_PIDS = ("/v2/programmes/container/{pids}", False)
 
     """
-    Takes: a brand pid.
-    Returns: the seasons.
+    Takes: ?parent={brand pid}&type=series
+    Returns: the seasons as container_items, in pid order rather than date order.
+        Includes seasons with nothing available (e.g. omnibus editions).
+        Empty for a brand without seasons. Rejects sort=sequential with a 400.
     Used by: get_podcast.
     """
     SERIES_CONTAINER = ("/v2/programmes/container", False)
     SERIES_EPISODES = ("/v2/programmes/playable/{pids}", False)
 
     """
-    Takes: a brand or series pid.
-    Returns: a list of playable_items.
+    Takes: ?container={brand or series pid}&sort=sequential
+    Returns: playable_items. Each one's container is the top-level brand, even
+        when listing by series, and its "latest" uri points at its season.
+        sort=sequential groups the episodes by season. ?parent= with
+        sort=sequential is a 400.
     Used by: get_pid_container.
     """
     PLAYABLE_ITEMS_CONTAINER = (
@@ -150,18 +155,23 @@ class Endpoints(Enum):
     )
     BROADCAST = ("/v2/broadcasts/{pid}", False)
 
-    # Despite the name, this returns a single programme
     """
-    Radio episode:
-        Returns a Programmes response with total: 1 and a single episode.
-        id is the same as the urn pid.
-        ancestors holds the brand and the series.
-        There's no vpid.
-    Podcast episode:
-        Returns the brand's page, the same shape as URN_CONTAINER.
-        The episode with the requested pid is in there somewhere
+    Takes: an episode pid.
+    Returns: a Programmes response with total: 1 and the episode in data[0],
+        for radio and podcast episodes alike. ancestors holds the brand and
+        the series, availability.id is the vpid, and the artwork is in images.
+        There's no container, image_url or duration.
+        An unknown pid is a 200 with total: 0.
+    Used by: the _get_programme helpers.
     """
     PROGRAMME_FROM_PID = ("/v2/programmes/{pid}", False)
+    """
+    Takes: an episode pid.
+    Returns: a single playable_item. container is the top-level brand, the
+        "latest" uri points at the season and id is the vpid.
+        An unknown pid is a 404.
+    Used by: get_by_pid.
+    """
     PROGRAMME_FROM_PID_PLAYABLE = (
         "/v2/programmes/{pid}/playable",
         False,
@@ -233,4 +243,7 @@ class Endpoints(Enum):
     SUBSCRIBED = ("/v2/my/programmes/follows", True)
     BOOKMARKS = ("/v2/my/programmes/favourites/playable", True)
     CONTINUE = ("/v2/my/programmes/plays/playable", True)
+    # Same shapes as PROGRAMME_FROM_PID_PLAYABLE and PLAYABLE_ITEMS_CONTAINER,
+    # plus progress, which is None for anything not yet played
     PID_PLAYABLE = ("/v2/my/programmes/{pid}/playable", True)
+    MY_PLAYABLE_ITEMS_CONTAINER = ("/v2/my/programmes/playable", True)
