@@ -56,7 +56,7 @@ class PersonalService:
         """Gets the main Sounds menu for UK-based users."""
 
         json_resp = await self.requests.get_json_response(url=Endpoints.EXPERIENCE_MENU)
-        menu = self.parser.parse_menu(json_resp)
+        menu = await self.parser.parse_menu(json_resp)
 
         if not isinstance(menu, Menu) or not menu or len(menu.sub_items) == 0:
             raise APIResponseError("Menu not converted correctly.")
@@ -102,7 +102,7 @@ class PersonalService:
 
     async def get_recommendations(self) -> Sequence[RecommendedMenuItem]:
         json_resp = await self.requests.get_json_response(url=Endpoints.EXPERIENCE_MENU)
-        menu = self.parser.parse_menu(json_resp)
+        menu = await self.parser.parse_menu(json_resp)
         return [
             recommendation
             for recommendation in menu.sub_items
@@ -131,15 +131,17 @@ class PersonalService:
         return MenuItem(
             id="podcasts",
             title="Podcasts",
-            sub_items=self.parser.parse_menu(json).sub_items,
+            sub_items=(await self.parser.parse_menu(json)).sub_items,
         )
 
     async def get_music_menu_item(self) -> MenuItem:
         return MenuItem(
             id="music",
             title="Music",
-            sub_items=self.parser.parse_menu(
-                await self.requests.get_json_response(Endpoints.MUSIC)
+            sub_items=(
+                await self.parser.parse_menu(
+                    await self.requests.get_json_response(Endpoints.MUSIC)
+                )
             ).sub_items,
         )
 
@@ -147,8 +149,10 @@ class PersonalService:
         return MenuItem(
             id="news",
             title="News",
-            sub_items=self.parser.parse_menu(
-                await self.requests.get_json_response(Endpoints.NEWS)
+            sub_items=(
+                await self.parser.parse_menu(
+                    await self.requests.get_json_response(Endpoints.NEWS)
+                )
             ).sub_items,
         )
 
@@ -162,7 +166,7 @@ class PersonalService:
         return MenuItem(title="Explore All", id="explore", sub_items=explore_items)
 
     async def get_latest(self) -> list[PlayableItem]:
-        latest_items = self.parser.parse_container(
+        latest_items = await self.parser.parse_container(
             await self.requests.get_json_response(url=Endpoints.LATEST)
         )
         if not latest_items or type(latest_items) is not list:
@@ -174,7 +178,7 @@ class PersonalService:
         return MenuItem(title="Latest", id="latest", sub_items=latest_items)
 
     async def get_subscriptions(self) -> list[Podcast | RadioSeries]:
-        subscriptions = self.parser.parse_container(
+        subscriptions = await self.parser.parse_container(
             await self.requests.get_json_response(url=Endpoints.SUBSCRIBED)
         )
         if not subscriptions or type(subscriptions) is not list:
@@ -190,7 +194,7 @@ class PersonalService:
         )
 
     async def get_bookmarks(self) -> list[PlayableItem]:
-        bookmarks = self.parser.parse_container(
+        bookmarks = await self.parser.parse_container(
             await self.requests.get_json_response(url=Endpoints.BOOKMARKS)
         )
         if not bookmarks or type(bookmarks) is not list:
@@ -203,7 +207,7 @@ class PersonalService:
 
     async def get_continue_listening(self) -> list[PlayableItem] | None:
         json_response = await self.requests.get_json_response(url=Endpoints.CONTINUE)
-        container = self.parser.parse_container(json_response)
+        container = await self.parser.parse_container(json_response)
         if isinstance(container, list):
             return [item for item in container if isinstance(item, PlayableItem)]
         return None
