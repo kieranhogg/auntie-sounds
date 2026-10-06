@@ -3,7 +3,7 @@ from unittest.mock import AsyncMock
 import pytest
 
 from sounds.exceptions import APIResponseError
-from sounds.playback import get_best_stream
+from sounds.playback import StreamPreference, get_stream_variant
 from tests.conftest import make_response
 
 pytestmark = pytest.mark.anyio
@@ -20,8 +20,10 @@ class TestPlaybackService:
             {"transferFormat": "hls", "href": "https://example.com/hls"},
         ]
 
-        result = get_best_stream(streams, prefer_type="hls")
-        assert result == "https://example.com/hls"
+        result = get_stream_variant(
+            streams, preferences=StreamPreference(stream_type="hls")
+        )
+        assert result.get("href") == "https://example.com/hls"
 
     async def test_get_best_stream_not_found(self):
         """Test getting best stream when format not found."""
@@ -30,7 +32,9 @@ class TestPlaybackService:
             {"transferFormat": "dash", "href": "https://example.com/dash"},
         ]
 
-        result = get_best_stream(streams, prefer_type="hls")
+        result = get_stream_variant(
+            streams, preferences=StreamPreference(stream_type="hls")
+        )
         assert result is None
 
     async def test_invalid_pid(self, mock_user, mock_session, mock_content):
