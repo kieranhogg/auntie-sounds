@@ -3,7 +3,7 @@ import logging
 from datetime import datetime as dt
 from datetime import timedelta
 from itertools import chain
-from typing import TYPE_CHECKING, Literal
+from typing import TYPE_CHECKING
 
 from sounds import VERBOSE_LOG_LEVEL
 from sounds.endpoints import Endpoints
@@ -21,6 +21,7 @@ from sounds.models import (
     Station,
 )
 from sounds.parser import Parser
+from sounds.playback import StreamPreference
 from sounds.utils import service_id_to_station_id
 
 logger = logging.getLogger(__name__)
@@ -193,7 +194,7 @@ class StationService:
         self,
         station_id: str,
         include_stream: bool = False,
-        stream_format: Literal["hls", "dash"] = "hls",
+        stream_preferences: StreamPreference | None = None,
         include_schedule: bool = False,
         date: str | None = None,
     ) -> LiveStation | Station | None:
@@ -206,9 +207,14 @@ class StationService:
             include_schedule (optional): Set LiveStation.schedule to the station schedule. Defaults to False.
             date (optional): The date of the schedule, if `include_schedule` is True. Defaults to None.
         """
+        if not stream_preferences:
+            stream_preferences = StreamPreference()
+
         if station_id in self.international_networks:
             station = await self._get_international_station(
-                station_id, include_stream=include_stream, stream_format=stream_format
+                station_id,
+                include_stream=include_stream,
+                stream_preferences=stream_preferences,
             )
             station.international = True
             return station
@@ -233,7 +239,7 @@ class StationService:
             return None
         if include_stream:
             stream = await self.playback.get_live_stream(
-                station_id=station_id, prefer_type=stream_format
+                station_id=station_id, preferences=stream_preferences
             )
             if stream:
                 station.stream = stream
@@ -247,8 +253,8 @@ class StationService:
     async def _get_international_station(
         self,
         station_id,
+        stream_preferences: StreamPreference,
         include_stream: bool = False,
-        stream_format: Literal["hls", "dash"] = "hls",
     ):
         networks = await self.get_networks()
         network = next(n for n in networks if n.id == station_id)
@@ -258,7 +264,9 @@ class StationService:
             return None
         if include_stream:
             stream = await self.playback.get_live_stream(
-                station_id=station_id, prefer_type=stream_format, international=True
+                station_id=station_id,
+                preferences=stream_preferences,
+                international=True,
             )
             if stream:
                 station.stream = stream
