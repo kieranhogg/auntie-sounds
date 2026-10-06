@@ -279,7 +279,7 @@ class ContentService:
         self,
         pid,
         include_stream=False,
-        stream_format: Literal["hls", "dash"] = "hls",
+        stream_preferences: StreamPreference | None = None,
     ) -> SoundsTypes:
         """Get a single episode or clip.
 
@@ -288,6 +288,8 @@ class ContentService:
         404, which the request layer raises as NotFoundError.
         """
         logger.debug("Getting item with PID %s", pid)
+        if not stream_preferences:
+            stream_preferences = StreamPreference()
 
         # The personalised endpoint is the same, just with progress added progress
         url = (
@@ -312,7 +314,7 @@ class ContentService:
             if not playable_item.version_pid:
                 raise APIResponseError(f"No available version for PID {pid}")
             playable_item.stream = await self.playback.get_episode_stream(
-                episode_id=playable_item.version_pid, prefer_type=stream_format
+                episode_id=playable_item.version_pid, preferences=stream_preferences
             )
         return playable_item
 
