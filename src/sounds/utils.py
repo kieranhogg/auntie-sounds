@@ -16,6 +16,16 @@ class ImageType(StrEnum):
     BLOCKS_COLOUR_WHITE = auto()
 
 
+def service_id_to_station_id(service_id):
+    """bbc_radio_fourfm -> bbc_radio_four"""
+    return "bbc_radio_four" if service_id == "bbc_radio_fourfm" else service_id
+
+
+def station_id_to_service_id(station_id):
+    """bbc_radio_four -> bbc_radio_fourfm"""
+    return "bbc_radio_fourfm" if station_id == "bbc_radio_four" else station_id
+
+
 def network_logo(
     logo_recipe: str,
     img_type: ImageType = ImageType.COLOUR,

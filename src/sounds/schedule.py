@@ -11,7 +11,7 @@ from sounds.exceptions import APIResponseError, DateOutOfRangeError, InvalidForm
 from sounds.models import LiveStation, Schedule, ScheduleItem, Segment
 from sounds.parser import Parser
 from sounds.requests import RequestManager
-from sounds.stations import StationService
+from sounds.utils import station_id_to_service_id
 
 logger = logging.getLogger(__name__)
 
@@ -52,6 +52,7 @@ class ScheduleService:
 
         on_air_show = next((s for s in schedule.sub_items if s.is_live), None)
         return on_air_show if isinstance(on_air_show, ScheduleItem) else None
+
     async def get_schedule(
         self, station_id: str, date: str | None = None
     ) -> Schedule | None:
@@ -127,7 +128,7 @@ class ScheduleService:
         return [schedule for schedule in schedules if isinstance(schedule, Schedule)]
 
     async def current_programme(self, station_id: str) -> LiveStation | None:
-        station_id = StationService.station_id_to_service_id(station_id)
+        station_id = station_id_to_service_id(station_id)
         json_resp = await self.requests.get_json_response(
             url=endpoints.Endpoints.STATIONS
         )
@@ -152,9 +153,7 @@ class ScheduleService:
         """Gets the recent playing items on this station"""
         json_resp = await self.requests.get_json_response(
             url=Endpoints.NOW_PLAYING,
-            url_args={
-                "service_id": StationService.station_id_to_service_id(station_id)
-            },
+            url_args={"service_id": station_id_to_service_id(station_id)},
             params={"limit": results},
         )
         segments = self.parser.parse_container(json_resp)

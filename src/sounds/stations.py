@@ -21,6 +21,7 @@ from sounds.models import (
     Station,
 )
 from sounds.parser import Parser
+from sounds.utils import service_id_to_station_id
 
 logger = logging.getLogger(__name__)
 
@@ -212,7 +213,7 @@ class StationService:
             station.international = True
             return station
 
-        station_id = self.service_id_to_station_id(station_id)
+        station_id = service_id_to_station_id(station_id)
 
         try:
             json_response = await self.requests.get_json_response(
@@ -374,13 +375,3 @@ class StationService:
             )
             menu_item.sub_items = date_data
         return menu_item
-
-    @staticmethod
-    def station_id_to_service_id(station_id):
-        """bbc_radio_four -> bbc_radio_fourfm"""
-        return "bbc_radio_fourfm" if station_id == "bbc_radio_four" else station_id
-
-    @staticmethod
-    def service_id_to_station_id(service_id):
-        """bbc_radio_fourfm -> bbc_radio_four"""
-        return "bbc_radio_four" if service_id == "bbc_radio_fourfm" else service_id
