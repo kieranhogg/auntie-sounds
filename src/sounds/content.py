@@ -3,7 +3,7 @@ import logging
 from collections import defaultdict
 from collections.abc import Sequence
 from itertools import chain
-from typing import TYPE_CHECKING, Final, Literal, cast
+from typing import TYPE_CHECKING, Final, cast
 
 from sounds import endpoints
 from sounds.endpoints import Endpoints
@@ -25,7 +25,7 @@ from sounds.models import (
     Segment,
 )
 from sounds.owners import OwnerAwareParser, OwnerService
-from sounds.playback import PlaybackService
+from sounds.playback import PlaybackService, StreamPreference
 from sounds.requests import RequestManager
 from sounds.user import UserService
 
@@ -56,10 +56,15 @@ def assign_seasons(
         by_series[episode.series_pid].append(episode)
 
     def first_release(season: Season) -> str:
-        return min(
-            (e.release["date"] for e in season.sub_items or () if e.release),
-            default="9999",
-        )
+        # An episode can have a release with no date, so fall back to when it became available
+        dates: list[str] = []
+        for episode in season.sub_items or ():
+            date = (episode.release or {}).get("date") or (
+                episode.availability or {}
+            ).get("from")
+            if isinstance(date, str):
+                dates.append(date)
+        return min(dates, default="9999")
 
     for season in podcast.seasons:
         # Container.pid isn't populated from the urn, so use item_id
