@@ -110,6 +110,19 @@ class Endpoints(Enum):
         "/v2/services/{service_id}/segments/latest",  # ?limit={limit}
         False,
     )
+    """
+    Takes: a service id.
+    Returns: an experience made of modules. Some have uris.polling, a template
+        to refresh them with and wait_before_poll_sec, how long to leave
+        between requests. live_play_area holds the on-air programme then the
+        next few. recent_tracks only has a polling uri on stations with tracks.
+    Used by: ScheduleService.polling.
+    """
+    PLAY_EXPERIENCE = (
+        "/v2/experience/inline/play/{service_id}",
+        False,
+        "ExperienceResponse",
+    )
     SCHEDULE = (
         "/v2/experience/inline/schedules/{service_id}",
         False,

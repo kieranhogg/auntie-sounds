@@ -226,7 +226,7 @@ class RequestManager:
 
     async def get_json_response(
         self,
-        url: Endpoints | URLs,
+        url: Endpoints | URLs | str,
         url_args: dict | None = None,
         fetch_all_items: bool = False,
         max_items: int | None = None,

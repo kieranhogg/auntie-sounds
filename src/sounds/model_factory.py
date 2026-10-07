@@ -244,6 +244,30 @@ class IDType(StrEnum):
     EPISODE_SEARCH_CONTAINER = "playable_search"
 
 
+def _broadcast_as_summary(original_object: dict) -> dict:
+    """Make a single broadcast match a broadcast summary format.
+
+    A summary has the broadcast pid in `id` and the episode's details at the
+    top level. A single /v2/broadcasts/{pid} response has the broadcast pid in
+    `pid`, the episode nested under `programme` and `progress` as plain seconds.
+    Both end up with the broadcast pid in `id` and the episode pid in the urn.
+    """
+    programme = original_object.get("programme")
+    if not isinstance(programme, dict):
+        return original_object
+    # The broadcast's own fields win, including its `type` and `id`
+    summary = {
+        **programme,
+        **{k: v for k, v in original_object.items() if k != "programme"},
+    }
+    summary["id"] = original_object.get("id") or original_object.get("pid")
+    summary["urn"] = original_object.get("urn") or programme.get("urn")
+    if not isinstance(summary.get("progress"), dict):
+        # Seconds into the broadcast, not the listener's progress through it
+        summary.pop("progress", None)
+    return summary
+
+
 class ModelFactory:
     PLAYABLE_ITEM_URN_MAP: ClassVar[dict[str, type]] = {
         ItemURN.COLLECTION: Collection,
@@ -340,21 +364,22 @@ class ModelFactory:
                     case ItemType.BROADCAST_SUMMARY | ItemType.BROADCAST:
                         if urn == ItemURN.NETWORK:
                             new_type = Station
+                        original_object = _broadcast_as_summary(original_object)
+                        playable = original_object.get("playable_item")
+                        if playable is not None:
+                            # On a broadcast summary, playable_item.id is the version pid.
+                            original_object = {
+                                **original_object,
+                                "version_pid": playable.get("id"),
+                            }
                         if (
                             original_object.get("progress")
                             and original_object["progress"].get("value") == 0
                         ) or original_object.get("on_air"):
                             # Live, or not yet aired
                             new_type = ScheduleItem
-                        elif (
-                            playable := original_object.get("playable_item")
-                        ) is not None:
+                        elif playable is not None:
                             new_type = RadioShow
-                            # On a broadcast summary, playable_item.id is the version pid.
-                            original_object = {
-                                **original_object,
-                                "version_pid": playable.get("id"),
-                            }
                         else:
                             new_type = ScheduleItem
 

@@ -12,9 +12,15 @@
 * New feature: `RequestManager.get_json_response()` can page through results with `fetch_all_items` or `max_items`
 * New feature: `DateOutOfRangeError` (a subclass of `APIResponseError`) is raised when a schedule is requested
   outside the range the API serves
+* New feature: `Segment.offset` is now a `SegmentOffset` (`start`, `end`, `label`, `now_playing`) rather than a dict
+* New feature: `ScheduleService.polling()` returns each experience module's polling URI and `wait_before_poll_sec`
+* New feature: `ScheduleService.refresh_history()` and `history()` keep a per-station `SegmentHistory` of recent
+  tracks. `SegmentHistory.lookup()` says whether a track, speech or nothing known was on air at a time
+* New feature: single broadcast responses (`pid` rather than `id`, with a nested `programme`) parse into `ScheduleItem`
 * Fix: podcasts with a single episode no longer raise `NotFoundError`
 * Fix: podcasts with more than 30 episodes are no longer truncated
 * Fix: ensure the correct Radio 4 ID is used across all endpoints
+* Fix: `ScheduleService.recently_played_items()` restricts `results` to 1 to 10, the actual range the API accepts
 
 ### API Changes
 
@@ -24,6 +30,8 @@
 * `Segment.uris` is now a required `list[URI]`, not a list of dicts. `Segment.spotify_url` now matches on the
   URI `id` (`commercial-music-service-spotify`) instead of the `Spotify` label
 * `ContentService.get_podcast_episodes()` always returns a list (never `None`)
+* `Segment.offset` is a `SegmentOffset`, so `offset.get("start")` is now `offset.start`
+* `ScheduleService.on_air()` takes the first programme of the station's on-air poll, and accepts `now`
 * `APIResponseError` raised from an API error body now carries `status_code`
 * `Client.get_menu(MenuRecommendationOptions.ONLY)` is no longer supported, use `Client.get_recommendation_folders()`
   instead

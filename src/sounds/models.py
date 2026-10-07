@@ -186,6 +186,38 @@ class Duration:
 
 
 @dataclass(kw_only=True)
+class SegmentOffset(SerializableMixin):
+    """Where a segment sits in the programme it was broadcast in.
+
+    start and end are seconds from the start of that broadcast. Two
+    consecutive tracks can overlap by a second, and there is a gap between
+    them while the presenter talks. now_playing and label are the API's own
+    description of the segment at the time it was fetched, so they go stale.
+    """
+
+    start: int
+    end: int | None = None
+    label: str | None = None
+    now_playing: bool = False
+
+
+@dataclass(kw_only=True)
+class Polling(SerializableMixin):
+    """How an experience module asks to be refreshed.
+
+    uri is a template with {offset} and {limit} placeholders. Callers must
+    leave wait_before_poll_sec between requests to it.
+    """
+
+    uri: str
+    wait_before_poll_sec: int
+
+    def render(self, **values: int) -> str:
+        """Fill in the template's placeholders, e.g. offset=0, limit=10."""
+        return self.uri.format(**values)
+
+
+@dataclass(kw_only=True)
 class ItemCategory:
     id: str
     key: str | None = None
@@ -230,7 +262,13 @@ class Segment(SerializableMixin, IdentifiableMixin, ImageMixin):
         )
     )
     image_url: str | None
-    offset: dict | None
+    offset: SegmentOffset | None
+
+    def post_processing(self, logger: Logger) -> None:
+        super().post_processing(logger)
+        # The factory hands over the raw dict, a cached copy already has the model
+        if isinstance(self.offset, dict):
+            self.offset = SegmentOffset.from_dict(self.offset)
 
     @property
     def record_id(self):
