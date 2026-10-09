@@ -28,3 +28,8 @@ class TestHTTP:
         assert url == URL_BASE + Endpoints.NETWORK_DETAILS.value.format(
             network_id="123"
         )
+
+
+    async def test_build_url_with_multiple_placeholders(self, client):
+        url = build_url(url="/{one}{two}{three}", url_args={"one": "one", "two": "two", "three": "three"})
+        assert url == URL_BASE + "/onetwothree"

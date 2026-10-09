@@ -58,11 +58,10 @@ def build_url(
     if not url_args:
         url_args = {}
 
-    pattern = re.compile(r".*(\{.*}).*")
+    pattern = re.compile(r"\{(.*?)}")
     parameters_required = re.findall(pattern, url_str)
 
     for keyword in parameters_required:
-        keyword = keyword.replace("{", "").replace("}", "")
         if keyword not in url_args and keyword not in default_args:
             raise InvalidArgumentsError(
                 f"{keyword} is a required parameter for the URL, but it is not in url_args."
