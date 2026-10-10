@@ -1,8 +1,7 @@
-import asyncio.constants
+import asyncio
 import hashlib
 import logging
 from collections.abc import Sequence
-from http.cookiejar import CookieJar as HttpCookieJar
 from pathlib import Path
 
 import aiohttp
@@ -10,7 +9,7 @@ import aiohttp
 from auntie_sounds.auth import AuthService
 from auntie_sounds.content import ContentService
 from auntie_sounds.cookies import CookieStore
-from auntie_sounds.exceptions import InvalidArgumentsError
+from auntie_sounds.exceptions import InvalidArgumentsError, NotStartedError
 from auntie_sounds.models import Menu, MenuItem
 from auntie_sounds.owners import OwnerService
 from auntie_sounds.personal import PersonalService
@@ -41,6 +40,22 @@ def _default_cookie_file(username: str | None) -> Path:
 
 class SoundsClient:
     """A client to interact with the Sounds API."""
+
+    def __getattr__(self, name):
+        if name in (
+            "requests",
+            "auth",
+            "owners",
+            "schedules",
+            "user",
+            "playback",
+            "content",
+            "stations",
+            "personal",
+        ):
+            raise NotStartedError(
+                "The client has not been started. Call `client.start()` or use `async with`"
+            )
 
     def __init__(
         self,
@@ -83,15 +98,10 @@ class SoundsClient:
             )
         else:
             self._session = aiohttp.ClientSession(cookie_jar=aiohttp.CookieJar())
-        self._started = True
+
         if not isinstance(self._session.cookie_jar, aiohttp.CookieJar):
             raise TypeError(
                 "SoundsClient requires an aiohttp.CookieJar for persistence"
-            )
-        if len(self._session.cookie_jar) > 0:
-            raise InvalidArgumentsError(
-                "This session's cookie jar already contains cookies, so it may be shared "
-                "with another account. Pass each account its own session"
             )
 
         self.cookie_store = CookieStore(
@@ -101,14 +111,10 @@ class SoundsClient:
         )
         await asyncio.to_thread(self.cookie_store.load)
         self._create_services()
+        self._started = True
 
     def _create_services(self) -> None:
         login_details_provided: bool = bool(self.username and self.password)
-
-        if not isinstance(self._session.cookie_jar, (HttpCookieJar, aiohttp.CookieJar)):
-            raise TypeError(
-                "SoundsClient requires aiohttp.CookieJar for cookie persistence"
-            )
 
         self.requests: RequestManager = RequestManager(
             session=self._session,
@@ -125,15 +131,10 @@ class SoundsClient:
         )
         self.requests.set_reauth_handler(self.auth.retry_with_reauth)
         self.owners = OwnerService(requests=self.requests)
-        self.schedules = ScheduleService(
-            requests=self.requests,
-        )
         self.user = UserService(
-            cookie_store=self.cookie_store,
             login_details_provided=login_details_provided,
             requests=self.requests,
         )
-
         self.schedules = ScheduleService(requests=self.requests)
         self.playback = PlaybackService(
             requests=self.requests,
@@ -149,9 +150,7 @@ class SoundsClient:
             schedules=self.schedules,
             requests=self.requests,
         )
-        self.personal = PersonalService(
-            auth=self.auth, requests=self.requests, owners=self.owners
-        )
+        self.personal = PersonalService(requests=self.requests, owners=self.owners)
 
     async def login(self) -> bool:
         """Signs into BBC Sounds.
@@ -198,17 +197,18 @@ class SoundsClient:
         include_recommendations: bool = True,
     ) -> Menu:
         """Get the main Sounds menu."""
-        stations = await self.stations.get_stations(
-            include_local_stations=include_local_stations
+        # The station list and the UK check don't depend on each other.
+        # Without login details there's no personalised menu, so userinfo isn't needed.
+
+        stations, personalised = await asyncio.gather(
+            self.stations.get_stations(include_local_stations=include_local_stations),
+            self._wants_personalised_menu(),
         )
 
         radio = MenuItem(id="radio", title="Live Radio", sub_items=stations)
         schedule = station_folders("schedule", "Station Schedules", stations)
         catch_up = station_folders("catch_up", "Catch-up Radio", stations)
-        if (
-            self.user.login_details_provided
-            and await self.user.is_uk_account_and_location()
-        ):
+        if personalised:
             return await self.personal.construct_uk_menu(
                 radio=radio,
                 catch_up=catch_up,
@@ -222,10 +222,15 @@ class SoundsClient:
                 schedule=schedule,
             )
 
+    async def _wants_personalised_menu(self) -> bool:
+        return (
+            self.user.login_details_provided
+            and await self.user.is_uk_account_and_location()
+        )
+
     async def logout(self) -> None:
         logger.debug("Logging out...")
         await self.clear_cookies()
-        await self.save_cookies()
         logger.debug("Logged out.")
 
     async def close(self) -> None:
@@ -233,7 +238,6 @@ class SoundsClient:
             return
         logger.debug("Closing session...")
         await self.save_cookies()
-        # if self._external_session is None:
         await self._session.close()
         self._started = False
         logger.debug("Session closed.")

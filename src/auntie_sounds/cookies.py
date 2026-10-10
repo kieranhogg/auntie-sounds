@@ -1,5 +1,4 @@
 import logging
-from http.cookiejar import FileCookieJar
 from pathlib import Path
 from typing import cast
 
@@ -21,7 +20,6 @@ class CookieStore:
     def __init__(
         self,
         session: aiohttp.ClientSession,
-        mock_session: bool = False,
         cookie_file_location: str | Path | None = None,
         account_id: str | None = None,
     ):
@@ -31,7 +29,6 @@ class CookieStore:
         else:
             self.path = cookie_file_location
         logger.debug("Cookie jar location: %s", self.path)
-        self.mock_session = mock_session
         self.session = session
         self.account_id = account_id
 
@@ -73,7 +70,7 @@ class CookieStore:
             logger.warning("No cookie file location configured.")
             return
         logger.debug("Saving cookies to disk...")
-        cast(FileCookieJar, self.session.cookie_jar).save(str(self.path))
+        cast(aiohttp.CookieJar, self.session.cookie_jar).save(str(self.path))
         self._write_owner()
 
     @property

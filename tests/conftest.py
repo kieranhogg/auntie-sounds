@@ -91,8 +91,6 @@ def mock_auth_service(mock_requests, mock_cookie_store):
 def _mock_requests(mock_session):
     return RequestManager(
         session=mock_session,
-        username="user",
-        password="password",
     )
 
 
@@ -101,7 +99,6 @@ def _mock_user(mock_session, mock_requests, monkeypatch):
     user = UserService(
         requests=mock_requests,
         login_details_provided=True,
-        session=mock_session,
     )
     monkeypatch.setattr(
         user, "is_uk_account_and_location", AsyncMock(return_value=True)
@@ -118,10 +115,6 @@ def _mock_playback(
     mock_requests,
 ):
     return PlaybackService(
-        session=mock_session,
-        auth=mock_auth_service,
-        schedules=mock_schedule,
-        user=mock_user,
         requests=mock_requests,
     )
 
@@ -132,7 +125,6 @@ def _mock_personal(
     mock_requests,
 ):
     return PersonalService(
-        auth=mock_auth_service,
         requests=mock_requests,
     )
 
@@ -164,7 +156,6 @@ def _mock_personal_service(
     mock_content,
 ):
     return PersonalService(
-        auth=mock_auth_service,
         requests=mock_requests,
     )
 

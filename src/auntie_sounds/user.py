@@ -8,9 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 class UserService:
-    def __init__(
-        self, requests: RequestManager, login_details_provided: bool, **kwargs
-    ) -> None:
+    def __init__(self, requests: RequestManager, login_details_provided: bool) -> None:
         self.requests = requests
         self._user_info: dict[str, str] = {}
         self.login_details_provided = login_details_provided

@@ -7,6 +7,7 @@ of the pages requested.
 """
 
 import asyncio
+import hashlib
 import logging
 import math
 import time
@@ -16,7 +17,7 @@ import aiohttp
 from bs4 import BeautifulSoup, Tag
 from yarl import URL
 
-from auntie_sounds import VERBOSE_LOG_LEVEL
+from auntie_sounds.constants import VERBOSE_LOG_LEVEL
 from auntie_sounds.cookies import CookieStore
 from auntie_sounds.endpoints import URLs
 from auntie_sounds.exceptions import (
@@ -59,7 +60,7 @@ def _get_form_action(html: str) -> str:
         raise MultipleObjectsFound
 
     form = soup.find("form", {"action": True})
-    if not (form or isinstance(form, Tag)):
+    if not isinstance(form, Tag):
         raise NotFoundError("No valid form found on page")
 
     action = str(form.get("action"))
@@ -100,7 +101,6 @@ class AuthService:
         debug_login: bool = False,
         on_login_success=None,
     ):
-        self.user_info = None
         self.requests = requests
         self.cookie_store = cookie_store
         self.username = username
@@ -242,7 +242,7 @@ class AuthService:
             if not force_login and self.cookie_store.is_signed_in:
                 if await self.renew_session():
                     self._auth_generation += 1
-                    self.cookie_store.save()
+                    await asyncio.to_thread(self.cookie_store.save)
                     return self._auth_generation
                 logger.warning("Session renewal failed, trying full login...")
             if not (self.username and self.password):
@@ -387,8 +387,6 @@ class AuthService:
 
         # Grab the form target for the password page
         password_form_action = _get_form_action(html_contents)
-        if password_form_action is None:
-            raise LoginFailedError("Could not find password form URL")
         password_url = URLs.LOGIN_BASE + password_form_action
         logger.debug(f"Found password form target: {password_url}")
         return password_url
@@ -434,6 +432,7 @@ class AuthService:
     def _save_file_if_needed(self, html: str | bytes, filename: str):
         """Save the login pages to aid with debugging, if requested."""
         if self.debug_login:
-            with open(Path(_get_data_dir(), filename), "w") as page:
+            digest = hashlib.sha256((self.username or "anon").encode()).hexdigest()[:8]
+            with open(Path(_get_data_dir(), f"{digest}_{filename}"), "w") as page:
                 html = BeautifulSoup(html, features="html.parser").prettify()
                 page.write(str(html))

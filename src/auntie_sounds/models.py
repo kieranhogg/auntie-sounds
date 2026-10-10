@@ -5,7 +5,6 @@ from datetime import datetime as dt
 from logging import Logger
 from typing import Annotated, Any, ClassVar, Final, Literal
 from urllib.parse import parse_qs, urlparse
-from warnings import deprecated
 from zoneinfo import ZoneInfo
 
 import mashumaro
@@ -152,16 +151,6 @@ class ImageMixin:
             )
 
 
-class TimedContent:
-    """Mixin for content with timing information."""
-
-    def is_live(self) -> bool:
-        return self.start <= dt.now(tz=UTC) < self.end  # type: ignore
-
-    def has_already_aired(self) -> bool:
-        return dt.now(tz=UTC) > self.end  # type: ignore
-
-
 ###### Sub-types ###############################################################
 @dataclass(kw_only=True)
 class Titles:
@@ -233,27 +222,6 @@ class ItemCategory:
     key: str | None = None
     title: str | None = None
     type: str
-
-
-@dataclass(kw_only=True)
-class Stream(TimedContent, SerializableMixin, ImageMixin):
-    """Represents a station stream."""
-
-    id: str
-    uri: str
-    image_url: str | None
-    show_title: str
-    show_description: str
-    container: Any | None = None
-
-    @property
-    def can_seek(self) -> bool:
-        """Indicates if the stream supports seeking."""
-        return False  # Always False for now
-
-    def post_processing(self, logger: Logger) -> None:
-        super().post_processing(logger)
-        self.process_image()
 
 
 @dataclass(kw_only=True)
@@ -527,7 +495,7 @@ class ImageContainer(Container):
             )
 
 
-@dataclass(kw_only=True, slots=True)
+@dataclass(kw_only=True)
 class PlayableItem(BaseObject, IdentifiableMixin):
     """Base class for actual playable content.
 
@@ -609,7 +577,7 @@ class PlayableItem(BaseObject, IdentifiableMixin):
         )
 
     def post_processing(self, logger: Logger) -> None:
-        # Subclasses run process_image() after this, which fills in the recipe
+        # image_url is set here so process_image() below can fill in the recipe
         if not self.image_url and self.images:
             standard = next(
                 (i for i in self.images if i.get("type") == "standard"), self.images[0]
@@ -669,6 +637,11 @@ class PlayableItem(BaseObject, IdentifiableMixin):
         ):
             self.duration = Duration(label=f"{seconds // 60} mins", value=seconds)
 
+        # BaseObject.post_processing doesn't call super(), so ImageMixin's
+        # post_processing is never reached through the MRO.
+        if isinstance(self, ImageMixin):
+            self.process_image()
+
     @property
     def is_live(self) -> bool:
         if self.start and self.end:
@@ -679,33 +652,6 @@ class PlayableItem(BaseObject, IdentifiableMixin):
         if self.end:
             return dt.now(tz=UTC) > self.end
         return True
-
-
-@dataclass(kw_only=True)
-@deprecated("Broadcast has been deprecated in favour of LiveStation and ScheduleItem")
-class Broadcast:
-    """Represents a broadcast item."""
-
-    type: str
-    pid: str
-    start: dt
-    end: dt
-    service_id: str
-    duration: int
-    progress: int
-    live: bool
-    blanked: bool
-    repeat: bool
-    critical: bool
-    on_air: bool
-    programme: RadioShow
-
-    def post_processing(self, logger: Logger) -> None:
-        self.start = _parse_datetime(self.start)
-        self.end = _parse_datetime(self.end)
-
-    def __repr__(self):
-        return f"{self.__class__.__name__}({self.pid})"
 
 
 @dataclass(kw_only=True)
@@ -729,10 +675,6 @@ class ScheduleItem(PlayableItem, ImageMixin):
     @property
     def vpid(self) -> str | None:
         return self.version_pid
-
-    def post_processing(self, logger: Logger) -> None:
-        super().post_processing(logger)
-        self.process_image()
 
 
 @dataclass(kw_only=True)
@@ -789,13 +731,6 @@ class StationSearchResult(SerializableMixin):
 
 
 @dataclass(kw_only=True)
-class LiveProgramme(PlayableItem, ImageMixin):
-    def post_processing(self, logger: Logger) -> None:
-        super().post_processing(logger)
-        self.process_image()
-
-
-@dataclass(kw_only=True)
 class LiveStation(PlayableItem, ImageMixin):
     """Represents a radio station which is also playable.
 
@@ -819,7 +754,6 @@ class LiveStation(PlayableItem, ImageMixin):
 
     def post_processing(self, logger: Logger) -> None:
         super().post_processing(logger)
-        self.process_image()
         self.description = station_description(self.id, self.local)
 
 
@@ -848,18 +782,10 @@ class Schedule(Container):
 class RadioClip(PlayableItem, ImageMixin):
     """Represents a playable radio clip."""
 
-    def post_processing(self, logger: Logger) -> None:
-        super().post_processing(logger)
-        self.process_image()
-
 
 @dataclass(kw_only=True)
 class PodcastEpisode(PlayableItem, ImageMixin):
     """Represents a playable podcast episode."""
-
-    def post_processing(self, logger: Logger) -> None:
-        super().post_processing(logger)
-        self.process_image()
 
 
 # Not a PodcastEpisode subclass: consumers dispatch on isinstance and check
@@ -870,10 +796,6 @@ class RadioShow(PlayableItem, ImageMixin):
 
     service_id: str | None = None
     version_pid: str | None = None
-
-    def post_processing(self, logger: Logger) -> None:
-        super().post_processing(logger)
-        self.process_image()
 
 
 @dataclass(kw_only=True)
@@ -1012,7 +934,6 @@ type SoundsTypes = (
     | Container
     | Collection
     | DisplayItem
-    | LiveProgramme
     | LiveStation
     | MenuItem
     | Network

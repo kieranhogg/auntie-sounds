@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from enum import StrEnum, auto, unique
 from typing import Literal
 
-from auntie_sounds import VERBOSE_LOG_LEVEL
+from auntie_sounds.constants import VERBOSE_LOG_LEVEL
 from auntie_sounds.endpoints import Endpoints, URLs
 from auntie_sounds.exceptions import APIResponseError, InvalidArgumentsError
 from auntie_sounds.requests import RequestManager
@@ -108,7 +108,7 @@ class PlaybackService:
     ContentService finds items, PlaybackService focuses on playing-type actions.
     """
 
-    def __init__(self, requests: RequestManager, **kwargs) -> None:
+    def __init__(self, requests: RequestManager) -> None:
         self.requests = requests
 
     async def get_stream_token(self, station_id, international: bool = False) -> str:
@@ -173,7 +173,6 @@ class PlaybackService:
                 url=URLs.MEDIASET,
                 url_args=url_args,
                 params=params,
-                # headers={"Bearer": jwt_token},
             )
             logger.log(VERBOSE_LOG_LEVEL, json_resp)
         return _extract_stream(json_resp, preferences=preferences)

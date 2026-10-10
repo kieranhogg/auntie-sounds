@@ -1,9 +1,7 @@
 import asyncio
 import logging
 from collections.abc import Sequence
-from enum import StrEnum, auto
 
-from auntie_sounds.auth import AuthService
 from auntie_sounds.endpoints import Endpoints
 from auntie_sounds.exceptions import APIResponseError
 from auntie_sounds.models import (
@@ -20,11 +18,6 @@ from auntie_sounds.requests import RequestManager
 logger = logging.getLogger(__name__)
 
 
-class MenuRecommendationOptions(StrEnum):
-    EXCLUDE = auto()
-    INCLUDE = auto()
-
-
 class PersonalService:
     """PersonalService interacts with the personalised endpoints of the API.
 
@@ -36,11 +29,9 @@ class PersonalService:
 
     def __init__(
         self,
-        auth: AuthService,
         requests: RequestManager,
         owners: OwnerService | None = None,
     ):
-        self.auth = auth
         self.requests = requests
         # The client passes in one OwnerService for all its services, so each
         # owner is looked up once per client
@@ -55,8 +46,12 @@ class PersonalService:
     ) -> Menu:
         """Gets the main Sounds menu for UK-based users."""
 
-        json_resp = await self.requests.get_json_response(url=Endpoints.EXPERIENCE_MENU)
-        menu = await self.parser.parse_menu(json_resp)
+        # The API's menu, My Sounds and Explore All don't depend on each other
+        menu, my_sounds, explore_all = await asyncio.gather(
+            self._get_experience_menu(),
+            self.get_my_sounds_menu(),
+            self.get_explore_all(),
+        )
 
         if not isinstance(menu, Menu) or not menu or len(menu.sub_items) == 0:
             raise APIResponseError("Menu not converted correctly.")
@@ -77,32 +72,35 @@ class PersonalService:
             if obj.id not in ["listen_live", "continue_listening"]
         ]
 
-        latest, bookmarks, subscribed, continue_listening = await asyncio.gather(
-            self.get_latest_menu(),
-            self.get_bookmarks_menu(),
-            self.get_subscriptions_menu(),
-            self.get_continue_listening_menu(),
-        )
-
-        my_sounds = MenuItem(
-            title="My Sounds",
-            id="my_sounds",
-            sub_items=[continue_listening, subscribed, latest, bookmarks],
-        )
-
         menu.sub_items = [
             radio,
             catch_up,
             schedule,
             my_sounds,
             *menu.sub_items,
-            await self.get_explore_all(),
+            explore_all,
         ]
         return menu
 
-    async def get_recommendations(self) -> Sequence[RecommendedMenuItem]:
+    async def _get_experience_menu(self) -> Menu:
         json_resp = await self.requests.get_json_response(url=Endpoints.EXPERIENCE_MENU)
-        menu = await self.parser.parse_menu(json_resp)
+        return await self.parser.parse_menu(json_resp)
+
+    async def get_my_sounds_menu(self) -> MenuItem:
+        latest, bookmarks, subscribed, continue_listening = await asyncio.gather(
+            self.get_latest_menu(),
+            self.get_bookmarks_menu(),
+            self.get_subscriptions_menu(),
+            self.get_continue_listening_menu(),
+        )
+        return MenuItem(
+            title="My Sounds",
+            id="my_sounds",
+            sub_items=[continue_listening, subscribed, latest, bookmarks],
+        )
+
+    async def get_recommendations(self) -> Sequence[RecommendedMenuItem]:
+        menu = await self._get_experience_menu()
         return [
             recommendation
             for recommendation in menu.sub_items

@@ -117,14 +117,11 @@ class RequestManager:
         timeout: aiohttp.ClientTimeout = DEFAULT_TIMEOUT,
         login_details_provided: bool = False,
         reauth_handler: Callable | None = None,
-        **kwargs,
     ):
         self._session: aiohttp.ClientSession = session
         self.timeout: aiohttp.ClientTimeout = timeout
         self.login_details_provided: bool = login_details_provided
         self.reauth_handler: Callable | None = reauth_handler
-        self.count_requests: bool = False
-        self.request_counter: int = 0
 
     async def run(self, call):
         """Runs `call`, falling back to `reauth_handler`, if set, to retry auth.
@@ -135,9 +132,7 @@ class RequestManager:
         it over.
         """
 
-        logger.debug(f"Running {call}")
         if self.reauth_handler:
-            logger.debug("Calling reauth_handler %s.", self.reauth_handler)
             return await self.reauth_handler(call)
         return await call()
 
@@ -204,7 +199,12 @@ class RequestManager:
                 logger.warning(
                     "URL used a string found in URLs enum, use that directly instead."
                 )
-        logger.debug(f"Making HTTP {method} request to {url}")
+        logger.debug(
+            "Making HTTP %s request to %s%s",
+            method,
+            url,
+            f" with params {params}" if params else "",
+        )
         try:
             if login_required:
                 resp = await self.run(

@@ -1,7 +1,7 @@
 import logging
 from dataclasses import fields
 
-from auntie_sounds.model_factory import ModelFactory, parse_nested_objects
+from auntie_sounds.model_factory import ModelFactory
 from auntie_sounds.models import (
     BasicContainer,
     CategoryItemContainer,
@@ -91,7 +91,6 @@ class Parser:
             playable_item = self.model_factory.parse_object(
                 node, parent_network=parent_network, type_hint=type_hint
             )
-            playable_item = parse_nested_objects(playable_item)
             return playable_item
 
     def parse_menu(self, json_data: dict) -> Menu:

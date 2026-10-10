@@ -64,3 +64,7 @@ class ConfigurationError(SoundsException):
 
 class DateOutOfRangeError(APIResponseError):
     """Schedule requested outside the window the API serves."""
+
+
+class NotStartedError(SoundsException):
+    """SoundsClient services accessed before .start() was called."""

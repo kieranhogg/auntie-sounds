@@ -32,7 +32,6 @@ from auntie_sounds.models import (
     Container,
     DisplayItem,
     ImageMixin,
-    LiveProgramme,
     LiveStation,
     MenuItem,
     Network,
@@ -101,7 +100,6 @@ PLAYABLES = [
     pytest.param(PlayableItem, {}, id="PlayableItem"),
     pytest.param(PodcastEpisode, {}, id="PodcastEpisode"),
     pytest.param(RadioShow, {}, id="RadioShow"),
-    pytest.param(LiveProgramme, {}, id="LiveProgramme"),
     pytest.param(
         AudiobookEpisode,
         {"container": Container(id=BRAND_PID, urn=BRAND_URN)},

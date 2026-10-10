@@ -272,8 +272,6 @@ class ModelFactory:
     PLAYABLE_ITEM_URN_MAP: ClassVar[dict[str, type]] = {
         ItemURN.COLLECTION: Collection,
         ItemURN.CATEGORY: Category,
-        ItemURN.SERIES: Podcast,
-        ItemURN.RADIO_SHOW_OR_PODCAST: RadioShow,
         ItemURN.PROMO_ITEM: PromoItem,
         ItemURN.PLAYLIST: Playlist,
     }
@@ -434,11 +432,6 @@ class ModelFactory:
             else:
                 return None
 
-            if not new_type:
-                logger.error(f"Unexpected original_object type: {object_type}")
-                logger.debug(f"Object:\n{original_object}\n\nSchema type:{schema_type}")
-                raise ParserError("Unexpected object type.")
-
         new_object = convert_between_types(original_object, new_type)
 
         if hasattr(new_object, "post_processing"):
@@ -475,8 +468,8 @@ def convert_between_types(original_object, new_type):
     except TypeError as e:
         raise ParserError(
             "Not all required fields present.\n"
-            "Required fields: {required_fields}\n"
-            "Available fields: {attrs}"
+            f"Required fields: {required_fields}\n"
+            f"Available fields: {attrs}"
         ) from e
     new_object = parse_nested_objects(new_object)
     return new_object

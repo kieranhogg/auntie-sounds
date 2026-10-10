@@ -3,7 +3,7 @@ import logging
 from itertools import chain
 from typing import TYPE_CHECKING
 
-from auntie_sounds import VERBOSE_LOG_LEVEL
+from auntie_sounds.constants import VERBOSE_LOG_LEVEL
 from auntie_sounds.endpoints import Endpoints
 from auntie_sounds.exceptions import (
     APIResponseError,
