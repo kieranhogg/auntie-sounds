@@ -5,16 +5,12 @@ description = "A library for interacting with BBC Radio stations and streams"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
-    "aiofiles",
     "aiohttp",
     "appdirs",
     "beautifulsoup4",
-    "colorlog",
     "mashumaro",
-    "pydantic",
-    "python-dotenv",
     "pytz",
-    "typing-extensions",
+    "yarl>=1.25.1",
 ]
 
 [build-system]
@@ -30,13 +26,13 @@ required-version = ">=0.11.8,<0.13"
 [tool.uv.build-backend]
 package-dir = "src"
 namespace = true
-module-name = "sounds"
-source-exclude = ["sounds/icons"]
+module-name = "auntie_sounds"
+source-exclude = []
 
 [tool.pytest.ini_options]
 addopts = [
     "--maxfail=1",
-    "--cov=sounds",
+    "--cov=auntie_sounds",
     "--import-mode=importlib"
 ]
 pythonpath = [
@@ -53,6 +49,7 @@ markers = [
 dev = [
     "aioresponses>=0.7.9",
     "anyio>=4.14.0",
+    "deptry>=0.25.1",
     "mypy>=2.3.1",
     "pytest-cov>=7.0.0",
     "pytest>=9.0.1",
