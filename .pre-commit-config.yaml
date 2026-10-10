@@ -33,8 +33,16 @@ repos:
         require_serial: true
         pass_filenames: false
 
-      - id: test
-        name: test
+      - id: habit_hooks
+        name: Habit Hooks
+        entry: habit-hooks
+        language: system
+        types: [python]
+        require_serial: true
+        pass_filenames: false
+
+      - id: ptyest
+        name: pytest
         entry: sh scripts/test.sh
         language: system
         types: [ python ]
