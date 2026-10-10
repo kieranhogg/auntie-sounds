@@ -3,8 +3,8 @@ from unittest.mock import AsyncMock
 import pytest
 import pytz
 
-from sounds.client import SoundsClient
-from sounds.user import UserService
+from auntie_sounds.client import SoundsClient
+from auntie_sounds.user import UserService
 
 
 class TestClientLifecycle:

@@ -11,8 +11,8 @@ from collections.abc import Iterator
 import pytest
 from mashumaro import DataClassDictMixin
 
-from sounds.models import MODEL_TAG, Container, LiveStation, Podcast, RadioShow
-from sounds.parser import Parser
+from auntie_sounds.models import MODEL_TAG, Container, LiveStation, Podcast, RadioShow
+from auntie_sounds.parser import Parser
 
 from .conftest import FIXTURES_FOLDER
 

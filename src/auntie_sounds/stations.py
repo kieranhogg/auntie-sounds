@@ -1,35 +1,31 @@
 import asyncio.constants
 import logging
-from datetime import datetime as dt
-from datetime import timedelta
 from itertools import chain
 from typing import TYPE_CHECKING
 
-from sounds import VERBOSE_LOG_LEVEL
-from sounds.endpoints import Endpoints
-from sounds.exceptions import (
+from auntie_sounds import VERBOSE_LOG_LEVEL
+from auntie_sounds.endpoints import Endpoints
+from auntie_sounds.exceptions import (
     APIResponseError,
     InvalidArgumentsError,
     NotFoundError,
 )
-from sounds.models import (
+from auntie_sounds.models import (
     LiveStation,
-    MenuItem,
     Network,
     PlayableNetwork,
-    Schedule,
     Station,
 )
-from sounds.parser import Parser
-from sounds.playback import StreamPreference
-from sounds.utils import service_id_to_station_id
+from auntie_sounds.parser import Parser
+from auntie_sounds.playback import StreamPreference
+from auntie_sounds.utils import service_id_to_station_id
 
 logger = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
-    from sounds.playback import PlaybackService
-    from sounds.requests import RequestManager
-    from sounds.schedule import ScheduleService
+    from auntie_sounds.playback import PlaybackService
+    from auntie_sounds.requests import RequestManager
+    from auntie_sounds.schedule import ScheduleService
 
 
 class StationService:
@@ -216,6 +212,9 @@ class StationService:
                 include_stream=include_stream,
                 stream_preferences=stream_preferences,
             )
+            if not station:
+                return None
+
             station.international = True
             return station
 
@@ -257,8 +256,8 @@ class StationService:
         include_stream: bool = False,
     ):
         networks = await self.get_networks()
-        network = next(n for n in networks if n.id == station_id)
-        station = network.service
+        network = next((n for n in networks if n.id == station_id), None)
+        station = network.service if network is not None else None
 
         if not isinstance(station, Station):
             return None
@@ -279,107 +278,3 @@ class StationService:
         )
         broadcast = self.parser.parse_node(json_resp)
         return broadcast
-
-    async def get_radio_menu(
-        self,
-        include_national_stations: bool = True,
-        include_local_stations: bool = False,
-        include_international_stations: bool = False,
-    ):
-        return MenuItem(
-            id="radio",
-            title="Live Radio",
-            sub_items=await self.get_stations(
-                include_local_stations=include_local_stations,
-                include_national_stations=include_national_stations,
-                include_international_stations=include_international_stations,
-            ),
-        )
-
-    async def get_schedule_menu(
-        self,
-        include_national_stations: bool = True,
-        include_local_stations: bool = False,
-        include_international_stations: bool = False,
-        depth=2,
-    ):
-        """Get station schedules converted into a `MenuItem`.
-
-        Parameters:
-            depth: truncate the menu for later data retrieval. As follows: **Station Schedules > Radio One** *(depth = 2)* **> Today** *(depth = 3)* **> Programme Listing** *(depth = 4)*
-
-        """
-
-        def _station_to_schedule(station: LiveStation | Station) -> Schedule | None:
-            return (
-                Schedule(id=station.id, image_url=station.network.logo_url)
-                if station and station.network
-                else None
-            )
-
-        menu_item = MenuItem(
-            id="schedule",
-            title="Station Schedules",
-        )
-        if depth == 2:
-            menu_item.sub_items = [
-                result
-                for result in (
-                    _station_to_schedule(station)
-                    for station in await self.get_stations()
-                )
-                if result is not None
-            ]
-            return menu_item
-
-        menu_item.sub_items = [
-            await self.get_network_schedule_or_catch_up_menu(
-                station_id=station.id, catch_up=False, include_listings=(depth == 4)
-            )
-            for station in await self.get_stations(
-                include_national_stations=include_national_stations,
-                include_local_stations=include_local_stations,
-                include_international_stations=include_international_stations,
-            )
-        ]
-        return menu_item
-
-    async def get_catch_up_menu(self, include_local_stations: bool = False):
-        return MenuItem(
-            id="catch_up",
-            title="Catch-up Radio",
-            sub_items=[],
-            # await self.get_station_schedule_or_catch_up_menu(
-            #     station.id, catch_up=True
-            # )
-            # for station in await self.get_networks(
-            #     include_local_networks=include_local
-            # )
-            # ],
-        )
-
-    async def get_network_schedule_or_catch_up_menu(
-        self, station_id: str, catch_up: bool = True, include_listings: bool = True
-    ) -> MenuItem:
-        station = await self.get_station(station_id)
-        if not station:  # or not isinstance(station, LiveStation):
-            raise NotFoundError(f"Couldn't get station with id {station_id}")
-
-        menu_item = MenuItem(
-            id=station_id,
-            title=station.network.short_title
-            if station and station.network
-            else "Unknown Station",
-            image_url=station.network.logo_url if station and station.network else None,
-        )
-        if include_listings:
-            start_date = dt.now(tz=self.schedules.SCHEDULE_TIMEZONE).date()
-            if catch_up:
-                end_date = start_date - timedelta(days=30)
-            else:
-                end_date = start_date + timedelta(days=7)
-            date_data = await self.schedules.get_station_schedules(
-                station_id, start_date, end_date
-            )
-            menu_item.sub_items = date_data
-        return menu_item

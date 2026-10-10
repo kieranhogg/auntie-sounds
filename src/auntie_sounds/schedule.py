@@ -2,42 +2,80 @@ import asyncio
 import datetime
 import logging
 import time
-from collections.abc import Callable, Iterable
-from datetime import UTC, timedelta
+from collections.abc import Callable, Iterable, Sequence
+from datetime import UTC, date, timedelta
 from datetime import datetime as dt
-from zoneinfo import ZoneInfo
+from itertools import chain
 
-from sounds import endpoints
-from sounds.endpoints import Endpoints
-from sounds.exceptions import APIResponseError, DateOutOfRangeError, InvalidFormatError
-from sounds.history import SegmentHistory
-from sounds.models import (
+from auntie_sounds import endpoints
+from auntie_sounds.constants import SCHEDULE_TIMEZONE
+from auntie_sounds.endpoints import Endpoints
+from auntie_sounds.exceptions import (
+    APIResponseError,
+    DateOutOfRangeError,
+    InvalidFormatError,
+)
+from auntie_sounds.history import SegmentHistory
+from auntie_sounds.models import (
     LiveStation,
+    MenuItem,
     Polling,
     RadioShow,
     Schedule,
     ScheduleItem,
     Segment,
+    Station,
 )
-from sounds.parser import Parser
-from sounds.requests import RequestManager, build_url
-from sounds.utils import station_id_to_service_id
+from auntie_sounds.parser import Parser
+from auntie_sounds.requests import RequestManager, build_url
+from auntie_sounds.utils import station_id_to_service_id
 
 logger = logging.getLogger(__name__)
 
-# The API rejects any other limit on the latest segments, whatever its spec says
-SEGMENT_LIMIT_MAX = 10
-# How many programmes the on-air poll lists: the one on air and the next four
-ON_AIR_LIMIT = 5
 RECENT_TRACKS = "recent_tracks"
 LIVE_PLAY_AREA = "live_play_area"
 BROADCAST_TYPES = ("broadcast_summary", "broadcast")
+
+# The API serves 30 days back and 7 ahead
+CATCH_UP_DAYS = 30
+UPCOMING_DAYS = 7
+
+# How many programmes the on-air poll lists: the one on air and the next four
+ON_AIR_LIMIT = 5
+
+# The API rejects any other limit on the latest segments, whatever its spec says
+SEGMENT_LIMIT_MAX = 10
 
 
 def _covers(item: ScheduleItem | RadioShow, now: dt) -> bool:
     return (
         item.start is not None and item.end is not None and item.start <= now < item.end
     )
+
+
+def _schedule_or_catch_up_dates(
+    catch_up: bool, start_date: date | None = None
+) -> list[date]:
+    """The dates the API will return a schedule or catch-up for."""
+    start_date = start_date or dt.now(SCHEDULE_TIMEZONE).date()
+    if catch_up:
+        return [start_date - timedelta(days=n) for n in range(CATCH_UP_DAYS + 1)]
+    return [start_date + timedelta(days=n) for n in range(UPCOMING_DAYS + 1)]
+
+
+def schedule_dates(start_date: date | None = None):
+    """The dates the API will return a schedule for, soonest first.
+
+    The API will accept today's date, and then 7 future days, for 8 total."""
+    return _schedule_or_catch_up_dates(catch_up=False, start_date=start_date)
+
+
+def catch_up_dates(start_date: date | None = None):
+    """The dates the API will return a catch-up for, most recent first.
+
+    The API will accept today's date, and then 30 previous days, for 31 total.
+    """
+    return _schedule_or_catch_up_dates(catch_up=True, start_date=start_date)
 
 
 def unique_broadcasts(
@@ -57,28 +95,7 @@ def unique_broadcasts(
     return list(seen.values())
 
 
-def _get_date_range(start_date: datetime.date, end_date: datetime.date):
-    # Future schedule requested
-    if end_date > start_date:
-        if (end_date - start_date).days > 7:
-            logger.warning(
-                "More than 7 days of schedule requested, which is not supported."
-            )
-            return range(7)
-        return range((end_date - start_date).days + 1)
-    # Catch-up schedule requested
-    if (start_date - end_date).days > 30:
-        logger.warning(
-            "More than 30 days of catch-up requested, which is not supported."
-        )
-        return range(0, -30, -1)
-    return range(0, -(start_date - end_date).days - 1, -1)
-
-
 class ScheduleService:
-    # Schedule dates are UK broadcast days
-    SCHEDULE_TIMEZONE = ZoneInfo("Europe/London")
-
     def __init__(
         self,
         requests: RequestManager,
@@ -302,15 +319,15 @@ class ScheduleService:
         """Get the schedules for a station for a date range.
 
         Supports end_date being earlier than start date, i.e. a catch-up range.
-        Note: the API"""
-        date_range = _get_date_range(start_date, end_date)
+        """
+        date_range = schedule_dates(start_date=dt.now(tz=SCHEDULE_TIMEZONE))
         schedules = await asyncio.gather(
             *(
                 self.get_schedule(
                     station_id,
-                    date=(start_date + timedelta(days=diff)).strftime("%Y-%m-%d"),
+                    date=the_date.strftime("%Y-%m-%d"),
                 )
-                for diff in date_range
+                for the_date in date_range
             )
         )
         return [schedule for schedule in schedules if isinstance(schedule, Schedule)]
@@ -319,13 +336,13 @@ class ScheduleService:
         self, station_ids: list[str], start_date: datetime.date, end_date: datetime.date
     ) -> list[Schedule]:
         """Get the schedules for multiple stations for a date range."""
-        schedules = await asyncio.gather(
+        per_station = await asyncio.gather(
             *(
                 self.get_station_schedules(id, start_date=start_date, end_date=end_date)
                 for id in station_ids
             )
         )
-        return [schedule for schedule in schedules if isinstance(schedule, Schedule)]
+        return list(chain.from_iterable(per_station))
 
     async def current_programme(self, station_id: str) -> LiveStation | None:
         station_id = station_id_to_service_id(station_id)
@@ -371,3 +388,22 @@ class ScheduleService:
         ):
             return recently_played[0]
         return None
+
+
+def station_folders(
+    id: str, title: str, stations: Sequence[LiveStation | Station]
+) -> MenuItem:
+    """A folder with one entry per station, e.g. for the schedule or catch-up menus."""
+    return MenuItem(
+        id=id,
+        title=title,
+        sub_items=[
+            MenuItem(
+                id=station.item_id,
+                title=station.network.short_title,
+                image_url=station.network.logo_url,
+            )
+            for station in stations
+            if station.network
+        ],
+    )

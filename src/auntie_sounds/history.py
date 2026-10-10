@@ -14,7 +14,7 @@ from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 
-from sounds.models import Segment
+from auntie_sounds.models import Segment
 
 logger = logging.getLogger(__name__)
 
@@ -127,6 +127,10 @@ class SegmentHistory:
                 # Only the programme before can have offsets that haven't happened yet
                 logger.debug("Segment %s starts in the future, ignoring", segment.id)
                 continue
+            existing = self._entries.get(segment.id)
+            if existing is not None and existing.start < programme_start:
+                # Seen while its own programme was on air, so it can't belong to this one
+                continue
             timed = TimedSegment(
                 segment=segment,
                 start=start,
@@ -137,12 +141,6 @@ class SegmentHistory:
                 merged += 1
         self._prune(now)
         return merged
-
-    def _prune(self, now: datetime) -> None:
-        cutoff = now - self.max_age
-        self._entries = {
-            id_: entry for id_, entry in self._entries.items() if entry.end >= cutoff
-        }
 
     def lookup(self, at: datetime, delay: timedelta = timedelta(0)) -> Lookup:
         """
@@ -168,3 +166,9 @@ class SegmentHistory:
         if at >= max(entry.end for entry in newest_first):
             return Unknown()
         return Speech()
+
+    def _prune(self, now: datetime) -> None:
+        cutoff = now - self.max_age
+        self._entries = {
+            id_: entry for id_, entry in self._entries.items() if entry.end >= cutoff
+        }

@@ -3,10 +3,10 @@ import logging
 from collections.abc import Sequence
 from enum import StrEnum, auto
 
-from sounds.auth import AuthService
-from sounds.endpoints import Endpoints
-from sounds.exceptions import APIResponseError
-from sounds.models import (
+from auntie_sounds.auth import AuthService
+from auntie_sounds.endpoints import Endpoints
+from auntie_sounds.exceptions import APIResponseError
+from auntie_sounds.models import (
     Menu,
     MenuItem,
     PlayableItem,
@@ -14,8 +14,8 @@ from sounds.models import (
     RadioSeries,
     RecommendedMenuItem,
 )
-from sounds.owners import OwnerAwareParser, OwnerService
-from sounds.requests import RequestManager
+from auntie_sounds.owners import OwnerAwareParser, OwnerService
+from auntie_sounds.requests import RequestManager
 
 logger = logging.getLogger(__name__)
 

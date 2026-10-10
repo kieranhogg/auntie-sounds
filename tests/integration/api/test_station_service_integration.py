@@ -4,9 +4,9 @@ from datetime import timedelta
 
 import pytest
 
-from sounds.client import SoundsClient
-from sounds.exceptions import ConfigurationError, NotFoundError
-from sounds.models import LiveStation, Schedule
+from auntie_sounds.client import SoundsClient
+from auntie_sounds.exceptions import ConfigurationError, NotFoundError
+from auntie_sounds.models import LiveStation, Schedule
 
 pytestmark = pytest.mark.anyio
 

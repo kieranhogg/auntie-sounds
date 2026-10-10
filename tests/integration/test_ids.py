@@ -1,6 +1,6 @@
 from typing import ClassVar
 
-from sounds.models import Network
+from auntie_sounds.models import Network
 
 
 class TestIDs:
@@ -45,10 +45,3 @@ class TestIDs:
 
         network = await mock_client.stations.get_network(radio_four.id)
         assert network.id == radio_four.id
-
-    async def test_check_network_ids_against_methods(self, mock_client):
-        network_id = "bbc_radio_four"
-        await mock_client.stations.get_station(network_id)
-        menu = await mock_client.stations.get_radio_menu()
-        ids = [item.id for item in menu.sub_items]
-        assert network_id in ids

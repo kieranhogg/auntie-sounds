@@ -22,12 +22,12 @@ from collections.abc import Iterable, Iterator
 from itertools import batched
 from typing import Any
 
-from sounds.endpoints import Endpoints
-from sounds.exceptions import SoundsException
-from sounds.model_factory import STATION_OWNED
-from sounds.models import Menu, SearchResults, Season, SoundsTypes
-from sounds.parser import Parser
-from sounds.requests import RequestManager
+from auntie_sounds.endpoints import Endpoints
+from auntie_sounds.exceptions import SoundsException
+from auntie_sounds.model_factory import STATION_OWNED
+from auntie_sounds.models import Menu, SearchResults, Season, SoundsTypes
+from auntie_sounds.parser import Parser
+from auntie_sounds.requests import RequestManager
 
 logger = logging.getLogger(__name__)
 
@@ -40,6 +40,7 @@ _BATCH_SIZE = 30
 
 # How long to wait before asking again about a pid the API didn't return
 _RETRY_MISSES_AFTER = 60 * 60
+_RETRY_STATIONS_AFTER = 60
 
 
 def _walk(node: Any, parent: dict | None = None) -> Iterator[tuple[dict, dict | None]]:
@@ -84,8 +85,9 @@ class OwnerService:
         self._owners: dict[str, str | None] = {}
         # pid -> time.monotonic() of the last lookup that didn't find it
         self._misses: dict[str, float] = {}
-        # Ids of networks with a live service. None until fetched.
         self._stations: frozenset[str] | None = None
+        self._stations_task: asyncio.Task[frozenset[str]] | None = None
+        self._stations_failed_at: float | None = None
 
     async def lookup(self, pids: Iterable[str]) -> None:
         """Fetch the owners of any of these pids not already known."""
@@ -141,20 +143,38 @@ class OwnerService:
 
     async def _station_networks(self) -> frozenset[str] | None:
         """The networks that are radio stations, fetched once per client."""
-        if self._stations is None:
-            try:
-                json_resp = await self.requests.get_json_response(
-                    url=Endpoints.NETWORKS, fetch_all_items=True
-                )
-            except SoundsException as e:
+        if self._stations is not None:
+            return self._stations
+        if (
+            self._stations_failed_at is not None
+            and time.monotonic() - self._stations_failed_at < _RETRY_STATIONS_AFTER
+        ):
+            return None
+        if self._stations_task is None:
+            self._stations_task = asyncio.create_task(self._fetch_station_networks())
+        task = self._stations_task
+        try:
+            # shield, so one caller being cancelled doesn't cancel the fetch for the others
+            self._stations = await asyncio.shield(task)
+        except SoundsException as e:
+            # Every waiter gets the error, so only the first one records it
+            if self._stations_task is task:
+                self._stations_task = None
+                self._stations_failed_at = time.monotonic()
                 logger.warning("Couldn't get the station list: %s", e)
-                return None
-            self._stations = frozenset(
-                network["id"]
-                for network in json_resp.get("data") or []
-                if network.get("services")
-            )
+            return None
+        self._stations_failed_at = None
         return self._stations
+
+    async def _fetch_station_networks(self) -> frozenset[str]:
+        json_resp = await self.requests.get_json_response(
+            url=Endpoints.NETWORKS, fetch_all_items=True
+        )
+        return frozenset(
+            network["id"]
+            for network in json_resp.get("data") or []
+            if network.get("services")
+        )
 
     async def _fetch(self, pids: list[str]) -> None:
         try:

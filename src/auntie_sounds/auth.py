@@ -16,10 +16,10 @@ import aiohttp
 from bs4 import BeautifulSoup, Tag
 from yarl import URL
 
-from sounds import VERBOSE_LOG_LEVEL
-from sounds.cookies import CookieStore
-from sounds.endpoints import URLs
-from sounds.exceptions import (
+from auntie_sounds import VERBOSE_LOG_LEVEL
+from auntie_sounds.cookies import CookieStore
+from auntie_sounds.endpoints import URLs
+from auntie_sounds.exceptions import (
     CredentialsRejectedError,
     InvalidArgumentsError,
     LoginFailedError,
@@ -29,8 +29,8 @@ from sounds.exceptions import (
     SoundsException,
     UnauthorisedError,
 )
-from sounds.requests import RequestManager, build_headers
-from sounds.utils import _get_data_dir
+from auntie_sounds.requests import RequestManager, build_headers
+from auntie_sounds.utils import _get_data_dir
 
 logger = logging.getLogger(__name__)
 

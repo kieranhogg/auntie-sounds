@@ -2,9 +2,9 @@ from unittest.mock import AsyncMock
 
 import pytest
 
-from sounds.endpoints import Endpoints
-from sounds.exceptions import APIResponseError
-from sounds.models import Menu, MenuItem, RecommendedMenuItem
+from auntie_sounds.endpoints import Endpoints
+from auntie_sounds.exceptions import APIResponseError
+from auntie_sounds.models import Menu, MenuItem, RecommendedMenuItem
 
 
 def _menu_item_node(item_id: str, children: list) -> dict:

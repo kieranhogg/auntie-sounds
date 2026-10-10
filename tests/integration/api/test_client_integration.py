@@ -2,7 +2,7 @@ import os
 
 import pytest
 
-from sounds.client import SoundsClient
+from auntie_sounds.client import SoundsClient
 
 
 @pytest.mark.local_only

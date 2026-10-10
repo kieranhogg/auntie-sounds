@@ -2,8 +2,8 @@ from unittest.mock import AsyncMock
 
 import pytest
 
-from sounds.exceptions import APIResponseError
-from sounds.playback import StreamPreference, get_stream_variant
+from auntie_sounds.exceptions import APIResponseError
+from auntie_sounds.playback import StreamPreference, get_stream_variant
 from tests.conftest import make_response
 
 pytestmark = pytest.mark.anyio

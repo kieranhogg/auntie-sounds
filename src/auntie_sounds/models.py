@@ -12,7 +12,7 @@ import mashumaro
 import pytz
 from mashumaro.types import Discriminator
 
-from sounds.utils import image_from_recipe, network_logo
+from auntie_sounds.utils import image_from_recipe, network_logo
 
 NETWORK_LOGO_FORMAT = "https://sounds.files.bbci.co.uk/3.12.0/networks/{network_id}/{type}_{size}.{format}"
 
@@ -106,6 +106,16 @@ class SerializableMixin(mashumaro.DataClassDictMixin):
     def __post_serialize__(self, d: dict[Any, Any]) -> dict[Any, Any]:
         d[MODEL_TAG] = type(self).__name__
         return d
+
+
+class IterableMixin:
+    def __iter__(self):
+        if (
+            hasattr(self, "sub_items")
+            and self.sub_items
+            and isinstance(self.sub_items, list)
+        ):
+            yield from self.sub_items
 
 
 class IdentifiableMixin:
@@ -486,7 +496,7 @@ class BasicContainer:
 
 
 @dataclass(kw_only=True)
-class Container(BaseObject, IdentifiableMixin):
+class Container(BaseObject, IdentifiableMixin, IterableMixin):
     """Base container for organising content and not directly playable."""
 
     id: str | None = None
@@ -583,10 +593,15 @@ class PlayableItem(BaseObject, IdentifiableMixin):
             "new episodes",
             "stand by",
         ]
+        if self.titles.entity_title is None:
+            return False
         # Title is exactly Trailer, or contains a promo word and is <5 mins
         return self.titles.entity_title.casefold() == "trailer" or (
             self.titles.entity_title is not None
-            and any(keyword.casefold() in self.titles.entity_title for keyword in promo_keywords)
+            and any(
+                keyword.casefold() in self.titles.entity_title
+                for keyword in promo_keywords
+            )
             and (
                 (type(self.duration) is int and self.duration < (5 * 60))
                 or (type(self.duration) is Duration and self.duration.value < (5 * 60))
@@ -867,8 +882,7 @@ class AudiobookEpisode(PodcastEpisode):
 
     def post_processing(self, logger: Logger) -> None:
         super().post_processing(logger)
-        self.process_image()
-        if type(self.container) is not Audiobook:
+        if self.container is not None and type(self.container) is not Audiobook:
             self.container = Audiobook(**vars(self.container))
 
 
@@ -902,7 +916,7 @@ class Category(ImageContainer):
 
 
 @dataclass(kw_only=True)
-class CategoryItemContainer(SerializableMixin):
+class CategoryItemContainer(SerializableMixin, IterableMixin):
     """Represents a content category container."""
 
     id: str | None = None
@@ -968,8 +982,12 @@ class PromoItem(Container):
 @dataclass(kw_only=True)
 class SearchResults(SerializableMixin):
     stations: list[Annotated[LiveStation | StationSearchResult, _POLYMORPHIC]]
-    shows: list[Annotated[Podcast | RadioShow, _POLYMORPHIC]]
+    shows: list[Annotated[Podcast | RadioSeries, _POLYMORPHIC]]
     episodes: list[Annotated[PodcastEpisode | RadioClip | RadioShow, _POLYMORPHIC]]
+
+    def __iter__(self):
+        results = self.stations + self.shows + self.episodes
+        yield from results
 
 
 @dataclass(kw_only=True)

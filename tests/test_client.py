@@ -2,8 +2,8 @@ import aiohttp
 import pytest
 from yarl import URL
 
-from sounds.client import SoundsClient, _default_cookie_file
-from sounds.cookies import ID_COOKIE
+from auntie_sounds.client import SoundsClient, _default_cookie_file
+from auntie_sounds.cookies import ID_COOKIE
 
 
 class TestClientLogin:
@@ -23,7 +23,7 @@ class TestClientCookieFileScoping:
         assert _default_cookie_file("alice") == _default_cookie_file("alice")
 
     def test_anonymous_default_cookie_file_unchanged(self):
-        from sounds.client import COOKIE_FILE
+        from auntie_sounds.client import COOKIE_FILE
 
         assert _default_cookie_file(None) == COOKIE_FILE
         assert _default_cookie_file("") == COOKIE_FILE
@@ -32,8 +32,8 @@ class TestClientCookieFileScoping:
     async def test_second_account_does_not_inherit_first_accounts_session(
         self, tmp_path, monkeypatch
     ):
-        monkeypatch.setattr("sounds.client._get_data_dir", lambda: tmp_path)
-        monkeypatch.setattr("sounds.client.COOKIE_FILE", tmp_path / "sounds_jar")
+        monkeypatch.setattr("auntie_sounds.client._get_data_dir", lambda: tmp_path)
+        monkeypatch.setattr("auntie_sounds.client.COOKIE_FILE", tmp_path / "sounds_jar")
 
         session_a = aiohttp.ClientSession()
         client_a = SoundsClient(

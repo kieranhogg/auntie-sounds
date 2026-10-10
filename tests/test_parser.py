@@ -3,8 +3,8 @@ from logging import Logger
 
 import pytest
 
-from sounds.model_factory import NESTED_OBJECTS
-from sounds.models import (
+from auntie_sounds.model_factory import NESTED_OBJECTS
+from auntie_sounds.models import (
     Menu,
     Podcast,
     PodcastEpisode,
@@ -12,7 +12,8 @@ from sounds.models import (
     RadioShow,
     SearchResults,
 )
-from sounds.parser import Parser
+from auntie_sounds.parser import Parser
+from tests.conftest import FIXTURES_FOLDER
 
 
 class TestParser:
@@ -31,7 +32,7 @@ class TestParser:
         assert isinstance(result, PodcastEpisode)
         assert isinstance(result.container, Podcast)
 
-    def test_parse_search_results(self):
+    def test_parse_search_results_shape(self):
         """Test parsing search results"""
         data = {
             "data": [
@@ -45,6 +46,17 @@ class TestParser:
         assert hasattr(result, "stations")
         assert hasattr(result, "shows")
         assert hasattr(result, "episodes")
+
+    async def test_parse_search_results(self, mock_api):
+        """Test parsing search results"""
+        json_result = json.loads((FIXTURES_FOLDER / "SEARCH.json").read_text())
+        result = Parser().parse_search(json_result)
+        assert hasattr(result, "stations")
+        assert hasattr(result, "shows")
+        assert hasattr(result, "episodes")
+        assert len(result.shows) == 10
+        assert len(result.stations) == 4
+        assert len(result.episodes) == 10
 
 
 class TestParserNestedObjects:

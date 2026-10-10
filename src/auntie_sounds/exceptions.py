@@ -27,7 +27,7 @@ class NetworkError(SoundsHttpException):
     pass
 
 
-class APIResponseError(SoundsException):
+class APIResponseError(SoundsHttpException):
     def __init__(self, message: str | None = None, status_code: int | None = None):
         self.message = message
         self.status_code = status_code

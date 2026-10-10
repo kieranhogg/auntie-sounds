@@ -2,7 +2,7 @@ from contextlib import AsyncExitStack
 
 import pytest
 
-from sounds.client import SoundsClient
+from auntie_sounds.client import SoundsClient
 
 
 @pytest.fixture

@@ -3,11 +3,11 @@ from unittest.mock import AsyncMock, Mock
 import aiohttp
 import pytest
 
-from sounds.auth import AuthService
-from sounds.client import SoundsClient
-from sounds.endpoints import Endpoints
-from sounds.exceptions import NetworkError, NotFoundError, UnauthorisedError
-from sounds.requests import RequestManager
+from auntie_sounds.auth import AuthService
+from auntie_sounds.client import SoundsClient
+from auntie_sounds.endpoints import Endpoints
+from auntie_sounds.exceptions import NetworkError, NotFoundError, UnauthorisedError
+from auntie_sounds.requests import RequestManager
 
 pytestmark = pytest.mark.anyio
 

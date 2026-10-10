@@ -3,8 +3,8 @@ import os
 import pytest
 from dotenv import load_dotenv
 
-from sounds.client import SoundsClient
-from sounds.exceptions import LoginFailedError
+from auntie_sounds.client import SoundsClient
+from auntie_sounds.exceptions import LoginFailedError
 
 load_dotenv()
 

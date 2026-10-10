@@ -4,12 +4,12 @@ from unittest.mock import AsyncMock, Mock
 
 import pytest
 
-from sounds.exceptions import (
+from auntie_sounds.exceptions import (
     APIResponseError,
     DateOutOfRangeError,
     InvalidFormatError,
 )
-from sounds.schedule import ScheduleService, _get_date_range
+from auntie_sounds.schedule import ScheduleService, catch_up_dates, schedule_dates
 
 pytestmark = pytest.mark.anyio
 
@@ -21,51 +21,17 @@ class TestDateRangeHelper:
 
     def test_get_7_day_schedule(self):
         """Test a date range 7 days into the future."""
-        date_range = _get_date_range(
-            dt(day=1, month=1, year=2000, tzinfo=TIMEZONE),
-            dt(day=7, month=1, year=2000, tzinfo=TIMEZONE),
-        )
-        assert len(date_range) == 7
-
-    def test_get_1_day_schedule_or_catchup(self):
-        """Test when start and end date are the same a range of 1 is still returned."""
-        date_range = _get_date_range(
-            dt(day=1, month=1, year=2000, tzinfo=TIMEZONE),
+        date_range = schedule_dates(
             dt(day=1, month=1, year=2000, tzinfo=TIMEZONE),
         )
-        assert len(date_range) == 1
-
-    def test_more_than_7_day_schedule(self):
-        """Test a date range over 7 days into the future gets truncated to 7 days."""
-        date_range = _get_date_range(
-            dt(day=1, month=1, year=2000, tzinfo=TIMEZONE),
-            dt(day=17, month=1, year=2000, tzinfo=TIMEZONE),
-        )
-        assert len(date_range) == 7
-
-    def test_7_day_catchup(self):
-        """Test a date range 7 days into the past."""
-        date_range = _get_date_range(
-            dt(day=7, month=1, year=2000, tzinfo=TIMEZONE),
-            dt(day=1, month=1, year=2000, tzinfo=TIMEZONE),
-        )
-        assert len(date_range) == 7
+        assert len(date_range) == 8
 
     def test_30_day_catchup(self):
-        """Test a date range 30 days into the past."""
-        date_range = _get_date_range(
+        """Test a date range 30 days (+today) into the past."""
+        date_range = catch_up_dates(
             dt(day=30, month=1, year=2000, tzinfo=TIMEZONE),
-            dt(day=1, month=1, year=2000, tzinfo=TIMEZONE),
         )
-        assert len(date_range) == 30
-
-    def test_over_30_day_catchup(self):
-        """Test a date range over 30 days into the past gets truncated to 30 days."""
-        date_range = _get_date_range(
-            dt(day=30, month=3, year=2000, tzinfo=TIMEZONE),
-            dt(day=1, month=1, year=2000, tzinfo=TIMEZONE),
-        )
-        assert len(date_range) == 30
+        assert len(date_range) == 31
 
 
 class TestScheduleService:
@@ -105,7 +71,6 @@ class TestScheduleDateOutOfRange:
             await service.get_schedule("bbc_radio_one", date="2000-01-01")
 
         assert "2000-01-01" in str(exc.value)
-        assert exc.value.status_code == 400
         # Existing handlers for APIResponseError still catch it
         assert isinstance(exc.value, APIResponseError)
 

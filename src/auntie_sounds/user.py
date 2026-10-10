@@ -1,6 +1,10 @@
-from sounds.endpoints import URLs
-from sounds.exceptions import APIResponseError, NotFoundError, UnauthorisedError
-from sounds.requests import RequestManager
+import logging
+
+from auntie_sounds.endpoints import URLs
+from auntie_sounds.exceptions import APIResponseError, NotFoundError, UnauthorisedError
+from auntie_sounds.requests import RequestManager
+
+logger = logging.getLogger(__name__)
 
 
 class UserService:
@@ -19,24 +23,19 @@ class UserService:
             try:
                 await self.refresh()
             except UnauthorisedError, NotFoundError, APIResponseError:
-                # Set conservative default as a safeguard
-                self._user_info = {
-                    "X-Country": "us",
-                    "X-Ip_is_uk_combined": "no",
-                    "X-Ip_is_advertise_combined": "yes",
-                }
+                logger.warning("Couldn't get user_info")
 
     async def listener_country(self) -> str | None:
         """Return the listener's current country."""
         await self._ensure_loaded()
-        return self._user_info.get("X-Country")
+        return self._user_info.get("X-Country", "us")
 
     async def is_geolocated_in_uk(self) -> bool:
         """Listener is in the UK."""
         await self._ensure_loaded()
-        return self._user_info.get("X-Country") == "gb"
+        return self._user_info.get("X-Country", "us") == "gb"
 
     async def is_uk_account_and_location(self) -> bool:
         """Listener has a UK-based account and is in the UK."""
         await self._ensure_loaded()
-        return self._user_info.get("X-Ip_is_uk_combined") == "yes"
+        return self._user_info.get("X-Ip_is_uk_combined", "no") == "yes"

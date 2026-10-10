@@ -6,9 +6,9 @@ import aiohttp
 import pytest
 from yarl import URL
 
-from sounds.auth import AuthService, _get_form_action
-from sounds.cookies import CookieStore
-from sounds.exceptions import (
+from auntie_sounds.auth import AuthService, _get_form_action
+from auntie_sounds.cookies import CookieStore
+from auntie_sounds.exceptions import (
     CredentialsRejectedError,
     InvalidArgumentsError,
     LoginFailedError,

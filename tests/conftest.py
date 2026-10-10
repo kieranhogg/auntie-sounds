@@ -12,17 +12,17 @@ import pytest
 from aioresponses import aioresponses
 from yarl import URL
 
-from sounds.auth import AuthService
-from sounds.client import COOKIE_FILE, SoundsClient
-from sounds.content import ContentService
-from sounds.cookies import ID_COOKIE, CookieStore
-from sounds.endpoints import URLs
-from sounds.personal import PersonalService
-from sounds.playback import PlaybackService
-from sounds.requests import RequestManager
-from sounds.schedule import ScheduleService
-from sounds.stations import StationService
-from sounds.user import UserService
+from auntie_sounds.auth import AuthService
+from auntie_sounds.client import COOKIE_FILE, SoundsClient
+from auntie_sounds.content import ContentService
+from auntie_sounds.cookies import ID_COOKIE, CookieStore
+from auntie_sounds.endpoints import URLs
+from auntie_sounds.personal import PersonalService
+from auntie_sounds.playback import PlaybackService
+from auntie_sounds.requests import RequestManager
+from auntie_sounds.schedule import ScheduleService
+from auntie_sounds.stations import StationService
+from auntie_sounds.user import UserService
 
 pytestmark = pytest.mark.anyio
 
@@ -51,7 +51,7 @@ def mock_api(monkeypatch):
         return json.loads((FIXTURES_FOLDER / f"{url.name}.json").read_text())
 
     monkeypatch.setattr(
-        "sounds.requests.RequestManager.get_json_response", fake_request
+        "auntie_sounds.requests.RequestManager.get_json_response", fake_request
     )
 
 

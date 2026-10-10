@@ -1,8 +1,8 @@
 import logging
 from dataclasses import fields
 
-from sounds.model_factory import ModelFactory, parse_nested_objects
-from sounds.models import (
+from auntie_sounds.model_factory import ModelFactory, parse_nested_objects
+from auntie_sounds.models import (
     BasicContainer,
     CategoryItemContainer,
     Container,
@@ -12,6 +12,7 @@ from sounds.models import (
     Podcast,
     PodcastEpisode,
     RadioClip,
+    RadioSeries,
     RadioShow,
     RecommendedMenuItem,
     SearchResults,
@@ -138,7 +139,7 @@ class Parser:
 
     def parse_search(self, json_data: dict) -> SearchResults:
         stations: list[LiveStation | StationSearchResult] = []
-        shows: list[Podcast | RadioShow] = []
+        shows: list[Podcast | RadioSeries] = []
         episodes: list[PodcastEpisode | RadioShow | RadioClip] = []
         for results_set in json_data["data"]:
             if results_set["id"] == "live_search":
@@ -158,7 +159,7 @@ class Parser:
                     shows = [
                         show
                         for show in show_results
-                        if isinstance(show, (Podcast, RadioShow))
+                        if isinstance(show, (Podcast, RadioSeries))
                     ]
             elif results_set["id"] == "playable_search":
                 episode_results = self.parse_container(results_set)

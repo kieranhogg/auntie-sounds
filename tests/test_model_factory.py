@@ -7,8 +7,8 @@ import json
 
 import pytest
 
-from sounds.model_factory import ModelFactory
-from sounds.models import (
+from auntie_sounds.model_factory import ModelFactory
+from auntie_sounds.models import (
     Category,
     Collection,
     LiveStation,
@@ -22,7 +22,7 @@ from sounds.models import (
     Segment,
     Station,
 )
-from sounds.parser import Parser
+from auntie_sounds.parser import Parser
 
 pytestmark = pytest.mark.anyio
 

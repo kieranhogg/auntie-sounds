@@ -4,10 +4,10 @@ from pathlib import Path
 
 import pytest
 
-from sounds.endpoints import Endpoints
-from sounds.exceptions import APIResponseError
-from sounds.models import Podcast, PodcastEpisode, RadioSeries, RadioShow
-from sounds.owners import OwnerAwareParser, OwnerService
+from auntie_sounds.endpoints import Endpoints
+from auntie_sounds.exceptions import APIResponseError
+from auntie_sounds.models import Podcast, PodcastEpisode, RadioSeries, RadioShow
+from auntie_sounds.owners import OwnerAwareParser, OwnerService
 
 pytestmark = pytest.mark.anyio
 

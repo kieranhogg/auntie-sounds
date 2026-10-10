@@ -208,7 +208,7 @@ class Endpoints(Enum):
     """
     PID_DETAILS = ("https://www.bbc.co.uk/programmes/{pid}/playlist.json", False)
     COLLECTIONS = (
-        "/v2/collections/{pid}/members/container",
+        "/v2/collections/{pid}/members",  # ?experience=domestic
         False,
     )
     CURATIONS = (
@@ -236,7 +236,7 @@ class Endpoints(Enum):
         "/v2/experience/inline/container/urn:bbc:radio:category:news",
         False,
     )
-    AUDIOBOOKS = "", False
+    AUDIOBOOKS = "/v2/programmes/playable?category=audiobooks", False
     POPULAR_AUDIOBOOKS = (
         "/v2/programmes/playable?category=audiobooks&sort=popular",
         False,

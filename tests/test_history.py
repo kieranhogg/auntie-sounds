@@ -5,14 +5,14 @@ from typing import ClassVar
 
 import pytest
 
-from sounds.history import (
+from auntie_sounds.history import (
     SegmentHistory,
     Speech,
     Track,
     Unknown,
     current_programme_segments,
 )
-from sounds.models import Segment, SegmentOffset
+from auntie_sounds.models import Segment, SegmentOffset
 
 START = datetime(2026, 10, 6, 6, 0, tzinfo=UTC)
 NOW = START + timedelta(minutes=30)

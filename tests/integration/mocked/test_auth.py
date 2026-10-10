@@ -1,6 +1,6 @@
 import pytest
 
-from sounds.auth import _get_form_action
+from auntie_sounds.auth import _get_form_action
 
 
 @pytest.fixture

@@ -7,10 +7,16 @@ from pathlib import Path
 
 import pytest
 
-from sounds.history import Speech, Track, Unknown
-from sounds.models import Polling, RadioShow, ScheduleItem, Segment, SegmentOffset
-from sounds.parser import Parser
-from sounds.schedule import SEGMENT_LIMIT_MAX, ScheduleService, unique_broadcasts
+from auntie_sounds.history import Speech, Track, Unknown
+from auntie_sounds.models import (
+    Polling,
+    RadioShow,
+    ScheduleItem,
+    Segment,
+    SegmentOffset,
+)
+from auntie_sounds.parser import Parser
+from auntie_sounds.schedule import SEGMENT_LIMIT_MAX, ScheduleService, unique_broadcasts
 
 pytestmark = pytest.mark.anyio
 

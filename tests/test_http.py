@@ -1,9 +1,9 @@
 import pytest
 
-from sounds.client import SoundsClient
-from sounds.endpoints import Endpoints
-from sounds.exceptions import InvalidArgumentsError
-from sounds.requests import URL_BASE, build_url
+from auntie_sounds.client import SoundsClient
+from auntie_sounds.endpoints import Endpoints
+from auntie_sounds.exceptions import InvalidArgumentsError
+from auntie_sounds.requests import URL_BASE, build_url
 
 
 @pytest.fixture
@@ -29,7 +29,9 @@ class TestHTTP:
             network_id="123"
         )
 
-
     async def test_build_url_with_multiple_placeholders(self, client):
-        url = build_url(url="/{one}{two}{three}", url_args={"one": "one", "two": "two", "three": "three"})
+        url = build_url(
+            url="/{one}{two}{three}",
+            url_args={"one": "one", "two": "two", "three": "three"},
+        )
         assert url == URL_BASE + "/onetwothree"

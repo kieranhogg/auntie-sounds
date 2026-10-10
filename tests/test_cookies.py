@@ -5,8 +5,8 @@ import aiohttp
 import pytest
 from yarl import URL
 
-from sounds.cookies import ID_COOKIE, CookieStore
-from sounds.endpoints import URLs
+from auntie_sounds.cookies import ID_COOKIE, CookieStore
+from auntie_sounds.endpoints import URLs
 
 pytestmark = pytest.mark.anyio
 
@@ -48,7 +48,7 @@ class TestCookieStore:
     async def test_load_warns_but_does_not_raise_when_file_missing(
         self, tmp_path, caplog
     ):
-        caplog.set_level(logging.WARNING, logger="sounds.cookies")
+        caplog.set_level(logging.WARNING, logger="auntie_sounds.cookies")
         store = CookieStore(
             session=Mock(cookie_jar=aiohttp.CookieJar()),
             cookie_file_location=tmp_path / "does_not_exist",

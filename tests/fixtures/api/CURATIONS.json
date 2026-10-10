@@ -1,0 +1,587 @@
+{
+  "$schema": "https://rms.api.bbc.co.uk/docs/swagger.json#/definitions/PlayableItems",
+  "total": 7,
+  "limit": 30,
+  "offset": 0,
+  "data": [
+    {
+      "type": "playable_item",
+      "id": "p0dc4l89",
+      "urn": "urn:bbc:radio:clip:p0dc4l85",
+      "network": {
+        "id": "bbc_webonly",
+        "key": null,
+        "short_title": "BBC",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_webonly/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "All Day Football",
+        "secondary": null,
+        "tertiary": null,
+        "entity_title": "All Day Football"
+      },
+      "synopses": {
+        "short": "Be a part of the All Day Football squad.",
+        "medium": "Be a part of the All Day Football squad.",
+        "long": null
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0dc4lsm.jpg",
+      "duration": {
+        "value": 8,
+        "label": "1 min"
+      },
+      "progress": null,
+      "container": null,
+      "download": null,
+      "availability": {
+        "from": "2022-11-01T18:31:58Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": null,
+        "label": null
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0pfjl2d",
+      "urn": "urn:bbc:radio:episode:p0pfjltk",
+      "network": {
+        "id": "bbc_radio_five_live",
+        "key": "5live",
+        "short_title": "Radio 5 Live",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_five_live/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Football Daily",
+        "secondary": "Spygate: Eckert free to continue as Southampton manager",
+        "tertiary": null,
+        "entity_title": "Spygate: Eckert free to continue as Southampton manager"
+      },
+      "synopses": {
+        "short": "John Bennett is joined by Adam Blackmore and Jobi McAnuff to react to the Spygate verdict",
+        "medium": "John Bennett is joined by BBC Radio Solent's Adam Blackmore and the 72+ podcast's Jobi McAnuff to react to the Spygate verdict.",
+        "long": "John Bennett is joined by BBC Radio Solent's Adam Blackmore and former Reading and Watford winger Jobi McAnuff to react to the Spygate verdict. \n\nAn FA regulatory commission has handed Southampton boss Tonda Eckert a suspended 6-week ban for his involvement in the Spygate scandal. What reasons were given for this verdict? And is it a fair outcome? \n\nWith Middlesborough the club to uncover the spying ahead of their Championship play-off semi-final,  fan and editor of Fly Me To The Moon fanzine, Robert Nichols, offers what this decision is like from a Boro perspective. \n\nTIMECODES:\n0'45 How did we get to this point? \n2'05 Why is the ban suspended?\n4'17 Jobi McAnuff's thoughts\n9'12 Has the length of time taken to get this verdict benefitted Eckert? \n11'51 What do Southampton fans think of the decision? \n15'00 Middlesborough fan Robert Nichols\n18'05 How much damage has this done to Southampton's reputation?"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0m6ztjd.jpg",
+      "duration": {
+        "value": 1199,
+        "label": "19 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "series",
+        "id": "p02nrsln",
+        "urn": "urn:bbc:radio:series:p02nrsln",
+        "title": "Football Daily",
+        "synopses": {
+          "short": "The latest news and analysis from the Premier League, Football League and more. Join us!",
+          "medium": "The latest news, insight, analysis and big-name guests from the Premier League, EFL, Scottish, International and European football. Plus, Karel Prince: Lie Detector.",
+          "long": "The latest news, insight, analysis and big-name guests from the Premier League, EFL, Scottish, International and European football. Plus, fact-checking football stories with Karel Prince: Lie Detector. Get in touch with us @5liveSport on social media and remember to leave us your ratings and reviews."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0pfjl2d.mp3",
+            "file_size": 20000000,
+            "label": "20 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0pfjl2d.mp3",
+            "file_size": 20000000,
+            "label": "20 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0pfjl2d.mp3",
+            "file_size": 20000000,
+            "label": "20 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-10-07T19:30:00Z",
+        "to": "2026-11-06T19:30:00Z",
+        "label": "Available for 29 days"
+      },
+      "release": {
+        "date": "2026-10-07T00:00:00Z",
+        "label": "07 Oct 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=p02nrsln&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0pfcg98",
+      "urn": "urn:bbc:radio:episode:p0pfcgm8",
+      "network": {
+        "id": "bbc_radio_scotland",
+        "key": "radioscotland",
+        "short_title": "Radio Scotland",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_scotland/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Scottish Football Podcast",
+        "secondary": "Does Pocognoli need to change already?",
+        "tertiary": null,
+        "entity_title": "Does Pocognoli need to change already?"
+      },
+      "synopses": {
+        "short": "Scotland slump to Slovenia: is Pocognoli's back three already in trouble?",
+        "medium": "Scotland fall 2-1 to Slovenia at Hampden. Is Pocognoli's system wrong for his players? Plus Bowie, Gannon-Doak, Angus Gunn and O'Neill staying at Celtic.",
+        "long": "What should we make of Scotland's slump to defeat against Slovenia at Hampden? Four games into Pocognoli's time in charge, how clear is his project, and is the back three the right fit for the players he has? With second place in the Nations League group now looking a long way off, is it time to go back to the drawing board?\n\nMartin Dowden, Steven McGowan and Cammy Bell look at a flat night at Hampden. Scotland took the lead but deserved to lose. The panel looks at a press that never worked as one unit, a high line that kept getting broken by a single ball over the top, and centre-backs Stephen Welsh, Jack Hendry and Binks being left exposed one-on-one. They also discuss three formation changes in one game, Andy Robertson asking the touchline what to do, and whether Slovenia had studied Scotland's last few games. Plus, is a 4-2-3-1 the answer, and is Steve Clarke now looking a little better in hindsight?\n\nPlus, should Kieran Bowie have started after scoring against North Macedonia? Has Ollie McBurnie's run without a goal gone on too long? How can Scotland get the best out of Ben Gannon-Doak while he isn't playing at Bournemouth? Is the criticism of Angus Gunn fair, or does the trouble start well before the ball reaches him? Do Josh McPake, James Wilson and the under-21s give Scotland real depth?\n\nAnd with Martin O'Neill committing to stay as Celtic manager, can he get through Motherwell, Benfica, Hearts and Celta Vigo with his critics quiet?"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0pfcgmn.jpg",
+      "duration": {
+        "value": 1385,
+        "label": "23 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "series",
+        "id": "p02nrsc7",
+        "urn": "urn:bbc:radio:series:p02nrsc7",
+        "title": "Scottish Football Podcast",
+        "synopses": {
+          "short": "The latest talking points in the national game breaking news, views and analysis",
+          "medium": "The latest talking points in the national game with the BBC Scottish Football Podcast. Breaking news, views and analysis",
+          "long": "The latest talking points in the national game with the BBC Scottish Football Podcast. Breaking news, views and analysis"
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0pfcg98.mp3",
+            "file_size": 23000000,
+            "label": "23 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0pfcg98.mp3",
+            "file_size": 23000000,
+            "label": "23 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0pfcg98.mp3",
+            "file_size": 23000000,
+            "label": "23 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-10-07T07:00:00Z",
+        "to": "2026-11-06T06:47:00Z",
+        "label": "Available for 29 days"
+      },
+      "release": {
+        "date": "2026-10-07T00:00:00Z",
+        "label": "07 Oct 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=p02nrsc7&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0pd9g15",
+      "urn": "urn:bbc:radio:episode:p0pd9gqj",
+      "network": {
+        "id": "bbc_radio_five_live",
+        "key": "5live",
+        "short_title": "Radio 5 Live",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_five_live/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Game's Gone: The Steve Bracknall Podcast",
+        "secondary": "Could Royal Oak FC End Up Playing Man City?!",
+        "tertiary": null,
+        "entity_title": "Could Royal Oak FC End Up Playing Man City?!"
+      },
+      "synopses": {
+        "short": "Royal Oak FC finally win, Man City are found guilty and Andy Townsend talks pub toilets.",
+        "medium": "Royal Oak FC finally win, Parksey wants a subs deduction, and the lads react to Man City's guilty verdict.",
+        "long": "It's been a monumental week in football, as Royal Oak FC have finally won a game! Buoyed by their recent clear-the-air talks and Steve's trip to Turkey, their fortunes are on the up.\n\nThe only cloud on the horizon is Parksey, who went off at half-time (he's asked for a pro-rata deduction in his subs), while the lads discuss his future role at the club.\n\nIn the wider football world, the lads drill down into the breaking news that Manchester City have been found guilty of all charges relating to breaches of the Premier League's financial rules. Steve, Paul and Bob take a fan's-eye view of the fallout.\n\nElsewhere, Andy Townsend weighs in on pub toilets, and the lads ponder whose life they'd most like to live as a footballer.\n\nErling Haaland, José Mourinho and Hakan Şükür all feature in another packed edition.\n\nYou can also watch the YouTube premiere of each episode on the Game’s Gone channel, every Thursday at 7pm with Bob and Steve in the live chat.\n\nSend your questions and voice notes to steve@bbc.co.uk or via whatsapp 0800 7831997\n\nMarching on, together as one. Steve.\n\nGame’s Gone: The Steve Bracknall Podcast is written and performed by Chris McClure and is a Persephonica production for BBC Sounds\n\nCredits\n\nSeries Producer: Ad Ahmed\nVideo Producer/Editor/Artwork: Matt Exton\nProduction Assistant: Lauren Carey\nAdditional Artwork and Social Media: Joe Whittaker and Megan Beattie\nPhotography: Rob Nicholson\nExecutive Producer: Dino Sofos\nCommissioning Executive for the BBC: Stevie Middleton\nAssistant Commissioner for the BBC: Steve Trenchard"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0mh9p6j.jpg",
+      "duration": {
+        "value": 2078,
+        "label": "34 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "p0mh9lt6",
+        "urn": "urn:bbc:radio:brand:p0mh9lt6",
+        "title": "Game's Gone: The Steve Bracknall Podcast",
+        "synopses": {
+          "short": "The self-proclaimed saviour of grassroots football - tackles the modern game.",
+          "medium": "Steve Bracknall takes a weekly deep dive into the murky world of the modern game whilst desperately trying to hold his ramshackle Sunday league team together.",
+          "long": null
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0pd9g15.mp3",
+            "file_size": 34000000,
+            "label": "34 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0pd9g15.mp3",
+            "file_size": 34000000,
+            "label": "34 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0pd9g15.mp3",
+            "file_size": 34000000,
+            "label": "34 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-10-01T06:00:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-10-01T00:00:00Z",
+        "label": "01 Oct 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": {
+          "short": "Contains strong language and adult humour.",
+          "long": "Contains strong language and adult humour."
+        }
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=p0mh9lt6&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0pfgynh",
+      "urn": "urn:bbc:radio:episode:p0pfh6lh",
+      "network": {
+        "id": "bbc_radio_five_live",
+        "key": "5live",
+        "short_title": "Radio 5 Live",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_five_live/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "BBC Women's Football Weekly",
+        "secondary": "Lionesses special: Esme Morgan & the next-gen midfielders",
+        "tertiary": null,
+        "entity_title": "Lionesses special: Esme Morgan & the next-gen midfielders"
+      },
+      "synopses": {
+        "short": "Ellen White sits down with defender Esme Morgan ahead of England's World Cup qualifiers.",
+        "medium": null,
+        "long": "Ellen White is back at St. George’s Park, alongside BBC Women's Sport Reporter Jo Currie, for a Lionesses special ahead of their upcoming World Cup play-off games against Greece.\n\nEllen sits down with Washington Spirit defender Esme Morgan to discuss finding consistency in the England starting XI, how the NWSL season has prepared her for these crucial international games, and we of course get an update on Biscuit the cat!\n\nPlus, Jo chats to England’s exciting new midfield talents in the press conference, Lexi Potter and Erica Meg Parkinson. \n\nFull commentary of England v Greece is on BBC Radio 5 Live and BBC Sounds. The first leg is a 5:30pm kick-off on Friday 9th October.\n\nTIMECODES:\n00:04 - Ellen White and Jo Currie are back!\n02:01 – Esme Morgan interview.\n21:44 – Ellen and Jo discuss what’s ahead for England.\n29:04 – Lexi Potter and Erica Meg Parkinson chat in the press conference.\n32:50 - Ellen and Jo reflect on the Lionesses they’ve heard from."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0pfh6nt.jpg",
+      "duration": {
+        "value": 2161,
+        "label": "36 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "p0bzmv49",
+        "urn": "urn:bbc:radio:brand:p0bzmv49",
+        "title": "BBC Women's Football Weekly",
+        "synopses": {
+          "short": "Weekly WSL talk and exclusive extras. Subscribe for your women's football fix.",
+          "medium": "Your go-to for women's football. Weekly WSL chat with Ben Haines and Ellen White, plus exclusives with the biggest stars. Subscribe for weekly episodes.",
+          "long": "Whether you're a lifelong Lionesses fan or just getting into the women's game, BBC Women's Football Weekly brings you closer to the action with new episodes every week.\n\nBen Haines teams up with England's record goalscorer Ellen White to unpack the biggest talking points from the Women's Super League and beyond - covering match previews, standout performances, and all the drama on and off the pitch. BBC Women's Football Weekly also features exclusive interviews with the biggest stars in the Women's Super League and national teams.\n\nSubscribe now to get every episode as soon as it drops and stay in the know with the latest from the world of women's football.\nPlus, listen to classic episodes of Jill Scott's Coffee Club, where Jill sits down with players for honest, off-the-pitch conversations over a coffee."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0pfgynh.mp3",
+            "file_size": 35000000,
+            "label": "35 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0pfgynh.mp3",
+            "file_size": 35000000,
+            "label": "35 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0pfgynh.mp3",
+            "file_size": 35000000,
+            "label": "35 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-10-07T15:53:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-10-07T00:00:00Z",
+        "label": "07 Oct 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=p0bzmv49&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0ngf8cv",
+      "urn": "urn:bbc:radio:episode:p0n7jvp2",
+      "network": {
+        "id": "bbc_radio_five_live",
+        "key": "5live",
+        "short_title": "Radio 5 Live",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_five_live/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "The Wayne Rooney Show",
+        "secondary": "Bruno Fernandes On Man Utd Pressure, Critics & Captaincy",
+        "tertiary": null,
+        "entity_title": "Bruno Fernandes On Man Utd Pressure, Critics & Captaincy"
+      },
+      "synopses": {
+        "short": "Bruno Fernandes on Manchester United pressure & criticism with Wayne Rooney.",
+        "medium": "Bruno Fernandes opens up on Manchester United pressure, criticism and captaincy in an honest chat with Wayne Rooney.",
+        "long": "Wayne Rooney sits down with Bruno Fernandes to talk Manchester United, pressure and captaincy. How does Bruno handle criticism at Man Utd? What is it really like leading the club during difficult periods and performing under constant pressure? Bruno Fernandes opens up on life as Manchester United captain, dealing with critics, playing through injuries and the mentality needed to deliver at the highest level. Wayne Rooney also reflects on his own experiences at United, leadership and what it takes to succeed under pressure. And Bruno also reveals his ambition to win the World Cup with Cristiano Ronaldo."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lxths6.jpg",
+      "duration": {
+        "value": 1498,
+        "label": "24 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "p0lwvsnc",
+        "urn": "urn:bbc:radio:brand:p0lwvsnc",
+        "title": "The Wayne Rooney Show",
+        "synopses": {
+          "short": "Wayne Rooney dives into football's biggest stories, career moments & legends of the game.",
+          "medium": "Wayne Rooney and friends dive into football's biggest stories, career moments and legends of the game.",
+          "long": "Wayne Rooney, Premier League icon, England legend, and the teenage sensation who lit up the headlines at just 16, is back. This time, he's behind the mic. The Wayne Rooney Show is your dose of football talk, where Rooney and friends team up for a deep dive into football's biggest stories. Expect raw, unfiltered opinions and wild stories from his own career - everything from dressing room drama to unforgettable international nights. You'll also get exclusive behind-the-scenes moments with some of football's biggest names. Subscribe now and remember the name."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0ngf8cv.mp3",
+            "file_size": 25000000,
+            "label": "25 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0ngf8cv.mp3",
+            "file_size": 25000000,
+            "label": "25 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0ngf8cv.mp3",
+            "file_size": 25000000,
+            "label": "25 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-04-24T17:00:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-04-24T00:00:00Z",
+        "label": "24 Apr 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=p0lwvsnc&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0ks603b",
+      "urn": "urn:bbc:radio:episode:p0ks5q2s",
+      "network": {
+        "id": "bbc_radio_five_live",
+        "key": "5live",
+        "short_title": "Radio 5 Live",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_five_live/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Football on Trial: The Manchester City Charges",
+        "secondary": "1. A New Hope",
+        "tertiary": null,
+        "entity_title": "1. A New Hope"
+      },
+      "synopses": {
+        "short": "Clive Myrie tells the inside story of Manchester City’s takeover by Abu Dhabi royalty.",
+        "medium": "Clive Myrie charts Man City’s transformation from ‘noisy neighbours’ to the richest football club in the world, telling the inside story on the takeover that changed everything.",
+        "long": "As a Manchester City fan for nearly 50 years, Clive Myrie has experienced his fair share of disappointment. But his club is transformed when a Gulf royal makes an audacious bid for City. Anil Bhoyrul brings fresh insight into how the takeover came about.\n\nFootball on Trial is a Tortoise Media production for BBC Sounds and BBC Radio 5 Live.\n\nHost: Clive Myrie\nWriter: Xavier Greenwood\nProducer: Xavier Greenwood, Andrew Butler\nOriginal music: Tom Kinsella\nSound design: Tom Kinsella, Karla Patella, Tom Burchell\nDevelopment producer: Jess Swinburne\nEditor: Jasper Corbett"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0ks0x6f.jpg",
+      "duration": {
+        "value": 2100,
+        "label": "35 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "p0ks0xwx",
+        "urn": "urn:bbc:radio:brand:p0ks0xwx",
+        "title": "Football on Trial: The Manchester City Charges",
+        "synopses": {
+          "short": "Clive Myrie tells the football story of the century: the Premier League vs Man City.",
+          "medium": "Clive Myrie tells the football story of the century: the Premier League vs Man City.",
+          "long": "Eight Premier League titles. Six League Cups. Three FA Cups. The Champions League. Since an extraordinary takeover in 2008, Manchester City have become one of the most dominant football clubs in the world. \n\nBut what did it take to get there? \n\nClive Myrie tells the inside story of the rise of Manchester City and the Premier League allegations of financial rule-breaking that threaten to put an asterisk next to their accolades and throw English football into disarray. \n\nOver four episodes you will hear from those who were there when Manchester City went from being a one-stop soap opera to Premier League domination to a potentially catastrophic censure. \n\nSubscribe now so you don't miss further reactive episodes presented by Clive Myrie where he will break down a verdict that could change English football forever."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 29000000,
+            "label": "29 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 39000000,
+            "label": "39 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 94000000,
+            "label": "94 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2025-02-20T04:30:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2025-02-20T00:00:00Z",
+        "label": "20 Feb 2025"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/programmes/playable?container=p0ks0xwx&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    }
+  ]
+}

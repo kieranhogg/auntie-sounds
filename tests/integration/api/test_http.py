@@ -4,9 +4,9 @@ import os
 import dotenv
 import pytest
 
-from sounds.client import SoundsClient
-from sounds.endpoints import Endpoints
-from sounds.exceptions import UnauthorisedError
+from auntie_sounds.client import SoundsClient
+from auntie_sounds.endpoints import Endpoints
+from auntie_sounds.exceptions import UnauthorisedError
 
 logger = logging.getLogger(__name__)
 

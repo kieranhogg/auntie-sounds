@@ -4,8 +4,8 @@ from dataclasses import fields
 from enum import StrEnum, auto, unique
 from typing import Any, ClassVar, Final, NamedTuple
 
-from sounds.exceptions import ParserError
-from sounds.models import (
+from auntie_sounds.exceptions import ParserError
+from auntie_sounds.models import (
     URI,
     URN,
     AudiobookEpisode,

@@ -7,19 +7,19 @@ from pathlib import Path
 
 import aiohttp
 
-from sounds.auth import AuthService
-from sounds.content import ContentService
-from sounds.cookies import CookieStore
-from sounds.exceptions import InvalidArgumentsError
-from sounds.models import Menu, MenuItem
-from sounds.owners import OwnerService
-from sounds.personal import PersonalService
-from sounds.playback import PlaybackService
-from sounds.requests import RequestManager
-from sounds.schedule import ScheduleService
-from sounds.stations import StationService
-from sounds.user import UserService
-from sounds.utils import _get_data_dir
+from auntie_sounds.auth import AuthService
+from auntie_sounds.content import ContentService
+from auntie_sounds.cookies import CookieStore
+from auntie_sounds.exceptions import InvalidArgumentsError
+from auntie_sounds.models import Menu, MenuItem
+from auntie_sounds.owners import OwnerService
+from auntie_sounds.personal import PersonalService
+from auntie_sounds.playback import PlaybackService
+from auntie_sounds.requests import RequestManager
+from auntie_sounds.schedule import ScheduleService, station_folders
+from auntie_sounds.stations import StationService
+from auntie_sounds.user import UserService
+from auntie_sounds.utils import _get_data_dir
 
 # Not-signed-in cookie location
 COOKIE_FILE = Path(_get_data_dir(), "sounds_jar")
@@ -51,8 +51,8 @@ class SoundsClient:
         log_level=None,
         debug_login=False,
     ) -> None:
-        if log_level:
-            logger.setLevel(log_level)
+        if log_level is not None:
+            logging.getLogger("auntie_sounds").setLevel(log_level)
         logger.debug("Creating new SoundsClient...")
 
         self.username = username
@@ -198,15 +198,13 @@ class SoundsClient:
         include_recommendations: bool = True,
     ) -> Menu:
         """Get the main Sounds menu."""
-        radio, schedule, catch_up = await asyncio.gather(
-            self.stations.get_radio_menu(include_local_stations=include_local_stations),
-            self.stations.get_schedule_menu(
-                include_local_stations=include_local_stations, depth=2
-            ),
-            self.stations.get_catch_up_menu(
-                include_local_stations=include_local_stations
-            ),
+        stations = await self.stations.get_stations(
+            include_local_stations=include_local_stations
         )
+
+        radio = MenuItem(id="radio", title="Live Radio", sub_items=stations)
+        schedule = station_folders("schedule", "Station Schedules", stations)
+        catch_up = station_folders("catch_up", "Catch-up Radio", stations)
         if (
             self.user.login_details_provided
             and await self.user.is_uk_account_and_location()

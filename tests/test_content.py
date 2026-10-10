@@ -1,25 +1,23 @@
 import copy
 import json
-from pathlib import Path
 from unittest.mock import AsyncMock
 
 import pytest
 
-from sounds import parse
-from sounds.content import MAX_PODCAST_EPISODES, assign_seasons
-from sounds.endpoints import Endpoints
-from sounds.exceptions import InvalidFormatError, NotFoundError
-from sounds.models import (
+from auntie_sounds import parse
+from auntie_sounds.content import MAX_PODCAST_EPISODES, assign_seasons
+from auntie_sounds.endpoints import Endpoints
+from auntie_sounds.exceptions import InvalidFormatError, NotFoundError
+from auntie_sounds.models import (
     Podcast,
     PodcastEpisode,
     RadioSeries,
     RadioShow,
     Season,
 )
+from tests.conftest import FIXTURES_FOLDER
 
 pytestmark = pytest.mark.anyio
-
-FIXTURES = Path(__file__).resolve().parent / "fixtures" / "api"
 
 
 class TestContentService:
@@ -90,7 +88,7 @@ class TestSeasons:
 
 
 def _load(name: str) -> dict:
-    return json.loads((FIXTURES / name).read_text())
+    return json.loads((FIXTURES_FOLDER / name).read_text())
 
 
 def _with_items(payload: dict, items: list[dict]) -> dict:

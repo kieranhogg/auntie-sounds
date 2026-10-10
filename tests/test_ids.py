@@ -22,8 +22,8 @@ from datetime import UTC, datetime, timedelta
 
 import pytest
 
-from sounds import models
-from sounds.models import (
+from auntie_sounds import models
+from auntie_sounds.models import (
     Audiobook,
     AudiobookEpisode,
     BasicContainer,

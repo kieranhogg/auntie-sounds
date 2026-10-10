@@ -7,8 +7,8 @@ import pytest
 import pytz
 from pytest import MarkDecorator
 
-from sounds import parse
-from sounds.models import (
+from auntie_sounds import parse
+from auntie_sounds.models import (
     Container,
     Duration,
     Menu,
@@ -119,8 +119,8 @@ class TestSegmentMusicServices:
 
     @staticmethod
     def _segment(uris):
-        from sounds.models import Segment
-        from sounds.parser import Parser
+        from auntie_sounds.models import Segment
+        from auntie_sounds.parser import Parser
 
         data = {
             "type": "segment_item",

@@ -7,8 +7,8 @@ from typing import Literal
 import aiohttp
 from aiohttp import ClientConnectionError
 
-from sounds.endpoints import Endpoints, URLs
-from sounds.exceptions import (
+from auntie_sounds.endpoints import Endpoints, URLs
+from auntie_sounds.exceptions import (
     APIResponseError,
     InvalidArgumentsError,
     NetworkError,
@@ -52,23 +52,28 @@ def build_url(
     url_args: dict | None = None,
 ) -> str:
     default_args = {"limit": DEFAULT_LIMIT}
+
     if isinstance(url, Endpoints):
-        url = url.value
-    url_str: str = url.value if isinstance(url, (Endpoints, URLs)) else url
+        url_str = url.value
+    else:
+        url_str = url
+
     if not url_args:
         url_args = {}
 
+    # /url/{param}/{thing}/ -> ["param", "thing"]
     pattern = re.compile(r"\{(.*?)}")
     parameters_required = re.findall(pattern, url_str)
 
     for keyword in parameters_required:
-        if keyword not in url_args and keyword not in default_args:
-            raise InvalidArgumentsError(
-                f"{keyword} is a required parameter for the URL, but it is not in url_args."
-            )
-        # We didn't receive an argument, but we have a default set so use that
-        elif keyword not in url_args and keyword in default_args:
-            url_args.update({keyword: default_args.get(keyword)})
+        if keyword not in url_args:
+            if keyword in default_args:
+                # We didn't receive an argument, but we have a default set so use that
+                url_args[keyword] = default_args[keyword]
+            else:
+                raise InvalidArgumentsError(
+                    f"{keyword} is a required parameter for the URL, but it is not in url_args."
+                )
     if parameters_required and url_args:
         return (
             URL_BASE + url_str.format(**url_args)
