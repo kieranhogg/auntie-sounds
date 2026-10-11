@@ -429,6 +429,7 @@ class PlayableNetwork(Network):
     release: dict | None = None
     availability: dict | None = None
     stream: str | None = None
+    fallback_streams: list[str] = field(default_factory=list)
     network: Annotated[Network, _POLYMORPHIC] | None = None
 
     @property
@@ -549,6 +550,7 @@ class PlayableItem(BaseObject, IdentifiableMixin):
     # Only on PROGRAMME_FROM_PID, in place of image_url
     images: list[dict] | None = None
     stream: str | None = None
+    fallback_streams: list[str] = field(default_factory=list)
 
     @property
     def is_promo(self):
@@ -690,6 +692,7 @@ class Station(Container):
     local: bool = False
     international: bool = False
     stream: str | None = None
+    fallback_streams: list[str] = field(default_factory=list)
     schedule: Schedule | None = None
     description: str | None = None
 

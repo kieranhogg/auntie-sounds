@@ -171,11 +171,12 @@ class StationService:
                 for s in stations_list
                 if not s.stream and isinstance(s, (Station, LiveStation))
             ]
-            streams = await asyncio.gather(
-                *(self.playback.get_live_stream(s.id) for s in needs_stream)
+            station_streams = await asyncio.gather(
+                *(self.playback.get_live_streams(s.id) for s in needs_stream)
             )
-            for station, stream in zip(needs_stream, streams, strict=True):
-                station.stream = stream
+            for station, streams in zip(needs_stream, station_streams, strict=True):
+                if streams:
+                    station.stream, *station.fallback_streams = streams
 
         if include_schedules and isinstance(stations_list, list):
             needs_schedule = [s for s in stations_list if not s.schedule]
@@ -198,7 +199,8 @@ class StationService:
 
         Parameters:
             station_id: ID of the station, e.g. bbc_radio_four
-            include_stream (optional): Set LiveStation.stream to the stream URL. Defaults to False.
+            include_stream (optional): Set LiveStation.stream to the stream URL and
+                LiveStation.fallback_streams to the other CDNs' URLs. Defaults to False.
             stream_format: Stream format preference. Defaults to "hls".
             include_schedule (optional): Set LiveStation.schedule to the station schedule. Defaults to False.
             date (optional): The date of the schedule, if `include_schedule` is True. Defaults to None.
@@ -237,11 +239,11 @@ class StationService:
         if not isinstance(station, LiveStation):
             return None
         if include_stream:
-            stream = await self.playback.get_live_stream(
+            streams = await self.playback.get_live_streams(
                 station_id=station_id, preferences=stream_preferences
             )
-            if stream:
-                station.stream = stream
+            if streams:
+                station.stream, *station.fallback_streams = streams
 
         if include_schedule:
             station.schedule = await self.schedules.get_schedule(
@@ -262,13 +264,13 @@ class StationService:
         if not isinstance(station, Station):
             return None
         if include_stream:
-            stream = await self.playback.get_live_stream(
+            streams = await self.playback.get_live_streams(
                 station_id=station_id,
                 preferences=stream_preferences,
                 international=True,
             )
-            if stream:
-                station.stream = stream
+            if streams:
+                station.stream, *station.fallback_streams = streams
 
         return station
 
