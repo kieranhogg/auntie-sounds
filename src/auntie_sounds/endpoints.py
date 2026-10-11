@@ -12,15 +12,13 @@ class URLs(StrEnum):
     USER_INFO = "https://www.bbc.co.uk/userinfo"
 
     # Streaming URLs
-    MEDIASET = "https://open.live.bbc.co.uk/mediaselector/6/select/version/2.0/mediaset/pc/vpid/{id}/format/json"  # ?jwt_auth={jwt_auth_token}"
-    I18N_MEDIASET = "https://open.live.bbc.co.uk/mediaselector/6/select/version/3.0/mediaset/pc/cvid/urn:bbc:pips:pid:{id}/format/json"
-
     """
-    Takes: a vpid.
-    Returns: stream connections.
-    Used by: get_episode_stream.
+    Takes: an id, which is the service id for a live station or the vpid for an episode.
+    Returns: media variants by bitrate, each with a list of stream connections.
+    Auth: live stations need a JWT from JWT or INTL_JWT, sent as a Bearer header.
+    Used by: get_live_streams and get_episode_streams.
     """
-    EPISODE_MEDIASET = "https://open.live.bbc.co.uk/mediaselector/6/select/version/2.0/mediaset/pc/vpid/{episode_id}"
+    MEDIASET = "https://open.live.bbc.co.uk/mediaselector/6/select/version/3.0/mediaset/pc/cvid/urn:bbc:pips:pid:{id}/format/json"
 
     # Auth URLs
     RENEW_SESSION = (
