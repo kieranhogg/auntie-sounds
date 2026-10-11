@@ -8,13 +8,10 @@ A library for interacting with BBC radio stations via an interface to BBC Sounds
 
 ✅ Signing into a BBC Sounds account<br />
 ✅ Listing current station programming<br />
-✅ Obtaining a stream to listen to a station<br />
+✅ Obtaining a stream to listen to a local, national, or international radio station<br />
 ✅ Getting the current and previous segments (typically songs) on a station<br />
-✅ Displaying and listening to previous shows
-
-### Not implemented
-
-❌ Pausing or rewinding live radio<br />
+✅ Displaying and getting streams for previous catch-up radio or podcast content
+✅ Searching the Sounds catalogue
 
 ## Notes
 - It is written as an async library
@@ -24,8 +21,8 @@ A library for interacting with BBC radio stations via an interface to BBC Sounds
 
 ```python
 import asyncio
-from sounds import exceptions
-from sounds.client import SoundsClient
+from auntie_sounds import exceptions
+from auntie_sounds.client import SoundsClient
 
 async def main():
     try:
@@ -46,10 +43,12 @@ async def main():
         ...
     except exceptions.NetworkError:
         ...
+    except exceptions.SoundsException:
+        ...
 
     # Or, without a context manager and not logged-in:
     client = SoundsClient()
-    print([station for station in client.stations.get_stations()])
+    print([episode for episode in client.content.get_podcast_episodes("example_pid")])
     client.close()
     
 asyncio.run(main())
