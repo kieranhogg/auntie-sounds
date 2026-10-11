@@ -464,6 +464,32 @@ class TestGetByPid:
         assert item.version_pid == "p0p78bd4"
         assert item.image_url
 
+    async def test_include_stream_sets_fallback_streams(
+        self, mock_content, monkeypatch
+    ):
+        """The best stream goes in `stream`, the other CDNs' streams in `fallback_streams`."""
+        monkeypatch.setattr(
+            mock_content, "_personalised", AsyncMock(return_value=False)
+        )
+        fake, _ = _fake_api(
+            {
+                Endpoints.PROGRAMME_FROM_PID_PLAYABLE: _load(
+                    "PROGRAMME_FROM_PID_PLAYABLE.json"
+                ),
+                Endpoints.CONTAINER_FROM_PIDS: _load("CONTAINER_FROM_PIDS.json"),
+            }
+        )
+        monkeypatch.setattr(mock_content.requests, "get_json_response", fake)
+        get_streams = AsyncMock(return_value=["https://akamai", "https://cloudfront"])
+        monkeypatch.setattr(mock_content.playback, "get_episode_streams", get_streams)
+
+        item = await mock_content.get_by_pid("m003169g", include_stream=True)
+
+        get_streams.assert_awaited_once()
+        assert get_streams.await_args.kwargs["vpid"] == "p0p78bd4"
+        assert item.stream == "https://akamai"
+        assert item.fallback_streams == ["https://cloudfront"]
+
     async def test_personalised_has_progress(self, mock_content, monkeypatch):
         monkeypatch.setattr(mock_content, "_personalised", AsyncMock(return_value=True))
         fake, _ = _fake_api(

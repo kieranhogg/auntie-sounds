@@ -78,3 +78,30 @@ class TestStationService:
 
         result = await mock_station.get_stations(include_local_stations=True)
         assert {s.id for s in result} == {"national1", "local1"}
+
+    async def test_get_stations_sets_fallback_streams(self, mock_session, mock_station):
+        """Each station gets its best stream, plus the other CDNs' streams as fallbacks."""
+        mock_response = make_response()
+        mock_response.json = AsyncMock(
+            return_value={
+                "data": [
+                    {
+                        "data": [
+                            self._station_payload(
+                                "national1", "urn:bbc:radio:network:radio1"
+                            )
+                        ]
+                    },
+                    {"data": []},
+                ]
+            }
+        )
+        mock_session.request = AsyncMock(return_value=mock_response)
+        mock_station.playback.get_live_streams = AsyncMock(
+            return_value=["https://akamai", "https://cloudfront"]
+        )
+
+        [station] = await mock_station.get_stations(include_streams=True)
+
+        assert station.stream == "https://akamai"
+        assert station.fallback_streams == ["https://cloudfront"]
