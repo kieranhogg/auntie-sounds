@@ -179,6 +179,20 @@ class Progress:
 
 
 @dataclass(kw_only=True)
+class Activity:
+    """Something the signed-in listener has done with an item.
+
+    For example type="play_activity", action="ended" for a finished episode,
+    or type="favourite_activity", action="favourited".
+    """
+
+    type: str
+    action: str
+    label: str | None = None
+    urn: str | None = None
+
+
+@dataclass(kw_only=True)
 class Duration:
     label: str
     value: int
@@ -551,6 +565,7 @@ class PlayableItem(BaseObject, IdentifiableMixin):
     images: list[dict] | None = None
     stream: str | None = None
     fallback_streams: list[str] = field(default_factory=list)
+    activities: list[Activity] = field(default_factory=list)
 
     @property
     def is_promo(self):
