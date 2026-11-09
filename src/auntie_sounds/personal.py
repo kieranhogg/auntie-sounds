@@ -53,7 +53,7 @@ class PersonalService:
             self.get_explore_all(),
         )
 
-        if not isinstance(menu, Menu) or not menu or len(menu.sub_items) == 0:
+        if not isinstance(menu, Menu) or len(menu.sub_items) == 0:
             raise APIResponseError("Menu not converted correctly.")
         if include_recommendations:
             menu.sub_items = list(menu.sub_items)
@@ -62,7 +62,7 @@ class PersonalService:
             menu.sub_items = [
                 item
                 for item in menu.sub_items
-                if item and type(item) is not RecommendedMenuItem
+                if item is not None and type(item) is not RecommendedMenuItem
             ]
 
         # Remove the API's listen_live to replace with ours (as it's better)
