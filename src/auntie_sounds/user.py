@@ -1,7 +1,9 @@
 import logging
 
 from auntie_sounds.endpoints import URLs
-from auntie_sounds.exceptions import APIResponseError, NotFoundError, UnauthorisedError
+from auntie_sounds.exceptions import (
+    SoundsHttpException,
+)
 from auntie_sounds.requests import RequestManager
 
 logger = logging.getLogger(__name__)
@@ -20,7 +22,7 @@ class UserService:
         if not self._user_info:
             try:
                 await self.refresh()
-            except UnauthorisedError, NotFoundError, APIResponseError:
+            except SoundsHttpException:
                 logger.warning("Couldn't get user_info")
 
     async def listener_country(self) -> str | None:
