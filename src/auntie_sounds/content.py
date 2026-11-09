@@ -405,7 +405,7 @@ class ContentService:
         self,
         vpid: str,
         fetch_missing_images: bool = False,
-        fetch_images_sempaphore: int = 5,
+        max_concurrent_images: int = 5,
     ) -> list[Segment]:
         """Get the show segments (songs played) for a certain show, i.e. catch-up radio.
 
@@ -424,7 +424,7 @@ class ContentService:
 
         # The Sounds API for catch-up media does not contain image URLs
         if fetch_missing_images:
-            semaphore = asyncio.Semaphore(fetch_images_sempaphore)
+            semaphore = asyncio.Semaphore(max_concurrent_images)
 
             async def fetch(segment: Segment) -> str | None:
                 async with semaphore:
