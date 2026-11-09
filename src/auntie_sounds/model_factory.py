@@ -188,17 +188,6 @@ class BaseSoundsTypes(StrEnum):
 
 
 @unique
-class PlayableSoundsTypes(StrEnum):
-    """Types as defined in the JSON schema"""
-
-    EPISODE = "Episode"
-    PROGRAMMES = "Programmes"
-    EXPERIENCE_RESPONSE = "ExperienceResponse"
-    PLAYABLE_ITEM = "PlayableItem"
-    BROADCASTS = "BroadcastsResponse"
-
-
-@unique
 class ItemURN(StrEnum):
     EPISODE = "urn:bbc:radio:episode"
     CLIP = "urn:bbc:radio:clip"
@@ -230,11 +219,6 @@ class ContainerType(StrEnum):
     BRAND = "brand"
     SERIES = "series"
     ITEM = "container_item"
-
-
-@unique
-class NetworkType(StrEnum):
-    MASTER = "master_brand"
 
 
 @unique
@@ -293,9 +277,12 @@ class ModelFactory:
 
     def _programme_episode(self, original_object) -> tuple[type, dict]:
         """Reads contents from PROGRAMME_FROM_PID, decides its type and extracts the episode"""
-        if original_object["total"] > 1:
-            raise NotImplementedError("Container has more than 1 programme!")
-        episode = original_object["data"][0]
+        programmes = original_object.get("data") or []
+        if len(programmes) != 1:
+            raise ParserError(
+                f"Expected 1 programme in a Programmes response, got {len(programmes)}"
+            )
+        episode = programmes[0]
         episode_type = _episode_or_show_or_audiobook_episode(episode)
         # return (PodcastEpisode if "podcasts" in formats else RadioShow), episode
         return episode_type, episode

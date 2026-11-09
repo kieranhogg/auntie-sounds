@@ -287,42 +287,6 @@ class Segment(SerializableMixin, IdentifiableMixin, ImageMixin):
         return self.music_service_uri("apple")
 
 
-""":param
-
-        "id": "bbc_radio_one",
-          "title": "BBC Radio 1",
-          "type": "service",
-          "region": "All Regions",
-          "coverage": "national",
-          "active": true,
-          "short_title": "Radio 1",
-          "date_ranges": [
-            {
-              "start": "1967-09-30T05:30:00Z",
-              "end": null
-            }
-          ],
-          "default_language": "en",
-          "default": true
-"""
-
-
-@dataclass(kw_only=True)
-class Service:
-    id: str
-    title: str | None = None
-    pid: str | None = None
-    short_title: str
-    type: str
-    region: str | None = None
-    coverage: Literal["local", "regional", "national"] = "national"
-    active: str | None = None
-    # present in NETWORKS_DETAILED
-    date_ranges: list[dict[str, Any]] = field(default_factory=list)
-    default_language: Literal["en", "gd", "ga", "cy"] = "en"
-    default: bool | None = None
-
-
 @dataclass(kw_only=True)
 class URI(SerializableMixin):
     type: str
@@ -908,11 +872,6 @@ class Menu(SerializableMixin):
 
 
 @dataclass(kw_only=True)
-class DisplayItem(Container):
-    item: Annotated[PlayableItem, _POLYMORPHIC] | None = None
-
-
-@dataclass(kw_only=True)
 class PromoItem(Container):
     item: Annotated[PlayableItem, _POLYMORPHIC]
 
@@ -949,7 +908,6 @@ type SoundsTypes = (
     | CollectionItemContainer
     | Container
     | Collection
-    | DisplayItem
     | LiveStation
     | MenuItem
     | Network
