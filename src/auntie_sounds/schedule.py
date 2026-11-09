@@ -1,5 +1,4 @@
 import asyncio
-import datetime
 import logging
 import time
 from collections.abc import Callable, Iterable, Sequence
@@ -310,37 +309,34 @@ class ScheduleService:
         )
         return [schedule for schedule in schedules if isinstance(schedule, Schedule)]
 
-    async def get_station_schedules(
-        self,
-        station_id: str,
-        start_date: datetime.date,
-        end_date: datetime.date,
+    async def _get_schedules(
+        self, station_id: str, dates: Iterable[date]
     ) -> list[Schedule]:
-        """Get the schedules for a station for a date range.
-
-        Supports end_date being earlier than start date, i.e. a catch-up range.
-        """
-        date_range = schedule_dates(start_date=dt.now(tz=SCHEDULE_TIMEZONE))
+        """Get a station's schedule for each of the given days."""
         schedules = await asyncio.gather(
-            *(
-                self.get_schedule(
-                    station_id,
-                    date=the_date.strftime("%Y-%m-%d"),
-                )
-                for the_date in date_range
-            )
+            *(self.get_schedule(station_id, date=day.isoformat()) for day in dates)
         )
         return [schedule for schedule in schedules if isinstance(schedule, Schedule)]
 
-    async def get_stations_schedules(
-        self, station_ids: list[str], start_date: datetime.date, end_date: datetime.date
-    ) -> list[Schedule]:
-        """Get the schedules for multiple stations for a date range."""
+    async def get_station_schedules(self, station_id: str) -> list[Schedule]:
+        """Get a station's schedules for today and the next 7 days."""
+        return await self._get_schedules(station_id, schedule_dates())
+
+    async def get_stations_schedules(self, station_ids: list[str]) -> list[Schedule]:
+        """Get the schedules for multiple stations for today and the next 7 days."""
         per_station = await asyncio.gather(
-            *(
-                self.get_station_schedules(id, start_date=start_date, end_date=end_date)
-                for id in station_ids
-            )
+            *(self.get_station_schedules(id) for id in station_ids)
+        )
+        return list(chain.from_iterable(per_station))
+
+    async def get_station_catch_up(self, station_id: str) -> list[Schedule]:
+        """Get a station's schedules for today and the previous 30 days."""
+        return await self._get_schedules(station_id, catch_up_dates())
+
+    async def get_stations_catch_up(self, station_ids: list[str]) -> list[Schedule]:
+        """Get the programme catch-up listings for multiple stations."""
+        per_station = await asyncio.gather(
+            *(self.get_station_catch_up(id) for id in station_ids)
         )
         return list(chain.from_iterable(per_station))
 
@@ -351,7 +347,7 @@ class ScheduleService:
         )
         try:
             stations_data = json_resp["data"][0]["data"]
-        except (TypeError, KeyError) as e:
+        except (TypeError, KeyError, IndexError) as e:
             raise APIResponseError(
                 "Station listing data not in expected format."
             ) from e
