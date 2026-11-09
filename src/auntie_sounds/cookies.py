@@ -54,10 +54,17 @@ class CookieStore:
                 )
                 return
 
-            cast(
-                aiohttp.CookieJar,
-                self.session.cookie_jar,
-            ).load(str(self.path))
+            try:
+                cast(aiohttp.CookieJar, self.session.cookie_jar).load(str(self.path))
+            except Exception:
+                # If we run into any issues loading the cookie jar, restarting the
+                # session is the best option here
+                logger.warning(
+                    "Couldn't read the cookie file at %s, starting without a session",
+                    self.path,
+                    exc_info=True,
+                )
+                return
 
             if recorded_owner is None:
                 # Legacy cookie file with no owner marker <v2.1.0
