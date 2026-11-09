@@ -16,6 +16,9 @@ dependencies = [
 requires = ["uv_build>=0.11.8,<0.14"]
 build-backend = "uv_build"
 
+[tool.mypy]
+enable_error_code = ["truthy-bool", "truthy-iterable"]
+
 [tool.ty.environment]
 root = ["./src"]
 
@@ -41,7 +44,8 @@ anyio_mode = "auto"
 markers = [
     "api",
     "downstream",
-    "local_only"
+    "local_only",
+    "slow",
 ]
 
 [dependency-groups]
