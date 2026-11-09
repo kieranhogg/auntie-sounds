@@ -16,18 +16,19 @@ class SoundsHttpException(SoundsException):
 
 
 class LoginFailedError(SoundsException):
-    pass
+    """Generic login failed error."""
 
 
 class CredentialsRejectedError(LoginFailedError):
-    """BBC rejected the username or password; retrying won't help."""
+    """The API rejected the username or password combination."""
 
 
 class NetworkError(SoundsHttpException):
-    pass
+    """Generic network error."""
 
 
 class APIResponseError(SoundsHttpException):
+    """The API response was not as expected."""
     def __init__(self, message: str | None = None, status_code: int | None = None):
         self.message = message
         self.status_code = status_code
@@ -35,33 +36,35 @@ class APIResponseError(SoundsHttpException):
 
 
 class InvalidFormatError(SoundsException):
-    pass
+    """The parameter, or parameters, were given in an invalid format."""
 
 
 class UnauthorisedError(SoundsHttpException):
-    pass
+    """The endpoint requires authentication, and the current user is not authenticated."""
 
 
 class InvalidArgumentsError(SoundsException):
-    pass
+    """Invalid arguments were supplied."""
 
 
 class NotFoundError(SoundsHttpException):
-    pass
+    """The requested resource was not found."""
+
+
 class NotExpectedTypeError(NotFoundError):
     """A unexpected type error."""
 
 
 class MultipleObjectsFound(SoundsException):
-    pass
+    """More than one object was found when looking for exactly one."""
 
 
 class ParserError(SoundsException):
-    pass
+    """Generic parser error when interpreting the API response."""
 
 
 class ConfigurationError(SoundsException):
-    pass
+    """Raised when a test is not configured correctly."""
 
 
 class DateOutOfRangeError(APIResponseError):
