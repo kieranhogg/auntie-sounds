@@ -8,6 +8,7 @@ from auntie_sounds.exceptions import ParserError
 from auntie_sounds.models import (
     URI,
     URN,
+    Activity,
     AudiobookEpisode,
     BasicContainer,
     Category,
@@ -55,6 +56,7 @@ NESTED_OBJECTS: Final[tuple[NestedObject, ...]] = (
     NestedObject("container", Container, False),
     NestedObject("titles", Titles),
     NestedObject("progress", Progress),
+    NestedObject("activities", Activity, list_only=True),
     NestedObject("duration", Duration),
     NestedObject("synopses", Synopses),
     NestedObject("services", Station),
@@ -436,8 +438,6 @@ class ModelFactory:
 
         if hasattr(new_object, "post_processing"):
             new_object.post_processing(logger=logger)
-        if type_hint and type(new_object) is not type_hint:
-            raise ParserError(f"{type_hint} requested, but {type(new_object)} received")
         return new_object
 
 
