@@ -255,7 +255,7 @@ wheels = [
 
 [[package]]
 name = "auntie-sounds"
-version = "2.1.0b15"
+version = "3.0.0b1"
 source = { editable = "." }
 dependencies = [
     { name = "aiohttp" },
