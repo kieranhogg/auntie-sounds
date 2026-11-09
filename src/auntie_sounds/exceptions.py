@@ -48,6 +48,8 @@ class InvalidArgumentsError(SoundsException):
 
 class NotFoundError(SoundsHttpException):
     pass
+class NotExpectedTypeError(NotFoundError):
+    """A unexpected type error."""
 
 
 class MultipleObjectsFound(SoundsException):
