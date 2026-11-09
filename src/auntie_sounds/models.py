@@ -5,10 +5,8 @@ from datetime import datetime as dt
 from logging import Logger
 from typing import Annotated, Any, ClassVar, Final, Literal
 from urllib.parse import parse_qs, urlparse
-from zoneinfo import ZoneInfo
 
 import mashumaro
-import pytz
 from mashumaro.types import Discriminator
 
 from auntie_sounds.utils import image_from_recipe, network_logo
@@ -531,6 +529,8 @@ class PlayableItem(BaseObject, IdentifiableMixin):
         release:
         availability:
         stream:
+        fallback_streams:
+        activities:
     """
 
     # Whether `id` is the version pid when it differs from the episode pid.
@@ -662,7 +662,8 @@ class PlayableItem(BaseObject, IdentifiableMixin):
             return self.start <= dt.now(tz=UTC) < self.end
         return False
 
-    def has_already_aired(self, timezone: ZoneInfo | pytz.tzinfo.BaseTzInfo) -> bool:
+    @property
+    def has_already_aired(self) -> bool:
         if self.end:
             return dt.now(tz=UTC) > self.end
         return True
@@ -815,7 +816,7 @@ class RadioShow(PlayableItem, ImageMixin):
 
 @dataclass(kw_only=True)
 class AudiobookEpisode(PodcastEpisode):
-    """Represents a playable podcast episode."""
+    """Represents a playable audiobook episode."""
 
     def post_processing(self, logger: Logger) -> None:
         super().post_processing(logger)
@@ -832,7 +833,7 @@ class Podcast(ImageContainer):
 
 @dataclass(kw_only=True)
 class Audiobook(Podcast):
-    """Represents a podcast container (holds episodes)."""
+    """Represents an audiobook container (holds episodes)."""
 
 
 @dataclass(kw_only=True)
