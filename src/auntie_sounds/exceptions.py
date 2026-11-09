@@ -53,7 +53,7 @@ class NotFoundError(SoundsHttpException):
 
 
 class NotExpectedTypeError(NotFoundError):
-    """A unexpected type error."""
+    """The pid or urn exists, but is a different type of item from the one asked for."""
 
 
 class MultipleObjectsFound(SoundsException):
