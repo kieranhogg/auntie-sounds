@@ -248,8 +248,8 @@ class PlaybackService:
 
         :param pid: the episode, or current station programme's pid
         :param action: a `PlayStatus` value for the current action
-        :param elapsed_time: the time listened so far, only applicable to
         :param vpid: version pid of the episode
+        :param elapsed_time: the time listened so far, in seconds
         :return: True if the update suceeded, raises APIResponseError if not
 
         :raises APIResponseError(msg, status) if HTTP 202 not returned
@@ -302,8 +302,7 @@ class PlaybackService:
         async with await self.requests.make_request(
             method="POST", url=Endpoints.PLAYS, json=data
         ) as resp:
-            # We're expected a 202 here
-            if not resp.ok:
+            if resp.status not in (200, 201, 202, 204):
                 json_resp = await resp.json()
                 logger.debug(json_resp)
                 raise APIResponseError(resp.reason, resp.status)
