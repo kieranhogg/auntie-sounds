@@ -146,7 +146,7 @@ class Parser:
                     stations = [
                         station
                         for station in station_results
-                        if station
+                        if station is not None
                         if isinstance(station, (LiveStation, StationSearchResult))
                     ]
                 else:
