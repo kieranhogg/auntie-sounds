@@ -12,13 +12,14 @@ class URLs(StrEnum):
     USER_INFO = "https://www.bbc.co.uk/userinfo"
 
     # Streaming URLs
+    MEDIASET = "https://open.live.bbc.co.uk/mediaselector/6/select/version/3.0/mediaset/pc/cvid/urn:bbc:pips:pid:{id}/format/json"
     """
     Takes: an id, which is the service id for a live station or the vpid for an episode.
     Returns: media variants by bitrate, each with a list of stream connections.
-    Auth: live stations need a JWT from JWT or INTL_JWT, sent as a Bearer header.
+    Auth: domestic live stations need a JWT from JWT, sent as a Bearer header.
+        International stations and episodes need none.
     Used by: get_live_streams and get_episode_streams.
     """
-    MEDIASET = "https://open.live.bbc.co.uk/mediaselector/6/select/version/3.0/mediaset/pc/cvid/urn:bbc:pips:pid:{id}/format/json"
 
     # Auth URLs
     RENEW_SESSION = (
@@ -94,7 +95,6 @@ class Endpoints(Enum):
         "/v2/networks/{station_id}/playable",
         False,
     )
-    LIVE_STATION = ("https://www.bbc.co.uk/sounds/play/live:{network_id}", False)
 
     # Segments & Schedules
     BROADCASTS = ("/v2/broadcasts?service={service_id}&sort=-start_at", False)
@@ -108,6 +108,11 @@ class Endpoints(Enum):
         "/v2/services/{service_id}/segments/latest",  # ?limit={limit}
         False,
     )
+    PLAY_EXPERIENCE = (
+        "/v2/experience/inline/play/{service_id}",
+        False,
+        "ExperienceResponse",
+    )
     """
     Takes: a service id.
     Returns: an experience made of modules. Some have uris.polling, a template
@@ -116,11 +121,6 @@ class Endpoints(Enum):
         next few. recent_tracks only has a polling uri on stations with tracks.
     Used by: ScheduleService.polling.
     """
-    PLAY_EXPERIENCE = (
-        "/v2/experience/inline/play/{service_id}",
-        False,
-        "ExperienceResponse",
-    )
     SCHEDULE = (
         "/v2/experience/inline/schedules/{service_id}",
         False,
@@ -130,18 +130,18 @@ class Endpoints(Enum):
         False,
     )
     SEGMENTS = ("/v2/versions/{vpid}/segments", False)
-    TRACKS = ("/v2/versions/{vpid}/tracks", False)
 
     ####### Episodes, programmes, series etc. ##########################################
 
+    CONTAINER_FROM_PIDS = ("/v2/programmes/container/{pids}", False)
     """
     Takes: a brand or series pid.
     Returns: a list of container_items
     Useful fields: id, urn, and uris[latest], which links to the episode listing.
     Used by: get_podcast.
     """
-    CONTAINER_FROM_PIDS = ("/v2/programmes/container/{pids}", False)
 
+    SERIES_CONTAINER = ("/v2/programmes/container", False)
     """
     Takes: ?parent={brand pid}&type=series
     Returns: the seasons as container_items, in pid order rather than date order.
@@ -149,9 +149,12 @@ class Endpoints(Enum):
         Empty for a brand without seasons. Rejects sort=sequential with a 400.
     Used by: get_podcast.
     """
-    SERIES_CONTAINER = ("/v2/programmes/container", False)
     SERIES_EPISODES = ("/v2/programmes/playable/{pids}", False)
 
+    PLAYABLE_ITEMS_CONTAINER = (
+        "/v2/programmes/playable",  # ?container={pid}&sort=sequential | sort=popular | sort=-release_date
+        False,
+    )
     """
     Takes: ?container={brand or series pid}&sort=sequential
     Returns: playable_items. Each one's container is the top-level brand, even
@@ -160,12 +163,9 @@ class Endpoints(Enum):
         sort=sequential is a 400.
     Used by: get_pid_container.
     """
-    PLAYABLE_ITEMS_CONTAINER = (
-        "/v2/programmes/playable",  # ?container={pid}&sort=sequential | sort=popular | sort=-release_date
-        False,
-    )
     BROADCAST = ("/v2/broadcasts/{pid}", False)
 
+    PROGRAMME_FROM_PID = ("/v2/programmes/{pid}", False)
     """
     Takes: an episode pid.
     Returns: a Programmes response with total: 1 and the episode in data[0],
@@ -175,7 +175,10 @@ class Endpoints(Enum):
         An unknown pid is a 200 with total: 0.
     Used by: the _get_programme helpers.
     """
-    PROGRAMME_FROM_PID = ("/v2/programmes/{pid}", False)
+    PROGRAMME_FROM_PID_PLAYABLE = (
+        "/v2/programmes/{pid}/playable",
+        False,
+    )
     """
     Takes: an episode pid.
     Returns: a single playable_item. container is the top-level brand, the
@@ -183,28 +186,24 @@ class Endpoints(Enum):
         An unknown pid is a 404.
     Used by: get_by_pid.
     """
-    PROGRAMME_FROM_PID_PLAYABLE = (
-        "/v2/programmes/{pid}/playable",
+
+    URN_CONTAINER = (
+        "/v2/experience/inline/container/{urn}",
         False,
     )
-
     """
     Takes: a container urn.
     Returns: a page with two parts: a header module holding the brand, and a 
         container_list holding all the episodes as playable_items
     Used by: get_container and get_radio_series.
     """
-    URN_CONTAINER = (
-        "/v2/experience/inline/container/{urn}",
-        False,
-    )
 
+    PID_DETAILS = ("https://www.bbc.co.uk/programmes/{pid}/playlist.json", False)
     """
     Takes: an episode pid.
     Returns: the vpid and statsObject.parentPIDType.
     Used by: the heartbeat.
     """
-    PID_DETAILS = ("https://www.bbc.co.uk/programmes/{pid}/playlist.json", False)
     COLLECTIONS = (
         "/v2/collections/{pid}/members",  # ?experience=domestic
         False,
