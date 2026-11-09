@@ -158,13 +158,17 @@ class RequestManager:
         method: Literal["GET", "POST"],
         url: Endpoints | URLs | str,
         url_args: dict | None = None,
-        login_required: bool = False,
         offset: int | None = None,
         limit: int | None = None,
         **kwargs,
     ) -> aiohttp.ClientResponse:
         """Makes an HTTP request using the shared session, applying defaults
-        and handling connection-level errors. Also ensures auth, if needed."""
+        and handling connection-level errors.
+
+        An Endpoints value has a parameter storing if a log in is required. URLs values
+        are deliberately separate as they never need auth (and most aren't part of the
+        API).
+        """
         kwargs.setdefault("timeout", self.timeout)
         kwargs.setdefault("ssl", True)
         kwargs.setdefault("allow_redirects", True)
@@ -180,11 +184,8 @@ class RequestManager:
             kwargs["params"] = params
 
         logger.debug("Preparing to request %s", url)
-        if isinstance(url, Endpoints):
-            # If we have a endpoint, we can check if it's an authenticated one
-            login_required = url.login_required
-            url = build_url(url=url, url_args=url_args)
-        elif isinstance(url, URLs):
+        login_required = isinstance(url, Endpoints) and url.login_required
+        if isinstance(url, (Endpoints, URLs)) or url_args:
             url = build_url(url=url, url_args=url_args)
         else:
             if url in Endpoints:
@@ -293,8 +294,8 @@ class RequestManager:
         **kwargs,
     ) -> str:
         """Gets raw text/HTML response."""
-        built_url = build_url(url=url, url_args=url_args)
-        resp = await self.make_request(method, built_url, **kwargs)
+        # Pass the URL through without building, so login_required is preserved
+        resp = await self.make_request(method, url, url_args=url_args, **kwargs)
         return await resp.text()
 
     def set_reauth_handler(self, call: Callable):
