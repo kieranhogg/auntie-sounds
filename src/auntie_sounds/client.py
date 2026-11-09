@@ -41,21 +41,28 @@ def _default_cookie_file(username: str | None) -> Path:
 class SoundsClient:
     """A client to interact with the Sounds API."""
 
-    def __getattr__(self, name):
-        if name in (
-            "requests",
+    SERVICES = frozenset(
+        [
             "auth",
-            "owners",
-            "schedules",
-            "user",
-            "playback",
             "content",
-            "stations",
+            "owners",
             "personal",
-        ):
+            "playback",
+            "requests",
+            "schedules",
+            "stations",
+            "user",
+        ]
+    )
+
+    def __getattr__(self, name):
+        if name in self.SERVICES:
             raise NotStartedError(
                 "The client has not been started. Call `client.start()` or use `async with`"
             )
+        raise AttributeError(
+            f"{type(self).__name__!r} object has no attribute {name!r}"
+        )
 
     def __init__(
         self,
@@ -98,11 +105,6 @@ class SoundsClient:
             )
         else:
             self._session = aiohttp.ClientSession(cookie_jar=aiohttp.CookieJar())
-
-        if not isinstance(self._session.cookie_jar, aiohttp.CookieJar):
-            raise TypeError(
-                "SoundsClient requires an aiohttp.CookieJar for persistence"
-            )
 
         self.cookie_store = CookieStore(
             session=self._session,
