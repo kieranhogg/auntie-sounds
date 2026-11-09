@@ -446,22 +446,17 @@ class ContentService:
         """Get the details (vpid, resource_type) required to send a heartbeat request.
 
         :param pid the pid of the stream or episode
-        :return: the vpid (version pid) of the resource, and the resource type
+        :return: the vpid (version pid) of the resource, and the resource type, e.g. episode
         """
         # _get_programme already returns the programme itself, not the response
         episode = await self._get_programme(pid)
-        if not (
-            episode
-            and "availability" in episode
-            and "urn" in episode
-            and episode["availability"]["id"]
-            and episode["urn"].count(":") != 3
-        ):
-            raise APIResponseError(f"Couldn't get details for pid {pid}")
-        vpid = episode["availability"]["id"]
+        vpid = (episode.get("availability") or {}).get("id")
         # e.g. urn:bbc:radio:episode:m00321tk
         # where the 4th part matches playlist.json's parentPIDType
-        resource_type = episode["urn"].split(":")[3]
+        urn_parts = (episode.get("urn") or "").split(":")
+        if not vpid or len(urn_parts) < 4:
+            raise APIResponseError(f"Couldn't get details for pid {pid}")
+        resource_type = urn_parts[3]
         return vpid, resource_type
 
     async def _get_programme(self, pid: str) -> dict:
