@@ -30,7 +30,6 @@ from auntie_sounds.models import (
     Category,
     Collection,
     Container,
-    DisplayItem,
     ImageMixin,
     LiveStation,
     MenuItem,
@@ -282,7 +281,6 @@ CONTAINERS = [
     pytest.param(MenuItem, {}, id="MenuItem"),
     pytest.param(RecommendedMenuItem, {}, id="RecommendedMenuItem"),
     pytest.param(Season, {}, id="Season"),
-    pytest.param(DisplayItem, {}, id="DisplayItem"),
     pytest.param(PromoItem, {"item": promo()}, id="PromoItem"),
 ]
 
