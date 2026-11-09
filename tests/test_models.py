@@ -1,14 +1,14 @@
 import copy
 import logging
+from datetime import UTC, timedelta
 from datetime import datetime as dt
-from datetime import timedelta
 
 import pytest
-import pytz
 from pytest import MarkDecorator
 
 from auntie_sounds import parse
 from auntie_sounds.models import (
+    Activity,
     Container,
     Duration,
     Menu,
@@ -38,7 +38,7 @@ class TestModels:
 
     def test_schedule_item_is_live(self):
         """Test ScheduleItem.is_live() method."""
-        now = dt.now(tz=pytz.UTC)
+        now = dt.now(tz=UTC)
         item = ScheduleItem(
             id="test",
             start=now - timedelta(hours=1),
@@ -48,7 +48,7 @@ class TestModels:
 
     def test_schedule_item_is_not_live_before_start(self):
         """Test ScheduleItem.is_live() returns False before the item starts."""
-        now = dt.now(tz=pytz.UTC)
+        now = dt.now(tz=UTC)
         item = ScheduleItem(
             id="test",
             start=now + timedelta(hours=1),
@@ -58,23 +58,38 @@ class TestModels:
 
     def test_schedule_item_has_aired(self):
         """Test ScheduleItem.has_already_aired() method."""
-        now = dt.now(tz=pytz.UTC)
+        now = dt.now(tz=UTC)
         item = ScheduleItem(
             id="test",
             start=now - timedelta(hours=2),
             end=now - timedelta(hours=1),
         )
-        assert item.has_already_aired(pytz.UTC) is True
+        assert item.has_already_aired is True
 
     def test_schedule_item_has_not_aired(self):
         """Test ScheduleItem.has_already_aired() returns False for a future item."""
-        now = dt.now(tz=pytz.UTC)
+        now = dt.now(tz=UTC)
         item = ScheduleItem(
             id="test",
             start=now + timedelta(hours=1),
             end=now + timedelta(hours=2),
         )
-        assert item.has_already_aired(pytz.UTC) is False
+        assert item.has_already_aired is False
+
+    def test_playable_item_activities(self, sample_schedule_item_data):
+        """activities on a playable item are parsed into Activity objects."""
+        data = copy.deepcopy(sample_schedule_item_data)
+        data["activities"] = [
+            {"type": "play_activity", "action": "ended", "label": None, "urn": None}
+        ]
+        item = parse(data)
+        assert isinstance(item, PlayableItem)
+        assert item.activities == [Activity(type="play_activity", action="ended")]
+
+    def test_playable_item_activities_default_empty(self, sample_schedule_item_data):
+        item = parse(copy.deepcopy(sample_schedule_item_data))
+        assert isinstance(item, PlayableItem)
+        assert item.activities == []
 
     def test_playable_item_id_from_urn(self):
         """Test PlayableItem.item_id property with URN."""

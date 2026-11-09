@@ -195,11 +195,6 @@ def sample_radio_series_data():
 
 
 @pytest.fixture
-def sample_network_data():
-    return json.loads(open("tests/fixtures/api/schedule.json").read())
-
-
-@pytest.fixture
 def sample_schedule_item_data():
     return {
         "type": "playable_item",

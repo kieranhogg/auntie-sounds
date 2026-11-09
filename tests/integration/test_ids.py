@@ -30,7 +30,7 @@ class TestIDs:
     ]
 
     async def test_ids_with_get_networks(self, mock_client):
-        networks = await mock_client.stations._get_networks()
+        networks = await mock_client.stations.get_networks()
         network_ids = {network.id for network in networks}
         assert set(self.NETWORK_IDS_TO_CHECK).issubset(network_ids)
         assert set(self.SERVICE_IDS_TO_CHECK).isdisjoint(network_ids)

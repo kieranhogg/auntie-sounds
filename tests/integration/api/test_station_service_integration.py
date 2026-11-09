@@ -4,6 +4,7 @@ from datetime import timedelta
 
 import pytest
 
+from auntie_sounds import SCHEDULE_TIMEZONE
 from auntie_sounds.client import SoundsClient
 from auntie_sounds.exceptions import ConfigurationError, NotFoundError
 from auntie_sounds.models import LiveStation, Schedule
@@ -83,7 +84,7 @@ class TestStationServiceIntegration:
         station = await real_sounds_client.stations.get_station(
             "bbc_radio_one", include_schedule=True
         )
-        today = dt.now(tz=real_sounds_client.timezone).date().strftime("%Y-%m-%d")
+        today = dt.now(tz=SCHEDULE_TIMEZONE).date().strftime("%Y-%m-%d")
         assert type(station) is LiveStation
         assert type(station.schedule) is Schedule
         assert station.schedule.sub_items and len(station.schedule.sub_items) > 0
@@ -91,7 +92,7 @@ class TestStationServiceIntegration:
 
     async def test_get_station_schedule_date(self, real_sounds_client: SoundsClient):
         yesterday = (
-            (dt.now(tz=real_sounds_client.timezone) - timedelta(days=1))
+            (dt.now(tz=SCHEDULE_TIMEZONE) - timedelta(days=1))
             .date()
             .strftime("%Y-%m-%d")
         )

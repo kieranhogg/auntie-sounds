@@ -60,18 +60,6 @@ class TestParser:
 
 
 class TestParserNestedObjects:
-    def test_ignored_nested_objects(self: Logger):
-        """Test that that embedded objects with keys in the ignore_objects list are removed."""
-        parser = Parser()
-        with open("tests/fixtures/api/PROGRAMME_FROM_PID_PLAYABLE.json") as json_file:
-            json_data = json.loads(json_file.read())
-            for key in parser.ignored_objects:
-                assert key in json_data
-                result = parser.parse_node(json_data)
-                assert type(result) is RadioShow
-                with pytest.raises(AttributeError):
-                    getattr(result, key)
-
     def test_nested_objects(self: Logger):
         """Test that that embedded objects with keys in the nested_objects list are parsed as objects too.
 
