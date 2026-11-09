@@ -645,7 +645,7 @@ class ScheduleItem(PlayableItem, ImageMixin):
 
     ID_IS_VERSION_PID: ClassVar[bool] = False
 
-    duration: int | None = None  # type: ignore[assignment]
+    duration: int | None = None  # type: ignore[assignment]  # ty: ignore[invalid-mutable-override]
 
     @property
     def broadcast_pid(self) -> str:
@@ -663,7 +663,7 @@ class Station(Container):
     id: the service id, e.g. bbc_radio_fourfm
     """
 
-    id: str
+    id: str  # ty: ignore[invalid-mutable-override]
     pid: str | None = None
     default: bool = True  # Whether this is default for its parent Network
     local: bool = False
@@ -741,9 +741,9 @@ class LiveStation(PlayableItem, ImageMixin):
 class Schedule(Container):
     """Represents a schedule for a given date."""
 
-    id: str
+    id: str  # ty: ignore[invalid-mutable-override]
     # title is the date of the schedule
-    sub_items: Sequence[Annotated[ScheduleItem | RadioShow, _POLYMORPHIC]] | None = None
+    sub_items: Sequence[Annotated[ScheduleItem | RadioShow, _POLYMORPHIC]] | None = None  # ty: ignore[invalid-mutable-override]
 
     def get_current_item(self) -> ScheduleItem | None:
         """Get the currently airing schedule item."""
@@ -896,7 +896,7 @@ class Header(BaseObject):
 class Season(ImageContainer):
     API_FIELD_MAP: ClassVar[Mapping[str, str]] = {"tlec_urn": "brand_urn"}
     brand_urn: str | None = None
-    sub_items: Sequence[Annotated[EpisodeTypes, _POLYMORPHIC]] | None = None
+    sub_items: Sequence[Annotated[EpisodeTypes, _POLYMORPHIC]] | None = None  # ty: ignore[invalid-mutable-override]
 
 
 EpisodeTypes = PodcastEpisode | RadioShow | RadioClip

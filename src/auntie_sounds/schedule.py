@@ -281,7 +281,7 @@ class ScheduleService:
             url_args.update({"date": date})
             try:
                 # Try to parse the date string as a valid date format
-                dt.strptime(date, "%Y-%m-%d")  # ruff: ignore[DTZ007]
+                dt.strptime(date, "%Y-%m-%d")
             except ValueError:
                 raise InvalidFormatError(
                     "Invalid date specified, must be in the format YYYY-MM-DD"
