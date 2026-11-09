@@ -1,13 +1,44 @@
 from auntie_sounds.client import SoundsClient
 from auntie_sounds.constants import FEATURE_FLAGS, SCHEDULE_TIMEZONE, VERBOSE_LOG_LEVEL
-from auntie_sounds.exceptions import SoundsException
+from auntie_sounds.exceptions import (
+    APIResponseError,
+    ConfigurationError,
+    CredentialsRejectedError,
+    DateOutOfRangeError,
+    InvalidArgumentsError,
+    InvalidFormatError,
+    LoginFailedError,
+    MultipleObjectsFound,
+    NetworkError,
+    NotFoundError,
+    NotStartedError,
+    ParserError,
+    SoundsException,
+    SoundsHttpException,
+    UnauthorisedError,
+)
 
 __all__ = [
     "FEATURE_FLAGS",
     "SCHEDULE_TIMEZONE",
     "VERBOSE_LOG_LEVEL",
+    "APIResponseError",
+    "ConfigurationError",
+    "CredentialsRejectedError",
+    "DateOutOfRangeError",
+    "InvalidArgumentsError",
+    "InvalidFormatError",
+    "LoginFailedError",
+    "MultipleObjectsFound",
+    "NetworkError",
+    "NotFoundError",
+    "NotStartedError",
+    "ParserError",
     "SoundsClient",
     "SoundsException",
+    "SoundsHttpException",
+    "UnauthorisedError",
+    "parse",
 ]
 
 
