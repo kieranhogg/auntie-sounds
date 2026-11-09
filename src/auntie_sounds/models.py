@@ -370,7 +370,7 @@ class Network(SerializableMixin):
     default_service_id: str | None = None
     active: bool = True
     coverage: Literal["national", "regional", "local"] | None = None
-    international: bool = True
+    international: bool = False
     promoted_category_summaries: list[dict[str, Any]] = field(default_factory=list)
     date_ranges: list[dict[str, Any]] = field(default_factory=list)
     logo_url: str | None = None
