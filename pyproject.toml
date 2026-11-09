@@ -9,19 +9,18 @@ dependencies = [
     "appdirs",
     "beautifulsoup4",
     "mashumaro",
-    "pytz",
     "yarl>=1.25.1",
 ]
 
 [build-system]
-requires = ["uv_build>=0.11.8,<0.13"]
+requires = ["uv_build>=0.11.8,<0.14"]
 build-backend = "uv_build"
 
 [tool.ty.environment]
 root = ["./src"]
 
 [tool.uv]
-required-version = ">=0.11.8,<0.13"
+required-version = ">=0.11.8,<0.14"
 
 [tool.uv.build-backend]
 package-dir = "src"
@@ -60,7 +59,6 @@ dev = [
     "ty>=0.0.84",
     "types-aiofiles>=25.1.0.20260518",
     "types-appdirs>=1.4.3.5",
-    "types-pytz>=2026.3.1.20260727",
 ]
 
 [tool.coverage.run]
