@@ -327,6 +327,8 @@ class AuthService:
             location = request.headers.get("Location")
             if not location:
                 break
+            # Free the connection, the redirect's body isn't needed
+            request.release()
             # Location may be relative; resolve against the URL that sent it
             location = str(request.url.join(URL(location)))
 
@@ -433,6 +435,6 @@ class AuthService:
         """Save the login pages to aid with debugging, if requested."""
         if self.debug_login:
             digest = hashlib.sha256((self.username or "anon").encode()).hexdigest()[:8]
-            with open(Path(_get_data_dir(), f"{digest}_{filename}"), "w") as page:
-                html = BeautifulSoup(html, features="html.parser").prettify()
-                page.write(str(html))
+            path = Path(_get_data_dir(create=True), f"{digest}_{filename}")
+            html = BeautifulSoup(html, features="html.parser").prettify()
+            path.write_text(str(html), encoding="utf-8")

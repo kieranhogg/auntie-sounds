@@ -70,6 +70,7 @@ class CookieStore:
             logger.warning("No cookie file location configured.")
             return
         logger.debug("Saving cookies to disk...")
+        self.path.parent.mkdir(parents=True, exist_ok=True)
         cast(aiohttp.CookieJar, self.session.cookie_jar).save(str(self.path))
         self._write_owner()
 

@@ -32,8 +32,7 @@ def network_logo(
     network_id: str | None = None,
     file_extension: str = "png",
 ) -> str | None:
-    """),
-    Formats a network logo based on the current recipe
+    """Formats a network logo based on the current recipe.
 
     :param logo_recipe e.g. http://example.com/{type}/{size}_{size}.{format}
     :param img_type An accepted image type
@@ -63,7 +62,6 @@ def image_from_recipe(
     size: int = 400,
     height: int | None = None,
     file_extension: str | None = None,
-    img_type: ImageType | None = None,
 ) -> str | None:
     """Formats an image from a recipe."""
     if not image_recipe:
@@ -78,13 +76,15 @@ def image_from_recipe(
     if "{format}" in image_recipe and file_extension:
         return image_recipe.format(format=file_extension, recipe=img_size)
 
-    if "{type}" in image_recipe and img_type:
-        return image_recipe.format(type=img_type, recipe=img_size)
-
     return image_recipe.format(recipe=img_size)
 
 
-def _get_data_dir() -> Path:
-    dir = Path(AppDirs(appname="auntie-sounds", version="1").user_data_dir)
-    dir.mkdir(parents=True, exist_ok=True)
-    return dir
+def _get_data_dir(create: bool = False) -> Path:
+    """The library's data directory, only created on disk if `create` is set.
+
+    Module-level paths are built from this at import, so it mustn't write by default.
+    """
+    data_dir = Path(AppDirs(appname="auntie-sounds", version="1").user_data_dir)
+    if create:
+        data_dir.mkdir(parents=True, exist_ok=True)
+    return data_dir
