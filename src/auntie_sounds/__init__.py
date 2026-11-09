@@ -1,5 +1,5 @@
 from auntie_sounds.client import SoundsClient
-from auntie_sounds.constants import FEATURE_FLAGS, SCHEDULE_TIMEZONE, VERBOSE_LOG_LEVEL
+from auntie_sounds.constants import SCHEDULE_TIMEZONE, VERBOSE_LOG_LEVEL
 from auntie_sounds.exceptions import (
     APIResponseError,
     ConfigurationError,
@@ -19,7 +19,6 @@ from auntie_sounds.exceptions import (
 )
 
 __all__ = [
-    "FEATURE_FLAGS",
     "SCHEDULE_TIMEZONE",
     "VERBOSE_LOG_LEVEL",
     "APIResponseError",
