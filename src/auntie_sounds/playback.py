@@ -169,19 +169,10 @@ class PlaybackService:
             preferences = StreamPreference()
 
         station_id = service_id_to_station_id(station_id)
-        url_args = {"id": station_id_to_service_id(station_id)}
-
-        if international:
-            headers = None
-        else:
-            jwt_token = await self.get_stream_token(station_id)
-            headers = {"Authorization": f"Bearer {jwt_token}"}
-
-        json_resp = await self.requests.get_json_response(
-            url=URLs.MEDIASET, url_args=url_args, headers=headers
+        jwt_token = None if international else await self.get_stream_token(station_id)
+        return await self._get_streams(
+            station_id_to_service_id(station_id), preferences, jwt_token=jwt_token
         )
-        logger.log(VERBOSE_LOG_LEVEL, json_resp)
-        return _extract_streams(json_resp, preferences=preferences)
 
     async def get_live_stream(
         self,
