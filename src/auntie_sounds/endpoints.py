@@ -8,7 +8,6 @@ class URLs(StrEnum):
     # resolves to: https://account.bbc.com/auth/identifier/signin?realm=%2F&clientId=Account&context=iplayerradio&ptrt=https%3A%2F%2Fwww.bbc.co.uk%2Fsounds&userOrigin=sounds&mvtUserId=<hash>&isCasso=false&action=sign-in&sequenceId=&redirectUri=https%3A%2F%2Fsession.bbc.co.uk%2Fsession%2Fcallback%3Frealm%3D%2F&service=IdSignInService&nonce=<nonce>
 
     JWT = "/v2/sign/token/{id}"
-    INTL_JWT = "https://web-cdn.api.bbci.co.uk/xd/media-token"  # ?{id_type}={id}"
     USER_INFO = "https://www.bbc.co.uk/userinfo"
 
     # Streaming URLs
@@ -28,10 +27,8 @@ class URLs(StrEnum):
     LOGIN_START = (
         "https://session.bbc.co.uk/session?ptrt=https%3A%2F%2Fwww.bbc.co.uk%2Fsounds"
     )
-    LOGIN_START_I18N = "https://account.bbc.com/auth?realm=%2F&clientId=Account&ptrt=https%3A%2F%2Fwww.bbc.com%2F&userOrigin=BBCS_BBC&purpose=free&isCasso=false&action=sign-in&redirectUri=https%3A%2F%2Fsession.bbc.com%2Fsession%2Fcallback%3Frealm%3D%2F&service=IdSignInService"
     LOGIN_BASE = "https://account.bbc.com"
     COOKIE_BASE = "https://www.bbc.co.uk"
-    COOKIE_BASE_I18N = "https://www.bbc.com"
 
 
 @unique
@@ -40,7 +37,7 @@ class Endpoints(Enum):
     response_type: str | None
     return_type: str | None
 
-    def __new__(cls, value, login_required, response_type=None, return_type=None):
+    def __new__(cls, value, login_required=False, response_type=None, return_type=None):
         obj = object.__new__(cls)
         obj._value_ = value
         obj.login_required = login_required
@@ -49,70 +46,29 @@ class Endpoints(Enum):
         return obj
 
     # Station & Networks
-    NETWORKS_DETAILED = (
-        "/radio/networks.json",
-        False,
-        "NetworksResponse",
-    )
-    NETWORKS = (
-        "/v2/networks",  # ?limit={limit}
-        False,
-        "NetworksResponse",
-        None,
-    )
-    NETWORK_SERVICES = (
-        "/v2/networks/services",  # ?limit={limit}
-        False,
-        "ServicesResponse",
-    )
-    NETWORKS_PLAYABLE = (
-        "/v2/networks/playable",
-        False,
-        "PlayableItemsResponse",
-        None,
-    )
-    NETWORK_DETAILS = ("/v2/networks/{network_id}", False, "NetworkResponse")
-    NETWORK_PROMOS = (
-        "/v2/networks/{network_id}/promos/display",
-        False,
-    )
-    NETWORK_PROMOS_PLAYABLE = (
-        "/v2/networks/{network_id}/promos/playable",
-        False,
-    )
-    NETWORK_PLAYABLE_DETAILS = (
-        "/v2/networks/{network_id}/playable",
-        False,
-    )
+    NETWORKS_DETAILED = "/radio/networks.json"
+    NETWORKS = "/v2/networks"  # ?limit={limit})
+    NETWORK_SERVICES = "/v2/networks/services"  # ?limit={limit})
+    NETWORKS_PLAYABLE = "/v2/networks/playable"
+    NETWORK_DETAILS = "/v2/networks/{network_id}"
+    NETWORK_PROMOS = "/v2/networks/{network_id}/promos/display"
+    NETWORK_PROMOS_PLAYABLE = "/v2/networks/{network_id}/promos/playable"
+    NETWORK_PLAYABLE_DETAILS = "/v2/networks/{network_id}/playable"
 
-    STATIONS = (
-        "/v2/experience/inline/stations",
-        False,
-        "ExperienceResponse",
-    )
-    STATION_DETAILS = ("/v2/networks/{station_id}", False)
-    STATION_PLAYABLE_DETAILS = (
-        "/v2/networks/{station_id}/playable",
-        False,
-    )
+    STATIONS = "/v2/experience/inline/stations"
+    STATION_DETAILS = "/v2/networks/{station_id}"
+    STATION_PLAYABLE_DETAILS = "/v2/networks/{station_id}/playable"
 
     # Segments & Schedules
-    BROADCASTS = ("/v2/broadcasts?service={service_id}&sort=-start_at", False)
+    BROADCASTS = "/v2/broadcasts?service={service_id}&sort=-start_at"
     CURRENT_PROGRAMME = (
-        "/v2/broadcasts/latest",  # ?on_air=now | service={service_id}&sort=-start_at
-        False,
+        "/v2/broadcasts/latest"  # ?on_air=now | service={service_id}&sort=-start_at)
     )
-    BROADCAST_SCHEDULE = ("/v2/broadcasts/schedules/{service_id}/{date}", False)
-    LATEST_TRACKS = ("/v2/services/{station_id}/tracks/latest/playable", False)
-    NOW_PLAYING = (
-        "/v2/services/{service_id}/segments/latest",  # ?limit={limit}
-        False,
-    )
-    PLAY_EXPERIENCE = (
-        "/v2/experience/inline/play/{service_id}",
-        False,
-        "ExperienceResponse",
-    )
+    BROADCAST_SCHEDULE = "/v2/broadcasts/schedules/{service_id}/{date}"
+    LATEST_TRACKS = "/v2/services/{station_id}/tracks/latest/playable"
+    NOW_PLAYING = "/v2/services/{service_id}/segments/latest"  # ?limit={limit})
+    PLAY_EXPERIENCE = "/v2/experience/inline/play/{service_id}"
+
     """
     Takes: a service id.
     Returns: an experience made of modules. Some have uris.polling, a template
@@ -121,27 +77,21 @@ class Endpoints(Enum):
         next few. recent_tracks only has a polling uri on stations with tracks.
     Used by: ScheduleService.polling.
     """
-    SCHEDULE = (
-        "/v2/experience/inline/schedules/{service_id}",
-        False,
-    )
-    SCHEDULE_DATE = (
-        "/v2/experience/inline/schedules/{service_id}/{date}",
-        False,
-    )
-    SEGMENTS = ("/v2/versions/{vpid}/segments", False)
+    SCHEDULE = "/v2/experience/inline/schedules/{service_id}"
+    SCHEDULE_DATE = "/v2/experience/inline/schedules/{service_id}/{date}"
+    SEGMENTS = "/v2/versions/{vpid}/segments"
 
     ####### Episodes, programmes, series etc. ##########################################
 
-    CONTAINER_FROM_PIDS = ("/v2/programmes/container/{pids}", False)
+    CONTAINER_FROM_PIDS = "/v2/programmes/container/{pids}"
+
     """
     Takes: a brand or series pid.
     Returns: a list of container_items
     Useful fields: id, urn, and uris[latest], which links to the episode listing.
     Used by: get_podcast.
     """
-
-    SERIES_CONTAINER = ("/v2/programmes/container", False)
+    SERIES_CONTAINER = "/v2/programmes/container"
     """
     Takes: ?parent={brand pid}&type=series
     Returns: the seasons as container_items, in pid order rather than date order.
@@ -149,12 +99,11 @@ class Endpoints(Enum):
         Empty for a brand without seasons. Rejects sort=sequential with a 400.
     Used by: get_podcast.
     """
-    SERIES_EPISODES = ("/v2/programmes/playable/{pids}", False)
+    SERIES_EPISODES = "/v2/programmes/playable/{pids}"
 
     PLAYABLE_ITEMS_CONTAINER = (
-        "/v2/programmes/playable",  # ?container={pid}&sort=sequential | sort=popular | sort=-release_date
-        False,
-    )
+        "/v2/programmes/playable",
+    )  # ?container={pid}&sort=sequential | sort=popular | sort=-release_date)
     """
     Takes: ?container={brand or series pid}&sort=sequential
     Returns: playable_items. Each one's container is the top-level brand, even
@@ -163,9 +112,9 @@ class Endpoints(Enum):
         sort=sequential is a 400.
     Used by: get_pid_container.
     """
-    BROADCAST = ("/v2/broadcasts/{pid}", False)
+    BROADCAST = "/v2/broadcasts/{pid}"
 
-    PROGRAMME_FROM_PID = ("/v2/programmes/{pid}", False)
+    PROGRAMME_FROM_PID = "/v2/programmes/{pid}"
     """
     Takes: an episode pid.
     Returns: a Programmes response with total: 1 and the episode in data[0],
@@ -175,10 +124,7 @@ class Endpoints(Enum):
         An unknown pid is a 200 with total: 0.
     Used by: the _get_programme helpers.
     """
-    PROGRAMME_FROM_PID_PLAYABLE = (
-        "/v2/programmes/{pid}/playable",
-        False,
-    )
+    PROGRAMME_FROM_PID_PLAYABLE = "/v2/programmes/{pid}/playable"
     """
     Takes: an episode pid.
     Returns: a single playable_item. container is the top-level brand, the
@@ -187,10 +133,7 @@ class Endpoints(Enum):
     Used by: get_by_pid.
     """
 
-    URN_CONTAINER = (
-        "/v2/experience/inline/container/{urn}",
-        False,
-    )
+    URN_CONTAINER = "/v2/experience/inline/container/{urn}"
     """
     Takes: a container urn.
     Returns: a page with two parts: a header module holding the brand, and a 
@@ -198,47 +141,30 @@ class Endpoints(Enum):
     Used by: get_container and get_radio_series.
     """
 
-    PID_DETAILS = ("https://www.bbc.co.uk/programmes/{pid}/playlist.json", False)
+    PID_DETAILS = "https://www.bbc.co.uk/programmes/{pid}/playlist.json"
     """
     Takes: an episode pid.
     Returns: the vpid and statsObject.parentPIDType.
     Used by: the heartbeat.
     """
-    COLLECTIONS = (
-        "/v2/collections/{pid}/members",  # ?experience=domestic
-        False,
-    )
-    CURATIONS = (
-        "/v2/curations/{pid}/members/playable",
-        False,
-    )
+    COLLECTIONS = "/v2/collections/{pid}/members"  # ?experience=domestic)
+    CURATIONS = "/v2/curations/{pid}/members/playable"
     # Options: focus feel_good_tunes dance fresh_new_music greatest_hits
-    TAGGED = ("/v2/tagged/{tag}/playable", False)
-    # Menu, search, etc.
-    SEARCH_URL = (
-        "/v2/experience/inline/search",
-        False,
-    )
-    SHOW_SEARCH_URL = (
-        "/v2/programmes/search/container",
-        False,
-    )
-    EPISODE_SEARCH_URL = (
-        "/v2/programmes/search/playable",
-        False,
-    )
-    PODCASTS = ("/v2/experience/inline/speech", False)
-    MUSIC = ("/v2/experience/inline/music", False)
-    NEWS = (
-        "/v2/experience/inline/container/urn:bbc:radio:category:news",
-        False,
-    )
-    AUDIOBOOKS = "/v2/programmes/playable?category=audiobooks", False
-    POPULAR_AUDIOBOOKS = (
-        "/v2/programmes/playable?category=audiobooks&sort=popular",
-        False,
-    )
-    # Authenticated URLs
+    TAGGED = "/v2/tagged/{tag}/playable"
+
+    ####### Menu, search, etc. #########################################################
+
+    SEARCH_URL = "/v2/experience/inline/search"
+    SHOW_SEARCH_URL = "/v2/programmes/search/container"
+    EPISODE_SEARCH_URL = "/v2/programmes/search/playable"
+    PODCASTS = "/v2/experience/inline/speech"
+    MUSIC = "/v2/experience/inline/music"
+    NEWS = "/v2/experience/inline/container/urn:bbc:radio:category:news"
+    AUDIOBOOKS = "/v2/programmes/playable?category=audiobooks"
+    POPULAR_AUDIOBOOKS = "/v2/programmes/playable?category=audiobooks&sort=popular"
+
+    ####### Authenticated URLs #########################################################
+
     EXPERIENCE_MENU = ("/v2/my/experience/inline/listen", True)
     PLAYS = ("/v2/my/programmes/plays", True)
     RECOMMENDATIONS = (
@@ -253,7 +179,8 @@ class Endpoints(Enum):
     SUBSCRIBED = ("/v2/my/programmes/follows", True)
     BOOKMARKS = ("/v2/my/programmes/favourites/playable", True)
     CONTINUE = ("/v2/my/programmes/plays/playable", True)
-    # Same shapes as PROGRAMME_FROM_PID_PLAYABLE and PLAYABLE_ITEMS_CONTAINER,
+
+    # The same as PROGRAMME_FROM_PID_PLAYABLE and PLAYABLE_ITEMS_CONTAINER,
     # plus progress, which is None for anything not yet played
     PID_PLAYABLE = ("/v2/my/programmes/{pid}/playable", True)
     MY_PLAYABLE_ITEMS_CONTAINER = ("/v2/my/programmes/playable", True)
