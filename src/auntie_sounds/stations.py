@@ -1,4 +1,4 @@
-import asyncio.constants
+import asyncio
 import logging
 from itertools import chain
 from typing import TYPE_CHECKING
@@ -80,7 +80,7 @@ class StationService:
         if type(networks) is not list:
             return []
         for network in networks:
-            if not network or type(network) is not Network:
+            if network is None or type(network) is not Network:
                 continue
             if network.id in self.international_networks:
                 network.international = True
@@ -171,8 +171,14 @@ class StationService:
                 for s in stations_list
                 if not s.stream and isinstance(s, (Station, LiveStation))
             ]
+            # LiveStation has no `international` field, get_networks sets it on Station
             station_streams = await asyncio.gather(
-                *(self.playback.get_live_streams(s.id) for s in needs_stream)
+                *(
+                    self.playback.get_live_streams(
+                        s.id, international=isinstance(s, Station) and s.international
+                    )
+                    for s in needs_stream
+                )
             )
             for station, streams in zip(needs_stream, station_streams, strict=True):
                 if streams:
