@@ -101,13 +101,9 @@ def _raise_for_api_errors(json_resp: dict) -> None:
     errors = json_resp.get("errors")
     if not errors:
         return
-    code = errors[0]["status"]
-    message = errors[0]["message"]
-    if code == 401:
-        raise UnauthorisedError(message)
-    elif code == 404:
-        raise NotFoundError(message)
-    raise APIResponseError(message, status_code=code)
+    code = errors[0].get("status")
+    message = errors[0].get("message")
+    raise _STATUS_ERRORS.get(code, APIResponseError)(message, status_code=code)
 
 
 class RequestManager:
@@ -214,11 +210,7 @@ class RequestManager:
                 resp = await self._request_or_raise(method, url, **kwargs)
             logger.debug(f"HTTP {method} {url} - Status {resp.status}")
             return resp
-        except aiohttp.ClientConnectorDNSError as e:
-            logger.error(f"HTTP request failed: {method} {url} - {e}")
-            raise NetworkError(f"Connection failed: {e}") from e
         except TimeoutError as e:
-            # Total timeouts raise a bare TimeoutError, not a ClientError
             logger.error(f"HTTP request timed out: {method} {url}")
             raise NetworkError(f"Request timed out: {method} {url}") from e
         except aiohttp.ContentTypeError as e:
