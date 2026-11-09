@@ -3,7 +3,7 @@ import logging
 from collections import OrderedDict, defaultdict
 from collections.abc import Iterable, Sequence
 from itertools import chain
-from typing import TYPE_CHECKING, Final, cast
+from typing import TYPE_CHECKING, Final
 
 import aiohttp
 
@@ -12,6 +12,7 @@ from auntie_sounds.endpoints import Endpoints
 from auntie_sounds.exceptions import (
     APIResponseError,
     InvalidFormatError,
+    NotExpectedTypeError,
     NotFoundError,
     SoundsException,
 )
@@ -36,7 +37,6 @@ from auntie_sounds.user import UserService
 
 if TYPE_CHECKING:
     from auntie_sounds.models import SoundsTypes
-    from auntie_sounds.playback import ResourceType
 
 logger = logging.getLogger(__name__)
 
@@ -172,7 +172,7 @@ class ContentService:
         """Get a podcast or radio series, and optionally its episodes.
 
         With include_episodes, up to max_episodes are fetched, newest season
-        first. Pass max_episodes=None to fetch them all (up to MAX_PODCAST_EPISODES).
+        first. Pass max_episodes=None to fetch them all.
         """
         if not urn and not pid:
             raise InvalidFormatError("Must be called with one of: urn, pid")
@@ -237,10 +237,15 @@ class ContentService:
         )
         return [i for i in items or [] if isinstance(i, EpisodeTypes)]
 
-    async def get_podcast_episode(self, pid, include_stream=False) -> PodcastEpisode:
-        show = await self.get_by_pid(pid=pid, include_stream=include_stream)
-        show = cast(PodcastEpisode, show)
-        return show
+    async def get_podcast_episode(
+        self, pid: str, include_stream: bool = False
+    ) -> PodcastEpisode:
+        item = await self.get_by_pid(pid=pid, include_stream=include_stream)
+        if not isinstance(item, PodcastEpisode):
+            raise NotExpectedTypeError(
+                f"pid {pid} is a {type(item).__name__}, not a PodcastEpisode"
+            )
+        return item
 
     async def get_radio_series(self, urn, include_episodes=True) -> RadioSeries:
         series = await self.get_container(urn)
@@ -258,7 +263,9 @@ class ContentService:
     async def get_radio_show(self, pid, include_stream=False) -> RadioShow:
         show = await self.get_by_pid(pid=pid, include_stream=include_stream)
         if not isinstance(show, RadioShow):
-            raise APIResponseError(f"Item requested not a radio show! {show!s}")
+            raise NotExpectedTypeError(
+                f"pid {pid} is a {type(show).__name__}, not a RadioShow"
+            )
         return show
 
     async def get_by_pid(
@@ -442,7 +449,7 @@ class ContentService:
                 segment.image_url = image_url
         return segments
 
-    async def get_heartbeat_details(self, pid) -> tuple[str, ResourceType]:
+    async def get_heartbeat_details(self, pid) -> tuple[str, str]:
         """Get the details (vpid, resource_type) required to send a heartbeat request.
 
         :param pid the pid of the stream or episode
@@ -468,11 +475,11 @@ class ContentService:
                     url=Endpoints.PROGRAMME_FROM_PID, url_args={"pid": pid}
                 )
             )
-            if len(self._programme_cache) > MAX_CACHE_SIZE:
+            if len(self._programme_cache) >= MAX_CACHE_SIZE:
                 self._programme_cache.popitem(last=False)
             self._programme_cache[pid] = task
         try:
-            json_resp = await task
+            json_resp = await asyncio.shield(task)
         except Exception:
             # Forget the failed lookup so the next call tries again
             if self._programme_cache.get(pid) is task:
