@@ -243,14 +243,16 @@ class ContentService:
         return show
 
     async def get_radio_series(self, urn, include_episodes=True) -> RadioSeries:
-        series_container = await self.get_container(urn)
-
-        if series_container:
-            series = cast(RadioSeries, series_container)
-            if not include_episodes and getattr(series, "sub_items", None):
-                series.sub_items = []
-        else:
+        series = await self.get_container(urn)
+        # get_container returns an empty list when nothing is found
+        if not series:
             raise NotFoundError(f"No radio series with urn {urn}")
+        if not isinstance(series, RadioSeries):
+            raise NotExpectedTypeError(
+                f"urn {urn} is a {type(series).__name__}, not a RadioSeries"
+            )
+        if not include_episodes and getattr(series, "sub_items", None):
+            series.sub_items = []
         return series
 
     async def get_radio_show(self, pid, include_stream=False) -> RadioShow:
