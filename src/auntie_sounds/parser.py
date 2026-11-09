@@ -40,7 +40,6 @@ def _promote_if_recommended(menu_item: MenuItem) -> MenuItem:
 class Parser:
     def __init__(self):
         self.model_factory = ModelFactory()
-        self.ignored_objects = ["activities"]
 
     def parse_node(
         self,
