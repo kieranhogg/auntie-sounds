@@ -26,14 +26,14 @@ class UserService:
                 logger.warning("Couldn't get user_info")
 
     async def listener_country(self) -> str | None:
-        """Return the listener's current country."""
+        """Return the listener's current country code, e.g. gb, or None if unknown."""
         await self._ensure_loaded()
-        return self._user_info.get("X-Country", "us")
+        return self._user_info.get("X-Country")
 
     async def is_geolocated_in_uk(self) -> bool:
         """Listener is in the UK."""
         await self._ensure_loaded()
-        return self._user_info.get("X-Country", "us") == "gb"
+        return await self.listener_country() == "gb"
 
     async def is_uk_account_and_location(self) -> bool:
         """Listener has a UK-based account and is in the UK."""
