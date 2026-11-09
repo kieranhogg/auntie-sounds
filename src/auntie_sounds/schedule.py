@@ -310,13 +310,26 @@ class ScheduleService:
         return [schedule for schedule in schedules if isinstance(schedule, Schedule)]
 
     async def _get_schedules(
-        self, station_id: str, dates: Iterable[date]
+        self, station_id: str, dates: Sequence[date]
     ) -> list[Schedule]:
-        """Get a station's schedule for each of the given days."""
-        schedules = await asyncio.gather(
-            *(self.get_schedule(station_id, date=day.isoformat()) for day in dates)
+        """Get a station's schedule for each of the given days.
+
+        It's fairly easy to run into a DateOutOfRangeError at either side of the range
+        due to timezones etc., so these are ignored when encountered.
+        """
+        results = await asyncio.gather(
+            *(self.get_schedule(station_id, date=day.isoformat()) for day in dates),
+            return_exceptions=True,
         )
-        return [schedule for schedule in schedules if isinstance(schedule, Schedule)]
+        schedules = []
+        for day, result in zip(dates, results, strict=True):
+            if isinstance(result, DateOutOfRangeError):
+                logger.debug("Skipping %s for %s: %s", day, station_id, result)
+            elif isinstance(result, BaseException):
+                raise result
+            elif isinstance(result, Schedule):
+                schedules.append(result)
+        return schedules
 
     async def get_station_schedules(self, station_id: str) -> list[Schedule]:
         """Get a station's schedules for today and the next 7 days."""
