@@ -580,13 +580,10 @@ class PlayableItem(BaseObject, IdentifiableMixin):
         ]
         if self.titles.entity_title is None:
             return False
+        title = self.titles.entity_title.casefold()
         # Title is exactly Trailer, or contains a promo word and is <5 mins
-        return self.titles.entity_title.casefold() == "trailer" or (
-            self.titles.entity_title is not None
-            and any(
-                keyword.casefold() in self.titles.entity_title
-                for keyword in promo_keywords
-            )
+        return title == "trailer" or (
+            any(keyword in title for keyword in promo_keywords)
             and (
                 (type(self.duration) is int and self.duration < (5 * 60))
                 or (type(self.duration) is Duration and self.duration.value < (5 * 60))
