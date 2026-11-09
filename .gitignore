@@ -14,6 +14,7 @@ docs/_build
 local
 .sounds_jar
 *.html
+!tests/fixtures/auth/*.html
 *.patch
 .env
 .vscode/settings.json
