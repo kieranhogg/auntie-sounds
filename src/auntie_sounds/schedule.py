@@ -275,7 +275,7 @@ class ScheduleService:
     ) -> Schedule | None:
         """Get a Schedule item for a given station_id."""
         url = Endpoints.SCHEDULE
-        url_args = {"service_id": station_id}
+        url_args = {"service_id": station_id_to_service_id(station_id)}
 
         if date:
             url = Endpoints.SCHEDULE_DATE
