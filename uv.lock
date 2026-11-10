@@ -284,7 +284,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "aiohttp" },
+    { name = "aiohttp", specifier = ">=3.14" },
     { name = "appdirs" },
     { name = "beautifulsoup4" },
     { name = "mashumaro" },
