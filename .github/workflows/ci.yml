@@ -26,7 +26,7 @@ jobs:
           persist-credentials: false
       - name: Set up python
         id: setup-python
-        uses: actions/setup-python@v6.3.0
+        uses: actions/setup-python@v7.1.0
         with:
           python-version-file: ".python-version"
       - name: Set up uv
