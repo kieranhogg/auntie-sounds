@@ -15,6 +15,10 @@ class UserService:
         self._user_info: dict[str, str] = {}
         self.login_details_provided = login_details_provided
 
+    def clear(self) -> None:
+        """Clear the cached user info, used for signing out."""
+        self._user_info = {}
+
     async def refresh(self) -> None:
         self._user_info = await self.requests.get_json_response(url=URLs.USER_INFO)
 

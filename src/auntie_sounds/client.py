@@ -236,7 +236,13 @@ class SoundsClient:
         )
 
     async def logout(self) -> None:
+        """Signs out and clears any stored credentials and details."""
         logger.debug("Logging out...")
+        self.password = None
+        self.auth.password = None
+        self.requests.login_details_provided = False
+        self.user.login_details_provided = False
+        self.user.clear()
         await self.clear_cookies()
         logger.debug("Logged out.")
 
