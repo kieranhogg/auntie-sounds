@@ -46,11 +46,15 @@ async def main():
     except exceptions.SoundsException:
         ...
 
-    # Or, without a context manager and not logged-in:
-    client = SoundsClient()
-    print([episode for episode in client.content.get_podcast_episodes("example_pid")])
-    client.close()
-    
+    # Or, without a context manager and not logged in:
+    client = await SoundsClient.create()
+    try:
+        episodes = await client.content.get_podcast_episodes("example_pid")
+        print(episodes)
+    finally:
+        await client.close()
+
+
 asyncio.run(main())
 ```
 
