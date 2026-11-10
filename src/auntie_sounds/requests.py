@@ -1,6 +1,7 @@
 import logging
 import re
-from collections.abc import Callable
+from collections.abc import Callable, Generator
+from contextlib import contextmanager
 from functools import partial
 from typing import Literal
 
@@ -45,6 +46,22 @@ async def _error_message(resp: aiohttp.ClientResponse) -> str:
         TimeoutError,
     ):
         return resp.reason or str(resp.status)
+
+
+@contextmanager
+def _body_errors(url: object) -> Generator[None]:
+    """Raise possible suitable exceptions while reading a response body."""
+    try:
+        yield
+    except aiohttp.ContentTypeError as e:
+        raise APIResponseError(f"{e.message}. URL: {url}") from e
+    except ValueError as e:
+        # Invalid JSON, or a body that can't be decoded as text
+        raise APIResponseError(f"Unreadable response from {url}: {e}") from e
+    except TimeoutError as e:
+        raise NetworkError(f"Timed out reading the response from {url}") from e
+    except aiohttp.ClientError as e:
+        raise NetworkError(f"Failed reading the response from {url}: {e}") from e
 
 
 def build_url(
@@ -296,15 +313,18 @@ class RequestManager:
         """Gets raw text/HTML response."""
         # Pass the URL through without building, so login_required is preserved
         resp = await self.make_request(method, url, url_args=url_args, **kwargs)
-        return await resp.text()
+        with _body_errors(url):
+            return await resp.text()
 
     def set_reauth_handler(self, call: Callable):
         self.reauth_handler = call
 
     async def _read_json(self, resp, url) -> dict:
-        try:
-            body: dict = await resp.json()
-        except aiohttp.ContentTypeError as e:
-            raise APIResponseError(f"{e.message}. URL: {url}") from e
+        with _body_errors(url):
+            body = await resp.json()
+        if not isinstance(body, dict):
+            raise APIResponseError(
+                f"Expected a JSON object from {url}, got {type(body).__name__}"
+            )
         _raise_for_api_errors(body)
         return body

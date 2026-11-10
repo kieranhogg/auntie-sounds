@@ -5,8 +5,6 @@ from collections.abc import Iterable, Sequence
 from itertools import chain
 from typing import TYPE_CHECKING, Final
 
-import aiohttp
-
 from auntie_sounds import endpoints
 from auntie_sounds.endpoints import Endpoints
 from auntie_sounds.exceptions import (
@@ -147,14 +145,10 @@ class ContentService:
         return _ancestor_id(await self._get_programme(pid), "series")
 
     async def image_from_spotify(self, url: str) -> str | None:
-        spotify_url = "https://open.spotify.com/oembed?url={url}"
-        resp = await self.requests.make_request(
-            method="GET", url=spotify_url.format(url=url)
+        json_resp = await self.requests.get_json_response(
+            url="https://open.spotify.com/oembed", params={"url": url}
         )
-        json_resp = await resp.json()
-        if json_resp.get("thumbnail_url"):
-            return json_resp.get("thumbnail_url")
-        return None
+        return json_resp.get("thumbnail_url") or None
 
     async def get_podcasts(self) -> Menu:
         podcasts = await self.parser.parse_menu(
@@ -437,8 +431,7 @@ class ContentService:
                 async with semaphore:
                     try:
                         return await self.image_from_spotify(segment.spotify_url)
-                    # Catch make_request's SoundsException and resp.json()'s ContentTypeError
-                    except (SoundsException, aiohttp.ClientError) as e:
+                    except SoundsException as e:
                         logger.debug("No Spotify image for %s: %s", segment.id, e)
                         return None
 

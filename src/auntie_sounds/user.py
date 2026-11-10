@@ -1,9 +1,7 @@
 import logging
 
 from auntie_sounds.endpoints import URLs
-from auntie_sounds.exceptions import (
-    SoundsHttpException,
-)
+from auntie_sounds.exceptions import SoundsException
 from auntie_sounds.requests import RequestManager
 
 logger = logging.getLogger(__name__)
@@ -26,8 +24,8 @@ class UserService:
         if not self._user_info:
             try:
                 await self.refresh()
-            except SoundsHttpException:
-                logger.warning("Couldn't get user_info")
+            except SoundsException as e:
+                logger.warning("Couldn't get user_info: %s", e)
 
     async def listener_country(self) -> str | None:
         """Return the listener's current country code, e.g. gb, or None if unknown."""
