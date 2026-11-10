@@ -1,9 +1,9 @@
 import asyncio
 import logging
-from collections.abc import Sequence
+from collections.abc import Awaitable
 
 from auntie_sounds.endpoints import Endpoints
-from auntie_sounds.exceptions import APIResponseError
+from auntie_sounds.exceptions import APIResponseError, SoundsException
 from auntie_sounds.models import (
     Menu,
     MenuItem,
@@ -16,6 +16,15 @@ from auntie_sounds.owners import OwnerAwareParser, OwnerService
 from auntie_sounds.requests import RequestManager
 
 logger = logging.getLogger(__name__)
+
+
+async def _attempt_to_fetch_menu_item[T](title: str, section: Awaitable[T]) -> T | None:
+    """Await one section of a menu, returning None if it fails."""
+    try:
+        return await section
+    except SoundsException as e:
+        logger.warning("Leaving %s out of the menu: %s", title, e)
+        return None
 
 
 class PersonalService:
@@ -87,19 +96,26 @@ class PersonalService:
         return await self.parser.parse_menu(json_resp)
 
     async def get_my_sounds_menu(self) -> MenuItem:
-        latest, bookmarks, subscribed, continue_listening = await asyncio.gather(
-            self.get_latest_menu(),
-            self.get_bookmarks_menu(),
-            self.get_subscriptions_menu(),
-            self.get_continue_listening_menu(),
+        """My Sounds, with any section whose request fails left out.
+
+        While they are fetched asynchronously, dropping a menu item is still better than
+        tanking the whole menu.
+        """
+        sections = await asyncio.gather(
+            _attempt_to_fetch_menu_item(
+                "Continue Listening", self.get_continue_listening_menu()
+            ),
+            _attempt_to_fetch_menu_item("Subscriptions", self.get_subscriptions_menu()),
+            _attempt_to_fetch_menu_item("Latest", self.get_latest_menu()),
+            _attempt_to_fetch_menu_item("Bookmarks", self.get_bookmarks_menu()),
         )
         return MenuItem(
             title="My Sounds",
             id="my_sounds",
-            sub_items=[continue_listening, subscribed, latest, bookmarks],
+            sub_items=[section for section in sections if section is not None],
         )
 
-    async def get_recommendations(self) -> Sequence[RecommendedMenuItem]:
+    async def get_recommendations(self) -> list[RecommendedMenuItem]:
         menu = await self._get_experience_menu()
         return [
             recommendation
