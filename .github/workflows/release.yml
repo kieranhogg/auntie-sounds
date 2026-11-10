@@ -10,9 +10,7 @@ on:
         options: [ patch, minor, major, stable, beta ]
         default: patch
 
-permissions:
-  contents: write
-  id-token: write
+permissions: {}
 
 concurrency:
   group: release
@@ -20,22 +18,33 @@ concurrency:
 
 jobs:
   ci:
-    uses: ./.github/workflows/ci.yml
+    permissions:
+      contents: read
+    uses: $/.github/workflows/ci.yml
 
   stable_release:
     needs: ci
     if: github.ref == 'refs/heads/stable'
     runs-on: ubuntu-latest
+    permissions:
+      # Push the release commit and tag, and create the GitHub release
+      contents: write
+      # Trusted publishing to PyPI
+      id-token: write
     environment:
       name: pypi
       url: https://pypi.org/p/auntie-sounds
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
         with:
           ref: stable
           fetch-depth: 0
 
-      - uses: astral-sh/setup-uv@v6
+      - uses: astral-sh/setup-uv@v10.3.3
+        with:
+          # Match [tool.uv] required-version, and no cache in a job that publishes
+          version-file: "pyproject.toml"
+          enable-cache: false
 
       - name: Install deps
         run: uv sync --locked --all-extras --dev
@@ -70,7 +79,7 @@ jobs:
         run: uv build
 
       - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
+        uses: pypa/gh-action-pypi-publish@v1.14.3
 
       - name: Create GitHub release
         env:
@@ -89,13 +98,18 @@ jobs:
     needs: ci
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
         with:
           ref: main
           fetch-depth: 0
 
-      - uses: astral-sh/setup-uv@v6
+      - uses: astral-sh/setup-uv@v10.3.3
+        with:
+          version-file: "pyproject.toml"
+          enable-cache: false
 
       - name: Install deps
         run: uv sync --locked --all-extras --dev
