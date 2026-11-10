@@ -79,8 +79,10 @@ class TestPersonalService:
             radio=MenuItem(id="listen_live"),
             catch_up=MenuItem(id="catch_up"),
             schedule=MenuItem(id="schedule"),
+            include_recommendations=False,
         )
-        assert [item.id for item in menu.sub_items] != ["recommended"]
+        assert menu.get("recommended") is None
+        assert menu.get("regular") is not None
 
     async def test_get_uk_menu_only_keeps_recommendations(
         self, mock_personal_service, mock_requests, monkeypatch, mixed_menu_json

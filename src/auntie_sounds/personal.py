@@ -64,15 +64,13 @@ class PersonalService:
 
         if not isinstance(menu, Menu) or len(menu.sub_items) == 0:
             raise APIResponseError("Menu not converted correctly.")
-        if include_recommendations:
-            menu.sub_items = list(menu.sub_items)
-        else:
-            # Filter out recommendations if needed
-            menu.sub_items = [
-                item
-                for item in menu.sub_items
-                if item is not None and type(item) is not RecommendedMenuItem
-            ]
+
+        # Recommendations are only removed when asked not to be included
+        menu.sub_items = [
+            item
+            for item in menu.sub_items
+            if include_recommendations or not isinstance(item, RecommendedMenuItem)
+        ]
 
         # Remove the API's listen_live to replace with ours (as it's better)
         menu.sub_items = [
@@ -171,13 +169,17 @@ class PersonalService:
         )
 
     async def get_explore_all(self) -> MenuItem:
-        explore_items = await asyncio.gather(
-            self.get_podcasts_menu_item(),
-            self.get_music_menu_item(),
-            self.get_news_menu_item(),
+        """Explore All, with any section whose request fails left out."""
+        sections = await asyncio.gather(
+            _attempt_to_fetch_menu_item("Podcasts", self.get_podcasts_menu_item()),
+            _attempt_to_fetch_menu_item("Music", self.get_music_menu_item()),
+            _attempt_to_fetch_menu_item("News", self.get_news_menu_item()),
         )
-
-        return MenuItem(title="Explore All", id="explore", sub_items=explore_items)
+        return MenuItem(
+            title="Explore All",
+            id="explore",
+            sub_items=[section for section in sections if section is not None],
+        )
 
     async def get_latest(self) -> list[PlayableItem]:
         latest_items = await self.parser.parse_container(
