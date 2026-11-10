@@ -176,14 +176,14 @@ class SoundsClient:
         return True
 
     async def save_cookies(self) -> None:
-        await asyncio.to_thread(self.cookie_store.save)
+        self.cookie_store.save()
 
     async def load_cookies(self) -> None:
-        await asyncio.to_thread(self.cookie_store.load)
+        self.cookie_store.load()
 
     async def clear_cookies(self) -> None:
-        await asyncio.to_thread(self.cookie_store.clear)
-        await asyncio.to_thread(self.cookie_store.save)
+        self.cookie_store.clear()
+        self.cookie_store.save()
 
     @property
     def is_signed_in(self) -> bool:

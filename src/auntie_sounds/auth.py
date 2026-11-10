@@ -242,7 +242,13 @@ class AuthService:
             if not force_login and self.cookie_store.is_signed_in:
                 if await self.renew_session():
                     self._auth_generation += 1
-                    await asyncio.to_thread(self.cookie_store.save)
+                    # Flag a failed save rather than failing the request
+                    try:
+                        self.cookie_store.save()
+                    except OSError:
+                        logger.warning(
+                            "Couldn't save the renewed session", exc_info=True
+                        )
                     return self._auth_generation
                 logger.warning("Session renewal failed, trying full login...")
             if not (self.username and self.password):
