@@ -106,13 +106,18 @@ class SoundsClient:
         else:
             self._session = aiohttp.ClientSession(cookie_jar=aiohttp.CookieJar())
 
-        self.cookie_store = CookieStore(
-            session=self._session,
-            cookie_file_location=self._cookie_path,
-            account_id=self.username,
-        )
-        await asyncio.to_thread(self.cookie_store.load)
-        self._create_services()
+        try:
+            self.cookie_store = CookieStore(
+                session=self._session,
+                cookie_file_location=self._cookie_path,
+                account_id=self.username,
+            )
+            await asyncio.to_thread(self.cookie_store.load)
+            self._create_services()
+        except BaseException:
+            # Don't leave a hanging session if start() doesn't complete
+            await self._session.close()
+            raise
         self._started = True
 
     def _create_services(self) -> None:
@@ -239,9 +244,14 @@ class SoundsClient:
         if not self._started:
             return
         logger.debug("Closing session...")
-        await self.save_cookies()
-        await self._session.close()
-        self._started = False
+        try:
+            await self.save_cookies()
+        except Exception:
+            # Saving is best effort here. The session must still be closed.
+            logger.warning("Couldn't save cookies while closing", exc_info=True)
+        finally:
+            await self._session.close()
+            self._started = False
         logger.debug("Session closed.")
 
     async def __aenter__(self):
