@@ -154,14 +154,14 @@ class OwnerService:
             self._stations_task = asyncio.create_task(self._fetch_station_networks())
         task = self._stations_task
         try:
-            # shield, so one caller being cancelled doesn't cancel the fetch for the others
+            # Shield, so one caller being cancelled doesn't cancel the fetch for the others
             self._stations = await asyncio.shield(task)
-        except SoundsException as e:
-            # Every waiter gets the error, so only the first one records it
+        except Exception:
+            # Catch all exceptions so the failed task doesn't get stuck
             if self._stations_task is task:
                 self._stations_task = None
                 self._stations_failed_at = time.monotonic()
-                logger.warning("Couldn't get the station list: %s", e)
+                logger.warning("Couldn't get the station list", exc_info=True)
             return None
         self._stations_failed_at = None
         return self._stations
