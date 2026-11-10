@@ -90,9 +90,7 @@ class CookieStore:
         return self._has_cookie(ACCESS_TOKEN_COOKIE)
 
     def clear(self) -> None:
-        logger.debug("Clearing cookies...")
-
-        logger.debug(self._get_filtered_cookies())
+        logger.debug("Clearing cookies, signed in before: %s", self.is_signed_in)
         for base in self._COOKIE_CLEAR_DOMAINS:
             self.session.cookie_jar.clear_domain(base)
 
@@ -108,15 +106,6 @@ class CookieStore:
         if self.path is None:
             return None
         return self.path.with_name(self.path.name + ".owner")
-
-    def _get_filtered_cookies(self) -> list:
-        filtered_cookies = [
-            cookie
-            for cookie in cast(aiohttp.CookieJar, self.session.cookie_jar)
-            if cookie.key == ID_COOKIE
-        ]
-        logger.debug([m.key for m in filtered_cookies])
-        return filtered_cookies
 
     def _read_owner(self) -> str | None:
         """Return the account_id recorded for the on-disk cookie file.

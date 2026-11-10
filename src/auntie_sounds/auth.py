@@ -48,7 +48,7 @@ def _get_form_action(html: str) -> str:
 
     soup = BeautifulSoup(html, "html.parser")
     forms = soup.find_all("form", {"action": True})
-    logger.debug(forms)
+    logger.debug("Found %d form(s) with an action", len(forms))
     number_of_forms = len(forms)
 
     # No forms on page at all
