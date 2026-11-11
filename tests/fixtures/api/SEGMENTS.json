@@ -1,0 +1,92 @@
+{
+  "$schema": "https://rms.api.bbc.co.uk/docs/swagger.json#/definitions/SegmentItemsResponse",
+  "total": 4,
+  "limit": 4,
+  "offset": 0,
+  "data": [
+    {
+      "type": "segment_item",
+      "id": "p0pbhqfh",
+      "urn": "urn:bbc:radio:segment:music:n9pdgz",
+      "segment_type": "music",
+      "titles": {
+        "primary": "Roy Ayers",
+        "secondary": "Pathfinder",
+        "tertiary": null,
+        "entity_title": "Roy Ayers"
+      },
+      "synopses": null,
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p01bqdnd.jpg",
+      "offset": {
+        "start": 6958,
+        "end": 7157,
+        "label": "Now Playing",
+        "now_playing": true
+      },
+      "uris": []
+    },
+    {
+      "type": "segment_item",
+      "id": "p0pbhq8b",
+      "urn": "urn:bbc:radio:segment:music:n9c6mw",
+      "segment_type": "music",
+      "titles": {
+        "primary": "Christian McBride & Ursa Major",
+        "secondary": "No Rhyme No Reason",
+        "tertiary": null,
+        "entity_title": "Christian McBride & Ursa Major"
+      },
+      "synopses": null,
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0bqcdzf.jpg",
+      "offset": {
+        "start": 6630,
+        "end": 6949,
+        "label": "2 Minutes Ago",
+        "now_playing": false
+      },
+      "uris": []
+    },
+    {
+      "type": "segment_item",
+      "id": "p0pbhq24",
+      "urn": "urn:bbc:radio:segment:music:n9c6mh",
+      "segment_type": "music",
+      "titles": {
+        "primary": "LourenÃ§o Rebetez",
+        "secondary": "Maestro",
+        "tertiary": null,
+        "entity_title": "LourenÃ§o Rebetez"
+      },
+      "synopses": null,
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0bqcdzf.jpg",
+      "offset": {
+        "start": 6368,
+        "end": 6630,
+        "label": "7 Minutes Ago",
+        "now_playing": false
+      },
+      "uris": []
+    },
+    {
+      "type": "segment_item",
+      "id": "p0pbhpyl",
+      "urn": "urn:bbc:radio:segment:music:n9c6mf",
+      "segment_type": "music",
+      "titles": {
+        "primary": "Joyce",
+        "secondary": "Respiro Fundo",
+        "tertiary": null,
+        "entity_title": "Joyce"
+      },
+      "synopses": null,
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0bqcdzf.jpg",
+      "offset": {
+        "start": 6179,
+        "end": 6369,
+        "label": "12 Minutes Ago",
+        "now_playing": false
+      },
+      "uris": []
+    }
+  ]
+}

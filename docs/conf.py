@@ -10,7 +10,7 @@ extensions = [
     "sphinx.ext.apidoc",
     "autoapi.extension",
 ]
-autoapi_dirs = ["../src/sounds"]
+autoapi_dirs = ["../src/auntie_sounds"]
 autoapi_type = "python"
 autoapi_template_dir = "_templates/autoapi"
 autoapi_options = [
@@ -23,7 +23,7 @@ autoapi_options = [
 
 apidoc_modules = [
     {
-        "path": "src/sounds/",
+        "path": "src/auntie_sounds/",
         "destination": "source/",
         "exclude_patterns": ["**/test*"],
         "max_depth": 4,

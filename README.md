@@ -8,14 +8,10 @@ A library for interacting with BBC radio stations via an interface to BBC Sounds
 
 ✅ Signing into a BBC Sounds account<br />
 ✅ Listing current station programming<br />
-✅ Obtaining a stream to listen to a station<br />
+✅ Obtaining a stream to listen to a local, national, or international radio station<br />
 ✅ Getting the current and previous segments (typically songs) on a station<br />
-✅ Displaying and listening to previous shows
-
-### Not implemented
-
-❌ Pausing or rewinding live radio<br />
-
+✅ Displaying and getting streams for previous catch-up radio or podcast content
+✅ Searching the Sounds catalogue
 
 ## Notes
 - It is written as an async library
@@ -25,27 +21,43 @@ A library for interacting with BBC radio stations via an interface to BBC Sounds
 
 ```python
 import asyncio
-from sounds import exceptions
-from sounds.client import SoundsClient
+from auntie_sounds import exceptions
+from auntie_sounds.client import SoundsClient
 
 async def main():
     try:
-        client = SoundsClient(username="username", password="password")
-        if await client.login():
-            stations = await client.stations.get_stations()
-            schedule = await client.schedules.get_schedule("bbc_6music", date="2025-10-26")
-            bbc_6music = await client.stations.get_station("bbc_6music", include_stream=True)
-            
+        # As a logged-in context manager:
+        async with SoundsClient(username="username", password="password") as client:
+            if await client.login():
+                stations = await client.stations.get_stations()
+                schedule = await client.schedules.get_schedule(
+                    "bbc_6music", date="2025-10-26"
+                )
+                bbc_6music = await client.stations.get_station(
+                    "bbc_6music", include_stream=True
+                )
+
     except exceptions.LoginFailedError:
         ...
     except exceptions.APIResponseError:
         ...
     except exceptions.NetworkError:
         ...
+    except exceptions.SoundsException:
+        ...
+
+    # Or, without a context manager and not logged in:
+    client = await SoundsClient.create()
+    try:
+        episodes = await client.content.get_podcast_episodes("example_pid")
+        print(episodes)
+    finally:
+        await client.close()
+
 
 asyncio.run(main())
 ```
 
 ### Documentation
 
-Further documentation can be found in the documentation: https://auntie-sounds.readthedocs.io/en/stable/
+Further documentation can be found in the documentation: https://auntie-sounds.readthedocs.io/en/main/

@@ -3,22 +3,26 @@ classification logic. This is where most of the BBC API's JSON shapes get
 turned into typed models.
 """
 
+import json
+
 import pytest
 
-from sounds.models import (
+from auntie_sounds.model_factory import ModelFactory
+from auntie_sounds.models import (
     Category,
     Collection,
     LiveStation,
     Network,
     Playlist,
+    Podcast,
     PodcastEpisode,
     RadioClip,
+    RadioSeries,
     RadioShow,
     Segment,
     Station,
-    model_factory,
 )
-from sounds.parser import parse_node
+from auntie_sounds.parser import Parser
 
 pytestmark = pytest.mark.anyio
 
@@ -32,7 +36,7 @@ class TestModelFactoryBasicTypes:
             "id": "bbc_radio_one",
             "short_title": "Radio 1",
         }
-        result = model_factory(node)
+        result = ModelFactory().parse_object(node)
         assert isinstance(result, Network)
         assert result.id == "bbc_radio_one"
 
@@ -42,14 +46,28 @@ class TestModelFactoryBasicTypes:
                 "type": "playable_item",
                 "id": "m1",
                 "urn": "urn:bbc:radio:episode:m1",
+                "synopses": {"short": "", "medium": "", "long": ""},
+                "titles": {
+                    "primary": "",
+                    "secondary": "",
+                    "tertiary": "",
+                    "entity_title": "",
+                },
             },
             {
                 "type": "playable_item",
                 "id": "m2",
                 "urn": "urn:bbc:radio:episode:m2",
+                "titles": {
+                    "primary": "",
+                    "secondary": "",
+                    "tertiary": "",
+                    "entity_title": "",
+                },
+                "synopses": {},
             },
         ]
-        result = parse_node(nodes)
+        result = Parser().parse_node(nodes)
         assert isinstance(result, list)
         assert len(result) == 2
         assert all(isinstance(item, RadioShow) for item in result)
@@ -59,12 +77,17 @@ class TestModelFactoryBasicTypes:
             "type": "segment_item",
             "id": "seg1",
             "segment_type": "music",
-            "titles": {"primary": "Song Title"},
+            "titles": {
+                "primary": "Song Title",
+                "secondary": None,
+                "tertiary": None,
+                "entity_title": None,
+            },
             "image_url": None,
             "offset": {"start": 0},
             "uris": [],
         }
-        result = model_factory(node)
+        result = Parser().parse_node(node)
         assert isinstance(result, Segment)
         assert result.id == "seg1"
 
@@ -74,7 +97,7 @@ class TestModelFactoryBasicTypes:
             "id": "coll1",
             "urn": "urn:bbc:radio:collection:coll1",
         }
-        result = model_factory(node)
+        result = Parser().parse_node(node)
         assert isinstance(result, Collection)
 
     def test_category_urn(self):
@@ -83,7 +106,7 @@ class TestModelFactoryBasicTypes:
             "id": "cat1",
             "urn": "urn:bbc:radio:category:cat1",
         }
-        result = model_factory(node)
+        result = Parser().parse_node(node)
         assert isinstance(result, Category)
 
 
@@ -97,8 +120,14 @@ class TestEpisodeVsPodcastClassification:
             "type": "playable_item",
             "id": "m001",
             "urn": "urn:bbc:radio:episode:m001",
+            "titles": {
+                "primary": "Title",
+                "secondary": None,
+                "tertiary": None,
+                "entity_title": None,
+            },
         }
-        result = model_factory(node)
+        result = Parser().parse_node(node)
         assert isinstance(result, RadioShow)
 
     def test_episode_in_podcast_brand_container_is_podcast_episode(self):
@@ -106,10 +135,16 @@ class TestEpisodeVsPodcastClassification:
             "type": "playable_item",
             "id": "m002",
             "urn": "urn:bbc:radio:episode:m002",
-            "container": {"type": "brand"},
+            "container": {"id": "brand", "type": "brand"},
             "network": {"id": "bbc_sounds_podcasts"},
+            "titles": {
+                "primary": "Title",
+                "secondary": None,
+                "tertiary": None,
+                "entity_title": None,
+            },
         }
-        result = model_factory(node)
+        result = Parser().parse_node(node)
         assert isinstance(result, PodcastEpisode)
 
     def test_episode_in_non_podcast_brand_container_is_radio_show(self):
@@ -117,11 +152,25 @@ class TestEpisodeVsPodcastClassification:
             "type": "playable_item",
             "id": "m003",
             "urn": "urn:bbc:radio:episode:m003",
-            "container": {"type": "brand"},
+            "container": {"id": "brand", "type": "brand"},
             "network": {"id": "bbc_radio_one"},
+            "titles": {
+                "primary": "Title",
+                "secondary": None,
+                "tertiary": None,
+                "entity_title": None,
+            },
         }
-        result = model_factory(node)
+        result = Parser().parse_node(node)
         assert isinstance(result, RadioShow)
+
+    def test_bbc_news_podcast_is_podcast(self):
+        """Test that a podcast associated with BBC News, and not a station is a Podcast not a RadioSeries."""
+        with open("tests/fixtures/api/podcast_news.json") as node_file:
+            node = json.loads(node_file.read())
+            result = Parser().parse_node(node)
+            assert type(result) is PodcastEpisode
+            assert isinstance(result.container, Podcast)
 
 
 class TestClipVsPodcastClassification:
@@ -130,19 +179,48 @@ class TestClipVsPodcastClassification:
             "type": "playable_item",
             "id": "m010",
             "urn": "urn:bbc:radio:clip:m010",
+            "titles": {
+                "primary": "Title",
+                "secondary": None,
+                "tertiary": None,
+                "entity_title": None,
+            },
         }
-        result = model_factory(node)
+        result = Parser().parse_node(node)
         assert isinstance(result, RadioClip)
 
-    def test_clip_in_brand_container_is_podcast_episode(self):
+    @pytest.mark.parametrize(
+        ("station_owned", "expected", "container_type"),
+        [
+            # In a podcast's listing, a clip is one of its episodes
+            (False, PodcastEpisode, Podcast),
+            # In a station's brand it stays a clip, matching its RadioSeries
+            (True, RadioClip, RadioSeries),
+        ],
+    )
+    def test_clip_follows_its_brand_owner(
+        self, station_owned, expected, container_type
+    ):
         node = {
             "type": "playable_item",
             "id": "m011",
             "urn": "urn:bbc:radio:clip:m011",
-            "container": {"type": "brand"},
+            "container": {
+                "id": "brand",
+                "type": "brand",
+                "network": {"id": "some_network"},
+                "station_owned": station_owned,
+            },
+            "titles": {
+                "primary": "Title",
+                "secondary": None,
+                "tertiary": None,
+                "entity_title": None,
+            },
         }
-        result = model_factory(node)
-        assert isinstance(result, PodcastEpisode)
+        result = Parser().parse_node(node)
+        assert type(result) is expected
+        assert type(result.container) is container_type
 
 
 class TestStationClassification:
@@ -154,10 +232,16 @@ class TestStationClassification:
             "type": "playable_item",
             "id": "radio1",
             "urn": "urn:bbc:radio:network:radio1",
-            "synopses": {"short": "BBC Radio 1"},
+            "synopses": {"short": "BBC Radio 1", "medium": "", "long": ""},
+            "titles": {
+                "primary": "Title",
+                "secondary": None,
+                "tertiary": None,
+                "entity_title": None,
+            },
         }
-        result = model_factory(node)
-        assert isinstance(result, LiveStation)
+        result = Parser().parse_node(node)
+        assert type(result) is LiveStation
 
     def test_station_without_synopses_is_plain_station(self):
         node = {
@@ -165,9 +249,18 @@ class TestStationClassification:
             "id": "radio1",
             "urn": "urn:bbc:radio:network:radio1",
         }
-        result = model_factory(node)
-        assert isinstance(result, Station)
-        assert not isinstance(result, LiveStation)
+        result = Parser().parse_node(node)
+        assert type(result) is Station
+
+    def test_network_with_synopses_is_livestation(self):
+        node = {
+            "type": "playable_item",
+            "id": "radio1",
+            "urn": "urn:bbc:radio:network:radio1",
+            "synopses": {"short": ""},
+        }
+        result = Parser().parse_node(node)
+        assert type(result) is LiveStation
 
 
 class TestPlaylists:
@@ -191,10 +284,38 @@ class TestPlaylists:
                 "medium": "Experience all the highlights from the world’s greatest classical music festival here. To listen on smart speaker just say, “ask BBC Sounds to play The Proms”",
                 "long": "Experience all the highlights from the world’s greatest classical music festival here. To listen on smart speaker just say, “ask BBC Sounds to play The Proms”",
             },
-            "titles": {"primary": "BBC Proms", "secondary": None, "tertiary": None},
+            "titles": {
+                "primary": "BBC Proms",
+                "secondary": None,
+                "tertiary": None,
+                "entity_title": None,
+            },
             "urn": "urn:bbc:radio:curation:m002gj2t",
             "network": None,
             "sub_items": [],
         }
-        result = model_factory(node)
+        result = Parser().parse_node(node)
         assert isinstance(result, Playlist)
+
+
+class TestProgrammes:
+    @pytest.mark.parametrize(
+        ("owner", "expected"),
+        [
+            # The brand is a podcast, though this episode went out on Radio 4
+            ("bbc_sounds_podcasts", PodcastEpisode),
+            ("bbc_radio_four", RadioShow),
+            # With no mark and no network on the brand, the episode's own is used
+            (None, RadioShow),
+        ],
+    )
+    def test_programme_episode_type_follows_owner(self, owner, expected):
+        """Unmarked by OwnerService, so this is the fallback to the fixed set."""
+        with open("tests/fixtures/api/PROGRAMME_FROM_PID.json") as node_file:
+            json_data = json.loads(node_file.read())
+        original_object = json_data["data"][0]
+        if owner:
+            original_object["ancestors"][0]["network"] = {"id": owner}
+        new_type, new_object = ModelFactory()._programme_episode(json_data)
+        assert new_type is expected
+        assert original_object == new_object

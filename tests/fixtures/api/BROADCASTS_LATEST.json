@@ -1,0 +1,2198 @@
+{
+  "$schema": "https://rms.api.bbc.co.uk/docs/swagger.json#/definitions/BroadcastsResponse",
+  "total": 145,
+  "limit": 30,
+  "offset": 0,
+  "data": [
+    {
+      "type": "broadcast",
+      "pid": "p0p7k2w4",
+      "start": "2026-09-18T04:30:00Z",
+      "end": "2026-09-18T17:58:00Z",
+      "service_id": "bbc_four",
+      "duration": 48480,
+      "progress": 38150,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "p03ydzjy",
+        "urn": "urn:bbc:radio:episode:p03ydzjy",
+        "network": {
+          "id": "bbc_four",
+          "key": "bbcfour",
+          "short_title": "Four",
+          "long_title": "BBC Four",
+          "group": "",
+          "active": true
+        },
+        "media_type": null,
+        "release_date": null,
+        "siblings_count": 0,
+        "position": null,
+        "titles": {
+          "primary": "",
+          "secondary": null,
+          "tertiary": null,
+          "entity_title": null,
+          "display_title": null,
+          "primary_title": null,
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "",
+          "medium": "",
+          "long": ""
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p04drxhs",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p04drxhs.jpg"
+          }
+        ],
+        "categories": [],
+        "ancestors": [],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p7k337",
+      "start": "2026-09-18T04:30:00Z",
+      "end": "2026-09-18T17:58:00Z",
+      "service_id": "bbc_four_hd",
+      "duration": 48480,
+      "progress": 38150,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "p03ydzjy",
+        "urn": "urn:bbc:radio:episode:p03ydzjy",
+        "network": {
+          "id": "bbc_four",
+          "key": "bbcfour",
+          "short_title": "Four",
+          "long_title": "BBC Four",
+          "group": "",
+          "active": true
+        },
+        "media_type": null,
+        "release_date": null,
+        "siblings_count": 0,
+        "position": null,
+        "titles": {
+          "primary": "",
+          "secondary": null,
+          "tertiary": null,
+          "entity_title": null,
+          "display_title": null,
+          "primary_title": null,
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "",
+          "medium": "",
+          "long": ""
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p04drxhs",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p04drxhs.jpg"
+          }
+        ],
+        "categories": [],
+        "ancestors": [],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p7k57y",
+      "start": "2026-09-18T04:30:00Z",
+      "end": "2026-09-18T17:58:00Z",
+      "service_id": "bbc_three_hd",
+      "duration": 48480,
+      "progress": 38150,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "p03ydzjy",
+        "urn": "urn:bbc:radio:episode:p03ydzjy",
+        "network": {
+          "id": "bbc_three",
+          "key": "bbcthree",
+          "short_title": "Three",
+          "long_title": "BBC Three",
+          "group": "",
+          "active": true
+        },
+        "media_type": null,
+        "release_date": null,
+        "siblings_count": 0,
+        "position": null,
+        "titles": {
+          "primary": "",
+          "secondary": null,
+          "tertiary": null,
+          "entity_title": null,
+          "display_title": null,
+          "primary_title": null,
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "",
+          "medium": "",
+          "long": ""
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p04drxhs",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p04drxhs.jpg"
+          }
+        ],
+        "categories": [],
+        "ancestors": [],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p7k5c5",
+      "start": "2026-09-18T04:30:00Z",
+      "end": "2026-09-18T17:58:00Z",
+      "service_id": "bbc_three",
+      "duration": 48480,
+      "progress": 38150,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "p03ydzjy",
+        "urn": "urn:bbc:radio:episode:p03ydzjy",
+        "network": {
+          "id": "bbc_three",
+          "key": "bbcthree",
+          "short_title": "Three",
+          "long_title": "BBC Three",
+          "group": "",
+          "active": true
+        },
+        "media_type": null,
+        "release_date": null,
+        "siblings_count": 0,
+        "position": null,
+        "titles": {
+          "primary": "",
+          "secondary": null,
+          "tertiary": null,
+          "entity_title": null,
+          "display_title": null,
+          "primary_title": null,
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "",
+          "medium": "",
+          "long": ""
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p04drxhs",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p04drxhs.jpg"
+          }
+        ],
+        "categories": [],
+        "ancestors": [],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p7k8bf",
+      "start": "2026-09-18T05:00:00Z",
+      "end": "2026-09-18T16:00:00Z",
+      "service_id": "bbc_alba_hd",
+      "duration": 39600,
+      "progress": 36350,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "p03ydzjy",
+        "urn": "urn:bbc:radio:episode:p03ydzjy",
+        "network": {
+          "id": "bbc_alba",
+          "key": "bbcalba",
+          "short_title": "ALBA",
+          "long_title": "BBC ALBA",
+          "group": "",
+          "active": true
+        },
+        "media_type": null,
+        "release_date": null,
+        "siblings_count": 0,
+        "position": null,
+        "titles": {
+          "primary": "",
+          "secondary": null,
+          "tertiary": null,
+          "entity_title": null,
+          "display_title": null,
+          "primary_title": null,
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "",
+          "medium": "",
+          "long": ""
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p04drxhs",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p04drxhs.jpg"
+          }
+        ],
+        "categories": [],
+        "ancestors": [],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p7k8t0",
+      "start": "2026-09-18T05:00:00Z",
+      "end": "2026-09-18T16:00:00Z",
+      "service_id": "bbc_alba",
+      "duration": 39600,
+      "progress": 36350,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "p03ydzjy",
+        "urn": "urn:bbc:radio:episode:p03ydzjy",
+        "network": {
+          "id": "bbc_alba",
+          "key": "bbcalba",
+          "short_title": "ALBA",
+          "long_title": "BBC ALBA",
+          "group": "",
+          "active": true
+        },
+        "media_type": null,
+        "release_date": null,
+        "siblings_count": 0,
+        "position": null,
+        "titles": {
+          "primary": "",
+          "secondary": null,
+          "tertiary": null,
+          "entity_title": null,
+          "display_title": null,
+          "primary_title": null,
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "",
+          "medium": "",
+          "long": ""
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p04drxhs",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p04drxhs.jpg"
+          }
+        ],
+        "categories": [],
+        "ancestors": [],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p7ktrk",
+      "start": "2026-09-18T09:25:00Z",
+      "end": "2026-09-18T17:30:00Z",
+      "service_id": "bbc_radio_five_sports_extra_3",
+      "duration": 29100,
+      "progress": 20450,
+      "live": true,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "m0031nq5",
+        "urn": "urn:bbc:radio:episode:m0031nq5",
+        "network": {
+          "id": "bbc_radio_five_sports_extra_3",
+          "key": "radio5sportsextra3",
+          "short_title": "Radio 5 Sports Extra 3",
+          "long_title": "BBC Radio 5 Sports Extra 3",
+          "group": "",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-09-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "County Championship Cricket",
+          "secondary": "2026",
+          "tertiary": "18/09/2026",
+          "entity_title": "18/09/2026",
+          "display_title": "County Championship Cricket - 2026 - 18/09/2026",
+          "primary_title": "2026",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Live ball-by-ball cricket commentary from the County Championship.",
+          "medium": "Live ball-by-ball cricket commentary from the County Championship.",
+          "long": null
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0n7l3j0",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0n7l3j0.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "sport",
+            "key": "sport",
+            "title": "Sport"
+          },
+          {
+            "type": "genre",
+            "id": "sport-cricket",
+            "key": "cricket",
+            "title": "Cricket"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "m002tgfw",
+            "title": "County Championship Cricket",
+            "synopses": {
+              "short": "Kevin Howells presents live ball-by-ball cricket commentary from the County Championship.",
+              "medium": "Kevin Howells presents live ball-by-ball cricket commentary from the County Championship.",
+              "long": null
+            }
+          },
+          {
+            "type": "series",
+            "id": "m002tgfv",
+            "title": "2026",
+            "synopses": {
+              "short": "Kevin Howells presents live ball-by-ball cricket commentary from the County Championship.",
+              "medium": "Kevin Howells presents live ball-by-ball cricket commentary from the County Championship.",
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p7lpgp",
+      "start": "2026-09-18T09:25:00Z",
+      "end": "2026-09-18T17:30:00Z",
+      "service_id": "bbc_radio_five_sports_extra_2",
+      "duration": 29100,
+      "progress": 20450,
+      "live": true,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "m0031nzk",
+        "urn": "urn:bbc:radio:episode:m0031nzk",
+        "network": {
+          "id": "bbc_radio_five_sports_extra_2",
+          "key": "radio5sportsextra2",
+          "short_title": "Radio 5 Sports Extra 2",
+          "long_title": "BBC Radio 5 Sports Extra 2",
+          "group": "",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-09-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "County Championship Cricket",
+          "secondary": "2026",
+          "tertiary": "18/09/2026",
+          "entity_title": "18/09/2026",
+          "display_title": "County Championship Cricket - 2026 - 18/09/2026",
+          "primary_title": "2026",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Live ball-by-ball cricket commentary from the County Championship.",
+          "medium": "Live ball-by-ball cricket commentary from the County Championship.",
+          "long": null
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0n7l3j0",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0n7l3j0.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "sport",
+            "key": "sport",
+            "title": "Sport"
+          },
+          {
+            "type": "genre",
+            "id": "sport-cricket",
+            "key": "cricket",
+            "title": "Cricket"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "m002tgfw",
+            "title": "County Championship Cricket",
+            "synopses": {
+              "short": "Kevin Howells presents live ball-by-ball cricket commentary from the County Championship.",
+              "medium": "Kevin Howells presents live ball-by-ball cricket commentary from the County Championship.",
+              "long": null
+            }
+          },
+          {
+            "type": "series",
+            "id": "m002tgfv",
+            "title": "2026",
+            "synopses": {
+              "short": "Kevin Howells presents live ball-by-ball cricket commentary from the County Championship.",
+              "medium": "Kevin Howells presents live ball-by-ball cricket commentary from the County Championship.",
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p6ts2d",
+      "start": "2026-09-18T09:25:00Z",
+      "end": "2026-09-18T17:30:00Z",
+      "service_id": "bbc_radio_five_live_sports_extra",
+      "duration": 29100,
+      "progress": 20450,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "m0031lqp",
+        "urn": "urn:bbc:radio:episode:m0031lqp",
+        "network": {
+          "id": "bbc_radio_five_live_sports_extra",
+          "key": "5livesportsextra",
+          "short_title": "Radio 5 Sports Extra",
+          "long_title": "BBC Radio 5 Sports Extra",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-09-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "County Championship Cricket",
+          "secondary": "2026",
+          "tertiary": "18/09/2026",
+          "entity_title": "18/09/2026",
+          "display_title": "County Championship Cricket - 2026 - 18/09/2026",
+          "primary_title": "2026",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Kevin Howells presents live ball-by-ball cricket commentary from the County Championship.",
+          "medium": "Kevin Howells presents live ball-by-ball cricket commentary from the County Championship.",
+          "long": null
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0n7l3j0",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0n7l3j0.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "sport",
+            "key": "sport",
+            "title": "Sport"
+          },
+          {
+            "type": "genre",
+            "id": "sport-cricket",
+            "key": "cricket",
+            "title": "Cricket"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "m002tgfw",
+            "title": "County Championship Cricket",
+            "synopses": {
+              "short": "Kevin Howells presents live ball-by-ball cricket commentary from the County Championship.",
+              "medium": "Kevin Howells presents live ball-by-ball cricket commentary from the County Championship.",
+              "long": null
+            }
+          },
+          {
+            "type": "series",
+            "id": "m002tgfv",
+            "title": "2026",
+            "synopses": {
+              "short": "Kevin Howells presents live ball-by-ball cricket commentary from the County Championship.",
+              "medium": "Kevin Howells presents live ball-by-ball cricket commentary from the County Championship.",
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p7qfj9",
+      "start": "2026-09-18T11:00:00Z",
+      "end": "2026-09-18T17:00:00Z",
+      "service_id": "bbc_scotland_hd",
+      "duration": 21600,
+      "progress": 14750,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "p03ydzjy",
+        "urn": "urn:bbc:radio:episode:p03ydzjy",
+        "network": {
+          "id": "bbc_scotland",
+          "key": "bbcscotland",
+          "short_title": "Scotland",
+          "long_title": "BBC Scotland",
+          "group": "",
+          "active": true
+        },
+        "media_type": null,
+        "release_date": null,
+        "siblings_count": 0,
+        "position": null,
+        "titles": {
+          "primary": "",
+          "secondary": null,
+          "tertiary": null,
+          "entity_title": null,
+          "display_title": null,
+          "primary_title": null,
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "",
+          "medium": "",
+          "long": ""
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p04drxhs",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p04drxhs.jpg"
+          }
+        ],
+        "categories": [],
+        "ancestors": [],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p7qdgl",
+      "start": "2026-09-18T11:00:00Z",
+      "end": "2026-09-18T17:00:00Z",
+      "service_id": "bbc_scotland",
+      "duration": 21600,
+      "progress": 14750,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "p03ydzjy",
+        "urn": "urn:bbc:radio:episode:p03ydzjy",
+        "network": {
+          "id": "bbc_scotland",
+          "key": "bbcscotland",
+          "short_title": "Scotland",
+          "long_title": "BBC Scotland",
+          "group": "",
+          "active": true
+        },
+        "media_type": null,
+        "release_date": null,
+        "siblings_count": 0,
+        "position": null,
+        "titles": {
+          "primary": "",
+          "secondary": null,
+          "tertiary": null,
+          "entity_title": null,
+          "display_title": null,
+          "primary_title": null,
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "",
+          "medium": "",
+          "long": ""
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p04drxhs",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p04drxhs.jpg"
+          }
+        ],
+        "categories": [],
+        "ancestors": [],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p6kvw1",
+      "start": "2026-09-18T13:00:00Z",
+      "end": "2026-09-18T16:00:00Z",
+      "service_id": "bbc_radio_wales_am",
+      "duration": 10800,
+      "progress": 7550,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "m0031f2x",
+        "urn": "urn:bbc:radio:episode:m0031f2x",
+        "network": {
+          "id": "bbc_radio_wales",
+          "key": "radiowales",
+          "short_title": "Radio Wales",
+          "long_title": "BBC Radio Wales",
+          "group": "",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-09-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Eleri SiÃ´n",
+          "secondary": "Wilderness adventures with Simon Reeve, and Bad Apples with Gary Slaymaker in the film reviw",
+          "tertiary": null,
+          "entity_title": "Wilderness adventures with Simon Reeve, and Bad Apples with Gary Slaymaker in the film reviw",
+          "display_title": "Eleri SiÃ´n - Wilderness adventures with Simon Reeve, and Bad Apples with Gary Slaymaker in the film reviw",
+          "primary_title": "Eleri SiÃ´n",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Adventurer Simon Reeve on his latest BBC series, plus Bad Apples in the Film Review.",
+          "medium": "Simon Reeve chats about the places he has been, people he has met and scrapes he has gotten into on the latest series of Wilderness with Simon Reeve, and Gary Slaymaker reviews Bad Apples.",
+          "long": "Adventurer Simon Reeve shares stories about his expeditions into the wild for the latest series of Wilderness with Simon Reeve, and film guru Gary Slaymaker gives his review of Bad Apples and Resident Evil, plus asks for your 3 of the best or worst teachers in film. Call or Whatsapp 03700 100 110, text 8 10 12, email eleri@bbc.co.uk."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p091s9xy",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p091s9xy.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "entertainment",
+            "key": "entertainment",
+            "title": "Entertainment"
+          },
+          {
+            "type": "genre",
+            "id": "factual",
+            "key": "factual",
+            "title": "Factual"
+          },
+          {
+            "type": "genre",
+            "id": "factual-consumer",
+            "key": "consumer",
+            "title": "Consumer"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "b03d51wc",
+            "title": "Eleri SiÃ´n",
+            "synopses": {
+              "short": "Great music, chat and company every Monday to Thursday from 10pm and Fridays from 2pm.",
+              "medium": "Music, conversation and great company, brightening our nights from 10pm Monday to Thursday and kicking off the weekend on Fridays from 2pm.",
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p5hy42",
+      "start": "2026-09-18T13:00:00Z",
+      "end": "2026-09-18T17:00:00Z",
+      "service_id": "bbc_radio_surrey",
+      "duration": 14400,
+      "progress": 7550,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "m0031667",
+        "urn": "urn:bbc:radio:episode:m0031667",
+        "network": {
+          "id": "bbc_radio_surrey",
+          "key": "bbcsurrey",
+          "short_title": "Radio Surrey",
+          "long_title": "BBC Radio Surrey",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-09-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Adam Dowling on BBC Radio Surrey",
+          "secondary": "With presenter and explorer Simon Reeve",
+          "tertiary": null,
+          "entity_title": "With presenter and explorer Simon Reeve",
+          "display_title": "Adam Dowling on BBC Radio Surrey - With presenter and explorer Simon Reeve",
+          "primary_title": "Adam Dowling on BBC Radio Surrey",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Presenter Simon Reeve chats to Adam about the new series of Wilderness on BBC Two.",
+          "medium": null,
+          "long": "Presenter and explorer Simon Reeve chats to Adam about the new series of 'Wilderness' starting on BBC Two.\n\nAdam also chats to comedian Mark Thomas about his new stand-up show marking 40 years in the business.\n\nAnd our resident film critic Larushka Ivan-Zadeh talks us through this week's releases at the cinema and on streaming."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0glc9zs",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0glc9zs.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "entertainment",
+            "key": "entertainment",
+            "title": "Entertainment"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "p0glc9yw",
+            "title": "Adam Dowling on BBC Radio Surrey",
+            "synopses": {
+              "short": "Join Adam Dowling on BBC Radio Surrey.",
+              "medium": null,
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p5hy9f",
+      "start": "2026-09-18T13:00:00Z",
+      "end": "2026-09-18T17:00:00Z",
+      "service_id": "bbc_radio_kent",
+      "duration": 14400,
+      "progress": 7550,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "m003167s",
+        "urn": "urn:bbc:radio:episode:m003167s",
+        "network": {
+          "id": "bbc_radio_kent",
+          "key": "radiokent",
+          "short_title": "Radio Kent",
+          "long_title": "BBC Radio Kent",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-09-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Adam Dowling on BBC Radio Kent",
+          "secondary": "With presenter and explorer Simon Reeve",
+          "tertiary": null,
+          "entity_title": "With presenter and explorer Simon Reeve",
+          "display_title": "Adam Dowling on BBC Radio Kent - With presenter and explorer Simon Reeve",
+          "primary_title": "Adam Dowling on BBC Radio Kent",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Presenter and explorer Simon Reeve chats to Adam about the new series of Wilderness.",
+          "medium": null,
+          "long": "Presenter and explorer Simon Reeve chats to Adam about the new series of 'Wilderness' starting on BBC Two.\n\nAdam also chats to comedian Mark Thomas about his new stand-up show marking 40 years in the business.\n\nAnd our resident film critic Larushka Ivan-Zadeh talks us through this week's releases at the cinema and on streaming."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0f0kbqv",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0f0kbqv.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "entertainment",
+            "key": "entertainment",
+            "title": "Entertainment"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "p01671xv",
+            "title": "Adam Dowling on BBC Radio Kent",
+            "synopses": {
+              "short": "Join Adam Dowling on BBC Radio Kent.",
+              "medium": "Join Adam Dowling on BBC Radio Kent.",
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p5hyhm",
+      "start": "2026-09-18T13:00:00Z",
+      "end": "2026-09-18T17:00:00Z",
+      "service_id": "bbc_radio_sussex",
+      "duration": 14400,
+      "progress": 7550,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "m003167z",
+        "urn": "urn:bbc:radio:episode:m003167z",
+        "network": {
+          "id": "bbc_radio_sussex",
+          "key": "bbcsussex",
+          "short_title": "Radio Sussex",
+          "long_title": "BBC Radio Sussex",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-09-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Adam Dowling on BBC Radio Sussex",
+          "secondary": "With presenter and explorer Simon Reeve",
+          "tertiary": null,
+          "entity_title": "With presenter and explorer Simon Reeve",
+          "display_title": "Adam Dowling on BBC Radio Sussex - With presenter and explorer Simon Reeve",
+          "primary_title": "Adam Dowling on BBC Radio Sussex",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Presenter Simon Reeve chats to Adam about the new series of Wilderness on BBC Two.",
+          "medium": null,
+          "long": "Presenter and explorer Simon Reeve chats to Adam about the new series of 'Wilderness' starting on BBC Two.\n\nAdam also chats to comedian Mark Thomas about his new stand-up show marking 40 years in the business.\n\nAnd our resident film critic Larushka Ivan-Zadeh talks us through this week's releases at the cinema and on streaming."
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0glc9d4",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0glc9d4.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "entertainment",
+            "key": "entertainment",
+            "title": "Entertainment"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "p0glc95w",
+            "title": "Adam Dowling on BBC Radio Sussex",
+            "synopses": {
+              "short": "Join Adam Dowling on BBC Radio Sussex.",
+              "medium": null,
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p8dsfq",
+      "start": "2026-09-18T13:00:00Z",
+      "end": "2026-09-18T17:00:00Z",
+      "service_id": "bbc_radio_essex",
+      "duration": 14400,
+      "progress": 7550,
+      "live": true,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "m0031x9l",
+        "urn": "urn:bbc:radio:episode:m0031x9l",
+        "network": {
+          "id": "bbc_radio_essex",
+          "key": "bbcessex",
+          "short_title": "Essex",
+          "long_title": "BBC Essex",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-09-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Afternoons on BBC Essex",
+          "secondary": "With Emma Bullimore (18/09/2026)",
+          "tertiary": null,
+          "entity_title": "With Emma Bullimore (18/09/2026)",
+          "display_title": "Afternoons on BBC Essex - With Emma Bullimore (18/09/2026)",
+          "primary_title": "Afternoons on BBC Essex",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Fascinating guests, the news of the day and all the music you love.",
+          "medium": null,
+          "long": null
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0fjqxrz",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0fjqxrz.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "entertainment",
+            "key": "entertainment",
+            "title": "Entertainment"
+          },
+          {
+            "type": "genre",
+            "id": "factual",
+            "key": "factual",
+            "title": "Factual"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "p0g9d0vk",
+            "title": "Afternoons on BBC Essex",
+            "synopses": {
+              "short": "Fascinating afternoon guests, the news of the day and the music you love on BBC Essex.",
+              "medium": null,
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p5jxzg",
+      "start": "2026-09-18T13:00:00Z",
+      "end": "2026-09-18T17:00:00Z",
+      "service_id": "bbc_radio_solent",
+      "duration": 14400,
+      "progress": 7550,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "m00317y1",
+        "urn": "urn:bbc:radio:episode:m00317y1",
+        "network": {
+          "id": "bbc_radio_solent",
+          "key": "radiosolent",
+          "short_title": "Radio Solent",
+          "long_title": "BBC Radio Solent",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-09-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Alun Newman",
+          "secondary": "Iwan Thomas sits in (18/09/2026)",
+          "tertiary": null,
+          "entity_title": "Iwan Thomas sits in (18/09/2026)",
+          "display_title": "Alun Newman - Iwan Thomas sits in (18/09/2026)",
+          "primary_title": "Alun Newman",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "The day's local and national news, as well as big guests, great music and loads of fun.",
+          "medium": null,
+          "long": null
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0fdrpnt",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0fdrpnt.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "entertainment",
+            "key": "entertainment",
+            "title": "Entertainment"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "p01n3ch8",
+            "title": "Alun Newman",
+            "synopses": {
+              "short": "Join Alun Newman on BBC Radio Solent.",
+              "medium": "Join Alun Newman on BBC Radio Solent.",
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p5jy5v",
+      "start": "2026-09-18T13:00:00Z",
+      "end": "2026-09-18T17:00:00Z",
+      "service_id": "bbc_radio_solent_west_dorset",
+      "duration": 14400,
+      "progress": 7550,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "m00317y1",
+        "urn": "urn:bbc:radio:episode:m00317y1",
+        "network": {
+          "id": "bbc_radio_solent",
+          "key": "radiosolent",
+          "short_title": "Radio Solent",
+          "long_title": "BBC Radio Solent",
+          "group": "",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-09-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Alun Newman",
+          "secondary": "Iwan Thomas sits in (18/09/2026)",
+          "tertiary": null,
+          "entity_title": "Iwan Thomas sits in (18/09/2026)",
+          "display_title": "Alun Newman - Iwan Thomas sits in (18/09/2026)",
+          "primary_title": "Alun Newman",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "The day's local and national news, as well as big guests, great music and loads of fun.",
+          "medium": null,
+          "long": null
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0fdrpnt",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0fdrpnt.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "entertainment",
+            "key": "entertainment",
+            "title": "Entertainment"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "p01n3ch8",
+            "title": "Alun Newman",
+            "synopses": {
+              "short": "Join Alun Newman on BBC Radio Solent.",
+              "medium": "Join Alun Newman on BBC Radio Solent.",
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p5jyf2",
+      "start": "2026-09-18T13:00:00Z",
+      "end": "2026-09-18T17:00:00Z",
+      "service_id": "bbc_radio_oxford",
+      "duration": 14400,
+      "progress": 7550,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "m00317z5",
+        "urn": "urn:bbc:radio:episode:m00317z5",
+        "network": {
+          "id": "bbc_radio_oxford",
+          "key": "radiooxford",
+          "short_title": "Radio Oxford",
+          "long_title": "BBC Radio Oxford",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-09-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Bridgitte Tetteh on BBC Radio Oxford",
+          "secondary": "18/09/2026",
+          "tertiary": null,
+          "entity_title": "18/09/2026",
+          "display_title": "Bridgitte Tetteh on BBC Radio Oxford - 18/09/2026",
+          "primary_title": "Bridgitte Tetteh on BBC Radio Oxford",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "The very latest local news and stories with all the music you love with Bridgitte.",
+          "medium": null,
+          "long": null
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0gf87dn",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0gf87dn.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "entertainment",
+            "key": "entertainment",
+            "title": "Entertainment"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "p0gf87bs",
+            "title": "Bridgitte Tetteh on BBC Radio Oxford",
+            "synopses": {
+              "short": "Join Bridgitte Tetteh on BBC Radio Oxford.",
+              "medium": "Join Bridgitte Tetteh on BBC Radio Oxford.",
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p5jyd5",
+      "start": "2026-09-18T13:00:00Z",
+      "end": "2026-09-18T17:00:00Z",
+      "service_id": "bbc_radio_york",
+      "duration": 14400,
+      "progress": 7550,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "m00317yx",
+        "urn": "urn:bbc:radio:episode:m00317yx",
+        "network": {
+          "id": "bbc_radio_york",
+          "key": "radioyork",
+          "short_title": "Radio York",
+          "long_title": "BBC Radio York",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-09-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Toby Foster on BBC Radio York",
+          "secondary": "Sam Nixon sits in (18/09/2026)",
+          "tertiary": null,
+          "entity_title": "Sam Nixon sits in (18/09/2026)",
+          "display_title": "Toby Foster on BBC Radio York - Sam Nixon sits in (18/09/2026)",
+          "primary_title": "Toby Foster on BBC Radio York",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "The day's local and national news, as well as great music and quizzes with Sam.",
+          "medium": null,
+          "long": null
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0hgpvqz",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0hgpvqz.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "entertainment",
+            "key": "entertainment",
+            "title": "Entertainment"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "p0gm6fqg",
+            "title": "Toby Foster on BBC Radio York",
+            "synopses": {
+              "short": "Join Toby Foster on BBC Radio York.",
+              "medium": null,
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p5jypd",
+      "start": "2026-09-18T13:00:00Z",
+      "end": "2026-09-18T17:00:00Z",
+      "service_id": "bbc_radio_leeds",
+      "duration": 14400,
+      "progress": 7550,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "m003180z",
+        "urn": "urn:bbc:radio:episode:m003180z",
+        "network": {
+          "id": "bbc_radio_leeds",
+          "key": "radioleeds",
+          "short_title": "Radio Leeds",
+          "long_title": "BBC Radio Leeds",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-09-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Toby Foster on BBC Radio Leeds",
+          "secondary": "Sam Nixon sits in (18/09/2026)",
+          "tertiary": null,
+          "entity_title": "Sam Nixon sits in (18/09/2026)",
+          "display_title": "Toby Foster on BBC Radio Leeds - Sam Nixon sits in (18/09/2026)",
+          "primary_title": "Toby Foster on BBC Radio Leeds",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "The day's local and national news, as well as great music and quizzes with Sam.",
+          "medium": null,
+          "long": null
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0g0867w",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0g0867w.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "entertainment",
+            "key": "entertainment",
+            "title": "Entertainment"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "p0gm78p9",
+            "title": "Toby Foster on BBC Radio Leeds",
+            "synopses": {
+              "short": "Join Toby Foster on BBC Radio Leeds.",
+              "medium": null,
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p5kq7j",
+      "start": "2026-09-18T13:00:00Z",
+      "end": "2026-09-18T17:00:00Z",
+      "service_id": "bbc_radio_somerset_sound",
+      "duration": 14400,
+      "progress": 7550,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "m00318ld",
+        "urn": "urn:bbc:radio:episode:m00318ld",
+        "network": {
+          "id": "bbc_radio_somerset_sound",
+          "key": "bbcsomerset",
+          "short_title": "Radio Somerset",
+          "long_title": "BBC Radio Somerset",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-09-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Andy Bennett on BBC Radio Somerset",
+          "secondary": "18/09/2026",
+          "tertiary": null,
+          "entity_title": "18/09/2026",
+          "display_title": "Andy Bennett on BBC Radio Somerset - 18/09/2026",
+          "primary_title": "Andy Bennett on BBC Radio Somerset",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Andy brings you music, news, travel and sport for your weekday afternoon.",
+          "medium": null,
+          "long": null
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0gry42l",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0gry42l.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "entertainment",
+            "key": "entertainment",
+            "title": "Entertainment"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "p04jbykt",
+            "title": "Andy Bennett on BBC Radio Somerset",
+            "synopses": {
+              "short": "Join Andy Bennett on BBC Radio Somerset.",
+              "medium": null,
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p5kqbc",
+      "start": "2026-09-18T13:00:00Z",
+      "end": "2026-09-18T17:00:00Z",
+      "service_id": "bbc_radio_humberside",
+      "duration": 14400,
+      "progress": 7550,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "m00318lv",
+        "urn": "urn:bbc:radio:episode:m00318lv",
+        "network": {
+          "id": "bbc_radio_humberside",
+          "key": "radiohumberside",
+          "short_title": "Radio Humberside",
+          "long_title": "BBC Radio Humberside",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-09-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Richard Stead on BBC Radio Humberside",
+          "secondary": "18/09/2026",
+          "tertiary": null,
+          "entity_title": "18/09/2026",
+          "display_title": "Richard Stead on BBC Radio Humberside - 18/09/2026",
+          "primary_title": "Richard Stead on BBC Radio Humberside",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Entertainment through the afternoon and updates on the day's events with Richard.",
+          "medium": null,
+          "long": null
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0gmr3j9",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0gmr3j9.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "entertainment",
+            "key": "entertainment",
+            "title": "Entertainment"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "p0gj4wt2",
+            "title": "Richard Stead on BBC Radio Humberside",
+            "synopses": {
+              "short": "Join Richard Stead on BBC Radio Humberside.",
+              "medium": "Join Richard Stead on BBC Radio Humberside.",
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p5kqcj",
+      "start": "2026-09-18T13:00:00Z",
+      "end": "2026-09-18T17:00:00Z",
+      "service_id": "bbc_radio_gloucestershire",
+      "duration": 14400,
+      "progress": 7550,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "m00318m3",
+        "urn": "urn:bbc:radio:episode:m00318m3",
+        "network": {
+          "id": "bbc_radio_gloucestershire",
+          "key": "radiogloucestershire",
+          "short_title": "Radio Gloucestershire",
+          "long_title": "BBC Radio Gloucestershire",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-09-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Graham Rogers on BBC Radio Gloucestershire",
+          "secondary": "18/09/2026",
+          "tertiary": null,
+          "entity_title": "18/09/2026",
+          "display_title": "Graham Rogers on BBC Radio Gloucestershire - 18/09/2026",
+          "primary_title": "Graham Rogers on BBC Radio Gloucestershire",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Graham is here with conversation, updates and great music for your weekday afternoon.",
+          "medium": null,
+          "long": null
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0gfxsyj",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0gfxsyj.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "entertainment",
+            "key": "entertainment",
+            "title": "Entertainment"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "p0gfxsps",
+            "title": "Graham Rogers on BBC Radio Gloucestershire",
+            "synopses": {
+              "short": "Join Graham Rogers on BBC Radio Gloucestershire.",
+              "medium": null,
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p5kqkx",
+      "start": "2026-09-18T13:00:00Z",
+      "end": "2026-09-18T17:00:00Z",
+      "service_id": "bbc_radio_wiltshire",
+      "duration": 14400,
+      "progress": 7550,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "m00317wd",
+        "urn": "urn:bbc:radio:episode:m00317wd",
+        "network": {
+          "id": "bbc_radio_wiltshire",
+          "key": "bbcwiltshire",
+          "short_title": "Radio Wiltshire",
+          "long_title": "BBC Radio Wiltshire",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-09-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Graham Rogers on BBC Radio Wiltshire",
+          "secondary": "18/09/2026",
+          "tertiary": null,
+          "entity_title": "18/09/2026",
+          "display_title": "Graham Rogers on BBC Radio Wiltshire - 18/09/2026",
+          "primary_title": "Graham Rogers on BBC Radio Wiltshire",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Graham is here with conversation, updates and great music for your weekday afternoon.",
+          "medium": null,
+          "long": null
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0fy8g5w",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0fy8g5w.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "entertainment",
+            "key": "entertainment",
+            "title": "Entertainment"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "p003z7qk",
+            "title": "Graham Rogers on BBC Radio Wiltshire",
+            "synopses": {
+              "short": "Join Graham Rogers on BBC Radio Wiltshire.",
+              "medium": "Join Graham Rogers on BBC Radio Wiltshire.",
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p5h0kq",
+      "start": "2026-09-18T13:00:00Z",
+      "end": "2026-09-18T17:00:00Z",
+      "service_id": "bbc_radio_devon",
+      "duration": 14400,
+      "progress": 7550,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "m00315hm",
+        "urn": "urn:bbc:radio:episode:m00315hm",
+        "network": {
+          "id": "bbc_radio_devon",
+          "key": "radiodevon",
+          "short_title": "Radio Devon",
+          "long_title": "BBC Radio Devon",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-09-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "David White on BBC Radio Devon",
+          "secondary": "18/09/2026",
+          "tertiary": null,
+          "entity_title": "18/09/2026",
+          "display_title": "David White on BBC Radio Devon - 18/09/2026",
+          "primary_title": "David White on BBC Radio Devon",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Fun, games and great music for your weekday afternoon with David.",
+          "medium": null,
+          "long": null
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0gfgrv0",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0gfgrv0.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "entertainment",
+            "key": "entertainment",
+            "title": "Entertainment"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "p0gfgrpw",
+            "title": "David White on BBC Radio Devon",
+            "synopses": {
+              "short": "Join David White on BBC Radio Devon.",
+              "medium": "Join David White on BBC Radio Devon.",
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p5h0vw",
+      "start": "2026-09-18T13:00:00Z",
+      "end": "2026-09-18T17:00:00Z",
+      "service_id": "bbc_radio_merseyside",
+      "duration": 14400,
+      "progress": 7550,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "m00315j8",
+        "urn": "urn:bbc:radio:episode:m00315j8",
+        "network": {
+          "id": "bbc_radio_merseyside",
+          "key": "radiomerseyside",
+          "short_title": "Radio Merseyside",
+          "long_title": "BBC Radio Merseyside",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-09-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Helen Jones",
+          "secondary": "18/09/2026",
+          "tertiary": null,
+          "entity_title": "18/09/2026",
+          "display_title": "Helen Jones - 18/09/2026",
+          "primary_title": "Helen Jones",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "News, great music, fun and the local issues that matter to you.",
+          "medium": null,
+          "long": null
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0df0qq9",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0df0qq9.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "entertainment",
+            "key": "entertainment",
+            "title": "Entertainment"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "p001v984",
+            "title": "Helen Jones",
+            "synopses": {
+              "short": "Join Helen Jones on BBC Radio Merseyside.",
+              "medium": "Join Helen Jones on BBC Radio Merseyside.",
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p5l4vl",
+      "start": "2026-09-18T13:00:00Z",
+      "end": "2026-09-18T17:00:00Z",
+      "service_id": "bbc_radio_lincolnshire",
+      "duration": 14400,
+      "progress": 7550,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "m00318qb",
+        "urn": "urn:bbc:radio:episode:m00318qb",
+        "network": {
+          "id": "bbc_radio_lincolnshire",
+          "key": "radiolincolnshire",
+          "short_title": "Radio Lincolnshire",
+          "long_title": "BBC Radio Lincolnshire",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-09-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Richard Stead on BBC Radio Lincolnshire",
+          "secondary": "18/09/2026",
+          "tertiary": null,
+          "entity_title": "18/09/2026",
+          "display_title": "Richard Stead on BBC Radio Lincolnshire - 18/09/2026",
+          "primary_title": "Richard Stead on BBC Radio Lincolnshire",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "Entertainment through the afternoon and updates on the day's events with Richard.",
+          "medium": null,
+          "long": null
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0gp6jmx",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0gp6jmx.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "entertainment",
+            "key": "entertainment",
+            "title": "Entertainment"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "p0gjc8hl",
+            "title": "Richard Stead on BBC Radio Lincolnshire",
+            "synopses": {
+              "short": "Join Richard Stead on BBC Radio Lincolnshire.",
+              "medium": "Join Richard Stead on BBC Radio Lincolnshire.",
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p5l4w1",
+      "start": "2026-09-18T13:00:00Z",
+      "end": "2026-09-18T17:00:00Z",
+      "service_id": "bbc_radio_berkshire",
+      "duration": 14400,
+      "progress": 7550,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "m00318ql",
+        "urn": "urn:bbc:radio:episode:m00318ql",
+        "network": {
+          "id": "bbc_radio_berkshire",
+          "key": "radioberkshire",
+          "short_title": "Radio Berkshire",
+          "long_title": "BBC Radio Berkshire",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-09-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Bridgitte Tetteh on Radio Berkshire",
+          "secondary": "18/09/2026",
+          "tertiary": null,
+          "entity_title": "18/09/2026",
+          "display_title": "Bridgitte Tetteh on Radio Berkshire - 18/09/2026",
+          "primary_title": "Bridgitte Tetteh on Radio Berkshire",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "The very latest local news and stories with all the music you love with Bridgitte.",
+          "medium": null,
+          "long": null
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0dx582y",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0dx582y.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "entertainment",
+            "key": "entertainment",
+            "title": "Entertainment"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "p0gf8mg0",
+            "title": "Bridgitte Tetteh on Radio Berkshire",
+            "synopses": {
+              "short": "Join Bridgitte Tetteh on BBC Radio Berkshire.",
+              "medium": "Join Bridgitte Tetteh on BBC Radio Berkshire.",
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    },
+    {
+      "type": "broadcast",
+      "pid": "p0p5l5gh",
+      "start": "2026-09-18T13:00:00Z",
+      "end": "2026-09-18T17:00:00Z",
+      "service_id": "bbc_radio_sheffield",
+      "duration": 14400,
+      "progress": 7550,
+      "live": false,
+      "blanked": false,
+      "repeat": false,
+      "critical": false,
+      "on_air": true,
+      "programme": {
+        "type": "episode",
+        "id": "m00317wq",
+        "urn": "urn:bbc:radio:episode:m00317wq",
+        "network": {
+          "id": "bbc_radio_sheffield",
+          "key": "radiosheffield",
+          "short_title": "Radio Sheffield",
+          "long_title": "BBC Radio Sheffield",
+          "group": "radio",
+          "active": true
+        },
+        "media_type": "audio",
+        "release_date": "2026-09-18T00:00:00Z",
+        "siblings_count": 0,
+        "position": {
+          "position": null,
+          "total": null
+        },
+        "titles": {
+          "primary": "Toby Foster on BBC Radio Sheffield",
+          "secondary": "Sam Nixon sits in (18/09/2026)",
+          "tertiary": null,
+          "entity_title": "Sam Nixon sits in (18/09/2026)",
+          "display_title": "Toby Foster on BBC Radio Sheffield - Sam Nixon sits in (18/09/2026)",
+          "primary_title": "Toby Foster on BBC Radio Sheffield",
+          "secondary_title": null
+        },
+        "synopses": {
+          "short": "The day's local and national news, as well as great music and quizzes with Sam.",
+          "medium": null,
+          "long": null
+        },
+        "images": [
+          {
+            "type": "standard",
+            "id": "p0g0867w",
+            "url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0g0867w.jpg"
+          }
+        ],
+        "categories": [
+          {
+            "type": "genre",
+            "id": "entertainment",
+            "key": "entertainment",
+            "title": "Entertainment"
+          },
+          {
+            "type": "format",
+            "id": "magazinesandreviews",
+            "key": "magazinesandreviews",
+            "title": "Magazines & Reviews"
+          },
+          {
+            "type": "format",
+            "id": "phoneins",
+            "key": "phoneins",
+            "title": "Phone-ins"
+          }
+        ],
+        "ancestors": [
+          {
+            "type": "brand",
+            "id": "p001d7tv",
+            "title": "Toby Foster on BBC Radio Sheffield",
+            "synopses": {
+              "short": "Join Toby Foster on BBC Radio Sheffield.",
+              "medium": "Join Toby Foster on BBC Radio Sheffield.",
+              "long": null
+            }
+          }
+        ],
+        "availability": null
+      }
+    }
+  ]
+}

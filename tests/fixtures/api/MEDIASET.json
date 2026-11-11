@@ -1,0 +1,79 @@
+{
+  'disclaimer': "This code and data form part of the BBC iPlayer content protection system. Tampering with, removal of, misuse of, or unauthorised use of this code or data constitutes circumvention of the BBC's content protection measures and may result in legal action. BBC (C) 2026.",
+  'media': [
+    {
+      'bitrate': '320',
+      'service': '[deprecated]',
+      'connection': [
+        {
+          'priority': '10',
+          'dpw': '50',
+          'protocol': 'http',
+          'supplier': 'akamai_audio_live_uk',
+          'href': 'http://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/hls/uk/pc_hd_abr_v2/ak/bbc_6music.m3u8',
+          'transferFormat': 'hls'
+        },
+        {
+          'priority': '10',
+          'dpw': '50',
+          'protocol': 'https',
+          'supplier': 'akamai_audio_live_uk',
+          'href': 'https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/hls/uk/pc_hd_abr_v2/aks/bbc_6music.m3u8',
+          'transferFormat': 'hls'
+        },
+        {
+          'priority': '20',
+          'dpw': '50',
+          'protocol': 'http',
+          'supplier': 'cloudfront_audio_live_uk',
+          'href': 'http://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/hls/uk/pc_hd_abr_v2/cf/bbc_6music.m3u8',
+          'transferFormat': 'hls'
+        },
+        {
+          'priority': '20',
+          'dpw': '50',
+          'protocol': 'https',
+          'supplier': 'cloudfront_audio_live_uk',
+          'href': 'https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/hls/uk/pc_hd_abr_v2/cfs/bbc_6music.m3u8',
+          'transferFormat': 'hls'
+        },
+        {
+          'priority': '10',
+          'dpw': '50',
+          'protocol': 'http',
+          'supplier': 'akamai_audio_live_uk',
+          'href': 'http://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/uk/pc_hd_abr_v2/ak/bbc_6music.mpd',
+          'transferFormat': 'dash'
+        },
+        {
+          'priority': '10',
+          'dpw': '50',
+          'protocol': 'https',
+          'supplier': 'akamai_audio_live_uk',
+          'href': 'https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/uk/pc_hd_abr_v2/aks/bbc_6music.mpd',
+          'transferFormat': 'dash'
+        },
+        {
+          'priority': '20',
+          'dpw': '50',
+          'protocol': 'http',
+          'supplier': 'cloudfront_audio_live_uk',
+          'href': 'http://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/uk/pc_hd_abr_v2/cf/bbc_6music.mpd',
+          'transferFormat': 'dash'
+        },
+        {
+          'priority': '20',
+          'dpw': '50',
+          'protocol': 'https',
+          'supplier': 'cloudfront_audio_live_uk',
+          'href': 'https://a.files.bbci.co.uk/ms6/live/3441A116-B12E-4D2F-ACA8-C1984642FA4B/audio/simulcast/dash/uk/pc_hd_abr_v2/cfs/bbc_6music.mpd',
+          'transferFormat': 'dash'
+        }
+      ],
+      'kind': 'audio',
+      'type': 'audio/mp4',
+      'encoding': 'aac',
+      'expires': '2099-01-01T00:00:00Z'
+    }
+  ]
+}

@@ -7,7 +7,7 @@ github_account: kieranhogg
 github_repo_name: auntie-sounds
 keywords_describing_the_package: BBC Sounds streaming radio API
 license: Apache License 2.0
-package_module_name: sounds
+package_module_name: auntie_sounds
 package_name: auntie-sounds
 package_tagline: 'A module for interacting with BBC Radio stations and streams'
 package_title: auntie-sounds

@@ -1,0 +1,1241 @@
+{
+  "$schema": "https://rms.api.bbc.co.uk/docs/swagger.json#/definitions/ExperienceResponse",
+  "data": [
+    {
+      "type": "inline_display_module",
+      "id": "live_search",
+      "style": "live_playables_selector",
+      "title": "Listen Live",
+      "description": null,
+      "state": "ok",
+      "uris": null,
+      "controls": null,
+      "total": null,
+      "data": [
+        {
+          "type": "live_search_result_item",
+          "id": "search_result_bbc_radio_one",
+          "urn": "urn:bbc:radio:search_result:bbc_radio_one",
+          "now": {
+            "type": "broadcast_search_result",
+            "id": "broadcast_search_result_bbc_radio_one",
+            "urn": "urn:bbc:radio:network:bbc_radio_one",
+            "service_id": "bbc_radio_one",
+            "episode_image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p592r8.jpg",
+            "station_image_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_one/{type}_{size}.{format}",
+            "station_name": "Radio 1",
+            "title": "Radio 1's Future Pop with Mollie King",
+            "short_synopsis": "Jamie Miller and Asha Banks join Mollie King to talk all things pop!",
+            "progress": {
+              "value": 715,
+              "label": "108 mins left"
+            },
+            "duration": {
+              "value": 7200,
+              "label": "120 mins"
+            }
+          }
+        },
+        {
+          "type": "live_search_result_item",
+          "id": "search_result_bbc_radio_two",
+          "urn": "urn:bbc:radio:search_result:bbc_radio_two",
+          "now": {
+            "type": "broadcast_search_result",
+            "id": "broadcast_search_result_bbc_radio_two",
+            "urn": "urn:bbc:radio:network:bbc_radio_two",
+            "service_id": "bbc_radio_two",
+            "episode_image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0ly6ys2.jpg",
+            "station_image_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_two/{type}_{size}.{format}",
+            "station_name": "Radio 2",
+            "title": "Jo Whiley",
+            "short_synopsis": "Jo hand-picks her favourite new music from all genres of the musical spectrum.",
+            "progress": {
+              "value": 2515,
+              "label": "48 mins left"
+            },
+            "duration": {
+              "value": 5400,
+              "label": "90 mins"
+            }
+          }
+        },
+        {
+          "type": "live_search_result_item",
+          "id": "search_result_bbc_radio_three",
+          "urn": "urn:bbc:radio:search_result:bbc_radio_three",
+          "now": {
+            "type": "broadcast_search_result",
+            "id": "broadcast_search_result_bbc_radio_three",
+            "urn": "urn:bbc:radio:network:bbc_radio_three",
+            "service_id": "bbc_radio_three",
+            "episode_image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0m2fpg5.jpg",
+            "station_image_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_three/{type}_{size}.{format}",
+            "station_name": "Radio 3",
+            "title": "Radio 3 in Concert",
+            "short_synopsis": "The BBC Philharmonic Orchestra from the Bridgewater Hall.",
+            "progress": {
+              "value": 2515,
+              "label": "93 mins left"
+            },
+            "duration": {
+              "value": 8100,
+              "label": "135 mins"
+            }
+          }
+        },
+        {
+          "type": "live_search_result_item",
+          "id": "search_result_bbc_radio_fourfm",
+          "urn": "urn:bbc:radio:search_result:bbc_radio_fourfm",
+          "now": {
+            "type": "broadcast_search_result",
+            "id": "broadcast_search_result_bbc_radio_fourfm",
+            "urn": "urn:bbc:radio:network:bbc_radio_four",
+            "service_id": "bbc_radio_fourfm",
+            "episode_image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0nmg67x.jpg",
+            "station_image_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+            "station_name": "Radio 4",
+            "title": "Moral Maze",
+            "short_synopsis": "Live debate examining the moral issues behind one of the week's news stories. #moralmaze",
+            "progress": {
+              "value": 715,
+              "label": "48 mins left"
+            },
+            "duration": {
+              "value": 3600,
+              "label": "60 mins"
+            }
+          }
+        }
+      ],
+      "image_url": null
+    },
+    {
+      "type": "inline_display_module",
+      "id": "container_search",
+      "style": "impact_large",
+      "title": "Shows",
+      "description": null,
+      "state": "ok",
+      "uris": null,
+      "controls": null,
+      "total": null,
+      "data": [
+        {
+          "type": "container_item",
+          "id": "b007v097",
+          "urn": "urn:bbc:radio:brand:b007v097",
+          "tlec_urn": "urn:bbc:radio:brand:b007v097",
+          "network": {
+            "id": "bbc_radio_three",
+            "key": "radio3",
+            "short_title": "Radio 3",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_three/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "BBC Proms",
+            "secondary": null,
+            "tertiary": null
+          },
+          "synopses": {
+            "short": "The world's greatest classical music festival - stunning concerts and collaborations.",
+            "medium": "The world's greatest classical music festival - live from the Royal Albert Hall. Stunning concerts, unique collaborations and the sheer joy of music bringing people together.",
+            "long": null
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0nzdfqm.jpg",
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=b007v097&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "playable_count": null,
+          "recommendation": null
+        },
+        {
+          "type": "container_item",
+          "id": "p05hh4qy",
+          "urn": "urn:bbc:radio:brand:p05hh4qy",
+          "tlec_urn": "urn:bbc:radio:brand:p05hh4qy",
+          "network": {
+            "id": "bbc_news",
+            "key": "news",
+            "short_title": "News",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_news/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "BBC News",
+            "secondary": null,
+            "tertiary": null
+          },
+          "synopses": {
+            "short": "The latest news from the BBC.",
+            "medium": "The latest news from the BBC.",
+            "long": "The latest news from the BBC."
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0d7t9pz.jpg",
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p05hh4qy&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "playable_count": null,
+          "recommendation": null
+        },
+        {
+          "type": "container_item",
+          "id": "p02pc9pj",
+          "urn": "urn:bbc:radio:series:p02pc9pj",
+          "tlec_urn": "urn:bbc:radio:series:p02pc9pj",
+          "network": {
+            "id": "bbc_radio_four",
+            "key": "radio4",
+            "short_title": "Radio 4",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Friday Night Comedy from BBC Radio 4",
+            "secondary": null,
+            "tertiary": null
+          },
+          "synopses": {
+            "short": "The best topical comedy from BBC Radio 4, every Friday. Listen first on BBC Sounds.",
+            "medium": "The best topical comedy from BBC Radio 4, every Friday. Features The News Quiz, Dead Ringers, The Naked Week and Too Long; Didnâ€™t Read. Listen first on BBC Sounds.",
+            "long": "Topical comedy from the sharpest satirical minds in the business. Listen first on BBC Sounds, every Friday.\n\nIs the news driving you up the wall? Youâ€™re not alone. Let the comedians take the strain and work out whatâ€™s been funny this week. Features BBC Radio 4â€™s The News Quiz, Dead Ringers, The Naked Week and Too Long; Didnâ€™t Read. \n\nListen on BBC Sounds, seven days earlier than anywhere else, and subscribe to make sure that you donâ€™t miss an episode."
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lbr4j3.jpg",
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p02pc9pj&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "playable_count": null,
+          "recommendation": null
+        },
+        {
+          "type": "container_item",
+          "id": "p07nvrfp",
+          "urn": "urn:bbc:radio:brand:p07nvrfp",
+          "tlec_urn": "urn:bbc:radio:brand:p07nvrfp",
+          "network": {
+            "id": "bbc_radio_scotland",
+            "key": "radioscotland",
+            "short_title": "Radio Scotland",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_scotland/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "BBC Radio Scotland Rugby Podcast",
+            "secondary": null,
+            "tertiary": null
+          },
+          "synopses": {
+            "short": "Tom and Andy with all the news, analysis and interviews in the World of Scottish rugby",
+            "medium": "Tom English and Andy Burke with all the news, analysis and interviews on what's happening in the World of Scottish rugby",
+            "long": null
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0jqv857.jpg",
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p07nvrfp&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "playable_count": null,
+          "recommendation": null
+        },
+        {
+          "type": "container_item",
+          "id": "p0bzmv49",
+          "urn": "urn:bbc:radio:brand:p0bzmv49",
+          "tlec_urn": "urn:bbc:radio:brand:p0bzmv49",
+          "network": {
+            "id": "bbc_radio_five_live",
+            "key": "5live",
+            "short_title": "Radio 5 Live",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_five_live/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "BBC Women's Football Weekly",
+            "secondary": null,
+            "tertiary": null
+          },
+          "synopses": {
+            "short": "Weekly WSL talk and exclusive extras. Subscribe for your women's football fix.",
+            "medium": "Your go-to for women's football. Weekly WSL chat with Ben Haines and Ellen White, plus exclusives with the biggest stars. Subscribe for weekly episodes.",
+            "long": "Whether you're a lifelong Lionesses fan or just getting into the women's game, BBC Women's Football Weekly brings you closer to the action with new episodes every week.\n\nBen Haines teams up with England's record goalscorer Ellen White to unpack the biggest talking points from the Women's Super League and beyond - covering match previews, standout performances, and all the drama on and off the pitch. BBC Women's Football Weekly also features exclusive interviews with the biggest stars in the Women's Super League and national teams.\n\nSubscribe now to get every episode as soon as it drops and stay in the know with the latest from the world of women's football.\nPlus, listen to classic episodes of Jill Scott's Coffee Club, where Jill sits down with players for honest, off-the-pitch conversations over a coffee."
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0lz125l.jpg",
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0bzmv49&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "playable_count": null,
+          "recommendation": null
+        },
+        {
+          "type": "container_item",
+          "id": "p008rdym",
+          "urn": "urn:bbc:radio:brand:p008rdym",
+          "tlec_urn": "urn:bbc:radio:brand:p008rdym",
+          "network": {
+            "id": "bbc_radio_webonly",
+            "key": null,
+            "short_title": "Radio",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_webonly/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "BBC Writers",
+            "secondary": null,
+            "tertiary": null
+          },
+          "synopses": {
+            "short": "BBC Writers seeks out fresh voices, championing writer talent from across the UK and ROI.",
+            "medium": "BBC Writers seeks out fresh voices, championing writer talent from across the UK and ROI. We support, develop and challenge writers throughout their careers, across the BBC.",
+            "long": "BBC Writers seeks out fresh voices, championing writer talent from across the UK and Republic of Ireland. We support, develop and challenge writers throughout their careers, across the BBC."
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0gqc20w.jpg",
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p008rdym&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "playable_count": null,
+          "recommendation": null
+        },
+        {
+          "type": "container_item",
+          "id": "p052dfny",
+          "urn": "urn:bbc:radio:brand:p052dfny",
+          "tlec_urn": "urn:bbc:radio:brand:p052dfny",
+          "network": {
+            "id": "bbc_radio_coventry_warwickshire",
+            "key": "bbccoventryandwarwickshire",
+            "short_title": "CWR",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_coventry_warwickshire/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "BBC CWR Sport",
+            "secondary": null,
+            "tertiary": null
+          },
+          "synopses": {
+            "short": "The latest sport updates from across Coventry and Warwickshire.",
+            "medium": "The latest sport updates from across Coventry and Warwickshire.",
+            "long": null
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0cjdmlb.jpg",
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p052dfny&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "playable_count": null,
+          "recommendation": null
+        },
+        {
+          "type": "container_item",
+          "id": "p0n2x68x",
+          "urn": "urn:bbc:radio:brand:p0n2x68x",
+          "tlec_urn": "urn:bbc:radio:brand:p0n2x68x",
+          "network": {
+            "id": "bbc_radio_coventry_warwickshire",
+            "key": "bbccoventryandwarwickshire",
+            "short_title": "CWR",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_coventry_warwickshire/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "JD on BBC CWR",
+            "secondary": null,
+            "tertiary": null
+          },
+          "synopses": {
+            "short": "Join JD on BBC CWR.",
+            "medium": "Join JD on BBC CWR.",
+            "long": null
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0ln4561.jpg",
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0n2x68x&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "playable_count": null,
+          "recommendation": null
+        },
+        {
+          "type": "container_item",
+          "id": "w0000cj7",
+          "urn": "urn:bbc:radio:brand:w0000cj7",
+          "tlec_urn": "urn:bbc:radio:brand:w0000cj7",
+          "network": {
+            "id": "bbc_world_service",
+            "key": "worldserviceradio",
+            "short_title": "World Service",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_world_service/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "The BBC Debate",
+            "secondary": null,
+            "tertiary": null
+          },
+          "synopses": {
+            "short": "The programme that puts the important questions to those in the spotlight.",
+            "medium": "The programme that puts the important questions to those in the spotlight - representatives from global politics, finance, business, the arts and media.",
+            "long": "*** This programme is no longer on-air ***\n\nThe programme that puts the important questions to those in the spotlight - representatives from global politics, finance, business, the arts and media."
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p01m5v3v.jpg",
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=w0000cj7&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "playable_count": null,
+          "recommendation": null
+        },
+        {
+          "type": "container_item",
+          "id": "p001tbd5",
+          "urn": "urn:bbc:radio:brand:p001tbd5",
+          "tlec_urn": "urn:bbc:radio:brand:p001tbd5",
+          "network": {
+            "id": "bbc_radio_essex",
+            "key": "bbcessex",
+            "short_title": "Essex",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_essex/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "BBC Essex Sport",
+            "secondary": null,
+            "tertiary": null
+          },
+          "synopses": {
+            "short": "BBC Essex Sport with exclusive commentary of every Colchester and Southend United game.",
+            "medium": "BBC Essex Sport with exclusive commentary of every Colchester United, Southend United and Braintree Town game.",
+            "long": "Join BBC Essex Sport every Saturday afternoon from 2pm for exclusive live commentary of every Southend and Colchester United game. Plus updates from other sporting fixtures around Essex. \n\nBetween April and September we'll also have exclusive cricket commentary of every ball, run and wicket of Essex County Cricket Club in the county championship, Twenty 20 and 50-over competitions.\n\nYou can listen to each game through our website - www.bbc.co.uk/essex - along with a few which you'll be able to hear on the radio itself."
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0cjdqpx.jpg",
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p001tbd5&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "playable_count": null,
+          "recommendation": null
+        }
+      ],
+      "image_url": null
+    },
+    {
+      "type": "inline_display_module",
+      "id": "playable_search",
+      "style": "basic",
+      "title": "Episodes",
+      "description": null,
+      "state": "ok",
+      "uris": null,
+      "controls": null,
+      "total": null,
+      "data": [
+        {
+          "type": "playable_item",
+          "id": "p0p688fs",
+          "urn": "urn:bbc:radio:episode:m002l5c1",
+          "network": {
+            "id": "bbc_radio_two",
+            "key": "radio2",
+            "short_title": "Radio 2",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_two/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "The Country Show",
+            "secondary": "Dolly Parton at the BBC",
+            "tertiary": null,
+            "entity_title": "Dolly Parton at the BBC"
+          },
+          "synopses": {
+            "short": "Darius celebrates the Queen of Country, the one and only Dolly Parton.",
+            "medium": "Following her recent death, Darius Rucker introduces a celebration of the Queen of Country: singer, songwriter, philanthropist, businesswoman and actress, Dolly Parton.",
+            "long": "Following her recent death, Darius Rucker introduces a celebration of the Queen of Country: singer, songwriter, philanthropist, businesswoman and actress, Dolly Parton.\n\nFeaturing Dolly's BBC interviews and performances from the past 50 years. These include her first UK performance at the Empire Pool, Wembley, in 1976.  Plus, conversations with David Allan on Radio 2's Country Club, Michael Parkinson, Ross Kelly for The Heaven and Earth Show, and of course her triumphant Glastonbury Pyramid Stage appearance from 2014."
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0mbp64l.jpg",
+          "duration": {
+            "value": 3409,
+            "label": "56 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "m002y3ch",
+            "urn": "urn:bbc:radio:brand:m002y3ch",
+            "title": "The Country Show",
+            "synopses": {
+              "short": "All the country you need, plus special tributes to Dolly Parton",
+              "medium": "All the country you need to know, right here right now!",
+              "long": "All the country you need to know, right here right now!"
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 47000000,
+                "label": "47 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 62000000,
+                "label": "62 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 152000000,
+                "label": "152 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-08-25T20:09:00Z",
+            "to": "2026-09-24T20:09:00Z",
+            "label": "Expires on Thursday 9:09pm"
+          },
+          "release": {
+            "date": "2025-11-01T00:00:00Z",
+            "label": "01 Nov 2025"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=m002y3ch&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p03hxx8f",
+          "urn": "urn:bbc:radio:episode:b06p4jvq",
+          "network": {
+            "id": "bbc_radio_three",
+            "key": "radio3",
+            "short_title": "Radio 3",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_three/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sound of Cinema",
+            "secondary": "BBC Films",
+            "tertiary": null,
+            "entity_title": "BBC Films"
+          },
+          "synopses": {
+            "short": "Matthew Sweet celebrate 25 years of BBC Films.",
+            "medium": "Matthew Sweet is joined by producer Christine Langan and composer George Fenton to celebrate 25 years of BBC Films as the The Lady in the Van is released.",
+            "long": "Matthew Sweet is joined by producer Christine Langan and composer George Fenton to celebrate 25 years of BBC Films in the week that has seen the launch of The Lady In The Van \n\nThe programme also features music from \"Iris\", \"Billy Elliot\", \"Mrs Brown\", \"Becoming Jane\", \"Miss Potter\", \"The Duchess\", \"Notes On A Scandal\", \"Jane Eyre\", \"Philomena\", \"A Cock and Bull Story\", \"Mrs Henderson Presents\" and \"Brooklyn\"."
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0mcyjlc.jpg",
+          "duration": {
+            "value": 2298,
+            "label": "38 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "series",
+            "id": "b03bzf92",
+            "urn": "urn:bbc:radio:series:b03bzf92",
+            "title": "Sound of Cinema",
+            "synopses": {
+              "short": "Your weekly roundup of the finest film scores and movie music with Edith Bowman.",
+              "medium": null,
+              "long": null
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "non_drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 128,
+                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p03hxx8f.mp3",
+                "file_size": 37000000,
+                "label": "37 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p03hxx8f.mp3",
+                "file_size": 37000000,
+                "label": "37 MB"
+              },
+              "high": {
+                "bitrate": 128,
+                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p03hxx8f.mp3",
+                "file_size": 37000000,
+                "label": "37 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2016-02-08T14:56:20Z",
+            "to": null,
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2015-11-14T00:00:00Z",
+            "label": "14 Nov 2015"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=b03bzf92&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0pc4jf5",
+          "urn": "urn:bbc:radio:episode:p0pc4jff",
+          "network": {
+            "id": "bbc_news",
+            "key": "news",
+            "short_title": "News",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_news/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "BBC News",
+            "secondary": "BBC News 20:00",
+            "tertiary": null,
+            "entity_title": "BBC News 20:00"
+          },
+          "synopses": {
+            "short": "The latest news from the BBC.",
+            "medium": "The latest news from the BBC.",
+            "long": null
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0d7t9pz.jpg",
+          "duration": {
+            "value": 184,
+            "label": "3 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p05hh4qy",
+            "urn": "urn:bbc:radio:brand:p05hh4qy",
+            "title": "BBC News",
+            "synopses": {
+              "short": "The latest news from the BBC.",
+              "medium": "The latest news from the BBC.",
+              "long": null
+            },
+            "activities": []
+          },
+          "download": null,
+          "availability": {
+            "from": "2026-09-23T19:07:00Z",
+            "to": "2026-09-23T23:07:00Z",
+            "label": "Expires on Thursday 12:07am"
+          },
+          "release": {
+            "date": "2026-09-23T00:00:00Z",
+            "label": "23 Sep 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p05hh4qy&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0pc4jc3",
+          "urn": "urn:bbc:radio:episode:p0pc4jd0",
+          "network": {
+            "id": "bbc_news",
+            "key": "news",
+            "short_title": "News",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_news/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "BBC News",
+            "secondary": "BBC News 20:00",
+            "tertiary": null,
+            "entity_title": "BBC News 20:00"
+          },
+          "synopses": {
+            "short": "The latest news from the BBC.",
+            "medium": "The latest news from the BBC.",
+            "long": null
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0d7t9pz.jpg",
+          "duration": {
+            "value": 189,
+            "label": "3 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p05hh4qy",
+            "urn": "urn:bbc:radio:brand:p05hh4qy",
+            "title": "BBC News",
+            "synopses": {
+              "short": "The latest news from the BBC.",
+              "medium": "The latest news from the BBC.",
+              "long": null
+            },
+            "activities": []
+          },
+          "download": null,
+          "availability": {
+            "from": "2026-09-23T19:06:00Z",
+            "to": "2026-09-23T23:06:00Z",
+            "label": "Expires on Thursday 12:06am"
+          },
+          "release": {
+            "date": "2026-09-23T00:00:00Z",
+            "label": "23 Sep 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p05hh4qy&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0pc04pt",
+          "urn": "urn:bbc:radio:episode:p0pc04qv",
+          "network": {
+            "id": "bbc_radio_five_live",
+            "key": "5live",
+            "short_title": "Radio 5 Live",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_five_live/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "BBC Sports News",
+            "secondary": "BBC Sport News Wednesday, 8 AM",
+            "tertiary": null,
+            "entity_title": "BBC Sport News Wednesday, 8 AM"
+          },
+          "synopses": {
+            "short": "The latest sports news from the BBC",
+            "medium": "The latest sports news from the BBC",
+            "long": null
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p05jkx5w.jpg",
+          "duration": {
+            "value": 253,
+            "label": "4 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p05hh4xd",
+            "urn": "urn:bbc:radio:brand:p05hh4xd",
+            "title": "BBC Sports News",
+            "synopses": {
+              "short": "The latest sports news from the BBC",
+              "medium": "The latest sports news from the BBC",
+              "long": null
+            },
+            "activities": []
+          },
+          "download": null,
+          "availability": {
+            "from": "2026-09-23T07:50:34Z",
+            "to": "2026-09-30T07:42:48Z",
+            "label": "Available for 6 days"
+          },
+          "release": {
+            "date": "2026-09-23T00:00:00Z",
+            "label": "23 Sep 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p05hh4xd&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0pc0zfk",
+          "urn": "urn:bbc:radio:episode:p0pc0zhm",
+          "network": {
+            "id": "bbc_radio_five_live",
+            "key": "5live",
+            "short_title": "Radio 5 Live",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_five_live/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "BBC Sports News",
+            "secondary": "BBC Sport News Wednesday, 11 AM",
+            "tertiary": null,
+            "entity_title": "BBC Sport News Wednesday, 11 AM"
+          },
+          "synopses": {
+            "short": "The latest sports news from the BBC",
+            "medium": "The latest sports news from the BBC",
+            "long": null
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p05jkx5w.jpg",
+          "duration": {
+            "value": 203,
+            "label": "3 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p05hh4xd",
+            "urn": "urn:bbc:radio:brand:p05hh4xd",
+            "title": "BBC Sports News",
+            "synopses": {
+              "short": "The latest sports news from the BBC",
+              "medium": "The latest sports news from the BBC",
+              "long": null
+            },
+            "activities": []
+          },
+          "download": null,
+          "availability": {
+            "from": "2026-09-23T10:40:38Z",
+            "to": "2026-09-30T10:40:30Z",
+            "label": "Available for 6 days"
+          },
+          "release": {
+            "date": "2026-09-23T00:00:00Z",
+            "label": "23 Sep 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p05hh4xd&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "w1msm0w273hxb32",
+          "urn": "urn:bbc:radio:episode:w1730nlnfz5y9pg",
+          "network": {
+            "id": "bbc_world_service",
+            "key": "worldserviceradio",
+            "short_title": "World Service",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_world_service/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "BBC News Summary",
+            "secondary": "23/09/2026 18:30 GMT",
+            "tertiary": null,
+            "entity_title": "23/09/2026 18:30 GMT"
+          },
+          "synopses": {
+            "short": "The latest two minute news summary from BBC World Service.",
+            "medium": "The latest two minute news summary from BBC World Service.",
+            "long": null
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p060dh18.jpg",
+          "duration": {
+            "value": 120,
+            "label": "2 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p002vsn1",
+            "urn": "urn:bbc:radio:brand:p002vsn1",
+            "title": "BBC News Summary",
+            "synopses": {
+              "short": "The latest two minute news summary from BBC World Service",
+              "medium": "The latest two minute news summary from BBC World Service.",
+              "long": null
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "non_drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 128,
+                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/w1msm0w273hxb32.mp3",
+                "file_size": 3000000,
+                "label": "3 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/w1msm0w273hxb32.mp3",
+                "file_size": 3000000,
+                "label": "3 MB"
+              },
+              "high": {
+                "bitrate": 128,
+                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/w1msm0w273hxb32.mp3",
+                "file_size": 3000000,
+                "label": "3 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-09-23T18:32:30Z",
+            "to": "2026-09-25T18:32:30Z",
+            "label": "Expires on Friday 7:32pm"
+          },
+          "release": {
+            "date": "2026-09-23T00:00:00Z",
+            "label": "23 Sep 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p002vsn1&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "w1msm0w273hx6by",
+          "urn": "urn:bbc:radio:episode:w1730nlnfz5y5yb",
+          "network": {
+            "id": "bbc_world_service",
+            "key": "worldserviceradio",
+            "short_title": "World Service",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_world_service/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "BBC News Summary",
+            "secondary": "23/09/2026 17:30 GMT",
+            "tertiary": null,
+            "entity_title": "23/09/2026 17:30 GMT"
+          },
+          "synopses": {
+            "short": "The latest two minute news summary from BBC World Service.",
+            "medium": "The latest two minute news summary from BBC World Service.",
+            "long": null
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p060dh18.jpg",
+          "duration": {
+            "value": 120,
+            "label": "2 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p002vsn1",
+            "urn": "urn:bbc:radio:brand:p002vsn1",
+            "title": "BBC News Summary",
+            "synopses": {
+              "short": "The latest two minute news summary from BBC World Service",
+              "medium": "The latest two minute news summary from BBC World Service.",
+              "long": null
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "non_drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 128,
+                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/w1msm0w273hx6by.mp3",
+                "file_size": 3000000,
+                "label": "3 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/w1msm0w273hx6by.mp3",
+                "file_size": 3000000,
+                "label": "3 MB"
+              },
+              "high": {
+                "bitrate": 128,
+                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/w1msm0w273hx6by.mp3",
+                "file_size": 3000000,
+                "label": "3 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-09-23T17:32:30Z",
+            "to": "2026-09-25T17:32:30Z",
+            "label": "Expires on Friday 6:32pm"
+          },
+          "release": {
+            "date": "2026-09-23T00:00:00Z",
+            "label": "23 Sep 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p002vsn1&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0pc18jp",
+          "urn": "urn:bbc:radio:episode:p0pc18k2",
+          "network": {
+            "id": "bbc_radio_scotland",
+            "key": "radioscotland",
+            "short_title": "Radio Scotland",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_scotland/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "BBC News Shetland",
+            "secondary": "BBC News Shetland 13:00 BST",
+            "tertiary": null,
+            "entity_title": "BBC News Shetland 13:00 BST"
+          },
+          "synopses": {
+            "short": "The latest news for Shetland from the BBC.",
+            "medium": null,
+            "long": null
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0hgkdkm.jpg",
+          "duration": {
+            "value": 185,
+            "label": "3 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0dvbjsb",
+            "urn": "urn:bbc:radio:brand:p0dvbjsb",
+            "title": "BBC News Shetland",
+            "synopses": {
+              "short": "The latest news for Shetland from the BBC.",
+              "medium": null,
+              "long": null
+            },
+            "activities": []
+          },
+          "download": null,
+          "availability": {
+            "from": "2026-09-23T11:56:00Z",
+            "to": "2026-09-24T11:56:00Z",
+            "label": "Expires on Thursday 12:56pm"
+          },
+          "release": {
+            "date": "2026-09-23T00:00:00Z",
+            "label": "23 Sep 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0dvbjsb&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0pc3jtj",
+          "urn": "urn:bbc:radio:episode:p0pc3jtq",
+          "network": {
+            "id": "bbc_news",
+            "key": "news",
+            "short_title": "News",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_news/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "BBC Scotland News",
+            "secondary": "BBC Scotland News update 17:30 BST",
+            "tertiary": null,
+            "entity_title": "BBC Scotland News update 17:30 BST"
+          },
+          "synopses": {
+            "short": "The latest news for Scotland from the BBC.",
+            "medium": null,
+            "long": null
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0hh3nd3.jpg",
+          "duration": {
+            "value": 139,
+            "label": "2 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p08zsyrw",
+            "urn": "urn:bbc:radio:brand:p08zsyrw",
+            "title": "BBC Scotland News",
+            "synopses": {
+              "short": "The latest news for Scotland from the BBC",
+              "medium": null,
+              "long": null
+            },
+            "activities": []
+          },
+          "download": null,
+          "availability": {
+            "from": "2026-09-23T16:39:00Z",
+            "to": "2026-09-24T16:39:00Z",
+            "label": "Expires on Thursday 5:39pm"
+          },
+          "release": {
+            "date": "2026-09-23T00:00:00Z",
+            "label": "23 Sep 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p08zsyrw&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        }
+      ],
+      "image_url": null
+    }
+  ]
+}

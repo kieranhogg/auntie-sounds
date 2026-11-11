@@ -1,0 +1,56 @@
+{
+    "info": {
+        "readme": "For the use of Radio, Music and Programmes only"
+    },
+    "statsObject": {
+        "parentPID": "p0lrfl7y",
+        "parentPIDType": "episode"
+    },
+    "defaultAvailableVersion": {
+        "pid": "p0lrflm7",
+        "types": [
+            "Online"
+        ],
+        "smpConfig": {
+            "title": "Newcastle United, Howe \u0027expects\u0027 Isak to be on Asia tour",
+            "summary": "Eddie Howe talks about Alexander Isak\u0027s future after Celtic defeat.",
+            "masterBrandName": "BBC Radio Newcastle",
+            "items": [
+                {
+                    "vpid": "p0lrflm7",
+                    "kind": "radioProgramme",
+                    "duration": 494
+                }
+            ],
+            "holdingImageURL": "\/\/ichef.bbci.co.uk\/images\/ic\/$recipe\/p0lrflb0.jpg",
+            "guidance": null,
+            "embedRights": "blocked"
+        },
+        "markers": []
+    },
+    "allAvailableVersions": [
+        {
+            "pid": "p0lrflm7",
+            "types": [
+                "Online"
+            ],
+            "smpConfig": {
+                "title": "Newcastle United, Howe \u0027expects\u0027 Isak to be on Asia tour",
+                "summary": "Eddie Howe talks about Alexander Isak\u0027s future after Celtic defeat.",
+                "masterBrandName": "BBC Radio Newcastle",
+                "items": [
+                    {
+                        "vpid": "p0lrflm7",
+                        "kind": "radioProgramme",
+                        "duration": 494
+                    }
+                ],
+                "holdingImageURL": "\/\/ichef.bbci.co.uk\/images\/ic\/$recipe\/p0lrflb0.jpg",
+                "guidance": null,
+                "embedRights": "blocked"
+            },
+            "markers": []
+        }
+    ],
+    "holdingImage": "\/\/ichef.bbci.co.uk\/images\/ic\/976x549\/p0lrflb0.jpg"
+}

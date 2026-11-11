@@ -1,0 +1,49 @@
+{
+  "$schema": "https://rms.api.bbc.co.uk/docs/swagger.json#/definitions/PlayableItemResponse",
+  "type": "playable_item",
+  "id": "bbc_radio_fourfm",
+  "urn": "urn:bbc:radio:network:bbc_radio_four",
+  "network": {
+    "id": "bbc_radio_four",
+    "key": "radio4",
+    "short_title": "Radio 4",
+    "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+    "network_type": "master_brand"
+  },
+  "titles": {
+    "primary": "In Our Time",
+    "secondary": "09:00 - 09:45",
+    "tertiary": "17/09/2026",
+    "entity_title": "In Our Time"
+  },
+  "synopses": {
+    "short": "How the description of a fictional island has fascinated readers for centuries.",
+    "medium": "Misha Glenny and guests discuss Thomas Moreâ€™s notoriously ambiguous text, which coined our word â€˜utopiaâ€™ and gave rise to new genres of writing, theorising, and thinking.",
+    "long": "In 1516, the publication of one small book would coin a new word and give rise to centuries of literature, theory, and thought. In his most influential work, the lawyer and Tudor politician Thomas More (1748-1535) described a seemingly perfect â€“ but entirely fictional â€“ island called Utopia. In 1535, less than two decades after writing the book, More was executed for refusing to accept King Henry VIII as supreme head of the church of England. Misha Glenny and his guests discuss why Moreâ€™s exploration of service and the ideal state has been read as a blueprint for society, a scathing satire, and as a timeless warning. This In Our Time episode examines the 16th-century origin and legacy of one of most influential works of political philosophy. The discussion explores Utopiaâ€™s roots in Renaissance Humanism, what the book has to say about tyranny and governance, and why utopias can so often seem dystopian.\n\nWith\n\nLaura Ashe\nProfessor of English Literature at Worcester College, University of Oxford\n\nCathy Shrank\nProfessor of Tudor and Renaissance Literature at the University of Sheffield\n\nAnd\n\nJoanne Paul\nHonorary Associate Professor in Intellectual History at the University of Sussex\n\nProducer: Martha Owen \n\nReading list:\n\nTerence Cave (ed.), Thomas Moreâ€™s â€˜Utopiaâ€™ in Early Modern Europe: Paratexts and Contexts (Manchester University Press, 2008)\n\nJ. H. Hexter, Moreâ€™s Utopia: The Biography of an Idea (Princeton University Press, 1952)\n\nRichard Marius, Thomas More: A Biography (Harvard University Press, 1999)\n\nThomas More (ed. Joanne Paul), Utopia (Oxford University Press, 2025)\n\nThomas More (ed. George M. Logan), Utopia (Cambridge University Press, 2016)\n\nThomas More (ed. Gerard B. Wegemer and Stephen W. Smith), The Essential Works of Thomas More (Yale University Press, 2020)\n\nJoanne Paul, Thomas More: A Life and Death in Tudor England (Michael Joseph, 2025)\n\nJoanne Paul, Thomas More: Classic Thinkers (Polity, 2016)\n\nHoward P. Segal, Utopias: A Brief History from Ancient Writings to Virtual Communities (Wiley-Blackwell, 2012)\n\nCathy Shrank and Phil Withington (eds.), The Oxford Handbook of Thomas More's Utopia (Oxford University Press, 2023)\n\nQuentin Skinner, The Foundations of Modern Political Thought, vol. 1: The Renaissance (Cambridge University Press, 1979)\n\nIn Our Time is a BBC Studios production\n\nA world-class seminar every week. Spanning history, religion, culture, science and philosophy, In Our Time celebrates the pursuit of knowledge and the enduring power of ideas. In each episode, host Misha Glenny and expert guests explore the characters, events and discoveries that have shaped our world."
+  },
+  "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p7k696.jpg",
+  "duration": {
+    "value": 2700,
+    "label": "45 mins"
+  },
+  "progress": {
+    "value": 1436,
+    "label": "21 mins left"
+  },
+  "container": null,
+  "download": null,
+  "availability": {
+    "from": null,
+    "to": null,
+    "label": "Live"
+  },
+  "release": {
+    "date": "2026-09-17T00:00:00Z",
+    "label": "17 Sep 2026"
+  },
+  "guidance": null,
+  "activities": [],
+  "uris": [],
+  "play_context": null,
+  "recommendation": null
+}

@@ -1,0 +1,2673 @@
+{
+  "$schema": "https://rms.api.bbc.co.uk/docs/swagger.json#/definitions/PlayableItems",
+  "total": 74,
+  "limit": 30,
+  "offset": 0,
+  "data": [
+    {
+      "type": "playable_item",
+      "id": "p0nzv1kj",
+      "urn": "urn:bbc:radio:episode:m002zv8n",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Breakin' the Cycle",
+        "tertiary": "Trailer",
+        "entity_title": "Trailer"
+      },
+      "synopses": {
+        "short": "What will it take for two London gangsters to turn their lives into a movie?",
+        "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+        "long": "Breakin’ the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000’s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK’s first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin’ the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0nyjfbx.jpg",
+      "duration": {
+        "value": 186,
+        "label": "3 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0nzv1kj.mp3",
+            "file_size": 4000000,
+            "label": "4 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0nzv1kj.mp3",
+            "file_size": 4000000,
+            "label": "4 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0nzv1kj.mp3",
+            "file_size": 4000000,
+            "label": "4 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-07-22T04:00:00Z",
+        "to": "2031-07-21T04:00:00Z",
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-07-22T00:00:00Z",
+        "label": "22 Jul 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002zhgk&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0p143td",
+      "urn": "urn:bbc:radio:episode:m002zhgl",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Breakin' the Cycle",
+        "tertiary": "1. The Script",
+        "entity_title": "1. The Script"
+      },
+      "synopses": {
+        "short": "Two notorious London gangsters decide to leave criminality and become film producers.",
+        "medium": "Two of East London’s most notorious gangsters try to leave crime behind by turning a prison-written script into a feature film - with extraordinary and dangerous consequences.",
+        "long": "When aspiring movie editor Lewis Albrow lands an unusual interview with Colin Browne and his right-hand man D, he believes he’s finally found his break into the film industry - but instead he’s pulled into a very different world.\n\nIn prison, Colin Browne has written a script based on his life and his long-running criminal partnership with D, leading the gang Love of Money. But in Colin’s story, unlike in his life, the main protagonist manages to break free from his cycle of criminality.\n\nWhen the pair reconnect after Colin’s release, they realise the script could be a way out of crime. They meet a smooth-talking fixer who promises to help them turn it into a movie, and begin a new chapter in their lives. But how serious are they about the film’s central theme - breaking the cycle of a life of crime?\n\nGripping stories from the Shadows - BBC investigations from across the UK.\n\nPresenter and Producer: Lewis Albrow\nSeries Producer: Emma Barnaby\nProducer: Louis Hollis\nAssistant Editor: Georgina Savage\nSound Designer, Composer, and Mix Engineer: Axel Kacoutie\nScript Editor: Jason Lewis\nFact Checker: Jessica Hatcher-Moore\nProduction Manager: Anna-Marie Batho\nProduction Executive: Letisha Kidza \nHead of Production: Nicky Murphy\nProduction Support: Emma Wood and Olivia Bouton\nExecutive Producers for Raw: Deborah Dudgeon, David Waters, and Tim Wardle. \nBusiness Affairs: Amy Ofori-Attah, Clotilde Leroux, Damian Kent, and Emma Ong.  \nCommissioning Executive: Tracy Williams\nCommissioning Editor: Dan Clarke\n\nA Raw production for BBC Radio 4"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0nyjfbx.jpg",
+      "duration": {
+        "value": 1717,
+        "label": "28 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0p143td.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0p143td.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0p143td.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-07-29T04:00:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-07-29T00:00:00Z",
+        "label": "29 Jul 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002zhgk&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0p144xj",
+      "urn": "urn:bbc:radio:episode:m002zsxg",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Breakin' the Cycle",
+        "tertiary": "2. A Hood Story",
+        "entity_title": "2. A Hood Story"
+      },
+      "synopses": {
+        "short": "Colin and D begin production, but remain tempted by their lucrative drug dealing business.",
+        "medium": "Colin and D’s gangster film gathers unlikely stars and fresh ambition, but the criminal world they’re trying to escape is already pulling them back in.",
+        "long": "As Colin and D begin turning their prison-written script into a real production, they recruit former pop stars and emerging actors, building a cast captivated by the promise of an authentic Black British crime story. Their film starts to feel like a genuine cultural moment. But most of the cast and crew are unaware of the true story behind the pair or their journey to becoming film-makers.\n\nBeneath the excitement of the production, the money, power, and instincts that built “Love of Money” are still very much in play. When D’s commitment to turning away from crime is tested, he is drawn back to familiar instincts.\n\nGripping stories from the Shadows - BBC investigations from across the UK.\n\nPresenter and Producer: Lewis Albrow\nSeries Producer: Emma Barnaby\nProducer: Louis Hollis\nAssistant Editor: Georgina Savage\nSound Designer, Composer, and Mix Engineer: Axel Kacoutie\nScript Editor: Jason Lewis\nFact Checker: Jessica Hatcher-Moore\nProduction Manager: Anna-Marie Batho\nProduction Executive: Letisha Kidza \nHead of Production: Nicky Murphy\nProduction Support: Emma Wood and Olivia Bouton\nExecutive Producers for Raw: Deborah Dudgeon, David Waters, and Tim Wardle. \nBusiness Affairs: Amy Ofori-Attah, Clotilde Leroux, Damian Kent, and Emma Ong.  \nCommissioning Executive: Tracy Williams\nCommissioning Editor: Dan Clarke\n\nA Raw Production for BBC Radio 4"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0nyjfbx.jpg",
+      "duration": {
+        "value": 1712,
+        "label": "28 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 24000000,
+            "label": "24 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 32000000,
+            "label": "32 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 77000000,
+            "label": "77 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-07-29T04:05:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-08-05T00:00:00Z",
+        "label": "05 Aug 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002zhgk&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0p146gb",
+      "urn": "urn:bbc:radio:episode:m003012z",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Breakin' the Cycle",
+        "tertiary": "3. The Right Kind of Violence",
+        "entity_title": "3. The Right Kind of Violence"
+      },
+      "synopses": {
+        "short": "As the film shoot descends into chaos, Colin and D decide to shut down their drug empire.",
+        "medium": "As Breakin’ the Cycle spirals into chaos, Colin and D make their boldest move yet — shutting down their drug empire, and taking control of the story only they can tell.",
+        "long": "Production on Breakin’ the Cycle is falling apart - actors are injured, the crew is out of its depth, and Colin and D realise their director can’t capture the reality they lived. \n\nAs D faces court and confronts the police corruption that shaped his life, he and Colin make a life-changing decision — to finally commit to breaking the cycle, shutting down their criminal operation, and betting everything on film.\n\nGripping stories from the Shadows - BBC investigations from across the UK.\n\nPresenter and Producer: Lewis Albrow\nSeries Producer: Emma Barnaby\nProducer: Louis Hollis\nAssistant Editor: Georgina Savage\nSound Designer, Composer, and Mix Engineer: Axel Kacoutie\nScript Editor: Jason Lewis\nFact Checker: Jessica Hatcher-Moore\nProduction Manager: Anna-Marie Batho\nProduction Executive: Letisha Kidza \nHead of Production: Nicky Murphy\nProduction Support: Emma Wood and Olivia Bouton\nExecutive Producers for Raw: Deborah Dudgeon, David Waters, and Tim Wardle. \nBusiness Affairs: Amy Ofori-Attah, Clotilde Leroux, Damian Kent, and Emma Ong.  \nCommissioning Executive: Tracy Williams\nCommissioning Editor: Dan Clarke\n\nA Raw production for BBC Radio 4"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0nyjfbx.jpg",
+      "duration": {
+        "value": 1713,
+        "label": "28 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 24000000,
+            "label": "24 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 32000000,
+            "label": "32 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 77000000,
+            "label": "77 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-07-29T04:10:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-08-12T00:00:00Z",
+        "label": "12 Aug 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002zhgk&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0p148gv",
+      "urn": "urn:bbc:radio:episode:m00303y9",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Breakin' the Cycle",
+        "tertiary": "4. A New Direction",
+        "entity_title": "4. A New Direction"
+      },
+      "synopses": {
+        "short": "Colin takes over directing, but the lines between gangland fact and fiction begin to blur.",
+        "medium": "Now Colin and D are in creative control, actors' performances are transformed. But the lines between gangland fact and fiction begin to blur, putting everyone in danger.",
+        "long": "With Colin now firmly in the director’s chair, Breakin’ the Cycle is transformed. Drawing directly from their lived experience, Colin unlocks startlingly authentic performances from the cast, turning what once looked like a cliched gangster film into something intimate, powerful, and deeply real.\n\nAs early edits reveal the film’s extraordinary potential, hope begins to take hold. This could be the project that finally changes Colin and D’s lives. But stepping into film-making doesn’t mean escaping the world they came from. When tensions flare on East London estates and old reputations are tested, the past begins to close in.\n\nGripping stories from the Shadows - BBC investigations from across the UK.\n\nPresenter and Producer: Lewis Albrow\nSeries Producer: Emma Barnaby\nProducer: Louis Hollis\nAssistant Editor: Georgina Savage\nSound Designer, Composer, and Mix Engineer: Axel Kacoutie\nScript Editor: Jason Lewis\nFact Checker: Jessica Hatcher-Moore\nProduction Manager: Anna-Marie Batho\nProduction Executive: Letisha Kidza \nHead of Production: Nicky Murphy\nProduction Support: Emma Wood and Olivia Bouton\nExecutive Producers for Raw: Deborah Dudgeon, David Waters, and Tim Wardle. \nBusiness Affairs: Amy Ofori-Attah, Clotilde Leroux, Damian Kent, and Emma Ong.  \nCommissioning Executive: Tracy Williams\nCommissioning Editor: Dan Clarke\n\nA Raw production for BBC Radio 4"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0nyjfbx.jpg",
+      "duration": {
+        "value": 1691,
+        "label": "28 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 24000000,
+            "label": "24 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 31000000,
+            "label": "31 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 76000000,
+            "label": "76 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-07-29T04:15:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-08-19T00:00:00Z",
+        "label": "19 Aug 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": {
+          "short": "Contains some sexual content.",
+          "long": "Contains some scenes of a sexual nature."
+        }
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002zhgk&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0p14cwv",
+      "urn": "urn:bbc:radio:episode:m00303yc",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Breakin' the Cycle",
+        "tertiary": "5. One Shot",
+        "entity_title": "5. One Shot"
+      },
+      "synopses": {
+        "short": "Just as Colin and D are on the brink of success, they make a fatal decision.",
+        "medium": "As Colin and D stand on the brink of turning their film into a mainstream success, a chance encounter with their old lives has devastating consequences.",
+        "long": "As filming wraps, Lewis struggles to finish the first edit of Breakin’ the Cycle as he questions the morality of its violent protagonist. \n\nColin and D head towards a make-or-break meeting that reveals the final steps needed to complete their goal. But before they can finish them, they are unexpectedly drawn into a high-level drug opportunity. As pressure mounts, the tragic consequences of their past lives begin to catch up with them.\n\nGripping stories from the Shadows - BBC investigations from across the UK.\n\nPresenter and Producer: Lewis Albrow\nSeries Producer: Emma Barnaby\nProducer: Louis Hollis\nAssistant Editor: Georgina Savage\nSound Designer, Composer, and Mix Engineer: Axel Kacoutie\nScript Editor: Jason Lewis\nFact Checker: Jessica Hatcher-Moore\nProduction Manager: Anna-Marie Batho\nProduction Executive: Letisha Kidza \nHead of Production: Nicky Murphy\nProduction Support: Emma Wood and Olivia Bouton\nExecutive Producers for Raw: Deborah Dudgeon, David Waters, and Tim Wardle. \nBusiness Affairs: Amy Ofori-Attah, Clotilde Leroux, Damian Kent, and Emma Ong.  \nCommissioning Executive: Tracy Williams\nCommissioning Editor: Dan Clarke\n\nA Raw production for BBC Radio 4"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0nyjfbx.jpg",
+      "duration": {
+        "value": 1692,
+        "label": "28 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 24000000,
+            "label": "24 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 31000000,
+            "label": "31 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 76000000,
+            "label": "76 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-07-29T04:20:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-08-26T00:00:00Z",
+        "label": "26 Aug 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": {
+          "short": "Contains some violence.",
+          "long": "Contains some violent scenes."
+        }
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002zhgk&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0p14gxv",
+      "urn": "urn:bbc:radio:episode:m00303yf",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Breakin' the Cycle",
+        "tertiary": "6. The Final Act",
+        "entity_title": "6. The Final Act"
+      },
+      "synopses": {
+        "short": "D’s arrested and imprisoned. Today he’s broken his cycle, but the film remains unfinished.",
+        "medium": "D spirals through grief and violence, and is arrested. He emerges from prison, determined to break the cycle of his past life, but the film remains unfinished. Until now.",
+        "long": "Tragedy sends D into shock, confusion, and grief. In the maelstrom of emotion, he decides to fulfill a lucrative drug deal, but is immediately arrested. \n\nIn prison, he struggles with guilt, despair, the consequences of his criminal past, and the legacy of the unfinished film. But over time, the story becomes a rare source of purpose.\n\nEventually, D is released and tries to rebuild his life away from crime, but the weight of Colin's memory, and the unfinished film, continues to define him. Has D finally come to terms with his past and its consequences?\n\nGripping stories from the Shadows - BBC investigations from across the UK.\n\nPresenter and Producer: Lewis Albrow\nSeries Producer: Emma Barnaby\nProducer: Louis Hollis\nAssistant Editor: Georgina Savage\nSound Designer, Composer, and Mix Engineer: Axel Kacoutie\nScript Editor: Jason Lewis\nFact Checker: Jessica Hatcher-Moore\nProduction Manager: Anna-Marie Batho\nProduction Executive: Letisha Kidza \nHead of Production: Nicky Murphy\nProduction Support: Emma Wood and Olivia Bouton\nExecutive Producers for Raw: Deborah Dudgeon, David Waters, and Tim Wardle. \nBusiness Affairs: Amy Ofori-Attah, Clotilde Leroux, Damian Kent, and Emma Ong.  \nCommissioning Executive: Tracy Williams\nCommissioning Editor: Dan Clarke\n\nA Raw production for BBC Radio 4\n\nIn memory of Malik Ford, who first brought this remarkable story to light."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0nyjfbx.jpg",
+      "duration": {
+        "value": 1772,
+        "label": "29 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 96,
+            "file_url": null,
+            "file_size": 25000000,
+            "label": "25 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": null,
+            "file_size": 33000000,
+            "label": "33 MB"
+          },
+          "high": {
+            "bitrate": 320,
+            "file_url": null,
+            "file_size": 80000000,
+            "label": "80 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-07-29T04:25:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-09-02T00:00:00Z",
+        "label": "02 Sep 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002zhgk&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0nklpkw",
+      "urn": "urn:bbc:radio:episode:m002wx92",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Stolen Years",
+        "tertiary": "Trailer",
+        "entity_title": "Trailer"
+      },
+      "synopses": {
+        "short": "Andrew Malkinson versus the justice system that failed him.",
+        "medium": "Andrew Malkinson’s fight for justice and reform. Now the right man is found guilty, what does Malkinson's wrongful conviction reveal about the justice system that failed him?",
+        "long": "Andrew Malkinson’s wrongful conviction of a brutal rape in 2003 has been recognised as one of the worst miscarriages of justice in UK history. He’s angry and says the criminal justice and appeal systems let him down.  Now that the right man has been convicted, he wants answers, and reform. \n \nSo why did he spend all those years in prison while the perpetrator remained free? And what does his case tell us about the justice system that failed him? In Shadow World:  Stolen Years, filmmaker and journalist Jemma Gander (co-director of The Wrong Man: 17 Years Behind Bars) follows the next chapter of this extraordinary case.\n \nAs Andrew tries to rebuild his life, fresh questions emerge about the role of the police, the courts, and the institutions that failed him. “You don’t know what you’re capable of withstanding until you are forced to. But it’s just horrific”.\n \nTwenty three years later, a man is found guilty of the crime Andrew Malkinson was falsely accused of."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0nklqcx.jpg",
+      "duration": {
+        "value": 216,
+        "label": "3 mins"
+      },
+      "progress": {
+        "value": 41,
+        "label": "2 mins left"
+      },
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0nklpkw.mp3",
+            "file_size": 4000000,
+            "label": "4 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0nklpkw.mp3",
+            "file_size": 4000000,
+            "label": "4 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0nklpkw.mp3",
+            "file_size": 4000000,
+            "label": "4 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-05-12T07:00:00Z",
+        "to": "2031-05-11T07:00:00Z",
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-05-11T00:00:00Z",
+        "label": "11 May 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [
+        {
+          "type": "play_activity",
+          "action": "paused",
+          "label": null,
+          "urn": null
+        }
+      ],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002wx7c&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0nlvwdy",
+      "urn": "urn:bbc:radio:episode:m002x6dh",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Stolen Years",
+        "tertiary": "1. Contaminated Memories",
+        "entity_title": "1. Contaminated Memories"
+      },
+      "synopses": {
+        "short": "Andrew Malkinson tries to rebuild his life and learns how he was wrongly identified.",
+        "medium": "How do you recover after 17 years in prison as an innocent man? Andrew Malkinson tries to rebuild his life after his exoneration and learns how he was wrongly identified.",
+        "long": "How can a victim of a traumatic crime appear to be so sure, yet so wrong? In the first episode of Shadow World: Stolen Years we confront the eyewitness evidence that helped convict Andrew Malkinson in 2004. \n\nAs a new suspect faces trial over the 2003 rape, Andy meets another woman who made the same devastating mistake, offering him an answer to the question that has haunted him for years.\n \nShadow World: Gripping stories from the shadows - BBC investigations from across the UK.\n\nPresenter and Producer: Jemma Gander\nSeries Producer and Editor: Fran Robertson\nAssistant Editor: Christopher Whyte\nComposer: Sholto\nSound design and mix: Chris Maclean\nExecutive Producer for Goldhawk: Kate Holland\nCommissioning executive: Tracy Williams\nCommissioning editor: Dan Clarke\n \nA Two Step Films production in association with Goldhawk for Radio 4"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0nklqcx.jpg",
+      "duration": {
+        "value": 1717,
+        "label": "28 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0nlvwdy.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0nlvwdy.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0nlvwdy.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-05-19T04:00:00Z",
+        "to": "2031-05-18T04:00:00Z",
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-05-19T00:00:00Z",
+        "label": "19 May 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002wx7c&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0nlvxfc",
+      "urn": "urn:bbc:radio:episode:m002x6dk",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Stolen Years",
+        "tertiary": "2. Without a Trace",
+        "entity_title": "2. Without a Trace"
+      },
+      "synopses": {
+        "short": "Who is the new suspect in the case?",
+        "medium": "As Andrew Malkinson’s lawyers fight to uncover the truth in his case, new DNA evidence identifies a new suspect, known only as Mr B.",
+        "long": "Who is Mr B?  In Shadow World: Stolen Years, a DNA match reopens a 20 year old rape case that should have been solved years earlier. \n\nAs police investigate the new suspect, Andrew Malkinson begins to reckon with the damage of a wrongful conviction and whether recovery after so many years in prison, is possible. \n \nShadow World: Gripping stories from the shadows - BBC investigations from across the UK.\n\nPresenter and Producer: Jemma Gander\nSeries Producer and Editor: Fran Robertson\nAssistant Editor: Christopher Whyte\nComposer: Sholto\nSound design and mix: Chris Maclean\nExecutive Producer for Goldhawk: Kate Holland\nCommissioning executive: Tracy Williams\nCommissioning editor: Dan Clarke\n\nA Two Step Films production in association with Goldhawk for Radio 4"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0nklqcx.jpg",
+      "duration": {
+        "value": 1720,
+        "label": "28 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0nlvxfc.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0nlvxfc.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0nlvxfc.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-05-19T04:10:00Z",
+        "to": "2031-05-18T04:10:00Z",
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-05-19T00:00:00Z",
+        "label": "19 May 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002wx7c&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0nlvyf6",
+      "urn": "urn:bbc:radio:episode:m002x6dm",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Stolen Years",
+        "tertiary": "3. Lucky Man",
+        "entity_title": "3. Lucky Man"
+      },
+      "synopses": {
+        "short": "While Andrew Malkinson fights for compensation, police discover dramatic witness evidence.",
+        "medium": "Police discover dramatic witness evidence during their investigation into the new suspect. And the full extent of the failures in the Andrew Malkinson case are exposed.",
+        "long": "Why did it take so long to free an innocent man? In Shadow World: Stolen Years, the case against the new suspect in the 2003 rape case gathers pace, while Andrew Malkinson finally receives good news of his own. \n\nBut as the series turns to the role of the Criminal Cases Review Commission and the appeal system, a deeper question emerges - how was he left in prison for so long?\n\n\nShadow World: Gripping stories from the shadows - BBC investigations from across the UK. \n\nPresenter and Producer: Jemma Gander\nSeries Producer and Editor: Fran Robertson\nAssistant Editor: Christopher Whyte\nComposer: Sholto\nSound design and mix: Chris Maclean\nExecutive Producer for Goldhawk: Kate Holland\nCommissioning executive: Tracy Williams\nCommissioning editor: Dan Clarke\n\nA Two Step Films production in association with Goldhawk for Radio 4"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0nklqcx.jpg",
+      "duration": {
+        "value": 1703,
+        "label": "28 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0nlvyf6.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0nlvyf6.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0nlvyf6.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-05-19T04:20:00Z",
+        "to": "2031-05-18T04:20:00Z",
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-05-19T00:00:00Z",
+        "label": "19 May 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002wx7c&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0nlvzkw",
+      "urn": "urn:bbc:radio:episode:m002x6dn",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Stolen Years",
+        "tertiary": "4. Closing Arguments",
+        "entity_title": "4. Closing Arguments"
+      },
+      "synopses": {
+        "short": "The victim testifies with some explosive revelations. Will justice finally prevail?",
+        "medium": "As the Paul Quinn trial concludes, will the right man finally be convicted? And will Andrew Malkinson, who served 17 years for a crime he didn't commit, feel a sense of closure?",
+        "long": "Will justice finally prevail?  For Shadow World: Stolen Years, the trial of Paul Quinn reaches its verdict. After more than two decades will the victim of the brutal rape finally see the right man convicted? \n\nAnd at the conclusion of the trial will Andy feel a sense of closure? With two separate investigations still examining the failures in his case, the verdict is not the end of the story. \n\nShadow World: Gripping stories from the shadows - BBC investigations from across the UK. \n\nPresenter and Producer: Jemma Gander\nSeries Producer and Editor:  Fran Robertson\nAssistant Editor:   Christopher Whyte\nComposer:     Sholto\nSound design and mix: Chris Maclean\nExecutive Producer for Goldhawk:   Kate Holland\nCommissioning executive: Tracy Williams\nCommissioning editor: Dan Clarke\n \nA Two Step Films production in association with Goldhawk for Radio 4"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0nklqcx.jpg",
+      "duration": {
+        "value": 1720,
+        "label": "28 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0nlvzkw.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0nlvzkw.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0nlvzkw.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-05-19T04:30:00Z",
+        "to": "2031-05-18T04:30:00Z",
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-05-19T00:00:00Z",
+        "label": "19 May 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002wx7c&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0n07k1r",
+      "urn": "urn:bbc:radio:episode:p0n05xnm",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Impulsive",
+        "tertiary": "Trailer",
+        "entity_title": "Trailer"
+      },
+      "synopses": {
+        "short": "Noel Titheradge uncovers devastating side effects caused by a class of prescription drugs",
+        "medium": "Noel Titheradge uncovers the devastating side effects of a class of prescription drugs which can cause hypersexuality and compulsive gambling.",
+        "long": "Early in 2025, BBC Investigations Correspondent Noel Titheradge published his first story about a category of prescription drug with unusual side effects. \n\nPeople who take dopamine agonist drugs for conditions like Parkinson’s disease or Restless Legs Syndrome often report impulse control disorders - problems with gambling, compulsive eating or shopping, or hypersexuality.\n\nHe wasn’t expecting the response. After that first article was published more than 200 people got in touch - that’s me, they said, that’s my partner, that’s my dad.\n\nSo Noel started digging. \n\nDetails of organisations offering help and support with some of the issues raised are available at bbc.co.uk/actionline.\n\nIf you have any concerns about medication you’re taking, speak to your doctor."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0n06t14.jpg",
+      "duration": {
+        "value": 202,
+        "label": "3 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n07k1r.mp3",
+            "file_size": 4000000,
+            "label": "4 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n07k1r.mp3",
+            "file_size": 4000000,
+            "label": "4 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n07k1r.mp3",
+            "file_size": 4000000,
+            "label": "4 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-02-10T15:35:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-02-10T00:00:00Z",
+        "label": "10 Feb 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002rvtc&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0n0r2wd",
+      "urn": "urn:bbc:radio:episode:m002rdp3",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Impulsive",
+        "tertiary": "1. Warning Signs",
+        "entity_title": "1. Warning Signs"
+      },
+      "synopses": {
+        "short": "Bill’s new medication helps his Parkinson’s - but then he begins to behave impulsively.",
+        "medium": "When Bill is diagnosed with Parkinson’s, his medication gives him a new lease of life. But then he begins to behave impulsively.",
+        "long": "When Freddie’s dad Bill is diagnosed with Parkinson’s, his medication gives him a new lease of life. He starts ticking things off his retiree bucket list - travelling, skydiving, golf.\n\nBut then Freddie notices that his previously sensible father has started behaving unusually.\n\nBBC Investigations correspondent Noel Titheradge has spent more than a year speaking to people whose behaviour changed radically after taking a category of prescription drugs called dopamine agonists.\n\nThese drugs boost dopamine activity in the brain - they were prescribed more than 1.5 million times in the UK last year to treat Parkinson’s disease and other movement disorders.\n\nBut they have well established side effects - around 1 in 6 people who take them develop impulse control disorders, which can include hypersexuality, binge eating, compulsive gambling and shopping.\n\nIf these side effects have been known about for decades, why weren’t some patients and their families properly warned or monitored? \n\nDetails of organisations offering help and support with some of the issues raised are available at bbc.co.uk/actionline.\n\nIf you have any concerns about medication you’re taking, speak to your doctor.\n\nPresenter: Noel Titheradge\nProducer: Lucy Burns\nEditor: Matt Willis\nA BBC News Long Form Audio production"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0n06t14.jpg",
+      "duration": {
+        "value": 833,
+        "label": "13 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r2wd.mp3",
+            "file_size": 14000000,
+            "label": "14 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r2wd.mp3",
+            "file_size": 14000000,
+            "label": "14 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r2wd.mp3",
+            "file_size": 14000000,
+            "label": "14 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-02-13T05:15:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-02-16T00:00:00Z",
+        "label": "16 Feb 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": {
+          "short": "Contains strong language.",
+          "long": "Contains strong language."
+        }
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002rvtc&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0n0r3gd",
+      "urn": "urn:bbc:radio:episode:m002rvxy",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Impulsive",
+        "tertiary": "2. Wonder drugs",
+        "entity_title": "2. Wonder drugs"
+      },
+      "synopses": {
+        "short": "Steve starts chatting to camgirls online - how long can he keep it a secret?",
+        "medium": "Steve starts chatting to camgirls online - it’s not long before he’s spending £1000 in a night. How long can he keep it a secret?",
+        "long": "Not long after his diagnosis with Parkinson’s disease, Steve starts chatting to camgirls online. But soon he’s going on the sites every night, even logging on while his wife’s asleep next to him in bed. How long can he keep it a secret?\n\nSteve’s one of more than 200 people who contacted BBC Investigations correspondent Noel Titheradge about their experiences of side effects caused by dopamine agonist drugs.\n\nWhen medications turn out to have life-changing side effects, how do we balance the benefits with the risks?\n\nDetails of organisations offering help and support with some of the issues raised are available at bbc.co.uk/actionline.\n\nIf you have any concerns about medication you’re taking, speak to your doctor.\n\nPresenter: Noel Titheradge\nProducer: Lucy Burns\nEditor: Matt Willis\nA BBC News Long Form Audio production"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0n06t14.jpg",
+      "duration": {
+        "value": 874,
+        "label": "14 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r3gd.mp3",
+            "file_size": 15000000,
+            "label": "15 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r3gd.mp3",
+            "file_size": 15000000,
+            "label": "15 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r3gd.mp3",
+            "file_size": 15000000,
+            "label": "15 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-02-13T05:17:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-02-17T00:00:00Z",
+        "label": "17 Feb 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002rvtc&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0n0r3r7",
+      "urn": "urn:bbc:radio:episode:m002rvxf",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Impulsive",
+        "tertiary": "3. Dopamine Hits",
+        "entity_title": "3. Dopamine Hits"
+      },
+      "synopses": {
+        "short": "Freddie finds out his dad has recklessly invested his life savings in property overseas.",
+        "medium": "Freddie finds out his dad has recklessly invested his life savings in property overseas. It turns out it's a romance scam - but his family have no idea why he’s acting erratically.",
+        "long": "Freddie finds out his dad’s been scammed - to his horror, he hears that his father Bill has been speaking to multiple women in Ghana who he’d met on Skype, and sent them £300,000.\n\nAnd Steve’s wife finds out about his camgirl habit when he makes a payment to one of the sites on their joint credit card.\n\nNeither Bill nor Steve has any idea why they’ve been behaving erratically.\n\nNoel meets retired neurologist Paul Morrish, who remembers that doctors were starting to notice their patients experiencing unusual side effects from dopamine agonist drugs as far back as the early 2000s. \n\nSo why weren’t some patients being properly warned fifteen years later?\n\nAnd neuropsychiatry professor Valerie Voon from the University of Cambridge explains how dopamine affects our perception of reward vs risk - which means people taking dopamine agonists can be prone to taking more risks.\n\nDetails of organisations offering help and support with some of the issues raised are available at bbc.co.uk/actionline.\n\nIf you have any concerns about medication you’re taking, speak to your doctor.\n\nPresenter: Noel Titheradge\nProducer: Lucy Burns\nEditor: Matt Willis\nA BBC News Long Form Audio production"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0n06t14.jpg",
+      "duration": {
+        "value": 835,
+        "label": "13 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r3r7.mp3",
+            "file_size": 14000000,
+            "label": "14 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r3r7.mp3",
+            "file_size": 14000000,
+            "label": "14 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r3r7.mp3",
+            "file_size": 14000000,
+            "label": "14 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-02-13T05:20:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-02-18T00:00:00Z",
+        "label": "18 Feb 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002rvtc&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0n0qyh0",
+      "urn": "urn:bbc:radio:episode:m002rvxh",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Impulsive",
+        "tertiary": "4. Big Pharma, Big Secret",
+        "entity_title": "4. Big Pharma, Big Secret"
+      },
+      "synopses": {
+        "short": "Noel discovers a shocking report from inside the UK company that makes one of the drugs.",
+        "medium": "Noel discovers a shocking report from inside the UK company that makes one of the drugs. It reveals they knew of potential side effects as far back as 2003.",
+        "long": "When BBC Investigations correspondent Noel Titheradge first started looking into this story, he set about finding insiders who knew what had gone on inside the pharmaceutical companies that made them. He contacted former staff and officials, cold called potential whistleblowers - and then he got lucky. \n\nSomeone shared an internal report from the drug company GlaxoSmithKline which revealed that they’d been aware of fifteen cases of “increased libido” in patients taking their dopamine agonist Ropinirole, including cases of paedophilia and indecent behaviour.\n\nThe report had been published in 2003, three years before warnings appeared on patient leaflets - and thirteen years before Steve started taking the drug. \n\nDetails of organisations offering help and support with some of the issues raised are available at bbc.co.uk/actionline.\n\nIf you have any concerns about medication you’re taking, speak to your doctor.\n\nPresenter: Noel Titheradge\nProducer: Lucy Burns\nEditor: Matt Willis\nA BBC News Long Form Audio production"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0n06t14.jpg",
+      "duration": {
+        "value": 872,
+        "label": "14 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0qyh0.mp3",
+            "file_size": 15000000,
+            "label": "15 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0qyh0.mp3",
+            "file_size": 15000000,
+            "label": "15 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0qyh0.mp3",
+            "file_size": 15000000,
+            "label": "15 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-02-13T05:22:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-02-19T00:00:00Z",
+        "label": "19 Feb 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002rvtc&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0n0r78g",
+      "urn": "urn:bbc:radio:episode:m002rvxk",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Impulsive",
+        "tertiary": "5. Restless",
+        "entity_title": "5. Restless"
+      },
+      "synopses": {
+        "short": "Lisa has new medication for her restless legs syndrome - then she meets a man online.",
+        "medium": "Lisa has new medication for her restless legs syndrome - then she starts an affair with a man she meets online.",
+        "long": "Lisa has Restless Legs Syndrome - it feels like her legs are on fire and they keep moving around. It’s affecting her sleep, so she’s pleased to hear that there’s a treatment: a commonly used Parkinson’s medication called Pramipexole. The prescriber doesn’t mention any side effects.\n\nBut Lisa’s dosage of Pramipexole keeps increasing as her symptoms keep returning, and she starts behaving in ways that feel out of character. After an argument with her husband, she starts an affair with a man she meets online. Soon she’s meeting strangers for sex.\n\nAnd even while her personality’s changing, her condition keeps getting worse…\n\nDetails of organisations offering help and support with some of the issues raised are available at bbc.co.uk/actionline.\n\nIf you have any concerns about medication you’re taking, speak to your doctor.\n\nPresenter: Noel Titheradge\nProducer: Lucy Burns\nEditor: Matt Willis\nA BBC News Long Form Audio production"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0n06t14.jpg",
+      "duration": {
+        "value": 838,
+        "label": "13 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r78g.mp3",
+            "file_size": 14000000,
+            "label": "14 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r78g.mp3",
+            "file_size": 14000000,
+            "label": "14 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r78g.mp3",
+            "file_size": 14000000,
+            "label": "14 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-02-13T05:25:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-02-20T00:00:00Z",
+        "label": "20 Feb 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002rvtc&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0n0r0pg",
+      "urn": "urn:bbc:radio:episode:m002rvy2",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Impulsive",
+        "tertiary": "6. Chasing Losses",
+        "entity_title": "6. Chasing Losses"
+      },
+      "synopses": {
+        "short": "Lucy’s never tried a scratchcard before - but soon her gambling is out of control.",
+        "medium": "Lucy’s on her lunchbreak when she tries her first scratchcard - but soon her gambling is out of control.",
+        "long": "Lucy’s on her lunchbreak when she tries her first scratchcard - soon, she’s hooked. She’s never been interested in gambling before, but after a few months the glove compartment of her car is full of scratchcards. And then she starts gambling online…\n\nLucy’s taking a medication called Aripiprazole for her mental health condition. It’s a partial dopamine agonist - a different mechanism to the dopamine agonist drugs used for Parkinson’s and Restless Legs Syndrome that we’ve heard about in previous episodes.\n\nBut it’s got similar side effects. For Lucy, this means compulsive eating, hypersexuality - and a gambling problem that’s spiralling out of control.\n\nDetails of organisations offering help and support with some of the issues raised are available at bbc.co.uk/actionline.\n\nIf you have any concerns about medication you’re taking, speak to your doctor.\n\n\nPresenter: Noel Titheradge\nProducer: Lucy Burns\nEditor: Matt Willis\nA BBC News Long Form Audio production"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0n06t14.jpg",
+      "duration": {
+        "value": 883,
+        "label": "14 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r0pg.mp3",
+            "file_size": 15000000,
+            "label": "15 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r0pg.mp3",
+            "file_size": 15000000,
+            "label": "15 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r0pg.mp3",
+            "file_size": 15000000,
+            "label": "15 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-02-13T05:30:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-02-23T00:00:00Z",
+        "label": "23 Feb 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002rvtc&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0n0s2j6",
+      "urn": "urn:bbc:radio:episode:m002rvy0",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Impulsive",
+        "tertiary": "7. Missed connections",
+        "entity_title": "7. Missed connections"
+      },
+      "synopses": {
+        "short": "Lucy and Freddie finally make the connection between the behaviour and the medication.",
+        "medium": "Lucy and Freddie finally make the connection between the impulsive behaviour and the medication. Why weren’t some people warned before it was too late?",
+        "long": "Lucy’s stumbled on a connection between her gambling problem and her medication. But her mental health team says they don’t know what she’s talking about.\n\nFreddie’s reached breaking point. And, one day, he notices his dad’s medication leaflet on the kitchen table, sparking a full-blown crisis. \n\nIt’s been known for more than two decades that drugs affecting dopamine levels in the brain have potential side effects including impulse control disorders like hypersexuality, or compulsive shopping or gambling.\n\nWarnings have been added to patient information leaflets - but many of the people who’ve contacted BBC investigations correspondent Noel Titheradge about their experiences say the risks weren’t made clear.\n\nWhy weren’t they warned about the potential side effects of these medications before it was too late?\n\nDetails of organisations offering help and support with some of the issues raised are available at bbc.co.uk/actionline.\n\nIf you have any concerns about medication you’re taking, speak to your doctor.\n\n\nPresenter: Noel Titheradge\nProducer: Lucy Burns\nEditor: Matt Willis\nA BBC News Long Form Audio production"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0n06t14.jpg",
+      "duration": {
+        "value": 830,
+        "label": "13 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0s2j6.mp3",
+            "file_size": 14000000,
+            "label": "14 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0s2j6.mp3",
+            "file_size": 14000000,
+            "label": "14 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0s2j6.mp3",
+            "file_size": 14000000,
+            "label": "14 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-02-13T05:33:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-02-24T00:00:00Z",
+        "label": "24 Feb 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002rvtc&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0n0r1nj",
+      "urn": "urn:bbc:radio:episode:m002rvy4",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Impulsive",
+        "tertiary": "8. Collateral",
+        "entity_title": "8. Collateral"
+      },
+      "synopses": {
+        "short": "Andrew is arrested for fraud. Will a judge accept that medication affected his behaviour?",
+        "medium": "Respected local solicitor Andrew is arrested for fraud. Will a judge accept that his Parkinson’s medication affected his behaviour?",
+        "long": "Andrew’s a respected local solicitor when one day he’s arrested. He has defrauded his elderly clients of more than £600,000, which he’s spent on sex workers and antiques.\n\nHis wife Frances and daughter Alice are shocked - this seems completely out of character. Then they learn there could be a connection to Andrew’s Parkinson’s medication.\n\nBut will the judge accept this as mitigation for his crimes?\n\nDetails of organisations offering help and support with some of the issues raised are available at bbc.co.uk/actionline.\n\nIf you have any concerns about medication you’re taking, speak to your doctor.\n\n\nPresenter: Noel Titheradge\nProducer: Lucy Burns\nEditor: Matt Willis\nA BBC News Long Form Audio production"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0n06t14.jpg",
+      "duration": {
+        "value": 879,
+        "label": "14 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r1nj.mp3",
+            "file_size": 15000000,
+            "label": "15 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r1nj.mp3",
+            "file_size": 15000000,
+            "label": "15 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r1nj.mp3",
+            "file_size": 15000000,
+            "label": "15 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-02-13T05:35:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-02-25T00:00:00Z",
+        "label": "25 Feb 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002rvtc&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0n0r23n",
+      "urn": "urn:bbc:radio:episode:m002rvy8",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Impulsive",
+        "tertiary": "9. Blame Game",
+        "entity_title": "9. Blame Game"
+      },
+      "synopses": {
+        "short": "Who should take responsibility for the impact of side effects from dopamine agonists?",
+        "medium": "Who should take responsibility for the devastating impact of side effects from dopamine agonists - drug companies, regulators, doctors?",
+        "long": "Respected local solicitor Andrew is sent to prison - but the devastating impact of the side effects of his Parkinson’s medication continues.\n\nBBC Investigations Correspondent Noel Titheradge has been contacted by more than 200 people about their experience of behavioural side effects of dopamine agonist drugs.\n\nSo who’s taking responsibility? We hear from pharmaceutical companies, regulators and doctors. There have been significant developments in the way these drugs are used - but what effect have they had?\n\nDetails of organisations offering help and support with some of the issues raised are available at bbc.co.uk/actionline.\n\nIf you have any concerns about medication you’re taking, speak to your doctor.\n\n\nPresenter: Noel Titheradge\nProducer: Lucy Burns\nEditor: Matt Willis\nA BBC News Long Form Audio production"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0n06t14.jpg",
+      "duration": {
+        "value": 834,
+        "label": "13 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r23n.mp3",
+            "file_size": 14000000,
+            "label": "14 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r23n.mp3",
+            "file_size": 14000000,
+            "label": "14 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r23n.mp3",
+            "file_size": 14000000,
+            "label": "14 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-02-13T05:40:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-02-26T00:00:00Z",
+        "label": "26 Feb 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002rvtc&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0n0r2k2",
+      "urn": "urn:bbc:radio:episode:m002rvy6",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Impulsive",
+        "tertiary": "10. Reflections",
+        "entity_title": "10. Reflections"
+      },
+      "synopses": {
+        "short": "Impulse control side effects are common, so why are they so hard to talk about?",
+        "medium": "Impulse control disorders are a common side effect of dopamine agonist drugs - so why are they so hard to talk about?",
+        "long": "Impulse control disorders are a common side effect of dopamine agonist drugs - it’s generally accepted that they will affect around 1 in 6 people taking these drugs for Parkinson’s.\n\nSo why are these side effects so hard to talk about? How can people get past their guilt and shame to access the support they need?\n\nAnd if subtle changes in the activity of chemicals in our brain can cause us to behave so differently - what is personality?\n\nDetails of organisations offering help and support with some of the issues raised are available at bbc.co.uk/actionline.\n\nIf you have any concerns about medication you’re taking, speak to your doctor.\n\n\nPresenter: Noel Titheradge\nProducer: Lucy Burns\nEditor: Matt Willis\nA BBC News Long Form Audio production"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0n06t14.jpg",
+      "duration": {
+        "value": 845,
+        "label": "14 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r2k2.mp3",
+            "file_size": 14000000,
+            "label": "14 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r2k2.mp3",
+            "file_size": 14000000,
+            "label": "14 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0n0r2k2.mp3",
+            "file_size": 14000000,
+            "label": "14 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2026-02-13T05:45:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2026-02-27T00:00:00Z",
+        "label": "27 Feb 2026"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002rvtc&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0mdh3hl",
+      "urn": "urn:bbc:radio:episode:m002mgsw",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Anatomy of a Cancellation",
+        "tertiary": "Trailer",
+        "entity_title": "Trailer"
+      },
+      "synopses": {
+        "short": "Katie Razzall reveals what happened when a prize-winning author was accused of racism",
+        "medium": "Katie Razzall reveals what happened when a prize-winning author was accused of racism, sparking what many saw as a culture war about race, class, and who has the right to say what.",
+        "long": null
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0mcfyyt.jpg",
+      "duration": {
+        "value": 184,
+        "label": "3 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0mdh3hl.mp3",
+            "file_size": 4000000,
+            "label": "4 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0mdh3hl.mp3",
+            "file_size": 4000000,
+            "label": "4 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0mdh3hl.mp3",
+            "file_size": 4000000,
+            "label": "4 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2025-11-03T18:19:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2025-11-03T00:00:00Z",
+        "label": "03 Nov 2025"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002m0bm&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0mf91z2",
+      "urn": "urn:bbc:radio:episode:m002m0bl",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Anatomy of a Cancellation",
+        "tertiary": "1. Kate’s Story",
+        "entity_title": "1. Kate’s Story"
+      },
+      "synopses": {
+        "short": "When a prize-winning author was accused of racism, she asked her online followers to help.",
+        "medium": "When prize-winning author Kate Clanchy was accused of racism she posted online for help, but found herself in the eye of a Twitter storm. We hear from Kate herself.",
+        "long": "When prize-winning author Kate Clanchy is accused of racism she asks her online followers for help.  She’s shocked by the reaction. We hear the story from Kate’s perspective. \n\nIn Shadow World: Anatomy of a Cancellation, the BBC’s Culture Editor Katie Razzall revisits a story that rocked the UK’s publishing industry in 2021. It led to what some saw as the unjustified cancellation of a prize-winning writer and teacher - but to others, was a long overdue reckoning for the world of publishing. It grew into a culture war about race, class, and who has the right to say what.\n\nAnatomy of a Cancellation explores a range of different perspectives to consider how people now view one of the most controversial literary rows in recent memory.\n\nWe have used clips from the following sources:\n\nThe Simpsons, Gracie Films and 20th Television \n\n“The myth of the climate ‘apocalypse,’” The Spiked podcast, 13 Aug 2021\n\n“What Happened? Kate Clanchy's Some Kids I Taught and What They Taught Me” - Josie Alford Youtube channel, 14 Aug 2021, \n\n'When I came from Nepal', by Mukahang Limbu\n\nPresenter: Katie Razzall\nProducer: Charlotte McDonald\nAdditional production: Octavia Woodward\nProduction co-ordinators: Sophie Hill and Katie Morrison\nSound design and mix: James Beard\nStory editing: Meara Sharma\nSeries producer: Matt Willis\nSenior news editor: Clare Fordham\nCommissioning executive: Tracy Williams\nCommissioning editor: Dan Clarke\n\nIt was a BBC Long Form Audio production for Radio 4."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0mcfyyt.jpg",
+      "duration": {
+        "value": 1707,
+        "label": "28 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0mf91z2.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0mf91z2.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0mf91z2.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2025-11-07T11:30:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2025-11-12T00:00:00Z",
+        "label": "12 Nov 2025"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": {
+          "short": "Contains strong language.",
+          "long": "Contains strong language."
+        }
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002m0bm&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0mf92rl",
+      "urn": "urn:bbc:radio:episode:m002m9l3",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Anatomy of a Cancellation",
+        "tertiary": "2. The Words",
+        "entity_title": "2. The Words"
+      },
+      "synopses": {
+        "short": "This time we hear from Kate Clanchy’s critics.",
+        "medium": "Many people found the words Kate Clanchy wrote in her memoir problematic: unkind, ableist, racist. We hear from some of her critics.",
+        "long": "Katie Razzall hears from critics who called out Kate Clanchy’s memoir ‘Some Kids I Taught and What They Taught Me’. The book, initially celebrated for its warmth and insight into multicultural classrooms, then comes under fire for what some call racialised and dehumanising language.\n\nIn Shadow World: Anatomy of a Cancellation, the BBC’s Culture Editor Katie Razzall revisits a story that rocked the UK’s publishing industry in 2021. It led to what some saw as the unjustified cancellation of a prize-winning writer and teacher - but to others, was a long overdue reckoning for the world of publishing. It grew into a culture war about race, class, and who has the right to say what.\n\nAnatomy of a Cancellation explores a range of different perspectives to consider how people now view one of the most controversial literary rows in recent memory.\n\nPresenter: Katie Razzall\nProducer: Charlotte McDonald\nAdditional production: Octavia Woodward\nProduction co-ordinators: Sophie Hill and Katie Morrison\nSound design and mix: James Beard\nStory editing: Meara Sharma\nSeries producer: Matt Willis\nSenior news editor: Clare Fordham\nCommissioning executive: Tracy Williams\nCommissioning editor: Dan Clarke\n\nIt was a BBC Long Form Audio production for Radio 4."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0mcfyyt.jpg",
+      "duration": {
+        "value": 1711,
+        "label": "28 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0mf92rl.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0mf92rl.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0mf92rl.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2025-11-07T11:35:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2025-11-19T00:00:00Z",
+        "label": "19 Nov 2025"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": {
+          "short": "Contains very strong language.",
+          "long": "Contains very strong language."
+        }
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002m0bm&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0mf93rm",
+      "urn": "urn:bbc:radio:episode:m002mmx2",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Anatomy of a Cancellation",
+        "tertiary": "3. The Paper Trail",
+        "entity_title": "3. The Paper Trail"
+      },
+      "synopses": {
+        "short": "How did Kate Clanchy’s publisher respond to the online debate?",
+        "medium": "With access to never before broadcast internal emails, can we learn how Kate Clanchy’s publisher responded to the online debate?",
+        "long": "Katie Razzall considers the internal reaction at publishing house Pan Macmillan during the storm surrounding Kate Clanchy’s memoir Some Kids I Taught and What They Taught Me. \n\nAs online criticism of the book intensifies, Kate Clanchy’s publisher faces mounting pressure from readers, authors, and its own staff. Drawing on a trove of redacted internal emails, the episode offers a rare behind-the-scenes look at how a major publisher grapples with a moment of reputational crisis. \n\nIn Shadow World: Anatomy of a Cancellation, the BBC’s Culture Editor Katie Razzall revisits a story that rocked the UK’s publishing industry in 2021. It led to what some saw as the unjustified cancellation of a prize-winning writer and teacher - but to others, was a long overdue reckoning for the world of publishing. It grew into a culture war about race, class, and who has the right to say what.\n\nAnatomy of a Cancellation explores a range of different perspectives to consider how people now view one of the most controversial literary rows in recent memory.\n\nPresenter: Katie Razzall\nProducer: Charlotte McDonald\nAdditional production: Octavia Woodward\nProduction co-ordinators: Sophie Hill and Katie Morrison\nSound design and mix: James Beard\nStory editing: Meara Sharma\nSeries producer: Matt Willis\nSenior news editor: Clare Fordham\nCommissioning executive: Tracy Williams\nCommissioning editor: Dan Clarke\n\nIt was a BBC Long Form Audio production for Radio 4."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0mcfyyt.jpg",
+      "duration": {
+        "value": 1710,
+        "label": "28 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0mf93rm.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0mf93rm.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0mf93rm.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2025-11-07T11:40:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2025-11-26T00:00:00Z",
+        "label": "26 Nov 2025"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002m0bm&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0mf954b",
+      "urn": "urn:bbc:radio:episode:m002mr53",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Anatomy of a Cancellation",
+        "tertiary": "4. The Defence of Kate Clanchy",
+        "entity_title": "4. The Defence of Kate Clanchy"
+      },
+      "synopses": {
+        "short": "We hear from some of Kate’s supporters.",
+        "medium": "Many people supported Kate Clanchy — fellow writers, journalists, and some of her own students. They said she had been misunderstood.",
+        "long": "Although Kate Clanchy faces a torrent of criticism in the summer of 2021, many people supported her — fellow writers, journalists, and some of her own students. They say she has been misunderstood. \n\nKatie Razzall speaks to those who stood by her—including a former student who credits Kate Clanchy with empowering him and others through poetry and mentorship. \n\nIn Shadow World: Anatomy of a Cancellation, the BBC’s Culture Editor Katie Razzall revisits a story that rocked the UK’s publishing industry in 2021. It led to what some saw as the unjustified cancellation of a prize-winning writer and teacher - but to others, was a long overdue reckoning for the world of publishing. It grew into a culture war about race, class, and who has the right to say what.\n\nAnatomy of a Cancellation explores a range of different perspectives to consider how people now view one of the most controversial literary rows in recent memory.\n\nPresenter: Katie Razzall\nProducer: Charlotte McDonald\nAdditional production: Octavia Woodward\nProduction co-ordinators: Sophie Hill and Katie Morrison\nSound design and mix: James Beard\nStory editing: Meara Sharma\nSeries producer: Matt Willis\nSenior news editor: Clare Fordham\nCommissioning executive: Tracy Williams\nCommissioning editor: Dan Clarke\n\nIt was a BBC Long Form Audio production for Radio 4."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0mcfyyt.jpg",
+      "duration": {
+        "value": 1712,
+        "label": "28 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0mf954b.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0mf954b.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0mf954b.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2025-11-07T11:45:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2025-12-03T00:00:00Z",
+        "label": "03 Dec 2025"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002m0bm&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0mf95km",
+      "urn": "urn:bbc:radio:episode:m002mr56",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Anatomy of a Cancellation",
+        "tertiary": "5. The Rewrite",
+        "entity_title": "5. The Rewrite"
+      },
+      "synopses": {
+        "short": "Will a sensitivity read be enough to move on from the row?",
+        "medium": "Two years after launch, Kate Clanchy’s publishers promise to revise the text and release a new version. Will a sensitivity read be enough to move on from the row?",
+        "long": "A sensitivity reader Helen Gould speaks publicly for the first time, revealing the emotional and professional complexities of revising a book already in print.\n\nKatie Razzall interrogates the role of sensitivity readers, and asks: who gets to decide what’s acceptable in literature—and what happens when those boundaries shift?\n\nIn Shadow World: Anatomy of a Cancellation, the BBC’s Culture Editor Katie Razzall revisits a story that rocked the UK’s publishing industry in 2021. It led to what some saw as the unjustified cancellation of a prize-winning writer and teacher - but to others, was a long overdue reckoning for the world of publishing. It grew into a culture war about race, class, and who has the right to say what.\n\nAnatomy of a Cancellation explores a range of different perspectives to consider how people now view one of the most controversial literary rows in recent memory.\n\nPresenter: Katie Razzall\nProducer: Charlotte McDonald\nAdditional production: Octavia Woodward\nProduction co-ordinators: Sophie Hill and Katie Morrison\nSound design and mix: James Beard\nStory editing: Meara Sharma\nSeries producer: Matt Willis\nSenior news editor: Clare Fordham\nCommissioning executive: Tracy Williams\nCommissioning editor: Dan Clarke\n\nIt was a BBC Long Form Audio production for Radio 4."
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0mcfyyt.jpg",
+      "duration": {
+        "value": 1713,
+        "label": "28 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0mf95km.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0mf95km.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0mf95km.mp3",
+            "file_size": 28000000,
+            "label": "28 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2025-11-07T11:50:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2025-12-10T00:00:00Z",
+        "label": "10 Dec 2025"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002m0bm&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    },
+    {
+      "type": "playable_item",
+      "id": "p0mfwr6v",
+      "urn": "urn:bbc:radio:episode:m002mr58",
+      "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+      },
+      "titles": {
+        "primary": "Shadow World",
+        "secondary": "Anatomy of a Cancellation",
+        "tertiary": "6. Post Mortem",
+        "entity_title": "6. Post Mortem"
+      },
+      "synopses": {
+        "short": "Today, what lessons can be drawn from what happened to Kate Clanchy and her critics?",
+        "medium": "Four years on, Kate Clanchy and her critics still do not agree. What bigger lessons can be drawn from what happened to them?",
+        "long": "Katie Razzall considers the fallout from the controversy surrounding Kate Clanchy’s award-winning memoir Some Kids I Taught and What They Taught Me. \n\nShe explores the deep divisions the case exposed: in publishing, on social media, and among writers. \n\nHas the industry changed?  What is the cost of this controversy, and who gets to tell their story?\n\nIn Shadow World: Anatomy of a Cancellation, the BBC’s Culture Editor Katie Razzall revisits a story that rocked the UK’s publishing industry in 2021. It led to what some saw as the unjustified cancellation of a prize-winning writer and teacher - but to others, was a long overdue reckoning for the world of publishing. It grew into a culture war about race, class, and who has the right to say what.\n\nAnatomy of a Cancellation explores a range of different perspectives to consider how people now view one of the most controversial literary rows in recent memory.\n\nPresenter: Katie Razzall\nProducer: Charlotte McDonald\nAdditional production: Octavia Woodward\nProduction co-ordinators: Sophie Hill and Katie Morrison\nSound design and mix: James Beard\nStory editing: Meara Sharma\nSeries producer: Matt Willis\nSenior news editor: Clare Fordham\nCommissioning executive: Tracy Williams\nCommissioning editor: Dan Clarke"
+      },
+      "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0mcfyyt.jpg",
+      "duration": {
+        "value": 1746,
+        "label": "29 mins"
+      },
+      "progress": null,
+      "container": {
+        "type": "brand",
+        "id": "m001zlz0",
+        "urn": "urn:bbc:radio:brand:m001zlz0",
+        "title": "Shadow World",
+        "synopses": {
+          "short": "What will it take for two London gangsters to turn their lives into a movie?",
+          "medium": "What will it take for two London gangsters to turn their lives into a movie? A story about friendship, survival, and the fight to escape the life you built.",
+          "long": "Shadow World - Breakin' the Cycle is the story of two feared London gangsters, Colin and D, who, in the early 2000s decide to try and escape the cycle of crime by making a movie based on their own lives as gang leaders and drug dealers. But the lines between fact and fiction quickly begin to blur, when they take a star-studded cast and a largely white, middle-class film crew into their world, in an attempt to make the UK's first authentic hood film. Accidental stabbings, drug dealing on set, and even a real-life shootout. Amongst the chaos, they're faced with the realities of leaving gang life behind, and the constant temptations of their old life threatening to drag them back in. Breakin' the Cycle is a series about friendship, guns, drugs, money and the sacrifices required when leaving one life behind in pursuit of another. \n\nWhat will it take for Colin and D to leave behind a world of guns, drugs, and gangs, and reinvent themselves as film-makers?\n \nGripping stories from the Shadows - BBC investigations from across the UK."
+        },
+        "activities": []
+      },
+      "download": {
+        "type": "non_drm",
+        "quality_variants": {
+          "low": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0mfwr6v.mp3",
+            "file_size": 29000000,
+            "label": "29 MB"
+          },
+          "medium": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0mfwr6v.mp3",
+            "file_size": 29000000,
+            "label": "29 MB"
+          },
+          "high": {
+            "bitrate": 128,
+            "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0mfwr6v.mp3",
+            "file_size": 29000000,
+            "label": "29 MB"
+          }
+        }
+      },
+      "availability": {
+        "from": "2025-11-07T11:55:00Z",
+        "to": null,
+        "label": "Available for over a year"
+      },
+      "release": {
+        "date": "2025-12-17T00:00:00Z",
+        "label": "17 Dec 2025"
+      },
+      "guidance": {
+        "competition_warning": false,
+        "warnings": null
+      },
+      "activities": [],
+      "uris": [
+        {
+          "type": "latest",
+          "id": null,
+          "label": "Latest",
+          "uri": "/v2/my/programmes/playable?container=m002m0bm&sort=sequential&type=episode&experience=domestic"
+        }
+      ],
+      "play_context": null,
+      "recommendation": null
+    }
+  ]
+}

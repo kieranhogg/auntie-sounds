@@ -1,0 +1,24 @@
+{
+  "$schema": "https://rms.api.bbc.co.uk/docs/swagger.json#/definitions/NetworkResponse",
+  "type": "network",
+  "id": "bbc_radio_four",
+  "coverage": "national",
+  "key": "radio4",
+  "short_title": "Radio 4",
+  "long_title": "BBC Radio 4",
+  "default_service_id": "bbc_radio_fourfm",
+  "services": [
+    {
+      "type": "service",
+      "id": "bbc_radio_fourfm",
+      "pid": "p00fzl7j",
+      "short_title": "Radio 4 FM"
+    },
+    {
+      "type": "service",
+      "id": "bbc_radio_fourlw",
+      "pid": "p00fzl7k",
+      "short_title": "Radio 4 LW"
+    }
+  ]
+}

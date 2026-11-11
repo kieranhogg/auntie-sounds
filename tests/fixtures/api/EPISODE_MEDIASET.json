@@ -1,0 +1,95 @@
+{
+  'disclaimer': "This code and data form part of the BBC iPlayer content protection system. Tampering with, removal of, misuse of, or unauthorised use of this code or data constitutes circumvention of the BBC's content protection measures and may result in legal action. BBC (C) 2026.",
+  'media': [
+    {
+      'bitrate': '320',
+      'service': '[deprecated]',
+      'connection': [
+        {
+          'priority': '20',
+          'authExpiresOffset': 21600,
+          'dpw': '75',
+          'protocol': 'http',
+          'supplier': 'mf_akamai_nonbidi',
+          'authExpires': '2026-10-06T20:54:28Z',
+          'href': 'http://aod-dash-uk-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/80a072-m00318mz/vf_m00318mz_4d29bd48-dbb7-4bad-957f-789c785e46d6.ism/pc_hd_abr_v2_uk_dash_master.mpd?__gda__=1791320068_90b48b26fc8cf9475a593e1f55bc108e',
+          'transferFormat': 'dash'
+        },
+        {
+          'priority': '20',
+          'authExpiresOffset': 21600,
+          'dpw': '75',
+          'protocol': 'https',
+          'supplier': 'mf_akamai_nonbidi',
+          'authExpires': '2026-10-06T20:54:28Z',
+          'href': 'https://aod-dash-uk-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/80a072-m00318mz/vf_m00318mz_4d29bd48-dbb7-4bad-957f-789c785e46d6.ism/pc_hd_abr_v2_uk_dash_master.mpd?__gda__=1791320068_90b48b26fc8cf9475a593e1f55bc108e',
+          'transferFormat': 'dash'
+        },
+        {
+          'priority': '40',
+          'authExpiresOffset': 21600,
+          'dpw': '25',
+          'protocol': 'http',
+          'supplier': 'mf_cloudfront_nonbidi',
+          'authExpires': '2026-10-06T20:54:28Z',
+          'href': 'http://aod-dash-uk.live.cf.md.bbci.co.uk/usp/auth/vod/piff_abr_full_audio/80a072-m00318mz/vf_m00318mz_4d29bd48-dbb7-4bad-957f-789c785e46d6.ism/pc_hd_abr_v2_uk_dash_master.mpd?Expires=1791320068&Signature=EAEEHG6HjVe080po2czBgnhB9Xkq64v81aP~A7tYFcuZUTw1YEjl6pWknbGGxHnq1MoPPleRH7X1zRpSMMyiDfqFAmUnzXVUuha9ewr0vtDYFjDi6iqz8RIlVYqiyIm4Fbxh--6xXxtWsirTm0qwvpisBOXToft8stnOjH5U8PEZzPnwCUz9bNrRXaEniFu3Ov8Cfw5PoZzzFc2xc0ZBhg3TjnY6eMzCRRwLuSplildiQzJIUnKDceIHi~jRRjmDSWtQaHkFHtflIIP44d1H~K0VN9NV99SYSzrbXtlinbG6F2FuM86cmLQWNJ~nfWHCBMXjQ5u8qDWhdRXmrzkZkA__&Key-Pair-Id=K2VWLYKQ4HU1FJ',
+          'transferFormat': 'dash'
+        },
+        {
+          'priority': '40',
+          'authExpiresOffset': 21600,
+          'dpw': '25',
+          'protocol': 'https',
+          'supplier': 'mf_cloudfront_nonbidi',
+          'authExpires': '2026-10-06T20:54:28Z',
+          'href': 'https://aod-dash-uk.live.cf.md.bbci.co.uk/usp/auth/vod/piff_abr_full_audio/80a072-m00318mz/vf_m00318mz_4d29bd48-dbb7-4bad-957f-789c785e46d6.ism/pc_hd_abr_v2_uk_dash_master.mpd?Expires=1791320068&Signature=OnZVAvsNhOymhrKcpCVEVqyVreAvKn31zizPoBPa0JDzH058g4NqLG3clg3eeHRr1T3E4sLUAHiJmVcUpTC7P7nKOGMT1POg01Ecc8uFSJbE9hc~PpnZGCNIngn5FvOPaA118vS-Mq2PJ4dRLxupCjXe9-mGlEneTbiRGNpPAPPIqo9fdQSdGJjeVzqjOqGlng3YeTkDoDejFKcR-vWuvxZIIPqpsZt0pkSlZ6nNPA6AXDB4oKo2UoL6qy80pY62gi-IR-f~HozlM6DWoE~VPer92wvvuZ3EdiTpRp8V3MoWh7JmMiUwD1k6Z5oNGNjuJKnzdfU-RWbhmCYzfSFtpA__&Key-Pair-Id=K2VWLYKQ4HU1FJ',
+          'transferFormat': 'dash'
+        },
+        {
+          'priority': '20',
+          'authExpiresOffset': 21600,
+          'dpw': '75',
+          'protocol': 'http',
+          'supplier': 'mf_akamai_nonbidi',
+          'authExpires': '2026-10-06T20:54:28Z',
+          'href': 'http://aod-hls-uk-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/80a072-m00318mz/vf_m00318mz_4d29bd48-dbb7-4bad-957f-789c785e46d6.ism/pc_hd_abr_v2_uk_hls_master.m3u8?__gda__=1791320068_13ed4cc93823e5fa81cbb54d06cc0097',
+          'transferFormat': 'hls'
+        },
+        {
+          'priority': '20',
+          'authExpiresOffset': 21600,
+          'dpw': '75',
+          'protocol': 'https',
+          'supplier': 'mf_akamai_nonbidi',
+          'authExpires': '2026-10-06T20:54:28Z',
+          'href': 'https://aod-hls-uk-live.akamaized.net/usp/auth/vod/piff_abr_full_audio/80a072-m00318mz/vf_m00318mz_4d29bd48-dbb7-4bad-957f-789c785e46d6.ism/pc_hd_abr_v2_uk_hls_master.m3u8?__gda__=1791320068_13ed4cc93823e5fa81cbb54d06cc0097',
+          'transferFormat': 'hls'
+        },
+        {
+          'priority': '40',
+          'authExpiresOffset': 21600,
+          'dpw': '25',
+          'protocol': 'http',
+          'supplier': 'mf_cloudfront_nonbidi',
+          'authExpires': '2026-10-06T20:54:28Z',
+          'href': 'http://aod-hls-uk.live.cf.md.bbci.co.uk/usp/auth/vod/piff_abr_full_audio/80a072-m00318mz/vf_m00318mz_4d29bd48-dbb7-4bad-957f-789c785e46d6.ism/pc_hd_abr_v2_uk_hls_master.m3u8?Expires=1791320068&Signature=FTbDWdxRH3PZuip9xpBnjqwo12ex9hVf~nCsb89JYltVtAVYmg-PWzUG1lC2rMHreLjsclsPJSdCeg~SMyTRDtSSVx-nWqbNRtWI8SlquJgUzjUdCy484Ywr5KwcfwxvczpsA4cmF-qe2ZXc7uFf1CD8ENhkDZ3S4BgCrY6Cma~m3nGMBlyAqPMwD8nvjyDsl0~fqvtN9c5E4fz8ZMJCjnTh4Knagqo2VBouzVV9loPcaA-77Z6hzAtL9MNao0oQ5NWJGhOuViH8caQIphZ1Ui1fqu~HDZ7421a847Z~0EnnIIshBSXTlwW0nqQrY3X1I~tUoePkUVJcCyZvfT765A__&Key-Pair-Id=K2VWLYKQ4HU1FJ',
+          'transferFormat': 'hls'
+        },
+        {
+          'priority': '40',
+          'authExpiresOffset': 21600,
+          'dpw': '25',
+          'protocol': 'https',
+          'supplier': 'mf_cloudfront_nonbidi',
+          'authExpires': '2026-10-06T20:54:28Z',
+          'href': 'https://aod-hls-uk.live.cf.md.bbci.co.uk/usp/auth/vod/piff_abr_full_audio/80a072-m00318mz/vf_m00318mz_4d29bd48-dbb7-4bad-957f-789c785e46d6.ism/pc_hd_abr_v2_uk_hls_master.m3u8?Expires=1791320068&Signature=i8lPVR200Sko-1LTLnujAn-4SIXDhPf7SOr6OfF6PKELP3sSXds9hKulORreeYj2Y-WsLyTj2M~-hUUNPiqVC7pfcR41C31ManX6XiCb9GJyCHAC1k25qR-GuE8f~N3sLJS1jFIrifVsMBTAAyUGxcsXEgklEXMmDoG9a~Yb9mMfsFmsAwhNFnMtS-zz0P~DIbqD2Dho052vaCfNbNUO604kSAyqOJ4l7hlpdm0bXcegyChEsk61seTHPSjgYiAvM7oAew7CQMWVZhLGrl~1BEhvsOd4m3RDFnpCo3ia-dhNeWcY-9rtWG7F~01u9bUQq23XBpmjeMy0TFuOJvlwGA__&Key-Pair-Id=K2VWLYKQ4HU1FJ',
+          'transferFormat': 'hls'
+        }
+      ],
+      'kind': 'audio',
+      'type': 'audio/mp4',
+      'encoding': 'aac',
+      'expires': '2026-10-12T23:30:00Z'
+    }
+  ]
+}

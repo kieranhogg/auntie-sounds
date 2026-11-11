@@ -1,0 +1,2739 @@
+{
+  "$schema": "https://rms.api.bbc.co.uk/docs/swagger.json#/definitions/ExperienceResponse",
+  "data": [
+    {
+      "type": "inline_header_module",
+      "id": "container",
+      "style": null,
+      "title": "Sherlock Holmes Short Stories",
+      "description": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+      "data": {
+        "type": "container_item",
+        "id": "p0k9tzr0",
+        "urn": "urn:bbc:radio:brand:p0k9tzr0",
+        "tlec_urn": "urn:bbc:radio:brand:p0k9tzr0",
+        "network": {
+          "id": "bbc_sounds_podcasts",
+          "key": "podcasts",
+          "short_title": "Sounds",
+          "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+          "network_type": "master_brand"
+        },
+        "titles": {
+          "primary": "Sherlock Holmes Short Stories",
+          "secondary": null,
+          "tertiary": null
+        },
+        "synopses": {
+          "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+          "medium": null,
+          "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+        },
+        "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+        "activities": [],
+        "uris": [
+          {
+            "type": "latest",
+            "id": null,
+            "label": "Latest",
+            "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+          }
+        ],
+        "playable_count": null,
+        "recommendation": null
+      }
+    },
+    {
+      "type": "inline_display_module",
+      "id": "container_list",
+      "style": null,
+      "title": "Latest Episodes from Sherlock Holmes Short Stories",
+      "description": null,
+      "state": "ok",
+      "uris": {
+        "pagination": {
+          "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic&offset={offset}&limit={limit}",
+          "offset": 0,
+          "limit": 30,
+          "total": 95
+        },
+        "polling": null
+      },
+      "controls": null,
+      "total": 95,
+      "data": [
+        {
+          "type": "playable_item",
+          "id": "p0p9vvrk",
+          "urn": "urn:bbc:radio:episode:p0p9vvvv",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Adventure of the Missing Three-Quarter: Part One",
+            "tertiary": null,
+            "entity_title": "The Adventure of the Missing Three-Quarter: Part One"
+          },
+          "synopses": {
+            "short": "Sherlock Holmes must find Cambridge's missing rugby player.",
+            "medium": null,
+            "long": "When the Cambridge rugby teamâ€™s star player goes missing, on the eve of a critical match against Oxford, itâ€™s up to Sherlock Holmes to track him down. \n\nA â Noiserâ  podcast production. \n \nNarrated by Hugh Bonnevilleâ€¯ \nWritten by Sir Arthur Conan Doyle \nProduced by Duncan Barrett \nScript Supervisor: Chris McDonald \nSound Design and Audio Editing by Tony Onuchukwu \nSound Supervisor: Tom Pink \nCompositions: Dorry Macaulay and Oliver Baines \nMix & Mastering: Josh Latham \nSeries Consultant: Dan Smith \nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 1644,
+            "label": "27 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 23000000,
+                "label": "23 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 30000000,
+                "label": "30 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 74000000,
+                "label": "74 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-09-17T05:00:00Z",
+            "to": "2029-09-16T05:00:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-09-17T00:00:00Z",
+            "label": "17 Sep 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0p8pytb",
+          "urn": "urn:bbc:radio:episode:p0p8pyxy",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Adventure of Shoscombe Old Place: Part Two",
+            "tertiary": null,
+            "entity_title": "The Adventure of Shoscombe Old Place: Part Two"
+          },
+          "synopses": {
+            "short": "Holmes has his eye on a bigger catch than those found in the lake of Shoscombe Old Place.",
+            "medium": null,
+            "long": "Holmes and Watson arrive in Berkshire, tackle in hand, ready for a spot of fishing. But the great detective has his eye on a bigger catch than those found in the lake of Shoscombe Old Place.\n\nA â Noiserâ  podcast production.\n \nNarrated by Hugh Bonneville \nWritten by Sir Arthur Conan Doyle\nProduced by Duncan Barrett\nScript Supervisor: Chris McDonald\nSound Design and Audio Editing by Tony Onuchukwu\nSound Supervisor: Tom Pink\nCompositions: Dorry Macaulay and Oliver Baines\nMix & Mastering: Ralph Tittley\nSeries Consultant: Dan Smith\nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 1705,
+            "label": "28 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 24000000,
+                "label": "24 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 32000000,
+                "label": "32 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 77000000,
+                "label": "77 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-09-10T04:00:00Z",
+            "to": "2029-09-09T04:00:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-09-10T00:00:00Z",
+            "label": "10 Sep 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0p7pkzj",
+          "urn": "urn:bbc:radio:episode:p0p7pl90",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Adventure of Shoscombe Old Place: Part One",
+            "tertiary": null,
+            "entity_title": "The Adventure of Shoscombe Old Place: Part One"
+          },
+          "synopses": {
+            "short": "Welcome to the last Sherlock Holmes story that Sir Arthur Conan Doyle ever wrote.",
+            "medium": null,
+            "long": "Part one of two.\n\nA hidden crypt... a mysterious late-night visitor... and a figure emerging from an old family tomb...\nWelcome to the last Sherlock Holmes story that Sir Arthur Conan Doyle ever wrote.\n\nA â Noiserâ  podcast production.\n\nNarrated by Hugh Bonneville \nWritten by Sir Arthur Conan Doyle\nProduced by Duncan Barrett\nScript Supervisor: Chris McDonald\nSound Design and Audio Editing by Tony Onuchukwu\nSound Supervisor: Tom Pink\nCompositions: Dorry Macaulay and Oliver Baines\nMix & Mastering: Ralph Tittley\nSeries Consultant: Dan Smith\nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 1424,
+            "label": "23 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 20000000,
+                "label": "20 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 27000000,
+                "label": "27 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 64000000,
+                "label": "64 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-09-03T09:14:00Z",
+            "to": "2029-09-02T09:14:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-09-03T00:00:00Z",
+            "label": "03 Sep 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0p6j69x",
+          "urn": "urn:bbc:radio:episode:p0p6j6f8",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Adventure of the Golden Pince-Nez: Part Two",
+            "tertiary": null,
+            "entity_title": "The Adventure of the Golden Pince-Nez: Part Two"
+          },
+          "synopses": {
+            "short": "A tutorial with Professor Coram gives Holmes all he needs to solve the case.",
+            "medium": null,
+            "long": "Part two of two \n\nA tutorial with the enigmatic Professor Coram gives Holmes all the evidence he needs to solve the case. \n \nA â Noiserâ  podcast production. \n \nNarrated by Hugh Bonnevilleâ€¯ \nWritten by Sir Arthur Conan Doyle \nProduced by Duncan Barrett \nScript Supervisor: Chris McDonald \nSound Design and Audio Editing by Tony Onuchukwu \nSound Supervisor: Tom Pink \nCompositions: Dorry Macaulay and Oliver Baines \nMix & Mastering: Josh Latham \nSeries Consultant: Dan Smith \nExecutive Producer: Katrina Hughes\n\nThis podcast contains mention of suicide."
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 2067,
+            "label": "34 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 29000000,
+                "label": "29 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 38000000,
+                "label": "38 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 92000000,
+                "label": "92 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-08-27T09:40:00Z",
+            "to": "2029-08-26T09:40:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-08-27T00:00:00Z",
+            "label": "27 Aug 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": {
+              "short": "Contains some upsetting scenes.",
+              "long": "Contains some scenes which some viewers may find upsetting."
+            }
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0p58yt4",
+          "urn": "urn:bbc:radio:episode:p0p58yxf",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Adventure of the Golden Pince-Nez: Part One",
+            "tertiary": null,
+            "entity_title": "The Adventure of the Golden Pince-Nez: Part One"
+          },
+          "synopses": {
+            "short": "Holmes and Watson are called to the home of a professor whose assistant has been murdered",
+            "medium": null,
+            "long": "Part one of two \n\nHolmes and Watson are called to the home of a reclusive professor whose young assistant has just been murdered. From the heavy prescription of the pince-nez left at the scene, the murderer must have been half-blind when they made their escape... but can Holmes bring the case into focus? \n\nA â Noiserâ  podcast production. \n \nNarrated by Hugh Bonnevilleâ€¯ \nWritten by Sir Arthur Conan Doyle \nProduced by Duncan Barrett \nScript Supervisor: Chris McDonald \nSound Design and Audio Editing: Tony Onuchukwu \nSound Supervisor: Tom Pink \nCompositions: Dorry Macaulay and Oliver Baines \nMix & Mastering: Josh Latham \nSeries Consultant: Dan Smith \nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 1946,
+            "label": "32 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 27000000,
+                "label": "27 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 36000000,
+                "label": "36 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 87000000,
+                "label": "87 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-08-20T05:00:00Z",
+            "to": "2029-08-19T05:00:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-08-20T00:00:00Z",
+            "label": "20 Aug 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": {
+              "short": "Contains some violence.",
+              "long": "Contains some violent scenes."
+            }
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0p3w1fm",
+          "urn": "urn:bbc:radio:episode:p0p3w209",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Adventure of the Priory School: Part Three",
+            "tertiary": null,
+            "entity_title": "The Adventure of the Priory School: Part Three"
+          },
+          "synopses": {
+            "short": "The mystery is resolved, as family secrets are revealed at Holdernesse Hall.",
+            "medium": null,
+            "long": "Part three of three.\n\nThe mystery of the missing schoolboy is resolved, as family secrets are revealed at Holdernesse Hall. And Sherlock Holmes pockets a hefty fee for his troubles.\n\nA â Noiserâ  podcast production.\n \nNarrated by Hugh Bonneville \nWritten by Sir Arthur Conan Doyle\nProduced by Duncan Barrett\nScript Supervisor: Chris McDonald\nSound Design and Audio Editing: Tony Onuchukwu\nSound Supervisor: Tom Pink\nCompositions: Dorry Macaulay and Oliver Baines\nMix & Mastering: Ralph Tittley\nSeries Consultant: Dan Smith\nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 1562,
+            "label": "26 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 22000000,
+                "label": "22 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 29000000,
+                "label": "29 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 70000000,
+                "label": "70 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-08-13T05:00:00Z",
+            "to": "2029-08-12T05:00:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-08-13T00:00:00Z",
+            "label": "13 Aug 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0p2r4n6",
+          "urn": "urn:bbc:radio:episode:p0p2r723",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Adventure of the Priory School: Part Two",
+            "tertiary": null,
+            "entity_title": "The Adventure of the Priory School: Part Two"
+          },
+          "synopses": {
+            "short": "A body is found on the moor, and Holmes thinks he has cracked the case...",
+            "medium": null,
+            "long": "Part two of three.\n\nHolmes and Watson find a body on the moor... and the great detective thinks he's cracked the case.\n\nA â Noiserâ  podcast production.\n \nNarrated by Hugh Bonneville \nWritten by Sir Arthur Conan Doyle\nProduced by Duncan Barrett\nScript Supervisor: Chris McDonald\nSound Design and Audio Editing: Tony Onuchukwu and George Tapp\nSound Supervisor: Tom Pink\nCompositions: Dorry Macaulay and Oliver Baines\nMix & Mastering: Ralph Tittley\nSeries Consultant: Dan Smith\nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 2009,
+            "label": "33 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 28000000,
+                "label": "28 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 37000000,
+                "label": "37 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 90000000,
+                "label": "90 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-08-06T05:00:00Z",
+            "to": "2029-08-05T05:00:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-08-06T00:00:00Z",
+            "label": "06 Aug 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": {
+              "short": "Contains some violence.",
+              "long": "Contains some violent scenes."
+            }
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0p1hx2k",
+          "urn": "urn:bbc:radio:episode:p0p1hx5d",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Adventure of the Priory School: Part One",
+            "tertiary": null,
+            "entity_title": "The Adventure of the Priory School: Part One"
+          },
+          "synopses": {
+            "short": "The ten-year-old son of one of the richest men in England is missing...",
+            "medium": null,
+            "long": "Part one of three.\n\nA frantic headmaster arrives in Baker Street, begging for Holmesâ€™ help in tracking down a missing pupilâ€¦ the ten-year-old son of one of the richest men in England. \n\nA â Noiserâ  podcast production.\n \nNarrated by Hugh Bonneville \nWritten by Sir Arthur Conan Doyle\nProduced by Duncan Barrett\nScript Supervisor: Chris McDonald\nSound Design and Audio Editing: Tony Onuchukwu and George Tapp\nSound Supervisor: Tom Pink\nCompositions: Dorry Macaulay and Oliver Baines\nMix & Mastering: Ralph Tittley\nSeries Consultant: Dan Smith\nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 1532,
+            "label": "25 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 22000000,
+                "label": "22 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 29000000,
+                "label": "29 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 69000000,
+                "label": "69 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-07-30T05:00:00Z",
+            "to": "2029-07-29T05:00:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-07-30T00:00:00Z",
+            "label": "30 Jul 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0p0cvm1",
+          "urn": "urn:bbc:radio:episode:p0p0cvz0",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Adventure of the Sussex Vampire: Part Two",
+            "tertiary": null,
+            "entity_title": "The Adventure of the Sussex Vampire: Part Two"
+          },
+          "synopses": {
+            "short": "The mystery concludes, as the supposed vampire is brought into the lightâ€¦",
+            "medium": null,
+            "long": "Part two of two.\n\nSherlock sinks his teeth into the mystery, as the supposed vampire is brought into the lightâ€¦ \n\nA â Noiserâ  podcast production.\n \nNarrated by Hugh Bonneville \nWritten by Sir Arthur Conan Doyle\nProduced by Duncan Barrett\nScript Supervisor: Chris McDonald\nSound Design and Audio Editing: Tony Onuchukwu\nSound Supervisor: Tom Pink\nCompositions: Dorry Macaulay and Oliver Baines\nMix & Mastering: Ralph Tittley\nSeries Consultant: Dan Smith\nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 1533,
+            "label": "25 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 22000000,
+                "label": "22 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 29000000,
+                "label": "29 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 69000000,
+                "label": "69 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-07-23T09:19:00Z",
+            "to": "2029-07-22T09:19:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-07-23T00:00:00Z",
+            "label": "23 Jul 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0nyhwxr",
+          "urn": "urn:bbc:radio:episode:p0nyhxhr",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Adventure of the Sussex Vampire: Part One",
+            "tertiary": null,
+            "entity_title": "The Adventure of the Sussex Vampire: Part One"
+          },
+          "synopses": {
+            "short": "Holmes and Watson are summoned to Sussex to investigate a case of marital discordâ€¦",
+            "medium": null,
+            "long": "Part one of two.\n\nHolmes and Watson are summoned to Sussex to investigate a case of marital discordâ€¦ in which the South American wife is suspected of being a vampire.  \n\nA â â Noiserâ â  podcast production. \n \nNarrated by Hugh Bonnevilleâ€¯ \nWritten by Sir Arthur Conan Doyle \nProduced by Duncan Barrett \nScript Supervisor: Chris McDonald \nSound Design and Audio Editing by Tony Onuchukwu \nSound Supervisor: Tom Pink \nCompositions: Dorry Macaulay and Oliver Baines \nMix & Mastering: Josh Latham \nSeries Consultant: Dan Smith \nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 1406,
+            "label": "23 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 20000000,
+                "label": "20 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 26000000,
+                "label": "26 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 63000000,
+                "label": "63 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-07-16T05:00:00Z",
+            "to": "2029-07-15T05:00:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-07-16T00:00:00Z",
+            "label": "16 Jul 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": {
+              "short": "Contains some violence.",
+              "long": "Contains some violent scenes."
+            }
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0nwbq21",
+          "urn": "urn:bbc:radio:episode:p0nwbq7z",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Adventure of the Empty House: Part Two",
+            "tertiary": null,
+            "entity_title": "The Adventure of the Empty House: Part Two"
+          },
+          "synopses": {
+            "short": "Watson lays a trap for Colonel Sebastian Moran, Moriartyâ€™s deadly right-hand manâ€¦",
+            "medium": null,
+            "long": "Part two of two\n\nHolmes and Watson stage an ingenious stakeout, laying a trap for Moriartyâ€™s right-hand manâ€¦ the deadly Colonel Sebastian Moran.\n\nA â Noiserâ  podcast production.\n \nNarrated by Hugh Bonneville \nWritten by Sir Arthur Conan Doyle\nProduced by Duncan Barrett\nSound Design and Audio Editing: Tony Onuchukwu and George Tapp\nSound Supervisor: Tom Pink\nCompositions: Dorry Macaulay and Oliver Baines\nMix & Mastering: Ralph Tittley\nSeries Consultant: Dan Smith\nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 2063,
+            "label": "34 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 29000000,
+                "label": "29 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 38000000,
+                "label": "38 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 92000000,
+                "label": "92 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-07-09T05:00:00Z",
+            "to": "2029-07-08T05:00:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-07-09T00:00:00Z",
+            "label": "09 Jul 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": {
+              "short": "Contains some violence.",
+              "long": "Contains some violent scenes."
+            }
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0nw6nb3",
+          "urn": "urn:bbc:radio:episode:p0nw6pg0",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Adventure of the Empty House: Part One",
+            "tertiary": null,
+            "entity_title": "The Adventure of the Empty House: Part One"
+          },
+          "synopses": {
+            "short": "With Sherlock Holmes missing, presumed dead, Dr Watson tries to solve a case on his ownâ€¦",
+            "medium": null,
+            "long": "Part one of two.\n\nWith Sherlock Holmes missing, presumed dead, Dr Watson tries to solve a case on his ownâ€¦ the so-called Park Lane Mystery, which has all of London abuzz.  \n \nA â Noiserâ  podcast production.\n \nNarrated by Hugh Bonneville \nWritten by Sir Arthur Conan Doyle\nProduced by Duncan Barrett\nSound Design and Audio Editing: Tony Onuchukwu and George Tapp\nSound Supervisor: Tom Pink\nCompositions: Dorry Macaulay and Oliver Baines\nMix & Mastering: Ralph Tittley\nSeries Consultant: Dan Smith\nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 1788,
+            "label": "29 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 25000000,
+                "label": "25 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 33000000,
+                "label": "33 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 80000000,
+                "label": "80 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-07-02T05:00:00Z",
+            "to": "2029-07-01T05:00:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-07-02T00:00:00Z",
+            "label": "02 Jul 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": {
+              "short": "Contains some violence.",
+              "long": "Contains some violent scenes."
+            }
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0ntsxzr",
+          "urn": "urn:bbc:radio:episode:p0ntsyqg",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Hound of the Baskervilles: Part Nine",
+            "tertiary": null,
+            "entity_title": "The Hound of the Baskervilles: Part Nine"
+          },
+          "synopses": {
+            "short": "Holmes and Watson come face to face with the mythical hound.",
+            "medium": null,
+            "long": "Holmes and Watson come face to face with the mythical hound. But how long can Sir Charlesâ€™ murderer escape justice on the moor? \n\nA â Noiserâ  podcast production. \n \nNarrated by Hugh Bonnevilleâ€¯ \nWritten by Sir Arthur Conan Doyle \nProduced by Duncan Barrett \nSound Design and Audio Editing: Mirianna Pitman-Latham \nSound Supervisor: Matt Peaty \nCompositions: Dorry Macaulay and Oliver Baines \nMix & Mastering: Josh Latham \nSeries Consultant: Dan Smith \nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 2731,
+            "label": "45 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 38000000,
+                "label": "38 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 50000000,
+                "label": "50 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 122000000,
+                "label": "122 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-06-25T05:00:00Z",
+            "to": "2029-06-24T05:00:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-06-25T00:00:00Z",
+            "label": "25 Jun 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": {
+              "short": "Contains some violence.",
+              "long": "Contains some violent scenes."
+            }
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0nr6by6",
+          "urn": "urn:bbc:radio:episode:p0nr6cm5",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Hound of the Baskervilles: Part Eight",
+            "tertiary": null,
+            "entity_title": "The Hound of the Baskervilles: Part Eight"
+          },
+          "synopses": {
+            "short": "Sherlock sets a trap for the murderer of Sir Charles Baskerville.",
+            "medium": null,
+            "long": "Sherlock sets a trap for the murderer of Sir Charles Baskerville. But will the late baronetâ€™s nephew survive his own encounter with the hound? \n\nA â Noiserâ  podcast production. \n \nNarrated by Hugh Bonnevilleâ€¯ \nWritten by Sir Arthur Conan Doyle \nProduced by Duncan Barrett \nSound Design and Audio Editing: Mirianna Pitman-Latham \nSound Supervisor: Matt Peaty\nCompositions: Dorry Macaulay and Oliver Baines \nMix & Mastering: Josh Latham \nSeries Consultant: Dan Smith \nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 2159,
+            "label": "35 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 30000000,
+                "label": "30 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 40000000,
+                "label": "40 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 97000000,
+                "label": "97 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-06-18T05:00:00Z",
+            "to": "2029-06-17T05:00:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-06-18T00:00:00Z",
+            "label": "18 Jun 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0nr69hm",
+          "urn": "urn:bbc:radio:episode:p0nr69x8",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Hound of the Baskervilles: Part Seven",
+            "tertiary": null,
+            "entity_title": "The Hound of the Baskervilles: Part Seven"
+          },
+          "synopses": {
+            "short": "Are Holmes and Watson too late to save Sir Henry Baskerville from death on the moor?",
+            "medium": null,
+            "long": "Holmes and Watson are finally reunited. But are they too late to save Sir Henry Baskerville from a violent death on the moor? \n\nA â Noiserâ  podcast production. \n \nNarrated by Hugh Bonnevilleâ€¯ \nWritten by Sir Arthur Conan Doyle \nProduced by Duncan Barrett \nSound Design and Audio Editing: Mirianna Pitman-Latham \nSound Supervisor: Tom Pink \nCompositions: Dorry Macaulay and Oliver Baines \nMix & Mastering: Josh Latham \nSeries Consultant: Dan Smith \nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 2062,
+            "label": "34 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 29000000,
+                "label": "29 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 38000000,
+                "label": "38 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 92000000,
+                "label": "92 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-06-11T05:00:00Z",
+            "to": "2029-06-10T05:00:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-06-11T00:00:00Z",
+            "label": "11 Jun 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": {
+              "short": "Contains some violence.",
+              "long": "Contains some violent scenes."
+            }
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0npwgmm",
+          "urn": "urn:bbc:radio:episode:p0npwgl0",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Hound of the Baskervilles: Part Six",
+            "tertiary": null,
+            "entity_title": "The Hound of the Baskervilles: Part Six"
+          },
+          "synopses": {
+            "short": "A stake-out on the moor leads to a shocking encounter for Dr Watson...",
+            "medium": null,
+            "long": "Sir Charles Baskerville's movements on the night of his death are revealed... and a stake-out on the moor leads to a shocking encounter for Dr Watson. \n\nA â Noiserâ  podcast production. \n \nNarrated by Hugh Bonnevilleâ€¯ \nWritten by Sir Arthur Conan Doyle \nProduced by Duncan Barrett \nSound Design and Audio Editing: Mirianna Pitman-Latham \nSound Supervisor: Tom Pink \nCompositions: Dorry Macaulay and Oliver Baines \nMix & Mastering: Josh Latham \nSeries Consultant: Dan Smith \nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 3305,
+            "label": "55 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 45000000,
+                "label": "45 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 60000000,
+                "label": "60 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 147000000,
+                "label": "147 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-06-04T05:00:00Z",
+            "to": "2029-06-03T05:00:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-06-04T00:00:00Z",
+            "label": "04 Jun 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0nnjdpp",
+          "urn": "urn:bbc:radio:episode:p0nnjdht",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Hound of the Baskervilles: Part Five",
+            "tertiary": null,
+            "entity_title": "The Hound of the Baskervilles: Part Five"
+          },
+          "synopses": {
+            "short": "The truth about Barrymore's late-night excursions comes to light...",
+            "medium": null,
+            "long": "The truth about Barrymore's late-night excursions comes to light... and Watson discovers a second man is camping out on the moor. \n\nA â Noiserâ  podcast production. \n \nNarrated by Hugh Bonnevilleâ€¯ \nWritten by Sir Arthur Conan Doyle \nProduced by Duncan Barrett \nSound Design and Audio Editing: Mirianna Pitman-Latham \nSound Supervisor: Tom Pink \nCompositions: Dorry Macaulay and Oliver Baines \nMix & Mastering: Josh Latham \nSeries Consultant: Dan Smith \nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 2644,
+            "label": "44 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 36000000,
+                "label": "36 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 48000000,
+                "label": "48 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 118000000,
+                "label": "118 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-05-28T05:00:00Z",
+            "to": "2029-05-27T05:00:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-05-28T00:00:00Z",
+            "label": "28 May 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0nmbz2w",
+          "urn": "urn:bbc:radio:episode:p0nmbyvg",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Hound of the Baskervilles: Part Four",
+            "tertiary": null,
+            "entity_title": "The Hound of the Baskervilles: Part Four"
+          },
+          "synopses": {
+            "short": "Watson investigates on Holmesâ€™s behalf, getting to know Sir Henryâ€™s new neighbours.",
+            "medium": null,
+            "long": "Watson continues his investigation on Holmesâ€™s behalf, getting to know some of Sir Henryâ€™s new neighboursâ€¦ and witnessing life and death on the eerie windswept moor.  \n\nA â Noiserâ  podcast production. \n \nNarrated by Hugh Bonnevilleâ€¯ \nWritten by Sir Arthur Conan Doyle \nProduced by Duncan Barrett \nSound Design and Audio Editing: Mirianna Pitman-Latham \nSound Supervisor: Tom Pink \nCompositions: Dorry Macaulay and Oliver Baines \nMix & Mastering: Josh Latham \nSeries Consultant: Dan Smith \nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 3138,
+            "label": "52 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 43000000,
+                "label": "43 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 57000000,
+                "label": "57 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 140000000,
+                "label": "140 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-05-21T05:05:00Z",
+            "to": "2029-05-20T05:05:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-05-21T00:00:00Z",
+            "label": "21 May 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0nmbvlr",
+          "urn": "urn:bbc:radio:episode:p0nmbv3q",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Hound of the Baskervilles: Part Three",
+            "tertiary": null,
+            "entity_title": "The Hound of the Baskervilles: Part Three"
+          },
+          "synopses": {
+            "short": "Watson accompanies Sir Henry Baskerville to Dartmoor, where further mystery awaits...",
+            "medium": null,
+            "long": "Dr Watson accompanies Sir Henry Baskerville to Dartmoor, but what they find there only deepens the mystery of his uncleâ€™s horrific death. \n\nA â Noiserâ  podcast production. \n \nNarrated by Hugh Bonnevilleâ€¯ \nWritten by Sir Arthur Conan Doyle \nProduced by Duncan Barrett \nSound Design and Audio Editing: Mirianna Pitman-Latham \nSound Supervisor: Tom Pink \nCompositions: Dorry Macaulay and Oliver Baines \nMix & Mastering: Josh Latham \nSeries Consultant: Dan Smith \nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 2862,
+            "label": "47 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 39000000,
+                "label": "39 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 52000000,
+                "label": "52 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 127000000,
+                "label": "127 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-05-21T05:00:00Z",
+            "to": "2029-05-20T05:00:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-05-21T00:00:00Z",
+            "label": "21 May 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0njtb6w",
+          "urn": "urn:bbc:radio:episode:p0njtb1g",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Hound of the Baskervilles: Part Two",
+            "tertiary": null,
+            "entity_title": "The Hound of the Baskervilles: Part Two"
+          },
+          "synopses": {
+            "short": "Sir Henry Baskerville arrives in England to claim his inheritance.",
+            "medium": null,
+            "long": "Sir Henry Baskerville arrives in England to claim his inheritance. But after his uncleâ€™s horrifying and mysterious death, is it safe for the newly minted baronet to travel to Dartmoor?  \n\nA â Noiserâ  podcast production. \n \nNarrated by Hugh Bonnevilleâ€¯ \nWritten by Sir Arthur Conan Doyle \nProduced by Duncan Barrett \nSound Design and Audio Editing: Mirianna Pitman-Latham \nSound Supervisor: Tom Pink \nCompositions: Dorry Macaulay and Oliver Baines \nMix & Mastering: Josh Latham \nSeries Consultant: Dan Smith \nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 2815,
+            "label": "46 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 39000000,
+                "label": "39 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 51000000,
+                "label": "51 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 125000000,
+                "label": "125 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-05-07T10:02:19Z",
+            "to": "2029-05-06T10:02:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-05-07T00:00:00Z",
+            "label": "07 May 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0nhc0ql",
+          "urn": "urn:bbc:radio:episode:p0nhc0ln",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Hound of the Baskervilles: Part One",
+            "tertiary": null,
+            "entity_title": "The Hound of the Baskervilles: Part One"
+          },
+          "synopses": {
+            "short": "We set aside the Sherlock short stories to bring you Holmesâ€™ most celebrated case.",
+            "medium": null,
+            "long": "Part 1 of 9.\n\nAn unexplained deathâ€¦ a vast inheritanceâ€¦ and a horrifying legend about a beast that stalks the moors at night.  \n\nFor the next nine episodes, we set aside the short stories to bring you Holmesâ€™ most celebrated case.   \n\nA â Noiserâ  podcast production. \n\nNarrated by Hugh Bonnevilleâ€¯ \nWritten by Sir Arthur Conan Doyle \nProduced by Duncan Barrett \nSound Design and Audio Editing: Mirianna Pitman-Latham \nSound Supervisor: Tom Pink \nCompositions: Dorry Macaulay and Oliver Baines \nMix & Mastering: Josh Latham \nSeries Consultant: Dan Smith \nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 2658,
+            "label": "44 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 37000000,
+                "label": "37 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 48000000,
+                "label": "48 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 119000000,
+                "label": "119 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-04-30T05:00:00Z",
+            "to": "2029-04-29T05:00:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-04-30T00:00:00Z",
+            "label": "30 Apr 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": {
+              "short": "Contains some violence.",
+              "long": "Contains some violent scenes."
+            }
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0nfz4w4",
+          "urn": "urn:bbc:radio:episode:p0nfz4t8",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Final Problem: Part Two",
+            "tertiary": null,
+            "entity_title": "The Final Problem: Part Two"
+          },
+          "synopses": {
+            "short": "Holmes and Watson are on the run in Europe, but Morarity is fast closing in on them.",
+            "medium": null,
+            "long": "Part two of two.\n\nHolmes and Watson are on the run in Europe, but Morarity is fast closing in on them. \nCan the great detective escape a dark fate at the hands of the â€˜Napoleon of Crimeâ€™?  \n\nA â Noiserâ  podcast production. \n \nNarrated by Hugh Bonnevilleâ€¯ \nWritten by Sir Arthur Conan Doyle \nProduced by Duncan Barrett \nSound Design and Audio Editing by Mirianna Pitman Latham \nSound Supervisor: Tom Pink \nCompositions: Dorry Macaulay and Oliver Baines \nMix & Mastering: Josh Latham  \nSeries Consultant: Dan Smith \nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 1197,
+            "label": "19 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 17000000,
+                "label": "17 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 23000000,
+                "label": "23 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 54000000,
+                "label": "54 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-04-23T05:00:00Z",
+            "to": "2029-04-22T05:00:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-04-23T00:00:00Z",
+            "label": "23 Apr 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0ndl1f2",
+          "urn": "urn:bbc:radio:episode:p0ndl17n",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Final Problem: Part One",
+            "tertiary": null,
+            "entity_title": "The Final Problem: Part One"
+          },
+          "synopses": {
+            "short": "Dr Watson's \"final\" story, in which Sherlock attempts to trap his nemesis, Moriarty.",
+            "medium": null,
+            "long": "Part one of two.\n\nDoctor Watson shares his dear friendâ€™s â€˜finalâ€™ storyâ€¦ in which Sherlock attempts to trap his nemesis Moriarty.   \n\nA â Noiserâ  podcast production. \n \nNarrated by Hugh Bonnevilleâ€¯ \nWritten by Sir Arthur Conan Doyle \nProduced by Duncan Barrett \nSound Design and Audio Editing by Mirianna Pitman Latham \nSound Supervisor: Tom Pink \nCompositions: Dorry Macaulay and Oliver Baines \nMix & Mastering: Josh Latham \nSeries Consultant: Dan Smith \nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 2019,
+            "label": "33 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 28000000,
+                "label": "28 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 37000000,
+                "label": "37 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 90000000,
+                "label": "90 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-04-16T05:00:00Z",
+            "to": "2029-04-15T22:59:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-04-16T00:00:00Z",
+            "label": "16 Apr 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0nc7gm7",
+          "urn": "urn:bbc:radio:episode:p0nc7dlg",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Boscombe Valley Mystery: Part Two",
+            "tertiary": null,
+            "entity_title": "The Boscombe Valley Mystery: Part Two"
+          },
+          "synopses": {
+            "short": "The mysterious â€˜ratâ€™ falls into Sherlockâ€™s trap.",
+            "medium": null,
+            "long": "The mysterious â€˜ratâ€™ falls into Sherlockâ€™s trap. But what will the great detective do with him, once heâ€™s solved the murder of Charles McCarthy? \n\nThis podcast contains strong language.\n\nA â Noiserâ  podcast production. \n \nNarrated by Hugh Bonnevilleâ€¯ \nWritten by Sir Arthur Conan Doyle \nProduced by Duncan Barrett \nSound Design and Audio Editing by Tony Onuchukwu \nSound Supervisor: Tom Pink \nCompositions: Dorry Macaulay and Oliver Baines \nMix & Mastering: Josh Latham  \nSeries Consultant: Dan Smith \nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 2160,
+            "label": "36 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 30000000,
+                "label": "30 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 40000000,
+                "label": "40 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 97000000,
+                "label": "97 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-04-09T05:00:00Z",
+            "to": "2029-04-08T22:59:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-04-09T00:00:00Z",
+            "label": "09 Apr 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": {
+              "short": "Contains strong language and some sexual content.",
+              "long": "Contains strong language and some scenes of a sexual nature."
+            }
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0nb3cv2",
+          "urn": "urn:bbc:radio:episode:p0nb3cr5",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Boscombe Valley Mystery: Part One",
+            "tertiary": null,
+            "entity_title": "The Boscombe Valley Mystery: Part One"
+          },
+          "synopses": {
+            "short": "Our duo heads to Herefordshire, where an Antipodean murder mystery is playing out.",
+            "medium": null,
+            "long": "Holmes and Watson head down to Herefordshireâ€¦ where an Antipodean murder mystery is playing out.\nBut who has killed local landowner Charles McCarthy, two decades after he returned home from Australia with his family?\nAnd what light can the dead manâ€™s final words â€“ â€˜A rat!â€™ â€“ shine on the mystery?\n\nA â Noiserâ  podcast production.\n\nNarrated by Hugh Bonneville\nWritten by Sir Arthur Conan Doyle\nProduced by Duncan Barrett\nSound Design and Audio Editing by Tony Onuchukwu\nSound Supervisor: Tom Pink\nCompositions: Dorry Macaulay and Oliver Baines\nMix & Mastering: Josh Latham\nSeries Consultant: Dan Smith\nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 1969,
+            "label": "32 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 28000000,
+                "label": "28 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 36000000,
+                "label": "36 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 88000000,
+                "label": "88 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-04-02T05:00:00Z",
+            "to": "2029-04-01T22:59:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-04-02T00:00:00Z",
+            "label": "02 Apr 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0n8qvv6",
+          "urn": "urn:bbc:radio:episode:p0n8qtq7",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Adventure of the Three Students: Part Two",
+            "tertiary": null,
+            "entity_title": "The Adventure of the Three Students: Part Two"
+          },
+          "synopses": {
+            "short": "The three students are called in for a tutorial, with none other than Mr Sherlock Holmes.",
+            "medium": null,
+            "long": "Part two of two.\n\nThe three students are called in for a tutorial, with none other than Mr Sherlock Holmesâ€¦ but which of them will face rustication when his cheating is discovered?  \n\nA â Noiserâ  podcast production. \n \nNarrated by Hugh Bonnevilleâ€¯ \nWritten by Sir Arthur Conan Doyle \nProduced by Duncan Barrett \nScript Supervisor: Chris McDonald \nSound Design and Audio Editing by Tony Onuchukwu  \nSound Supervisor: Tom Pink \nCompositions: Dorry Macaulay and Oliver Baines \nMix & Mastering: Josh Latham\nSeries Consultant: Dan Smith \nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 1387,
+            "label": "23 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 20000000,
+                "label": "20 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 26000000,
+                "label": "26 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 63000000,
+                "label": "63 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-03-26T06:00:00Z",
+            "to": "2029-03-25T22:59:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-03-26T00:00:00Z",
+            "label": "26 Mar 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0n7cl8j",
+          "urn": "urn:bbc:radio:episode:p0n7cjlv",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Adventure of the Three Students: Part One",
+            "tertiary": null,
+            "entity_title": "The Adventure of the Three Students: Part One"
+          },
+          "synopses": {
+            "short": "At one of the nationâ€™s top universities, Holmes is called upon to solve a tricky problem.",
+            "medium": null,
+            "long": "Part one of two.\n\nAt one of the nationâ€™s top universities, Holmes is called upon to solve a tricky problem: which of three candidates for a valuable scholarship is attempting to cheat on their Greek exam? \n\nA â Noiserâ  podcast production.\n\nNarrated by Hugh Bonneville \nWritten by Sir Arthur Conan Doyle\nProduced by Duncan Barrett\nScript Supervisor: Chris McDonald\nSound Design and Audio Editing: Tony Onuchukwu \nSound Supervisor: Tom Pink\nCompositions: Dorry Macaulay and Oliver Baines\nMix & Mastering: Josh Latham\nSeries Consultant: Dan Smith\nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 1540,
+            "label": "25 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 22000000,
+                "label": "22 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 29000000,
+                "label": "29 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 69000000,
+                "label": "69 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-03-19T06:00:00Z",
+            "to": "2029-03-18T23:59:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-03-19T00:00:00Z",
+            "label": "19 Mar 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0n5q40r",
+          "urn": "urn:bbc:radio:episode:p0n5q3nb",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "A Case of Identity: Part Two",
+            "tertiary": null,
+            "entity_title": "A Case of Identity: Part Two"
+          },
+          "synopses": {
+            "short": "What will Miss Mary Sutherland think when she learns the truth about her errant fiancÃ©?",
+            "medium": null,
+            "long": "Part two of two.\n\nHolmes continues his search for the missing Hosmer Angel â€“ and finds him, in a manner of speaking. But what will Miss Mary Sutherland think when she learns the truth about her errant fiancÃ©?  \n\nA â Noiserâ  podcast production. \n \nNarrated by Hugh Bonnevilleâ€¯ \nWritten by Sir Arthur Conan Doyle \nProduced by Duncan Barrett \nScript Supervisor: Chris McDonald \nSound Design and Audio Editing by Tony Onuchukwu \nSound Supervisor: Tom Pink \nCompositions: Dorry Macaulay and Oliver Baines \nMix & Mastering: Josh Latham\nSeries Consultant: Dan Smith \nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 1480,
+            "label": "24 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 21000000,
+                "label": "21 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 28000000,
+                "label": "28 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 67000000,
+                "label": "67 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-03-12T06:00:00Z",
+            "to": "2029-03-11T23:59:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-03-12T00:00:00Z",
+            "label": "12 Mar 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0n4m0r2",
+          "urn": "urn:bbc:radio:episode:p0n4m0ly",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "A Case of Identity: Part One",
+            "tertiary": null,
+            "entity_title": "A Case of Identity: Part One"
+          },
+          "synopses": {
+            "short": "A jilted bride pays a visit to Baker Street, begging Holmes to find her missing fiancÃ©.",
+            "medium": null,
+            "long": "Part one of two.\n\nA jilted bride pays a visit to Baker Street, begging Holmes to find her missing fiancÃ©.   \nBut what has happened to the mysterious Mr Hosmer Angelâ€¦ and will his devoted Mary ever see him again?   \n\nA â Noiserâ  podcast production. \n \nNarrated by Hugh Bonnevilleâ€¯ \nWritten by Sir Arthur Conan Doyle \nProduced by Duncan Barrett \nScript Supervisor: Chris McDonald \nSound Design and Audio Editing by Tony Onuchukwu \nSound Supervisor: Tom Pink \nCompositions: Dorry Macaulay and Oliver Baines \nMix & Mastering: Josh Latham\nSeries Consultant: Dan Smith \nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 1385,
+            "label": "23 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 20000000,
+                "label": "20 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 26000000,
+                "label": "26 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 62000000,
+                "label": "62 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-03-05T05:00:00Z",
+            "to": "2029-03-04T23:59:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-03-05T00:00:00Z",
+            "label": "05 Mar 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        },
+        {
+          "type": "playable_item",
+          "id": "p0n375f2",
+          "urn": "urn:bbc:radio:episode:p0n3750p",
+          "network": {
+            "id": "bbc_sounds_podcasts",
+            "key": "podcasts",
+            "short_title": "Sounds",
+            "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_sounds_podcasts/{type}_{size}.{format}",
+            "network_type": "master_brand"
+          },
+          "titles": {
+            "primary": "Sherlock Holmes Short Stories",
+            "secondary": "The Adventure of the Crooked Man: Part Two",
+            "tertiary": null,
+            "entity_title": "The Adventure of the Crooked Man: Part Two"
+          },
+          "synopses": {
+            "short": "A long-suppressed tale of love, jealousy and betrayal threatens to spill out into scandal",
+            "medium": null,
+            "long": "Part two of two.\n\nThe plot thickens as Sherlock Holmes tries to identify the mysterious pawprint found at the crime scene.  And a long-suppressed tale of love, jealousy and betrayal threatens to spill out into scandal.   \n\nA â Noiserâ  podcast production. \n \nNarrated by Hugh Bonnevilleâ€¯ \nWritten by Sir Arthur Conan Doyle \nProduced by Duncan Barrett \nScript Supervisor: Chris McDonald \nSound Design and Audio Editing by Mirianna Pitman Latham \nSound Supervisor: Tom Pink \nCompositions: Dorry Macaulay and Oliver Baines \nMix & Mastering: Josh Latham\nSeries Consultant: Dan Smith \nExecutive Producer: Katrina Hughes"
+          },
+          "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0k9v0gx.jpg",
+          "duration": {
+            "value": 1670,
+            "label": "27 mins"
+          },
+          "progress": null,
+          "container": {
+            "type": "brand",
+            "id": "p0k9tzr0",
+            "urn": "urn:bbc:radio:brand:p0k9tzr0",
+            "title": "Sherlock Holmes Short Stories",
+            "synopses": {
+              "short": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.",
+              "medium": null,
+              "long": "Listen to Sherlock Holmes Short Stories, narrated by Hugh Bonneville.\n\nA woman struck dead after hearing a haunting whistle. A series of child-like drawings scrawled throughout a country estate. A prize horse wandering the moors without an owner.\n\nTo the regular observer, these are merely strange anomalies. But for the master detective Sherlock Holmes they are the first pieces of an elaborate puzzle.\n\nNew episodes every Thursday."
+            },
+            "activities": []
+          },
+          "download": {
+            "type": "drm",
+            "quality_variants": {
+              "low": {
+                "bitrate": 96,
+                "file_url": null,
+                "file_size": 24000000,
+                "label": "24 MB"
+              },
+              "medium": {
+                "bitrate": 128,
+                "file_url": null,
+                "file_size": 31000000,
+                "label": "31 MB"
+              },
+              "high": {
+                "bitrate": 320,
+                "file_url": null,
+                "file_size": 75000000,
+                "label": "75 MB"
+              }
+            }
+          },
+          "availability": {
+            "from": "2026-02-26T06:00:00Z",
+            "to": "2029-02-25T23:59:00Z",
+            "label": "Available for over a year"
+          },
+          "release": {
+            "date": "2026-02-26T00:00:00Z",
+            "label": "26 Feb 2026"
+          },
+          "guidance": {
+            "competition_warning": false,
+            "warnings": null
+          },
+          "activities": [],
+          "uris": [
+            {
+              "type": "latest",
+              "id": null,
+              "label": "Latest",
+              "uri": "/v2/programmes/playable?container=p0k9tzr0&sort=sequential&type=episode&experience=domestic"
+            }
+          ],
+          "play_context": null,
+          "recommendation": null
+        }
+      ],
+      "image_url": null
+    }
+  ]
+}

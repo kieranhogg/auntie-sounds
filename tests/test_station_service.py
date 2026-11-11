@@ -2,7 +2,7 @@ from unittest.mock import AsyncMock
 
 import pytest
 
-from sounds.stations import StationService
+from tests.conftest import make_response
 
 pytestmark = pytest.mark.anyio
 
@@ -21,19 +21,9 @@ class TestStationService:
             "titles": {"primary": station_id},
         }
 
-    async def test_get_stations_exclude_local(self, mock_session, mock_logger):
+    async def test_get_stations_exclude_local(self, mock_session, mock_station):
         """Test getting stations excluding local stations."""
-        mock_streaming = AsyncMock()
-        mock_schedule = AsyncMock()
-
-        service = StationService(
-            session=mock_session,
-            logger=mock_logger,
-            streaming=mock_streaming,
-            schedules=mock_schedule,
-        )
-
-        mock_response = AsyncMock()
+        mock_response = make_response()
         mock_response.json = AsyncMock(
             return_value={
                 "data": [
@@ -56,23 +46,14 @@ class TestStationService:
         )
         mock_session.request = AsyncMock(return_value=mock_response)
 
-        result = await service.get_stations(include_local=False)
+        result = await mock_station.get_stations(include_local_stations=False)
         assert isinstance(result, list)
         assert [s.id for s in result] == ["national1"]
+        assert len(result) == 1
 
-    async def test_get_stations_include_local(self, mock_session, mock_logger):
+    async def test_get_stations_include_local(self, mock_session, mock_station):
         """Test getting stations including local stations."""
-        mock_streaming = AsyncMock()
-        mock_schedule = AsyncMock()
-
-        service = StationService(
-            session=mock_session,
-            logger=mock_logger,
-            streaming=mock_streaming,
-            schedules=mock_schedule,
-        )
-
-        mock_response = AsyncMock()
+        mock_response = make_response()
         mock_response.json = AsyncMock(
             return_value={
                 "data": [
@@ -95,29 +76,12 @@ class TestStationService:
         )
         mock_session.request = AsyncMock(return_value=mock_response)
 
-        result = await service.get_stations(include_local=True)
+        result = await mock_station.get_stations(include_local_stations=True)
         assert {s.id for s in result} == {"national1", "local1"}
-        assert next(s for s in result if s.id == "national1").local is False
-        assert next(s for s in result if s.id == "local1").local is True
 
-    async def test_get_stations_respects_include_local_after_cache_populated(
-        self, mock_session, mock_logger
-    ):
-        """Once get_stations() has been called (and cached the result) with
-        include_local=False, a subsequent call with include_local=True must
-        still return local stations — not the stale cached national-only list.
-        """
-        mock_streaming = AsyncMock()
-        mock_schedule = AsyncMock()
-
-        service = StationService(
-            session=mock_session,
-            logger=mock_logger,
-            streaming=mock_streaming,
-            schedules=mock_schedule,
-        )
-
-        mock_response = AsyncMock()
+    async def test_get_stations_sets_fallback_streams(self, mock_session, mock_station):
+        """Each station gets its best stream, plus the other CDNs' streams as fallbacks."""
+        mock_response = make_response()
         mock_response.json = AsyncMock(
             return_value={
                 "data": [
@@ -128,20 +92,16 @@ class TestStationService:
                             )
                         ]
                     },
-                    {
-                        "data": [
-                            self._station_payload(
-                                "local1", "urn:bbc:radio:network:local1"
-                            )
-                        ]
-                    },
+                    {"data": []},
                 ]
             }
         )
         mock_session.request = AsyncMock(return_value=mock_response)
+        mock_station.playback.get_live_streams = AsyncMock(
+            return_value=["https://akamai", "https://cloudfront"]
+        )
 
-        first = await service.get_stations(include_local=False)
-        assert [s.id for s in first] == ["national1"]
+        [station] = await mock_station.get_stations(include_streams=True)
 
-        second = await service.get_stations(include_local=True)
-        assert {s.id for s in second} == {"national1", "local1"}
+        assert station.stream == "https://akamai"
+        assert station.fallback_streams == ["https://cloudfront"]

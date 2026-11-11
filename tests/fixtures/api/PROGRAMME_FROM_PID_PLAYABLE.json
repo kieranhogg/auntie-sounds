@@ -1,0 +1,89 @@
+{
+    "$schema": "https://rms.api.bbc.co.uk/docs/swagger.json#/definitions/PlayableItem",
+    "type": "playable_item",
+    "id": "p0p78bd4",
+    "urn": "urn:bbc:radio:episode:m003169g",
+    "network": {
+        "id": "bbc_radio_four",
+        "key": "radio4",
+        "short_title": "Radio 4",
+        "logo_url": "https://sounds.files.bbci.co.uk/3.12.0/networks/bbc_radio_four/{type}_{size}.{format}",
+        "network_type": "master_brand"
+    },
+    "titles": {
+        "primary": "I'm Not A Monster Presents...",
+        "secondary": "Where Is Austin Tice?",
+        "tertiary": "Trailer",
+        "entity_title": "Trailer"
+    },
+    "synopses": {
+        "short": "Josh Baker investigates one of the biggest missing-person cases of our time.",
+        "medium": "Josh Baker enters a dangerous world of fear, greed and betrayal as he uncovers what happened in one of the biggest missing-person cases of our time - the abduction of Austin Tice.",
+        "long": "Josh Baker enters a dangerous world of fear, greed and betrayal as he sets out to uncover the truth behind one of the biggest missing-person cases of our time - the abduction of American journalist Austin Tice.\n\nArchive: NBC; PBS; CNN.\n\nWriter and showrunner: Josh Baker\nInvestigative producer: Sara Obeidat\nSeries producer: Simon Maybin\nField producing: Ouday Al Hussein\nAdditional producing: Lucy Burns\nOpen source intelligence: Thomas Bordeaux & Gabor Friesen\nProduction coordinator: Gemma Ashman\nSeries editor: Clare Fordham\nHead of BBC News Long Form Audio: Emma Rippon\nBBC Radio 4 commissioning editor: Dan Clarke\nNPR producer: Monika Evstatieva\nNPR editors: Robert Little & Katie Simon\nNPR executive producer for Embedded: Irene Noguchi\nBBC World Service commissioning editor: Jon Manel\nComposer: Firas Abou Fakher\nAdditional music: Karim Chehoury \nTheme music: Sam Slater\nMix and sound design: Tom Brignell"
+    },
+    "image_url": "https://ichef.bbci.co.uk/images/ic/{recipe}/p0p5j30m.jpg",
+    "duration": {
+        "value": 133,
+        "label": "2 mins"
+    },
+    "progress": null,
+    "container": {
+        "type": "brand",
+        "id": "p08yblkf",
+        "urn": "urn:bbc:radio:brand:p08yblkf",
+        "title": "I'm Not A Monster Presents...",
+        "synopses": {
+            "short": "Josh Baker investigates one of the biggest missing-person cases of our time.",
+            "medium": "Josh Baker enters a dangerous world of fear, greed and betrayal as he uncovers what happened in one of the biggest missing-person cases of our time — the abduction of Austin Tice.",
+            "long": "Josh Baker enters a dangerous world of fear, greed and betrayal as he sets out to uncover the truth behind one of the biggest missing-person cases of our time - the abduction of American journalist Austin Tice.\n\nJosh - creator of two of the BBC's most award-winning and widely listened-to investigative podcasts, I'm Not a Monster and The Shamima Begum Story - returns for his most ambitious chapter yet, in a major new series from BBC Radio 4 and NPR's Embedded.\n\nThis is not the retelling of a closed case. It is a real-time investigation into a disappearance that has remained unsolved for more than a decade, conducted in close contact with Austin's family.\n\nWhat started out as a personal effort to help a mother find her son has turned into a multi-year journalistic investigation stretching from the corridors of power in Washington DC to the depths of the Syrian security state.\n\nAustin Tice is a journalist, law student and former Marine officer, who vanished in Syria in 2012. Since then, competing stories have emerged about his fate. In some, he is alive - held in a cell and waiting to be rescued. In others, he was smuggled out of Syria and hidden away. In the darkest versions, he died long ago.\n\nHis disappearance has reached the highest levels of power - from presidents to popes - yet remarkably little is known about what happened to him.\n\nInvestigative journalists Josh Baker and Sara Obeidat begin following Austin's trail long before the fall of the Syrian regime. Then everything changes. The regime collapses, and the black box of Syria's intelligence state opens. Sources step forward, unprecedented leaks arrive and doors to secret bases that had been sealed for years open. Josh and Sara speak to spies, search secret prisons and track down alleged war criminals in hiding, uncovering information that has never been made public and making discoveries that generate international headlines. The audience follows every breakthrough as the investigation closes in on those who may know the truth - while Syria is transformed and powerful interests compete to shape what happens next.\n\nSome claim Austin was working for the CIA. Others say he was simply a young journalist trying to make his name in war reporting.\n\nHis fate has become entangled in secret negotiations and geopolitical power struggles that are still unfolding. At the centre of it all is his mother, Debra Tice, who has never stopped searching for her son.\n\nThere are people who know exactly what happened to Austin.\n\nSome of them do not want the truth to come out.\n\nSo where is Austin Tice?"
+        },
+        "activities": []
+    },
+    "download": {
+        "type": "non_drm",
+        "quality_variants": {
+            "low": {
+                "bitrate": 128,
+                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0p78bd4.mp3",
+                "file_size": 3000000,
+                "label": "3 MB"
+            },
+            "medium": {
+                "bitrate": 128,
+                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0p78bd4.mp3",
+                "file_size": 3000000,
+                "label": "3 MB"
+            },
+            "high": {
+                "bitrate": 128,
+                "file_url": "https://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download/proto/https/vpid/p0p78bd4.mp3",
+                "file_size": 3000000,
+                "label": "3 MB"
+            }
+        }
+    },
+    "availability": {
+        "from": "2026-09-01T05:00:00Z",
+        "to": null,
+        "label": "Available for over a year"
+    },
+    "release": {
+        "date": "2026-09-01T00:00:00Z",
+        "label": "01 Sep 2026"
+    },
+    "guidance": {
+        "competition_warning": false,
+        "warnings": null
+    },
+    "activities": [],
+    "uris": [
+        {
+            "type": "latest",
+            "id": null,
+            "label": "Latest",
+            "uri": "/v2/programmes/playable?container=m0031689&sort=sequential&type=episode&experience=domestic"
+        }
+    ],
+    "play_context": null,
+    "recommendation": null
+}

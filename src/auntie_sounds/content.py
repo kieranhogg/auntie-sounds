@@ -1,0 +1,514 @@
+import asyncio
+import logging
+from collections import OrderedDict, defaultdict
+from collections.abc import Iterable, Sequence
+from itertools import chain
+from typing import TYPE_CHECKING, Final
+
+from auntie_sounds import endpoints
+from auntie_sounds.endpoints import Endpoints
+from auntie_sounds.exceptions import (
+    APIResponseError,
+    InvalidFormatError,
+    NotExpectedTypeError,
+    NotFoundError,
+    SoundsException,
+)
+from auntie_sounds.models import (
+    CategoryItemContainer,
+    Container,
+    EpisodeTypes,
+    Menu,
+    PlayableItem,
+    Podcast,
+    PodcastEpisode,
+    RadioSeries,
+    RadioShow,
+    SearchResults,
+    Season,
+    Segment,
+)
+from auntie_sounds.owners import OwnerAwareParser, OwnerService
+from auntie_sounds.playback import PlaybackService, StreamPreference
+from auntie_sounds.requests import DEFAULT_LIMIT, RequestManager
+from auntie_sounds.user import UserService
+
+if TYPE_CHECKING:
+    from auntie_sounds.models import SoundsTypes
+
+logger = logging.getLogger(__name__)
+
+
+# Define a reasonable upper limit for episodes to fetch
+MAX_PODCAST_EPISODES: Final = 300
+
+MAX_CACHE_SIZE = 500
+
+
+def assign_seasons(
+    podcast: Podcast | RadioSeries,
+    episodes: Sequence[EpisodeTypes],
+    complete: bool = True,
+) -> None:
+    """Sort episodes into the podcast's seasons.
+
+    complete says whether episodes holds every episode. If it doesn't, a
+    season with none of them may just be beyond the ones fetched, so it's kept.
+    """
+    if not podcast.seasons:
+        return
+    by_series: defaultdict[str | None, list[EpisodeTypes]] = defaultdict(list)
+    for episode in episodes:
+        by_series[episode.series_pid].append(episode)
+
+    def first_release(season: Season) -> str:
+        # An episode can have a release with no date, so fall back to when it became available
+        dates: list[str] = []
+        for episode in season.sub_items or ():
+            date = (episode.release or {}).get("date") or (
+                episode.availability or {}
+            ).get("from")
+            if isinstance(date, str):
+                dates.append(date)
+        return min(dates, default="9999")
+
+    for season in podcast.seasons:
+        # Container.pid isn't populated from the urn, so use item_id
+        season.sub_items = (
+            by_series.pop(season.item_id, None) if season.item_id else None
+        )
+    # The API lists seasons by pid, not by date, and includes ones with nothing
+    # available, e.g. omnibus editions. Drop those, unless the episode list was
+    # cut short, and order the rest by first release.
+    podcast.seasons = (
+        sorted(
+            (season for season in podcast.seasons if season.sub_items or not complete),
+            key=first_release,
+        )
+        or None
+    )
+
+    # anything left matched no season (including series_pid=None)
+    podcast.sub_items = list(chain.from_iterable(by_series.values())) or None
+
+
+async def _no_episodes() -> None:
+    """Stands in for the episode fetch in get_podcast's gather when it's not wanted."""
+
+
+def _ancestor_id(programme: dict, kind: str) -> str | None:
+    """Return the id of the first ancestor of the given type, e.g. 'brand' or 'series'.
+
+    Standalone clips have an empty ancestors list, so this returns None for them.
+    """
+    return next(
+        (a["id"] for a in programme.get("ancestors") or [] if a.get("type") == kind),
+        None,
+    )
+
+
+class ContentService:
+    """Resolving IDs (pids/urns) and browsing the catalog: podcasts, radio
+    series, categories, collections, playlists, and search.
+
+    This is deliberately the "what is this thing, and what's in it" service.
+    Actually playing something lives in PlaybackService; get_by_pid() reaches
+    into it only when a caller explicitly asks for the stream to be attached.
+    """
+
+    def __init__(
+        self,
+        user: UserService,
+        requests: RequestManager,
+        playback: PlaybackService,
+        owners: OwnerService | None = None,
+    ):
+        self.user: UserService = user
+        self.requests: RequestManager = requests
+        self.playback: PlaybackService = playback
+        # The client passes in one OwnerService for all its services, so each
+        # owner is looked up once per client
+        self.parser = OwnerAwareParser(owners or OwnerService(requests))
+        self._programme_cache: OrderedDict[str, asyncio.Task[dict]] = OrderedDict()
+
+    async def get_urn_from_pid(self, pid: str) -> str | None:
+        return (await self._get_programme(pid)).get("urn")
+
+    async def get_vpid_from_pid(self, pid: str) -> str | None:
+        availability = (await self._get_programme(pid)).get("availability") or {}
+        return availability.get("id")
+
+    async def get_parent_pid(self, pid: str) -> str | None:
+        return _ancestor_id(await self._get_programme(pid), "brand")
+
+    async def get_series_pid(self, pid: str) -> str | None:
+        return _ancestor_id(await self._get_programme(pid), "series")
+
+    async def image_from_spotify(self, url: str) -> str | None:
+        json_resp = await self.requests.get_json_response(
+            url="https://open.spotify.com/oembed", params={"url": url}
+        )
+        return json_resp.get("thumbnail_url") or None
+
+    async def get_podcasts(self) -> Menu:
+        podcasts = await self.parser.parse_menu(
+            await self.requests.get_json_response(url=endpoints.Endpoints.PODCASTS)
+        )
+        return podcasts
+
+    async def get_podcast(
+        self,
+        urn=None,
+        pid=None,
+        include_episodes=False,
+        max_episodes: int | None = MAX_PODCAST_EPISODES,
+    ) -> Podcast | RadioSeries:
+        """Get a podcast or radio series, and optionally its episodes.
+
+        With include_episodes, up to max_episodes are fetched, newest season
+        first. Pass max_episodes=None to fetch them all.
+        """
+        if not urn and not pid:
+            raise InvalidFormatError("Must be called with one of: urn, pid")
+        if urn:
+            pid = urn.rsplit(":", 1)[-1]
+
+        # The container holds the podcast's own details and artwork. The series
+        # beneath it are its seasons, which comes back empty when it has none.
+        # None of these depend on each other, so fetch them together.
+        brand_json, series_json, episodes_json = await asyncio.gather(
+            self.requests.get_json_response(
+                url=Endpoints.CONTAINER_FROM_PIDS, url_args={"pids": pid}
+            ),
+            self.requests.get_json_response(
+                url=Endpoints.SERIES_CONTAINER,
+                params={"parent": pid, "type": "series"},
+                fetch_all_items=True,
+            ),
+            self._fetch_playable_items(
+                pid, fetch_all_items=max_episodes is None, max_items=max_episodes
+            )
+            if include_episodes
+            else _no_episodes(),
+        )
+
+        # Parsing the brand records its owner, so the episodes parsed after it
+        # don't need to look it up again
+        brand = await self.parser.parse_container(brand_json)
+        podcast = brand[0] if isinstance(brand, list) and brand else None
+        if not isinstance(podcast, (Podcast, RadioSeries)):
+            raise NotFoundError(f"Couldn't get podcast - pid: {pid}")
+
+        # Without the episodes, seasons are in pid order and may include empty ones
+        podcast.seasons = await self.parser.parse_seasons(series_json) or None
+        if episodes_json is not None:
+            episodes = [
+                item
+                for item in await self._parse_playable_items(episodes_json)
+                if isinstance(item, EpisodeTypes)
+            ]
+            if podcast.seasons:
+                complete = len(episodes_json.get("data") or []) >= episodes_json.get(
+                    "total", 0
+                )
+                assign_seasons(podcast, episodes, complete=complete)
+            else:
+                podcast.sub_items = episodes
+        return podcast
+
+    async def get_podcast_episodes(
+        self,
+        pid,
+        fetch_all_items: bool = False,
+        max_items: int | None = None,
+    ) -> list[EpisodeTypes]:
+        """Episodes in the API's sequential order, which groups them by season.
+
+        Each episode's series_pid is its season, taken from its "latest" uri.
+        """
+        items = await self.get_pid_container(
+            pid=pid, fetch_all_items=fetch_all_items, max_items=max_items
+        )
+        return [i for i in items or [] if isinstance(i, EpisodeTypes)]
+
+    async def get_podcast_episode(
+        self, pid: str, include_stream: bool = False
+    ) -> PodcastEpisode:
+        item = await self.get_by_pid(pid=pid, include_stream=include_stream)
+        if not isinstance(item, PodcastEpisode):
+            raise NotExpectedTypeError(
+                f"pid {pid} is a {type(item).__name__}, not a PodcastEpisode"
+            )
+        return item
+
+    async def get_radio_series(self, urn, include_episodes=True) -> RadioSeries:
+        series = await self.get_container(urn)
+        # get_container returns an empty list when nothing is found
+        if not series:
+            raise NotFoundError(f"No radio series with urn {urn}")
+        if not isinstance(series, RadioSeries):
+            raise NotExpectedTypeError(
+                f"urn {urn} is a {type(series).__name__}, not a RadioSeries"
+            )
+        if not include_episodes and getattr(series, "sub_items", None):
+            series.sub_items = []
+        return series
+
+    async def get_radio_show(self, pid, include_stream=False) -> RadioShow:
+        show = await self.get_by_pid(pid=pid, include_stream=include_stream)
+        if not isinstance(show, RadioShow):
+            raise NotExpectedTypeError(
+                f"pid {pid} is a {type(show).__name__}, not a RadioShow"
+            )
+        return show
+
+    async def get_by_pid(
+        self,
+        pid,
+        include_stream=False,
+        stream_preferences: StreamPreference | None = None,
+    ) -> SoundsTypes:
+        """Get a single episode or clip.
+
+        The playable endpoint gives the top-level brand as the container, the
+        season in the "latest" uri and the vpid as the id. A missing pid is a
+        404, which the request layer raises as NotFoundError.
+        """
+        logger.debug("Getting item with PID %s", pid)
+        if not stream_preferences:
+            stream_preferences = StreamPreference()
+
+        # The personalised endpoint is the same, just with progress added progress
+        url = (
+            Endpoints.PID_PLAYABLE
+            if await self._personalised()
+            else Endpoints.PROGRAMME_FROM_PID_PLAYABLE
+        )
+        json_resp = await self.requests.get_json_response(
+            url=url, url_args={"pid": pid}
+        )
+
+        logger.debug(json_resp)
+
+        if not json_resp:
+            raise NotFoundError(f"Couldn't get item with PID {pid}")
+        playable_item = await self.parser.parse_node(json_resp)
+
+        if not isinstance(playable_item, PlayableItem):
+            raise APIResponseError(f"Couldn't get item with PID {pid}")
+
+        if include_stream:
+            if not playable_item.version_pid:
+                raise APIResponseError(f"No available version for PID {pid}")
+            streams = await self.playback.get_episode_streams(
+                vpid=playable_item.version_pid, preferences=stream_preferences
+            )
+            if streams:
+                playable_item.stream, *playable_item.fallback_streams = streams
+
+        return playable_item
+
+    async def get_pid_container(
+        self,
+        pid,
+        sort: str = "sequential",
+        fetch_all_items: bool = False,
+        max_items: int | None = None,
+    ) -> list[PlayableItem]:
+        # Every item shares this brand, so look its owner up alongside the
+        # listing rather than after it
+        json_resp, _ = await asyncio.gather(
+            self._fetch_playable_items(
+                pid, sort=sort, fetch_all_items=fetch_all_items, max_items=max_items
+            ),
+            self.parser.owners.lookup([pid]),
+        )
+        return await self._parse_playable_items(json_resp)
+
+    async def get_container(
+        self, urn
+    ) -> list[SoundsTypes] | SoundsTypes | Container | None:
+        json_resp = await self.requests.get_json_response(
+            url=Endpoints.URN_CONTAINER, url_args={"urn": urn}
+        )
+        container = await self.parser.parse_container(json_resp)
+        if isinstance(container, list) and len(container) == 1:
+            return container[0]
+        if not container:
+            return []
+        return container
+
+    async def get_category(
+        self,
+        category,
+        fetch_all_items: bool = False,
+        max_items: int | None = None,
+        page_size: int = DEFAULT_LIMIT,
+    ) -> CategoryItemContainer | None:
+        json_resp = await self.requests.get_json_response(
+            url=Endpoints.PLAYABLE_ITEMS_CONTAINER,
+            params={"category": category, "sort": "-release_date"},
+            fetch_all_items=fetch_all_items,
+            max_items=max_items,
+            page_size=page_size,
+        )
+        category = await self.parser.parse_node(json_resp)
+        return category if isinstance(category, CategoryItemContainer) else None
+
+    async def get_collection(self, pid) -> list[EpisodeTypes | Container]:
+        json_resp = await self.requests.get_json_response(
+            url=Endpoints.COLLECTIONS, url_args={"pid": pid}
+        )
+        container = await self.parser.parse_container(json_resp)
+        if not isinstance(container, Iterable):
+            return []
+        return [c for c in container if isinstance(c, (EpisodeTypes, Container))]
+
+    async def get_audiobooks(self):
+        json_resp = await self.requests.get_json_response(url=Endpoints.AUDIOBOOKS)
+        return await self.parser.parse_node(json_resp)
+
+    async def get_popular_audiobooks(self):
+        json_resp = await self.requests.get_json_response(
+            url=Endpoints.POPULAR_AUDIOBOOKS
+        )
+        container = await self.parser.parse_container(json_resp)
+        return container
+
+    async def get_playlist_contents(self, pid) -> list[EpisodeTypes]:
+        """Gets a curation/playlist.
+
+        :param pid: PID of the playlist
+        :return: a list of playable items
+        """
+        json_resp = await self.requests.get_json_response(
+            url=Endpoints.CURATIONS, url_args={"pid": pid}
+        )
+        if not json_resp:
+            return []
+        container = await self.parser.parse_container(json_resp)
+        if isinstance(container, list):
+            return [c for c in container if isinstance(c, EpisodeTypes)]
+        return [container] if isinstance(container, EpisodeTypes) else []
+
+    async def search(self, query) -> SearchResults:
+        """Search the BBC Sounds catalogue.
+
+        :param query: the search query
+        :return: a `SearchResults` object describing the search results
+        """
+        json_resp = await self.requests.get_json_response(
+            url=Endpoints.SEARCH_URL, params={"q": query}
+        )
+        return await self.parser.parse_search(json_resp)
+
+    async def get_show_segments(
+        self,
+        vpid: str,
+        fetch_missing_images: bool = False,
+        max_concurrent_images: int = 5,
+    ) -> list[Segment]:
+        """Get the show segments (songs played) for a certain show, i.e. catch-up radio.
+
+        :param vpid: version PID of the show
+        :param fetch_missing_images: if True, the `Segment.image_url` field will be populated from the Spotify API
+        :return: a list of `Segment` objects for this show
+        """
+        json_resp = await self.requests.get_json_response(
+            url=Endpoints.SEGMENTS, url_args={"vpid": vpid}
+        )
+        parsed_segments = await self.parser.parse_container(json_resp)
+        if not isinstance(parsed_segments, list):
+            return []
+
+        segments = [item for item in parsed_segments if isinstance(item, Segment)]
+
+        # The Sounds API for catch-up media does not contain image URLs
+        if fetch_missing_images:
+            semaphore = asyncio.Semaphore(max_concurrent_images)
+
+            async def fetch(segment: Segment) -> str | None:
+                async with semaphore:
+                    try:
+                        return await self.image_from_spotify(segment.spotify_url)
+                    except SoundsException as e:
+                        logger.debug("No Spotify image for %s: %s", segment.id, e)
+                        return None
+
+            missing = [s for s in segments if not s.image_url and s.spotify_url]
+            image_urls = await asyncio.gather(*(fetch(s) for s in missing))
+
+            for segment, image_url in zip(missing, image_urls, strict=True):
+                segment.image_url = image_url
+        return segments
+
+    async def get_heartbeat_details(self, pid) -> tuple[str, str]:
+        """Get the details (vpid, resource_type) required to send a heartbeat request.
+
+        :param pid the pid of the stream or episode
+        :return: the vpid (version pid) of the resource, and the resource type, e.g. episode
+        """
+        # _get_programme already returns the programme itself, not the response
+        episode = await self._get_programme(pid)
+        vpid = (episode.get("availability") or {}).get("id")
+        # e.g. urn:bbc:radio:episode:m00321tk
+        # where the 4th part matches playlist.json's parentPIDType
+        urn_parts = (episode.get("urn") or "").split(":")
+        if not vpid or len(urn_parts) < 4:
+            raise APIResponseError(f"Couldn't get details for pid {pid}")
+        resource_type = urn_parts[3]
+        return vpid, resource_type
+
+    async def _get_programme(self, pid: str) -> dict:
+        """Fetch PROGRAMME_FROM_PID once per pid and return the single programme in it."""
+        task = self._programme_cache.get(pid)
+        if task is None:
+            task = asyncio.create_task(
+                self.requests.get_json_response(
+                    url=Endpoints.PROGRAMME_FROM_PID, url_args={"pid": pid}
+                )
+            )
+            if len(self._programme_cache) >= MAX_CACHE_SIZE:
+                self._programme_cache.popitem(last=False)
+            self._programme_cache[pid] = task
+        try:
+            json_resp = await asyncio.shield(task)
+        except Exception:
+            # Forget the failed lookup so the next call tries again
+            if self._programme_cache.get(pid) is task:
+                del self._programme_cache[pid]
+            raise
+        if not json_resp or not json_resp.get("data"):
+            self._programme_cache.pop(pid, None)
+            raise NotFoundError(f"Couldn't get item with PID {pid}")
+        return json_resp["data"][0]
+
+    async def _personalised(self) -> bool:
+        """Whether to use the /my/ endpoints, which add the listener's progress."""
+        return (
+            self.user.login_details_provided
+            and await self.user.is_uk_account_and_location()
+        )
+
+    async def _fetch_playable_items(
+        self,
+        pid,
+        sort: str = "sequential",
+        fetch_all_items: bool = False,
+        max_items: int | None = None,
+    ) -> dict:
+        # The personalised endpoint is the same shape, plus the listener's progress
+        return await self.requests.get_json_response(
+            url=Endpoints.MY_PLAYABLE_ITEMS_CONTAINER
+            if await self._personalised()
+            else Endpoints.PLAYABLE_ITEMS_CONTAINER,
+            params={"container": pid, "sort": sort},
+            fetch_all_items=fetch_all_items,
+            max_items=max_items,
+        )
+
+    async def _parse_playable_items(self, json_resp: dict) -> list[PlayableItem]:
+        items = await self.parser.parse_container(json_resp)
+        if not isinstance(items, list):
+            return []
+        return [item for item in items if isinstance(item, PlayableItem)]

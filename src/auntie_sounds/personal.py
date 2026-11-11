@@ -1,0 +1,237 @@
+import asyncio
+import logging
+from collections.abc import Awaitable
+
+from auntie_sounds.endpoints import Endpoints
+from auntie_sounds.exceptions import APIResponseError, SoundsException
+from auntie_sounds.models import (
+    Menu,
+    MenuItem,
+    PlayableItem,
+    Podcast,
+    RadioSeries,
+    RecommendedMenuItem,
+)
+from auntie_sounds.owners import OwnerAwareParser, OwnerService
+from auntie_sounds.requests import RequestManager
+
+logger = logging.getLogger(__name__)
+
+
+async def _attempt_to_fetch_menu_item[T](title: str, section: Awaitable[T]) -> T | None:
+    """Await one section of a menu, returning None if it fails."""
+    try:
+        return await section
+    except SoundsException as e:
+        logger.warning("Leaving %s out of the menu: %s", title, e)
+        return None
+
+
+class PersonalService:
+    """PersonalService interacts with the personalised endpoints of the API.
+
+    The main API returns a fairly comprehensive nested menu structure for those
+    users who are logged in. It also has some fairly noteable items missing,
+    such as live radio stations and catch-up. This service ultimately constructs
+    the menus for both logged-in users, and a smaller version for logged-out
+    users, or international."""
+
+    def __init__(
+        self,
+        requests: RequestManager,
+        owners: OwnerService | None = None,
+    ):
+        self.requests = requests
+        # The client passes in one OwnerService for all its services, so each
+        # owner is looked up once per client
+        self.parser = OwnerAwareParser(owners or OwnerService(requests))
+
+    async def construct_uk_menu(
+        self,
+        radio: MenuItem,
+        catch_up: MenuItem,
+        schedule: MenuItem,
+        include_recommendations: bool = True,
+    ) -> Menu:
+        """Gets the main Sounds menu for UK-based users."""
+
+        # The API's menu, My Sounds and Explore All don't depend on each other
+        menu, my_sounds, explore_all = await asyncio.gather(
+            self._get_experience_menu(),
+            self.get_my_sounds_menu(),
+            self.get_explore_all(),
+        )
+
+        if not isinstance(menu, Menu) or len(menu.sub_items) == 0:
+            raise APIResponseError("Menu not converted correctly.")
+
+        # Recommendations are only removed when asked not to be included
+        menu.sub_items = [
+            item
+            for item in menu.sub_items
+            if include_recommendations or not isinstance(item, RecommendedMenuItem)
+        ]
+
+        # Remove the API's listen_live to replace with ours (as it's better)
+        menu.sub_items = [
+            obj
+            for obj in menu.sub_items
+            if obj.id not in ["listen_live", "continue_listening"]
+        ]
+
+        menu.sub_items = [
+            radio,
+            catch_up,
+            schedule,
+            my_sounds,
+            *menu.sub_items,
+            explore_all,
+        ]
+        return menu
+
+    async def _get_experience_menu(self) -> Menu:
+        json_resp = await self.requests.get_json_response(url=Endpoints.EXPERIENCE_MENU)
+        return await self.parser.parse_menu(json_resp)
+
+    async def get_my_sounds_menu(self) -> MenuItem:
+        """My Sounds, with any section whose request fails left out.
+
+        While they are fetched asynchronously, dropping a menu item is still better than
+        tanking the whole menu.
+        """
+        sections = await asyncio.gather(
+            _attempt_to_fetch_menu_item(
+                "Continue Listening", self.get_continue_listening_menu()
+            ),
+            _attempt_to_fetch_menu_item("Subscriptions", self.get_subscriptions_menu()),
+            _attempt_to_fetch_menu_item("Latest", self.get_latest_menu()),
+            _attempt_to_fetch_menu_item("Bookmarks", self.get_bookmarks_menu()),
+        )
+        return MenuItem(
+            title="My Sounds",
+            id="my_sounds",
+            sub_items=[section for section in sections if section is not None],
+        )
+
+    async def get_recommendations(self) -> list[RecommendedMenuItem]:
+        menu = await self._get_experience_menu()
+        return [
+            recommendation
+            for recommendation in menu.sub_items
+            if isinstance(recommendation, RecommendedMenuItem)
+        ]
+
+    async def construct_international_menu(
+        self,
+        radio: MenuItem,
+        catch_up: MenuItem,
+        schedule: MenuItem,
+    ) -> Menu:
+        """Gets the main Sounds menu for international users."""
+
+        return Menu(
+            sub_items=[
+                radio,
+                catch_up,
+                schedule,
+                await self.get_explore_all(),
+            ]
+        )
+
+    async def get_podcasts_menu_item(self) -> MenuItem:
+        json = await self.requests.get_json_response(Endpoints.PODCASTS)
+        return MenuItem(
+            id="podcasts",
+            title="Podcasts",
+            sub_items=(await self.parser.parse_menu(json)).sub_items,
+        )
+
+    async def get_music_menu_item(self) -> MenuItem:
+        return MenuItem(
+            id="music",
+            title="Music",
+            sub_items=(
+                await self.parser.parse_menu(
+                    await self.requests.get_json_response(Endpoints.MUSIC)
+                )
+            ).sub_items,
+        )
+
+    async def get_news_menu_item(self) -> MenuItem:
+        return MenuItem(
+            id="news",
+            title="News",
+            sub_items=(
+                await self.parser.parse_menu(
+                    await self.requests.get_json_response(Endpoints.NEWS)
+                )
+            ).sub_items,
+        )
+
+    async def get_explore_all(self) -> MenuItem:
+        """Explore All, with any section whose request fails left out."""
+        sections = await asyncio.gather(
+            _attempt_to_fetch_menu_item("Podcasts", self.get_podcasts_menu_item()),
+            _attempt_to_fetch_menu_item("Music", self.get_music_menu_item()),
+            _attempt_to_fetch_menu_item("News", self.get_news_menu_item()),
+        )
+        return MenuItem(
+            title="Explore All",
+            id="explore",
+            sub_items=[section for section in sections if section is not None],
+        )
+
+    async def get_latest(self) -> list[PlayableItem]:
+        latest_items = await self.parser.parse_container(
+            await self.requests.get_json_response(url=Endpoints.LATEST)
+        )
+        if not latest_items or type(latest_items) is not list:
+            return []
+        return [item for item in latest_items if isinstance(item, PlayableItem)]
+
+    async def get_latest_menu(self) -> MenuItem:
+        latest_items = await self.get_latest()
+        return MenuItem(title="Latest", id="latest", sub_items=latest_items)
+
+    async def get_subscriptions(self) -> list[Podcast | RadioSeries]:
+        subscriptions = await self.parser.parse_container(
+            await self.requests.get_json_response(url=Endpoints.SUBSCRIBED)
+        )
+        if not subscriptions or type(subscriptions) is not list:
+            return []
+        return [
+            item for item in subscriptions if isinstance(item, (Podcast, RadioSeries))
+        ]
+
+    async def get_subscriptions_menu(self) -> MenuItem:
+        subscriptions = await self.get_subscriptions()
+        return MenuItem(
+            title="Subscriptions", id="subscriptions", sub_items=subscriptions
+        )
+
+    async def get_bookmarks(self) -> list[PlayableItem]:
+        bookmarks = await self.parser.parse_container(
+            await self.requests.get_json_response(url=Endpoints.BOOKMARKS)
+        )
+        if not bookmarks or type(bookmarks) is not list:
+            return []
+        return [item for item in bookmarks if isinstance(item, PlayableItem)]
+
+    async def get_bookmarks_menu(self) -> MenuItem:
+        bookmarks = await self.get_bookmarks()
+        return MenuItem(title="Bookmarks", id="bookmarks", sub_items=bookmarks)
+
+    async def get_continue_listening(self) -> list[PlayableItem] | None:
+        json_response = await self.requests.get_json_response(url=Endpoints.CONTINUE)
+        container = await self.parser.parse_container(json_response)
+        if isinstance(container, list):
+            return [item for item in container if isinstance(item, PlayableItem)]
+        return None
+
+    async def get_continue_listening_menu(self) -> MenuItem:
+        continue_listening_items = await self.get_continue_listening()
+        return MenuItem(
+            title="Continue Listening",
+            id="continue_listening",
+            sub_items=continue_listening_items,
+        )

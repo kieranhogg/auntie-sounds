@@ -1,0 +1,268 @@
+import asyncio
+import hashlib
+import logging
+from collections.abc import Sequence
+from pathlib import Path
+
+import aiohttp
+
+from auntie_sounds.auth import AuthService
+from auntie_sounds.content import ContentService
+from auntie_sounds.cookies import CookieStore
+from auntie_sounds.exceptions import InvalidArgumentsError, NotStartedError
+from auntie_sounds.models import Menu, MenuItem
+from auntie_sounds.owners import OwnerService
+from auntie_sounds.personal import PersonalService
+from auntie_sounds.playback import PlaybackService
+from auntie_sounds.requests import RequestManager
+from auntie_sounds.schedule import ScheduleService, station_folders
+from auntie_sounds.stations import StationService
+from auntie_sounds.user import UserService
+from auntie_sounds.utils import _get_data_dir
+
+# Not-signed-in cookie location
+COOKIE_FILE = Path(_get_data_dir(), "sounds_jar")
+
+logger = logging.getLogger(__name__)
+
+
+def _default_cookie_file(username: str | None) -> Path:
+    """Return the default cookie file path for a given account.
+
+    We use a cookie jar location per-username to avoid clashes. Anonymous sessions still
+    use COOKIE_FILE.
+    """
+    if not username:
+        return COOKIE_FILE
+    digest = hashlib.sha256(username.encode("utf-8")).hexdigest()[:16]
+    return Path(_get_data_dir(), f"sounds_jar_{digest}")
+
+
+class SoundsClient:
+    """A client to interact with the Sounds API."""
+
+    SERVICES = frozenset(
+        [
+            "auth",
+            "content",
+            "owners",
+            "personal",
+            "playback",
+            "requests",
+            "schedules",
+            "stations",
+            "user",
+        ]
+    )
+
+    def __getattr__(self, name):
+        if name in self.SERVICES:
+            raise NotStartedError(
+                "The client has not been started. Call `client.start()` or use `async with`"
+            )
+        raise AttributeError(
+            f"{type(self).__name__!r} object has no attribute {name!r}"
+        )
+
+    def __init__(
+        self,
+        username=None,
+        password=None,
+        session=None,
+        cookie_file_location=None,
+        log_level=None,
+        debug_login=False,
+    ) -> None:
+        if log_level is not None:
+            logging.getLogger("auntie_sounds").setLevel(log_level)
+        logger.debug("Creating new SoundsClient...")
+
+        self.username = username
+        self.password = password
+        self.debug_login = debug_login
+        self.cookie_store: CookieStore
+        self._external_session: aiohttp.ClientSession | None = session
+        self._session: aiohttp.ClientSession
+        self._started = False
+        self._cookie_path = cookie_file_location or _default_cookie_file(self.username)
+
+    @classmethod
+    async def create(cls, *args, **kwargs) -> SoundsClient:
+        client = cls(*args, **kwargs)
+        await client.start()
+        return client
+
+    async def start(self) -> None:
+        if self._started:
+            logger.info("Client already started.")
+            return
+        if self._external_session is not None:
+            self._session = aiohttp.ClientSession(
+                connector=self._external_session.connector,
+                connector_owner=False,
+                cookie_jar=aiohttp.CookieJar(),
+                headers=self._external_session.headers,
+            )
+        else:
+            self._session = aiohttp.ClientSession(cookie_jar=aiohttp.CookieJar())
+
+        try:
+            self.cookie_store = CookieStore(
+                session=self._session,
+                cookie_file_location=self._cookie_path,
+                account_id=self.username,
+            )
+            await asyncio.to_thread(self.cookie_store.load)
+            self._create_services()
+        except BaseException:
+            # Don't leave a hanging session if start() doesn't complete
+            await self._session.close()
+            raise
+        self._started = True
+
+    def _create_services(self) -> None:
+        login_details_provided: bool = bool(self.username and self.password)
+
+        self.requests: RequestManager = RequestManager(
+            session=self._session,
+            login_details_provided=login_details_provided,
+        )
+
+        self.auth = AuthService(
+            requests=self.requests,
+            cookie_store=self.cookie_store,
+            username=self.username,
+            password=self.password,
+            debug_login=self.debug_login,
+            on_login_success=self.save_cookies,
+        )
+        self.requests.set_reauth_handler(self.auth.retry_with_reauth)
+        self.owners = OwnerService(requests=self.requests)
+        self.user = UserService(
+            login_details_provided=login_details_provided,
+            requests=self.requests,
+        )
+        self.schedules = ScheduleService(requests=self.requests)
+        self.playback = PlaybackService(
+            requests=self.requests,
+        )
+        self.content = ContentService(
+            requests=self.requests,
+            user=self.user,
+            playback=self.playback,
+            owners=self.owners,
+        )
+        self.stations = StationService(
+            playback=self.playback,
+            schedules=self.schedules,
+            requests=self.requests,
+        )
+        self.personal = PersonalService(requests=self.requests, owners=self.owners)
+
+    async def login(self) -> bool:
+        """Signs into BBC Sounds.
+
+        Renews an existing session if possible, otherwise logs in.
+
+        :return: True on success
+        :raises LoginFailedError: If the login fails for any reason
+        :raises UnauthorisedError: If the login is not authorised
+        :raises InvalidArgumentsError: If either a username or password isn't set
+        """
+
+        if not self.username or not self.password:
+            raise InvalidArgumentsError(
+                "Can't authenticate without username and password set"
+            )
+
+        await self.auth.authenticate()
+        await self.save_cookies()
+        await self.user.refresh()
+        return True
+
+    async def save_cookies(self) -> None:
+        self.cookie_store.save()
+
+    async def load_cookies(self) -> None:
+        self.cookie_store.load()
+
+    async def clear_cookies(self) -> None:
+        self.cookie_store.clear()
+        self.cookie_store.save()
+
+    @property
+    def is_signed_in(self) -> bool:
+        """Check if we have a cookie present."""
+        return self.cookie_store.is_signed_in
+
+    async def get_recommendation_folders(self) -> Sequence[MenuItem]:
+        return await self.personal.get_recommendations()
+
+    async def get_menu(
+        self,
+        include_local_stations: bool = False,
+        include_recommendations: bool = True,
+    ) -> Menu:
+        """Get the main Sounds menu."""
+        # The station list and the UK check don't depend on each other.
+        # Without login details there's no personalised menu, so userinfo isn't needed.
+
+        stations, personalised = await asyncio.gather(
+            self.stations.get_stations(include_local_stations=include_local_stations),
+            self._wants_personalised_menu(),
+        )
+
+        radio = MenuItem(id="radio", title="Live Radio", sub_items=stations)
+        schedule = station_folders("schedule", "Station Schedules", stations)
+        catch_up = station_folders("catch_up", "Catch-up Radio", stations)
+        if personalised:
+            return await self.personal.construct_uk_menu(
+                radio=radio,
+                catch_up=catch_up,
+                schedule=schedule,
+                include_recommendations=include_recommendations,
+            )
+        else:
+            return await self.personal.construct_international_menu(
+                radio=radio,
+                catch_up=catch_up,
+                schedule=schedule,
+            )
+
+    async def _wants_personalised_menu(self) -> bool:
+        return (
+            self.user.login_details_provided
+            and await self.user.is_uk_account_and_location()
+        )
+
+    async def logout(self) -> None:
+        """Signs out and clears any stored credentials and details."""
+        logger.debug("Logging out...")
+        self.password = None
+        self.auth.password = None
+        self.requests.login_details_provided = False
+        self.user.login_details_provided = False
+        self.user.clear()
+        await self.clear_cookies()
+        logger.debug("Logged out.")
+
+    async def close(self) -> None:
+        if not self._started:
+            return
+        logger.debug("Closing session...")
+        try:
+            await self.save_cookies()
+        except Exception:
+            # Saving is best effort here. The session must still be closed.
+            logger.warning("Couldn't save cookies while closing", exc_info=True)
+        finally:
+            await self._session.close()
+            self._started = False
+        logger.debug("Session closed.")
+
+    async def __aenter__(self):
+        await self.start()
+        return self
+
+    async def __aexit__(self, *args):
+        await self.close()

@@ -19,7 +19,12 @@ tail = ("\n## [" + rest[1]) if len(rest) > 1 else ""
 if not body.strip():
     sys.exit("Unreleased section is empty — nothing to release")
 
-today = datetime.date.today().isoformat()
-new_text = f"{before}{marker}\n\n## [{version}] - {today}\n{body}\n{tail}"
-path.write_text(new_text)
+today = datetime.datetime.now(tz=datetime.UTC).date().isoformat()
+if "b" in version:
+    # Betas don't touch the changelog: notes accumulate in [Unreleased]
+    # until the stable release, and each beta's notes are a snapshot of it.
+    body = f"!PRE-RELEASE VERSION!\n\nChanges since the last stable release:\n\n{body}"
+else:
+    path.write_text(f"{before}{marker}\n\n## [{version}] - {today}\n{body}\n{tail}")
+
 pathlib.Path("release_notes.md").write_text(body + "\n")

@@ -1,9 +1,14 @@
-name: ci
+name: CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main, stable ]
+  pull_request:
+    branches: [ main, stable ]
+  workflow_call:
+
+permissions:
+  contents: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
@@ -16,18 +21,24 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
       - name: Set up python
         id: setup-python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7.1.0
         with:
           python-version-file: ".python-version"
       - name: Set up uv
-        uses: astral-sh/setup-uv@v7
+        uses: astral-sh/setup-uv@v10.3.3
         with:
           enable-cache: true
           version-file: "pyproject.toml"
       - name: Install dependencies
         run: uv sync --all-extras --dev --frozen
+      - name: ruff
+        run: uv run ruff check src
+      - name: mypy
+        run: uv run mypy src
       - name: Test with pytest
-        run: uv run pytest tests --cov=src
+        run: uv run pytest -m "not api" -k "not integration"

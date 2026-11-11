@@ -1,0 +1,2360 @@
+{
+  "$schema": "https://rms.api.bbc.co.uk/docs/swagger.json#/definitions/V2CategoriesResponse",
+  "total": 29,
+  "limit": 30,
+  "offset": 0,
+  "data": [
+    {
+      "type": "category",
+      "id": "animation",
+      "depth": 1,
+      "url_key": "animation",
+      "title": "Animation",
+      "pip_id": "PT001",
+      "category_type": "format",
+      "child_categories": []
+    },
+    {
+      "type": "category",
+      "id": "appeals",
+      "depth": 1,
+      "url_key": "appeals",
+      "title": "Appeals",
+      "pip_id": "PT002",
+      "category_type": "format",
+      "child_categories": []
+    },
+    {
+      "type": "category",
+      "id": "audiobooks",
+      "depth": 1,
+      "url_key": "audiobooks",
+      "title": "Audiobooks",
+      "pip_id": "PT013",
+      "category_type": "format",
+      "child_categories": []
+    },
+    {
+      "type": "category",
+      "id": "bulletins",
+      "depth": 1,
+      "url_key": "bulletins",
+      "title": "Bulletins",
+      "pip_id": "PT003",
+      "category_type": "format",
+      "child_categories": []
+    },
+    {
+      "type": "category",
+      "id": "childrens",
+      "depth": 1,
+      "url_key": "childrens",
+      "title": "Children's",
+      "pip_id": "C00001",
+      "category_type": "genre",
+      "child_categories": [
+        {
+          "type": "category",
+          "id": "childrens-activities",
+          "depth": 2,
+          "url_key": "activities",
+          "title": "Activities",
+          "pip_id": "C00002",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "childrens-drama",
+          "depth": 2,
+          "url_key": "drama",
+          "title": "Drama",
+          "pip_id": "C00004",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "childrens-entertainmentandcomedy",
+          "depth": 2,
+          "url_key": "entertainmentandcomedy",
+          "title": "Entertainment & Comedy",
+          "pip_id": "C00003",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "childrens-factual",
+          "depth": 2,
+          "url_key": "factual",
+          "title": "Factual",
+          "pip_id": "C00005",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "childrens-music",
+          "depth": 2,
+          "url_key": "music",
+          "title": "Music",
+          "pip_id": "C00006",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "childrens-news",
+          "depth": 2,
+          "url_key": "news",
+          "title": "News",
+          "pip_id": "C00007",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "childrens-sport",
+          "depth": 2,
+          "url_key": "sport",
+          "title": "Sport",
+          "pip_id": "C00008",
+          "category_type": "genre",
+          "child_categories": []
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "id": "comedy",
+      "depth": 1,
+      "url_key": "comedy",
+      "title": "Comedy",
+      "pip_id": "C00193",
+      "category_type": "genre",
+      "child_categories": [
+        {
+          "type": "category",
+          "id": "comedy-character",
+          "depth": 2,
+          "url_key": "character",
+          "title": "Character",
+          "pip_id": "C00202",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "comedy-chat",
+          "depth": 2,
+          "url_key": "chat",
+          "title": "Chat",
+          "pip_id": "C00234",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "comedy-impressionists",
+          "depth": 2,
+          "url_key": "impressionists",
+          "title": "Impressionists",
+          "pip_id": "C00194",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "comedy-music",
+          "depth": 2,
+          "url_key": "music",
+          "title": "Music",
+          "pip_id": "C00203",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "comedy-panelshows",
+          "depth": 2,
+          "url_key": "panelshows",
+          "title": "Panel Shows",
+          "pip_id": "C00235",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "comedy-satire",
+          "depth": 2,
+          "url_key": "satire",
+          "title": "Satire",
+          "pip_id": "C00195",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "comedy-sitcoms",
+          "depth": 2,
+          "url_key": "sitcoms",
+          "title": "Sitcoms",
+          "pip_id": "C00196",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "comedy-sketch",
+          "depth": 2,
+          "url_key": "sketch",
+          "title": "Sketch",
+          "pip_id": "C00197",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "comedy-spoof",
+          "depth": 2,
+          "url_key": "spoof",
+          "title": "Spoof",
+          "pip_id": "C00198",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "comedy-standup",
+          "depth": 2,
+          "url_key": "standup",
+          "title": "Standup",
+          "pip_id": "C00199",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "comedy-stunt",
+          "depth": 2,
+          "url_key": "stunt",
+          "title": "Stunt",
+          "pip_id": "C00204",
+          "category_type": "genre",
+          "child_categories": []
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "id": "discussionandtalk",
+      "depth": 1,
+      "url_key": "discussionandtalk",
+      "title": "Discussion & Talk",
+      "pip_id": "PT004",
+      "category_type": "format",
+      "child_categories": []
+    },
+    {
+      "type": "category",
+      "id": "docudramas",
+      "depth": 1,
+      "url_key": "docudramas",
+      "title": "Docudramas",
+      "pip_id": "PT005",
+      "category_type": "format",
+      "child_categories": []
+    },
+    {
+      "type": "category",
+      "id": "documentaries",
+      "depth": 1,
+      "url_key": "documentaries",
+      "title": "Documentaries",
+      "pip_id": "PT006",
+      "category_type": "format",
+      "child_categories": []
+    },
+    {
+      "type": "category",
+      "id": "drama",
+      "depth": 1,
+      "url_key": "drama",
+      "title": "Drama",
+      "pip_id": "C00017",
+      "category_type": "genre",
+      "child_categories": [
+        {
+          "type": "category",
+          "id": "drama-actionandadventure",
+          "depth": 2,
+          "url_key": "actionandadventure",
+          "title": "Action & Adventure",
+          "pip_id": "C00018",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "drama-biographical",
+          "depth": 2,
+          "url_key": "biographical",
+          "title": "Biographical",
+          "pip_id": "C00019",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "drama-classicandperiod",
+          "depth": 2,
+          "url_key": "classicandperiod",
+          "title": "Classic & Period",
+          "pip_id": "C00020",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "drama-crime",
+          "depth": 2,
+          "url_key": "crime",
+          "title": "Crime",
+          "pip_id": "C00021",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "drama-historical",
+          "depth": 2,
+          "url_key": "historical",
+          "title": "Historical",
+          "pip_id": "C00024",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "drama-horrorandsupernatural",
+          "depth": 2,
+          "url_key": "horrorandsupernatural",
+          "title": "Horror & Supernatural",
+          "pip_id": "C00025",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "drama-legalandcourtroom",
+          "depth": 2,
+          "url_key": "legalandcourtroom",
+          "title": "Legal & Courtroom",
+          "pip_id": "C00026",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "drama-medical",
+          "depth": 2,
+          "url_key": "medical",
+          "title": "Medical",
+          "pip_id": "C00028",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "drama-musical",
+          "depth": 2,
+          "url_key": "musical",
+          "title": "Musical",
+          "pip_id": "C00029",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "drama-political",
+          "depth": 2,
+          "url_key": "political",
+          "title": "Political",
+          "pip_id": "C00031",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "drama-psychological",
+          "depth": 2,
+          "url_key": "psychological",
+          "title": "Psychological",
+          "pip_id": "C00032",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "drama-relationshipsandromance",
+          "depth": 2,
+          "url_key": "relationshipsandromance",
+          "title": "Relationships & Romance",
+          "pip_id": "C00034",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "drama-scifiandfantasy",
+          "depth": 2,
+          "url_key": "scifiandfantasy",
+          "title": "SciFi & Fantasy",
+          "pip_id": "C00035",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "drama-soaps",
+          "depth": 2,
+          "url_key": "soaps",
+          "title": "Soaps",
+          "pip_id": "C00036",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "drama-spiritual",
+          "depth": 2,
+          "url_key": "spiritual",
+          "title": "Spiritual",
+          "pip_id": "C00033",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "drama-thriller",
+          "depth": 2,
+          "url_key": "thriller",
+          "title": "Thriller",
+          "pip_id": "C00037",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "drama-waranddisaster",
+          "depth": 2,
+          "url_key": "waranddisaster",
+          "title": "War & Disaster",
+          "pip_id": "C00038",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "drama-western",
+          "depth": 2,
+          "url_key": "western",
+          "title": "Western",
+          "pip_id": "C00039",
+          "category_type": "genre",
+          "child_categories": []
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "id": "entertainment",
+      "depth": 1,
+      "url_key": "entertainment",
+      "title": "Entertainment",
+      "pip_id": "C00200",
+      "category_type": "genre",
+      "child_categories": [
+        {
+          "type": "category",
+          "id": "entertainment-varietyshows",
+          "depth": 2,
+          "url_key": "varietyshows",
+          "title": "Variety Shows",
+          "pip_id": "C00201",
+          "category_type": "genre",
+          "child_categories": []
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "id": "factual",
+      "depth": 1,
+      "url_key": "factual",
+      "title": "Factual",
+      "pip_id": "C00045",
+      "category_type": "genre",
+      "child_categories": [
+        {
+          "type": "category",
+          "id": "factual-antiques",
+          "depth": 2,
+          "url_key": "antiques",
+          "title": "Antiques",
+          "pip_id": "C00048",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "factual-artscultureandthemedia",
+          "depth": 2,
+          "url_key": "artscultureandthemedia",
+          "title": "Arts, Culture & the Media",
+          "pip_id": "C00046",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "factual-artscultureandthemedia-arts",
+              "depth": 3,
+              "url_key": "arts",
+              "title": "Arts",
+              "pip_id": "C00231",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "id": "factual-beautyandstyle",
+          "depth": 2,
+          "url_key": "beautyandstyle",
+          "title": "Beauty & Style",
+          "pip_id": "C00049",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "factual-carsandmotors",
+          "depth": 2,
+          "url_key": "carsandmotors",
+          "title": "Cars & Motors",
+          "pip_id": "C00052",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "factual-consumer",
+          "depth": 2,
+          "url_key": "consumer",
+          "title": "Consumer",
+          "pip_id": "C00054",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "factual-crimeandjustice",
+          "depth": 2,
+          "url_key": "crimeandjustice",
+          "title": "Crime & Justice",
+          "pip_id": "C00062",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "factual-crimeandjustice-truecrime",
+              "depth": 3,
+              "url_key": "truecrime",
+              "title": "True Crime",
+              "pip_id": "C00236",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "id": "factual-disability",
+          "depth": 2,
+          "url_key": "disability",
+          "title": "Disability",
+          "pip_id": "C00124",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "factual-familiesandrelationships",
+          "depth": 2,
+          "url_key": "familiesandrelationships",
+          "title": "Families & Relationships",
+          "pip_id": "C00056",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "factual-foodanddrink",
+          "depth": 2,
+          "url_key": "foodanddrink",
+          "title": "Food & Drink",
+          "pip_id": "C00057",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "factual-healthandwellbeing",
+          "depth": 2,
+          "url_key": "healthandwellbeing",
+          "title": "Health & Wellbeing",
+          "pip_id": "C00059",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "factual-history",
+          "depth": 2,
+          "url_key": "history",
+          "title": "History",
+          "pip_id": "C00060",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "factual-homesandgardens",
+          "depth": 2,
+          "url_key": "homesandgardens",
+          "title": "Homes & Gardens",
+          "pip_id": "C00061",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "factual-homesandgardens-gardens",
+              "depth": 3,
+              "url_key": "gardens",
+              "title": "Gardens",
+              "pip_id": "C00188",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "factual-homesandgardens-homes",
+              "depth": 3,
+              "url_key": "homes",
+              "title": "Homes",
+              "pip_id": "C00189",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "id": "factual-lifestories",
+          "depth": 2,
+          "url_key": "lifestories",
+          "title": "Life Stories",
+          "pip_id": "C00050",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "factual-money",
+          "depth": 2,
+          "url_key": "money",
+          "title": "Money",
+          "pip_id": "C00051",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "factual-petsandanimals",
+          "depth": 2,
+          "url_key": "petsandanimals",
+          "title": "Pets & Animals",
+          "pip_id": "C00047",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "factual-politics",
+          "depth": 2,
+          "url_key": "politics",
+          "title": "Politics",
+          "pip_id": "C00063",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "factual-reallifestories",
+          "depth": 2,
+          "url_key": "reallifestories",
+          "title": "Real Life Stories",
+          "pip_id": "C00246",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "factual-scienceandnature",
+          "depth": 2,
+          "url_key": "scienceandnature",
+          "title": "Science & Nature",
+          "pip_id": "C00064",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "factual-scienceandnature-natureandenvironment",
+              "depth": 3,
+              "url_key": "natureandenvironment",
+              "title": "Nature & Environment",
+              "pip_id": "C00190",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "factual-scienceandnature-scienceandtechnology",
+              "depth": 3,
+              "url_key": "scienceandtechnology",
+              "title": "Science & Technology",
+              "pip_id": "C00191",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "id": "factual-travel",
+          "depth": 2,
+          "url_key": "travel",
+          "title": "Travel",
+          "pip_id": "C00065",
+          "category_type": "genre",
+          "child_categories": []
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "id": "films",
+      "depth": 1,
+      "url_key": "films",
+      "title": "Films",
+      "pip_id": "PT007",
+      "category_type": "format",
+      "child_categories": []
+    },
+    {
+      "type": "category",
+      "id": "gamesandquizzes",
+      "depth": 1,
+      "url_key": "gamesandquizzes",
+      "title": "Games & Quizzes",
+      "pip_id": "PT008",
+      "category_type": "format",
+      "child_categories": []
+    },
+    {
+      "type": "category",
+      "id": "learning",
+      "depth": 1,
+      "url_key": "learning",
+      "title": "Learning",
+      "pip_id": "C00040",
+      "category_type": "genre",
+      "child_categories": [
+        {
+          "type": "category",
+          "id": "learning-adults",
+          "depth": 2,
+          "url_key": "adults",
+          "title": "Adults",
+          "pip_id": "C00044",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "learning-languages",
+          "depth": 2,
+          "url_key": "languages",
+          "title": "Languages",
+          "pip_id": "C00232",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "learning-preschool",
+          "depth": 2,
+          "url_key": "preschool",
+          "title": "Pre-School",
+          "pip_id": "C00041",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "learning-primary",
+          "depth": 2,
+          "url_key": "primary",
+          "title": "Primary",
+          "pip_id": "C00042",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "learning-secondary",
+          "depth": 2,
+          "url_key": "secondary",
+          "title": "Secondary",
+          "pip_id": "C00043",
+          "category_type": "genre",
+          "child_categories": []
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "id": "magazinesandreviews",
+      "depth": 1,
+      "url_key": "magazinesandreviews",
+      "title": "Magazines & Reviews",
+      "pip_id": "PT009",
+      "category_type": "format",
+      "child_categories": []
+    },
+    {
+      "type": "category",
+      "id": "makeovers",
+      "depth": 1,
+      "url_key": "makeovers",
+      "title": "Makeovers",
+      "pip_id": "PT010",
+      "category_type": "format",
+      "child_categories": []
+    },
+    {
+      "type": "category",
+      "id": "mixes",
+      "depth": 1,
+      "url_key": "mixes",
+      "title": "Mixes",
+      "pip_id": "PT016",
+      "category_type": "format",
+      "child_categories": []
+    },
+    {
+      "type": "category",
+      "id": "music",
+      "depth": 1,
+      "url_key": "music",
+      "title": "Music",
+      "pip_id": "C00066",
+      "category_type": "genre",
+      "child_categories": [
+        {
+          "type": "category",
+          "id": "music-classical",
+          "depth": 2,
+          "url_key": "classical",
+          "title": "Classical",
+          "pip_id": "C00069",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "music-classical-chamberandrecital",
+              "depth": 3,
+              "url_key": "chamberandrecital",
+              "title": "Chamber & Recital",
+              "pip_id": "C00187",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-classical-choral",
+              "depth": 3,
+              "url_key": "choral",
+              "title": "Choral",
+              "pip_id": "C00153",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-classical-earlymusic",
+              "depth": 3,
+              "url_key": "earlymusic",
+              "title": "Early Music",
+              "pip_id": "C00154",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-classical-experimentalandnew",
+              "depth": 3,
+              "url_key": "experimentalandnew",
+              "title": "Experimental & New",
+              "pip_id": "C00128",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-classical-opera",
+              "depth": 3,
+              "url_key": "opera",
+              "title": "Opera",
+              "pip_id": "C00155",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-classical-orchestral",
+              "depth": 3,
+              "url_key": "orchestral",
+              "title": "Orchestral",
+              "pip_id": "C00156",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "id": "music-classicpopandrock",
+          "depth": 2,
+          "url_key": "classicpopandrock",
+          "title": "Classic Pop & Rock",
+          "pip_id": "C00068",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "music-classicpopandrock-experimentalandnew",
+              "depth": 3,
+              "url_key": "experimentalandnew",
+              "title": "Experimental & New",
+              "pip_id": "C00127",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "id": "music-country",
+          "depth": 2,
+          "url_key": "country",
+          "title": "Country",
+          "pip_id": "C00129",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "music-country-experimentalandnew",
+              "depth": 3,
+              "url_key": "experimentalandnew",
+              "title": "Experimental & New",
+              "pip_id": "C00130",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "id": "music-danceandelectronica",
+          "depth": 2,
+          "url_key": "danceandelectronica",
+          "title": "Dance & Electronica",
+          "pip_id": "C00070",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "music-danceandelectronica-drumandbass",
+              "depth": 3,
+              "url_key": "drumandbass",
+              "title": "Drum & Bass",
+              "pip_id": "C00173",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-danceandelectronica-experimentalandnew",
+              "depth": 3,
+              "url_key": "experimentalandnew",
+              "title": "Experimental & New",
+              "pip_id": "C00131",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-danceandelectronica-soulfulhouse",
+              "depth": 3,
+              "url_key": "soulfulhouse",
+              "title": "Soulful House",
+              "pip_id": "C00132",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "id": "music-desi",
+          "depth": 2,
+          "url_key": "desi",
+          "title": "Desi",
+          "pip_id": "C00133",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "music-desi-asianunderground",
+              "depth": 3,
+              "url_key": "asianunderground",
+              "title": "Asian Underground",
+              "pip_id": "C00157",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-desi-bhangra",
+              "depth": 3,
+              "url_key": "bhangra",
+              "title": "Bhangra",
+              "pip_id": "C00158",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-desi-bollywood",
+              "depth": 3,
+              "url_key": "bollywood",
+              "title": "Bollywood",
+              "pip_id": "C00159",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-desi-experimentalandnew",
+              "depth": 3,
+              "url_key": "experimentalandnew",
+              "title": "Experimental & New",
+              "pip_id": "C00134",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "id": "music-easylisteningsoundtracksandmusicals",
+          "depth": 2,
+          "url_key": "easylisteningsoundtracksandmusicals",
+          "title": "Easy Listening, Soundtracks & Musicals",
+          "pip_id": "C00071",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "music-easylisteningsoundtracksandmusicals-experimentalandnew",
+              "depth": 3,
+              "url_key": "experimentalandnew",
+              "title": "Experimental & New",
+              "pip_id": "C00135",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "id": "music-folk",
+          "depth": 2,
+          "url_key": "folk",
+          "title": "Folk",
+          "pip_id": "C00136",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "music-folk-experimentalandnew",
+              "depth": 3,
+              "url_key": "experimentalandnew",
+              "title": "Experimental & New",
+              "pip_id": "C00137",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "id": "music-hiphoprnbanddancehall",
+          "depth": 2,
+          "url_key": "hiphoprnbanddancehall",
+          "title": "Hip Hop, RnB & Dancehall",
+          "pip_id": "C00077",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "music-hiphoprnbanddancehall-dancehall",
+              "depth": 3,
+              "url_key": "dancehall",
+              "title": "Dancehall",
+              "pip_id": "C00164",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-hiphoprnbanddancehall-experimentalandnew",
+              "depth": 3,
+              "url_key": "experimentalandnew",
+              "title": "Experimental & New",
+              "pip_id": "C00148",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-hiphoprnbanddancehall-garage",
+              "depth": 3,
+              "url_key": "garage",
+              "title": "Garage",
+              "pip_id": "C00165",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-hiphoprnbanddancehall-grime",
+              "depth": 3,
+              "url_key": "grime",
+              "title": "Grime",
+              "pip_id": "C00233",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-hiphoprnbanddancehall-hiphop",
+              "depth": 3,
+              "url_key": "hiphop",
+              "title": "Hip Hop",
+              "pip_id": "C00166",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-hiphoprnbanddancehall-rnb",
+              "depth": 3,
+              "url_key": "rnb",
+              "title": "RnB",
+              "pip_id": "C00167",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "id": "music-jazzandblues",
+          "depth": 2,
+          "url_key": "jazzandblues",
+          "title": "Jazz & Blues",
+          "pip_id": "C00138",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "music-jazzandblues-blues",
+              "depth": 3,
+              "url_key": "blues",
+              "title": "Blues",
+              "pip_id": "C00160",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-jazzandblues-experimentalandnew",
+              "depth": 3,
+              "url_key": "experimentalandnew",
+              "title": "Experimental & New",
+              "pip_id": "C00139",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-jazzandblues-jazz",
+              "depth": 3,
+              "url_key": "jazz",
+              "title": "Jazz",
+              "pip_id": "C00161",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "id": "music-popandchart",
+          "depth": 2,
+          "url_key": "popandchart",
+          "title": "Pop & Chart",
+          "pip_id": "C00075",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "music-popandchart-experimentalandnew",
+              "depth": 3,
+              "url_key": "experimentalandnew",
+              "title": "Experimental & New",
+              "pip_id": "C00140",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "id": "music-rockandindie",
+          "depth": 2,
+          "url_key": "rockandindie",
+          "title": "Rock & Indie",
+          "pip_id": "C00076",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "music-rockandindie-experimentalandnew",
+              "depth": 3,
+              "url_key": "experimentalandnew",
+              "title": "Experimental & New",
+              "pip_id": "C00141",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "id": "music-soulandreggae",
+          "depth": 2,
+          "url_key": "soulandreggae",
+          "title": "Soul & Reggae",
+          "pip_id": "C00142",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "music-soulandreggae-experimentalandnew",
+              "depth": 3,
+              "url_key": "experimentalandnew",
+              "title": "Experimental & New",
+              "pip_id": "C00143",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-soulandreggae-gospel",
+              "depth": 3,
+              "url_key": "gospel",
+              "title": "Gospel",
+              "pip_id": "C00144",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-soulandreggae-reggae",
+              "depth": 3,
+              "url_key": "reggae",
+              "title": "Reggae",
+              "pip_id": "C00162",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-soulandreggae-soca",
+              "depth": 3,
+              "url_key": "soca",
+              "title": "Soca",
+              "pip_id": "C00145",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-soulandreggae-soul",
+              "depth": 3,
+              "url_key": "soul",
+              "title": "Soul",
+              "pip_id": "C00163",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-soulandreggae-soulfulunderground",
+              "depth": 3,
+              "url_key": "soulfulunderground",
+              "title": "Soulful Underground",
+              "pip_id": "C00146",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "id": "music-world",
+          "depth": 2,
+          "url_key": "world",
+          "title": "World",
+          "pip_id": "C00078",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "music-world-africa",
+              "depth": 3,
+              "url_key": "africa",
+              "title": "Africa",
+              "pip_id": "C00168",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-world-americas",
+              "depth": 3,
+              "url_key": "americas",
+              "title": "Americas",
+              "pip_id": "C00169",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-world-asiapacific",
+              "depth": 3,
+              "url_key": "asiapacific",
+              "title": "Asia Pacific",
+              "pip_id": "C00170",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-world-crosscultural",
+              "depth": 3,
+              "url_key": "crosscultural",
+              "title": "Cross Cultural",
+              "pip_id": "C00174",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-world-europe",
+              "depth": 3,
+              "url_key": "europe",
+              "title": "Europe",
+              "pip_id": "C00171",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-world-experimentalandnew",
+              "depth": 3,
+              "url_key": "experimentalandnew",
+              "title": "Experimental & New",
+              "pip_id": "C00150",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "music-world-middleeastandafrica",
+              "depth": 3,
+              "url_key": "middleeastandafrica",
+              "title": "Middle East & Africa",
+              "pip_id": "C00172",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "id": "news",
+      "depth": 1,
+      "url_key": "news",
+      "title": "News",
+      "pip_id": "C00079",
+      "category_type": "genre",
+      "child_categories": []
+    },
+    {
+      "type": "category",
+      "id": "performancesandevents",
+      "depth": 1,
+      "url_key": "performancesandevents",
+      "title": "Performances & Events",
+      "pip_id": "PT011",
+      "category_type": "format",
+      "child_categories": []
+    },
+    {
+      "type": "category",
+      "id": "phoneins",
+      "depth": 1,
+      "url_key": "phoneins",
+      "title": "Phone-ins",
+      "pip_id": "PT012",
+      "category_type": "format",
+      "child_categories": []
+    },
+    {
+      "type": "category",
+      "id": "podcasts",
+      "depth": 1,
+      "url_key": "podcasts",
+      "title": "Podcasts",
+      "pip_id": "PT017",
+      "category_type": "format",
+      "child_categories": []
+    },
+    {
+      "type": "category",
+      "id": "readings",
+      "depth": 1,
+      "url_key": "readings",
+      "title": "Readings",
+      "pip_id": "PT018",
+      "category_type": "format",
+      "child_categories": []
+    },
+    {
+      "type": "category",
+      "id": "reality",
+      "depth": 1,
+      "url_key": "reality",
+      "title": "Reality",
+      "pip_id": "PT014",
+      "category_type": "format",
+      "child_categories": []
+    },
+    {
+      "type": "category",
+      "id": "religionandethics",
+      "depth": 1,
+      "url_key": "religionandethics",
+      "title": "Religion & Ethics",
+      "pip_id": "C00080",
+      "category_type": "genre",
+      "child_categories": []
+    },
+    {
+      "type": "category",
+      "id": "sport",
+      "depth": 1,
+      "url_key": "sport",
+      "title": "Sport",
+      "pip_id": "C00081",
+      "category_type": "genre",
+      "child_categories": [
+        {
+          "type": "category",
+          "id": "sport-alpineskiing",
+          "depth": 2,
+          "url_key": "alpineskiing",
+          "title": "Alpine Skiing",
+          "pip_id": "C00206",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-americanfootball",
+          "depth": 2,
+          "url_key": "americanfootball",
+          "title": "American Football",
+          "pip_id": "C00205",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-archery",
+          "depth": 2,
+          "url_key": "archery",
+          "title": "Archery",
+          "pip_id": "C00175",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-athletics",
+          "depth": 2,
+          "url_key": "athletics",
+          "title": "Athletics",
+          "pip_id": "C00094",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-badminton",
+          "depth": 2,
+          "url_key": "badminton",
+          "title": "Badminton",
+          "pip_id": "C00098",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-baseball",
+          "depth": 2,
+          "url_key": "baseball",
+          "title": "Baseball",
+          "pip_id": "C00176",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-basketball",
+          "depth": 2,
+          "url_key": "basketball",
+          "title": "Basketball",
+          "pip_id": "C00099",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-beachvolleyball",
+          "depth": 2,
+          "url_key": "beachvolleyball",
+          "title": "Beach Volleyball",
+          "pip_id": "C00229",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-biathlon",
+          "depth": 2,
+          "url_key": "biathlon",
+          "title": "Biathlon",
+          "pip_id": "C00207",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-bobsleigh",
+          "depth": 2,
+          "url_key": "bobsleigh",
+          "title": "Bobsleigh",
+          "pip_id": "C00208",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-bowls",
+          "depth": 2,
+          "url_key": "bowls",
+          "title": "Bowls",
+          "pip_id": "C00100",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-boxing",
+          "depth": 2,
+          "url_key": "boxing",
+          "title": "Boxing",
+          "pip_id": "C00093",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-canoeing",
+          "depth": 2,
+          "url_key": "canoeing",
+          "title": "Canoeing",
+          "pip_id": "C00177",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "sport-canoeing-slalom",
+              "depth": 3,
+              "url_key": "slalom",
+              "title": "Slalom",
+              "pip_id": "C00227",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "sport-canoeing-sprint",
+              "depth": 3,
+              "url_key": "sprint",
+              "title": "Sprint",
+              "pip_id": "C00228",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "id": "sport-commonwealthgames",
+          "depth": 2,
+          "url_key": "commonwealthgames",
+          "title": "Commonwealth Games",
+          "pip_id": "C00109",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-cricket",
+          "depth": 2,
+          "url_key": "cricket",
+          "title": "Cricket",
+          "pip_id": "C00085",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "sport-cricket-cricketworldcup",
+              "depth": 3,
+              "url_key": "cricketworldcup",
+              "title": "Cricket World Cup",
+              "pip_id": "C00086",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "id": "sport-crosscountryskiing",
+          "depth": 2,
+          "url_key": "crosscountryskiing",
+          "title": "Cross Country Skiing",
+          "pip_id": "C00209",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-curling",
+          "depth": 2,
+          "url_key": "curling",
+          "title": "Curling",
+          "pip_id": "C00210",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-cycling",
+          "depth": 2,
+          "url_key": "cycling",
+          "title": "Cycling",
+          "pip_id": "C00097",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "sport-cycling-bmx",
+              "depth": 3,
+              "url_key": "bmx",
+              "title": "BMX",
+              "pip_id": "C00220",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "sport-cycling-mountainbike",
+              "depth": 3,
+              "url_key": "mountainbike",
+              "title": "Mountain Bike",
+              "pip_id": "C00221",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "sport-cycling-road",
+              "depth": 3,
+              "url_key": "road",
+              "title": "Road",
+              "pip_id": "C00222",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "sport-cycling-track",
+              "depth": 3,
+              "url_key": "track",
+              "title": "Track",
+              "pip_id": "C00223",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "id": "sport-darts",
+          "depth": 2,
+          "url_key": "darts",
+          "title": "Darts",
+          "pip_id": "C00101",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-disabilitysport",
+          "depth": 2,
+          "url_key": "disabilitysport",
+          "title": "Disability Sport",
+          "pip_id": "C00114",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "sport-disabilitysport-paralympics",
+              "depth": 3,
+              "url_key": "paralympics",
+              "title": "Paralympics",
+              "pip_id": "C00125",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "sport-disabilitysport-winterparalympics",
+              "depth": 3,
+              "url_key": "winterparalympics",
+              "title": "Winter Paralympics",
+              "pip_id": "C00126",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "id": "sport-diving",
+          "depth": 2,
+          "url_key": "diving",
+          "title": "Diving",
+          "pip_id": "C00178",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-equestrian",
+          "depth": 2,
+          "url_key": "equestrian",
+          "title": "Equestrian",
+          "pip_id": "C00102",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-fencing",
+          "depth": 2,
+          "url_key": "fencing",
+          "title": "Fencing",
+          "pip_id": "C00179",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-figureskating",
+          "depth": 2,
+          "url_key": "figureskating",
+          "title": "Figure Skating",
+          "pip_id": "C00211",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-football",
+          "depth": 2,
+          "url_key": "football",
+          "title": "Football",
+          "pip_id": "C00082",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "sport-football-europeanchampionship",
+              "depth": 3,
+              "url_key": "europeanchampionship",
+              "title": "European Championship",
+              "pip_id": "C00083",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "sport-football-worldcup",
+              "depth": 3,
+              "url_key": "worldcup",
+              "title": "World Cup",
+              "pip_id": "C00084",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "id": "sport-formulaone",
+          "depth": 2,
+          "url_key": "formulaone",
+          "title": "Formula One",
+          "pip_id": "C00192",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-freestyleskiing",
+          "depth": 2,
+          "url_key": "freestyleskiing",
+          "title": "Freestyle Skiing",
+          "pip_id": "C00212",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-gaelicgames",
+          "depth": 2,
+          "url_key": "gaelicgames",
+          "title": "Gaelic Games",
+          "pip_id": "C00115",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-golf",
+          "depth": 2,
+          "url_key": "golf",
+          "title": "Golf",
+          "pip_id": "C00091",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-gymnastics",
+          "depth": 2,
+          "url_key": "gymnastics",
+          "title": "Gymnastics",
+          "pip_id": "C00116",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "sport-gymnastics-artistic",
+              "depth": 3,
+              "url_key": "artistic",
+              "title": "Artistic",
+              "pip_id": "C00224",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "sport-gymnastics-rhythmic",
+              "depth": 3,
+              "url_key": "rhythmic",
+              "title": "Rhythmic",
+              "pip_id": "C00225",
+              "category_type": "genre",
+              "child_categories": []
+            },
+            {
+              "type": "category",
+              "id": "sport-gymnastics-trampoline",
+              "depth": 3,
+              "url_key": "trampoline",
+              "title": "Trampoline",
+              "pip_id": "C00226",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "id": "sport-handball",
+          "depth": 2,
+          "url_key": "handball",
+          "title": "Handball",
+          "pip_id": "C00180",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-hockey",
+          "depth": 2,
+          "url_key": "hockey",
+          "title": "Hockey",
+          "pip_id": "C00103",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-horseracing",
+          "depth": 2,
+          "url_key": "horseracing",
+          "title": "Horse Racing",
+          "pip_id": "C00096",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-icehockey",
+          "depth": 2,
+          "url_key": "icehockey",
+          "title": "Ice Hockey",
+          "pip_id": "C00104",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-judo",
+          "depth": 2,
+          "url_key": "judo",
+          "title": "Judo",
+          "pip_id": "C00117",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-luge",
+          "depth": 2,
+          "url_key": "luge",
+          "title": "Luge",
+          "pip_id": "C00213",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-modernpentathlon",
+          "depth": 2,
+          "url_key": "modernpentathlon",
+          "title": "Modern Pentathlon",
+          "pip_id": "C00181",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-motorsport",
+          "depth": 2,
+          "url_key": "motorsport",
+          "title": "Motorsport",
+          "pip_id": "C00092",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-netball",
+          "depth": 2,
+          "url_key": "netball",
+          "title": "Netball",
+          "pip_id": "C00118",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-nordiccombined",
+          "depth": 2,
+          "url_key": "nordiccombined",
+          "title": "Nordic Combined",
+          "pip_id": "C00214",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-olympics",
+          "depth": 2,
+          "url_key": "olympics",
+          "title": "Olympics",
+          "pip_id": "C00111",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-rowing",
+          "depth": 2,
+          "url_key": "rowing",
+          "title": "Rowing",
+          "pip_id": "C00105",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-rugbyleague",
+          "depth": 2,
+          "url_key": "rugbyleague",
+          "title": "Rugby League",
+          "pip_id": "C00089",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-rugbyunion",
+          "depth": 2,
+          "url_key": "rugbyunion",
+          "title": "Rugby Union",
+          "pip_id": "C00087",
+          "category_type": "genre",
+          "child_categories": [
+            {
+              "type": "category",
+              "id": "sport-rugbyunion-rugbyworldcup",
+              "depth": 3,
+              "url_key": "rugbyworldcup",
+              "title": "Rugby World Cup",
+              "pip_id": "C00088",
+              "category_type": "genre",
+              "child_categories": []
+            }
+          ]
+        },
+        {
+          "type": "category",
+          "id": "sport-sailing",
+          "depth": 2,
+          "url_key": "sailing",
+          "title": "Sailing",
+          "pip_id": "C00106",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-shinty",
+          "depth": 2,
+          "url_key": "shinty",
+          "title": "Shinty",
+          "pip_id": "C00112",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-shooting",
+          "depth": 2,
+          "url_key": "shooting",
+          "title": "Shooting",
+          "pip_id": "C00119",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-shorttrackskating",
+          "depth": 2,
+          "url_key": "shorttrackskating",
+          "title": "Short Track Skating",
+          "pip_id": "C00215",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-skeleton",
+          "depth": 2,
+          "url_key": "skeleton",
+          "title": "Skeleton",
+          "pip_id": "C00216",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-skijumping",
+          "depth": 2,
+          "url_key": "skijumping",
+          "title": "Ski Jumping",
+          "pip_id": "C00217",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-snooker",
+          "depth": 2,
+          "url_key": "snooker",
+          "title": "Snooker",
+          "pip_id": "C00095",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-snowboarding",
+          "depth": 2,
+          "url_key": "snowboarding",
+          "title": "Snowboarding",
+          "pip_id": "C00219",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-softball",
+          "depth": 2,
+          "url_key": "softball",
+          "title": "Softball",
+          "pip_id": "C00182",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-speedskating",
+          "depth": 2,
+          "url_key": "speedskating",
+          "title": "Speed Skating",
+          "pip_id": "C00218",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-squash",
+          "depth": 2,
+          "url_key": "squash",
+          "title": "Squash",
+          "pip_id": "C00107",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-swimming",
+          "depth": 2,
+          "url_key": "swimming",
+          "title": "Swimming",
+          "pip_id": "C00108",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-synchronisedswimming",
+          "depth": 2,
+          "url_key": "synchronisedswimming",
+          "title": "Synchronised Swimming",
+          "pip_id": "C00230",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-tabletennis",
+          "depth": 2,
+          "url_key": "tabletennis",
+          "title": "Table Tennis",
+          "pip_id": "C00120",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-taekwondo",
+          "depth": 2,
+          "url_key": "taekwondo",
+          "title": "Taekwondo",
+          "pip_id": "C00183",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-tennis",
+          "depth": 2,
+          "url_key": "tennis",
+          "title": "Tennis",
+          "pip_id": "C00090",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-triathlon",
+          "depth": 2,
+          "url_key": "triathlon",
+          "title": "Triathlon",
+          "pip_id": "C00121",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-volleyball",
+          "depth": 2,
+          "url_key": "volleyball",
+          "title": "Volleyball",
+          "pip_id": "C00184",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-waterpolo",
+          "depth": 2,
+          "url_key": "waterpolo",
+          "title": "Water Polo",
+          "pip_id": "C00185",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-weightlifting",
+          "depth": 2,
+          "url_key": "weightlifting",
+          "title": "Weightlifting",
+          "pip_id": "C00122",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-winterolympics",
+          "depth": 2,
+          "url_key": "winterolympics",
+          "title": "Winter Olympics",
+          "pip_id": "C00110",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-wintersports",
+          "depth": 2,
+          "url_key": "wintersports",
+          "title": "Winter Sports",
+          "pip_id": "C00123",
+          "category_type": "genre",
+          "child_categories": []
+        },
+        {
+          "type": "category",
+          "id": "sport-wrestling",
+          "depth": 2,
+          "url_key": "wrestling",
+          "title": "Wrestling",
+          "pip_id": "C00186",
+          "category_type": "genre",
+          "child_categories": []
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "id": "talentshows",
+      "depth": 1,
+      "url_key": "talentshows",
+      "title": "Talent Shows",
+      "pip_id": "PT015",
+      "category_type": "format",
+      "child_categories": []
+    },
+    {
+      "type": "category",
+      "id": "weather",
+      "depth": 1,
+      "url_key": "weather",
+      "title": "Weather",
+      "pip_id": "C00113",
+      "category_type": "genre",
+      "child_categories": []
+    }
+  ]
+}

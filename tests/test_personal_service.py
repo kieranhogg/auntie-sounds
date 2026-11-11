@@ -1,13 +1,10 @@
-from unittest.mock import AsyncMock, Mock
+from unittest.mock import AsyncMock
 
 import pytest
 
-from sounds.constants import URLs
-from sounds.exceptions import APIResponseError
-from sounds.models import Menu, MenuItem, RecommendedMenuItem
-from sounds.personal import MenuRecommendationOptions, PersonalService
-
-pytestmark = pytest.mark.anyio
+from auntie_sounds.endpoints import Endpoints
+from auntie_sounds.exceptions import APIResponseError
+from auntie_sounds.models import Menu, MenuItem, RecommendedMenuItem
 
 
 def _menu_item_node(item_id: str, children: list) -> dict:
@@ -28,21 +25,8 @@ def _playable_child(suffix: str, recommendation: dict | None = None) -> dict:
     return node
 
 
-class FakeRequestManager:
-    """Bypasses the login/retry logic so these test parsing and filtering."""
-
-    async def run(self, call):
-        return await call()
-
-
-@pytest.fixture
-def personal_service(mock_session, mock_logger):
-    return PersonalService(
-        auth=Mock(),
-        requests=FakeRequestManager(),
-        session=mock_session,
-        logger=mock_logger,
-    )
+async def run(self, call):
+    return await call()
 
 
 @pytest.fixture
@@ -63,59 +47,72 @@ class TestPersonalService:
     """Tests for personal service"""
 
     async def test_get_uk_menu_include_keeps_everything(
-        self, personal_service, monkeypatch, mixed_menu_json
+        self, mock_personal_service, mock_requests, monkeypatch, mixed_menu_json
     ):
         monkeypatch.setattr(
-            personal_service, "_get_json", AsyncMock(return_value=mixed_menu_json)
+            mock_requests,
+            "get_json_response",
+            AsyncMock(return_value=mixed_menu_json),
         )
 
-        menu = await personal_service.get_uk_menu(
-            recommendations=MenuRecommendationOptions.INCLUDE
+        menu = await mock_personal_service.construct_uk_menu(
+            radio=MenuItem(id="listen_live"),
+            catch_up=MenuItem(id="catch_up"),
+            schedule=MenuItem(id="schedule"),
         )
 
         assert isinstance(menu, Menu)
-        assert len(menu.sub_items) == 2
+        assert len(menu.sub_items) == 7
         assert isinstance(menu.get("recommended"), RecommendedMenuItem)
         assert type(menu.get("regular")) is MenuItem
 
     async def test_get_uk_menu_exclude_drops_recommendations(
-        self, personal_service, monkeypatch, mixed_menu_json
+        self, mock_personal_service, mock_requests, monkeypatch, mixed_menu_json
     ):
         monkeypatch.setattr(
-            personal_service, "_get_json", AsyncMock(return_value=mixed_menu_json)
+            mock_requests,
+            "get_json_response",
+            AsyncMock(return_value=mixed_menu_json),
         )
 
-        menu = await personal_service.get_uk_menu(
-            recommendations=MenuRecommendationOptions.EXCLUDE
+        menu = await mock_personal_service.construct_uk_menu(
+            radio=MenuItem(id="listen_live"),
+            catch_up=MenuItem(id="catch_up"),
+            schedule=MenuItem(id="schedule"),
+            include_recommendations=False,
         )
-
-        assert [item.id for item in menu.sub_items] == ["regular"]
+        assert menu.get("recommended") is None
+        assert menu.get("regular") is not None
 
     async def test_get_uk_menu_only_keeps_recommendations(
-        self, personal_service, monkeypatch, mixed_menu_json
+        self, mock_personal_service, mock_requests, monkeypatch, mixed_menu_json
     ):
         monkeypatch.setattr(
-            personal_service, "_get_json", AsyncMock(return_value=mixed_menu_json)
+            mock_requests,
+            "get_json_response",
+            AsyncMock(return_value=mixed_menu_json),
         )
 
-        menu = await personal_service.get_uk_menu(
-            recommendations=MenuRecommendationOptions.ONLY
-        )
+        folders = await mock_personal_service.get_recommendations()
 
-        assert [item.id for item in menu.sub_items] == ["recommended"]
+        assert [item.id for item in folders] == ["recommended"]
 
     async def test_get_uk_menu_raises_on_empty_response(
-        self, personal_service, monkeypatch
+        self, mock_personal_service, mock_requests, monkeypatch
     ):
         monkeypatch.setattr(
-            personal_service, "_get_json", AsyncMock(return_value={"data": []})
+            mock_requests, "get_json_response", AsyncMock(return_value={"data": []})
         )
 
         with pytest.raises(APIResponseError):
-            await personal_service.get_uk_menu()
+            await mock_personal_service.construct_uk_menu(
+                radio=MenuItem(id="listen_live"),
+                catch_up=MenuItem(id="catch_up"),
+                schedule=MenuItem(id="schedule"),
+            )
 
     async def test_get_explore_all_composes_submenus(
-        self, personal_service, monkeypatch
+        self, mock_personal_service, mock_requests, monkeypatch
     ):
         podcasts_json = {
             "data": [_menu_item_node("podcasts_item", [_playable_child("3")])]
@@ -124,17 +121,17 @@ class TestPersonalService:
         news_json = {"data": [_menu_item_node("news_item", [_playable_child("5")])]}
 
         responses = {
-            URLs.PODCASTS: podcasts_json,
-            URLs.MUSIC: music_json,
-            URLs.NEWS: news_json,
+            Endpoints.PODCASTS: podcasts_json,
+            Endpoints.MUSIC: music_json,
+            Endpoints.NEWS: news_json,
         }
 
-        async def fake_get_json(url=None, url_template=None, **kwargs):
-            return responses[url or url_template]
+        async def fake_get_json(url=None):
+            return responses[url]  # type: ignore[ty:invalid-argument-type]
 
-        monkeypatch.setattr(personal_service, "_get_json", fake_get_json)
+        monkeypatch.setattr(mock_requests, "get_json_response", fake_get_json)
 
-        explore_all = await personal_service.get_explore_all()
+        explore_all = await mock_personal_service.get_explore_all()
 
         assert explore_all.id == "explore"
         assert [item.id for item in explore_all.sub_items] == [
