@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## [Unreleased]
+
+## [3.0.1] - 2026-11-12
 * Change: tweak the main menu IDs to `live` and `schedules` from `radio` and `schedule`
 
 ## [3.0.0] - 2026-11-12
