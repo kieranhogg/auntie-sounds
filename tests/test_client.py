@@ -67,5 +67,5 @@ class TestClientMenus:
     async def test_get_international_menu(self, mock_api, real_anonymous_client):
         menu = await real_anonymous_client.get_menu()
         assert len(menu.sub_items) == 4
-        for id in ["radio", "catch_up", "schedule", "explore"]:
+        for id in ["live", "catch_up", "schedules", "explore"]:
             assert menu.get(id) is not None
