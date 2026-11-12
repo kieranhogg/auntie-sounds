@@ -212,9 +212,13 @@ class SoundsClient:
             self._wants_personalised_menu(),
         )
 
-        radio = MenuItem(id="radio", title="Live Radio", sub_items=stations)
-        schedule = station_folders("schedule", "Station Schedules", stations)
-        catch_up = station_folders("catch_up", "Catch-up Radio", stations)
+        radio = MenuItem(id="live", title="Live Radio", sub_items=stations)
+        schedule = station_folders(
+            id="schedules", title="Station Schedules", stations=stations
+        )
+        catch_up = station_folders(
+            id="catch_up", title="Catch-up Radio", stations=stations
+        )
         if personalised:
             return await self.personal.construct_uk_menu(
                 radio=radio,
