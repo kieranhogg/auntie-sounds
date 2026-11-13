@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [3.0.1] - 2026-11-12
+* Change: tweak the main menu IDs to `live` and `schedules` from `radio` and `schedule`
+
+## [3.0.0] - 2026-11-12
 * New feature: added international radio stations
 * New feature: podcast and radio series seasons. `Podcast.seasons` / `RadioSeries.seasons` hold `Season`
   containers; with `include_episodes=True`, episodes are grouped into their season and any that don't belong
