@@ -2,6 +2,7 @@ import asyncio
 import logging
 from collections import OrderedDict, defaultdict
 from collections.abc import Iterable, Sequence
+from dataclasses import dataclass
 from itertools import chain
 from typing import TYPE_CHECKING, Final
 
@@ -10,6 +11,7 @@ from auntie_sounds.endpoints import Endpoints
 from auntie_sounds.exceptions import (
     APIResponseError,
     InvalidFormatError,
+    NetworkError,
     NotExpectedTypeError,
     NotFoundError,
     SoundsException,
@@ -41,8 +43,8 @@ logger = logging.getLogger(__name__)
 
 # Define a reasonable upper limit for episodes to fetch
 MAX_PODCAST_EPISODES: Final = 300
-
 MAX_CACHE_SIZE = 500
+RETRYABLE_STATUSES = frozenset({429, 500, 502, 503, 504})
 
 
 def assign_seasons(
@@ -92,6 +94,12 @@ def assign_seasons(
     podcast.sub_items = list(chain.from_iterable(by_series.values())) or None
 
 
+def _is_retryable(e: SoundsException) -> bool:
+    return (
+        isinstance(e, NetworkError) or getattr(e, "status", None) in RETRYABLE_STATUSES
+    )
+
+
 async def _no_episodes() -> None:
     """Stands in for the episode fetch in get_podcast's gather when it's not wanted."""
 
@@ -105,6 +113,17 @@ def _ancestor_id(programme: dict, kind: str) -> str | None:
         (a["id"] for a in programme.get("ancestors") or [] if a.get("type") == kind),
         None,
     )
+
+
+@dataclass(frozen=True, slots=True)
+class SpotifyThrottler:
+    """A representation of a throttler to pass to Spotify requests."""
+
+    max_concurrent_images: int = 5
+    initial_delay: int = 0
+    request_delay: int = 0
+    max_retries: int = 2
+    retry_delay: float = 1.0
 
 
 class ContentService:
@@ -406,14 +425,20 @@ class ContentService:
         self,
         vpid: str,
         fetch_missing_images: bool = False,
-        max_concurrent_images: int = 5,
+        spotify_throttler: SpotifyThrottler | None = None,
     ) -> list[Segment]:
         """Get the show segments (songs played) for a certain show, i.e. catch-up radio.
 
         :param vpid: version PID of the show
         :param fetch_missing_images: if True, the `Segment.image_url` field will be populated from the Spotify API
+        :param spotify_throttler: an optional SpotifyThrottler instance to use fetching missing images
         :return: a list of `Segment` objects for this show
         """
+        logger.debug("Fetching show segments for %s", vpid)
+        logger.debug("fetch_missing_images set to %s", fetch_missing_images)
+        if not spotify_throttler:
+            spotify_throttler = SpotifyThrottler()
+
         json_resp = await self.requests.get_json_response(
             url=Endpoints.SEGMENTS, url_args={"vpid": vpid}
         )
@@ -425,22 +450,50 @@ class ContentService:
 
         # The Sounds API for catch-up media does not contain image URLs
         if fetch_missing_images:
-            semaphore = asyncio.Semaphore(max_concurrent_images)
+            await self._get_missing_images(
+                segments=segments, throttler=spotify_throttler
+            )
+        return segments
 
-            async def fetch(segment: Segment) -> str | None:
-                async with semaphore:
+    async def _get_missing_images(
+        self, segments: list[Segment], throttler: SpotifyThrottler
+    ) -> None:
+        """Checks a list of `Segment` objects for missing images and adds them in.
+
+        Any failed images with a retryable status are retried straight away with a
+        back-off time which doubles.
+        """
+        logger.debug(
+            "Fetching missing images from Spotify with throttler: %s", throttler
+        )
+        semaphore = asyncio.Semaphore(throttler.max_concurrent_images)
+
+        async def fetch(segment: Segment) -> str | None:
+            async with semaphore:
+                await asyncio.sleep(throttler.initial_delay)
+                for attempt in range(throttler.max_retries + 1):
                     try:
                         return await self.image_from_spotify(segment.spotify_url)
                     except SoundsException as e:
-                        logger.debug("No Spotify image for %s: %s", segment.id, e)
-                        return None
+                        if attempt == throttler.max_retries or not _is_retryable(e):
+                            logger.debug("No Spotify image for %s: %s", segment.id, e)
+                            return None
+                        logger.debug(
+                            "Retrying Spotify image for %s after: %s", segment.id, e
+                        )
+                        await asyncio.sleep(throttler.retry_delay * 2**attempt)
+                return None
 
-            missing = [s for s in segments if not s.image_url and s.spotify_url]
-            image_urls = await asyncio.gather(*(fetch(s) for s in missing))
+        missing = [s for s in segments if not s.image_url and s.spotify_url]
+        tasks = []
+        async with asyncio.TaskGroup() as tg:
+            for s in missing:
+                tasks.append(tg.create_task(fetch(s)))
+                if throttler.request_delay:
+                    await asyncio.sleep(throttler.request_delay)
 
-            for segment, image_url in zip(missing, image_urls, strict=True):
-                segment.image_url = image_url
-        return segments
+        for segment, task in zip(missing, tasks, strict=True):
+            segment.image_url = task.result()
 
     async def get_heartbeat_details(self, pid) -> tuple[str, str]:
         """Get the details (vpid, resource_type) required to send a heartbeat request.
