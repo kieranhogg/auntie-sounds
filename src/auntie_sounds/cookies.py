@@ -14,6 +14,11 @@ ACCESS_TOKEN_COOKIE = "ckns_atkn"
 _ANONYMOUS_OWNER = "\0anonymous"
 
 
+def _owner_path(path: Path) -> Path:
+    """Helper for typing, as owner path depends on path."""
+    return path.with_name(f"{path.name}.owner")
+
+
 class CookieStore:
     _COOKIE_CLEAR_DOMAINS = ("bbc.co.uk", "bbc.com")
 
@@ -31,6 +36,14 @@ class CookieStore:
         logger.debug("Cookie jar location: %s", self.path)
         self.session = session
         self.account_id = account_id
+
+    @property
+    def is_signed_in(self) -> bool:
+        return self._has_cookie(ID_COOKIE)
+
+    @property
+    def has_access_token(self) -> bool:
+        return self._has_cookie(ACCESS_TOKEN_COOKIE)
 
     def load(self) -> None:
         logger.debug("Loading cookies from disk...")
@@ -67,7 +80,7 @@ class CookieStore:
                 return
 
             if recorded_owner is None:
-                # Legacy cookie file with no owner marker <v2.1.0
+                # Legacy cookie file with no owner marker <v3.0.0
                 self._write_owner()
         else:
             logger.warning("Cookie location does not exist.")
@@ -81,18 +94,21 @@ class CookieStore:
         cast(aiohttp.CookieJar, self.session.cookie_jar).save(str(self.path))
         self._write_owner()
 
-    @property
-    def is_signed_in(self) -> bool:
-        return self._has_cookie(ID_COOKIE)
-
-    @property
-    def has_access_token(self) -> bool:
-        return self._has_cookie(ACCESS_TOKEN_COOKIE)
-
     def clear(self) -> None:
+        """Clear the cookies with domains matching `self._COOKIE_CLEAR_DOMAINS`."""
         logger.debug("Clearing cookies, signed in before: %s", self.is_signed_in)
         for base in self._COOKIE_CLEAR_DOMAINS:
             self.session.cookie_jar.clear_domain(base)
+
+    def delete(self) -> None:
+        """Remove the persisted jar and its owner file, if present."""
+        if self.path is None:
+            logger.warning("No cookie file location configured.")
+            return
+        logger.debug("Deleting cookie jar at %s...", self.path)
+        for path in (self.path, _owner_path(self.path)):
+            path.unlink(missing_ok=True)
+            logger.debug("Deleted")
 
     def _has_cookie(self, name: str) -> bool:
         # aiohttp drops expired cookies before we check
@@ -113,8 +129,10 @@ class CookieStore:
         Returns None if there is no marker file at all (a cookie file
         saved before this tracking existed, or not created by us).
         """
-        owner_path = self._owner_path
-        if owner_path is None or not owner_path.exists():
+        if self.path is None:
+            return None
+        owner_path = _owner_path(self.path)
+        if not owner_path.exists():
             return None
         try:
             return owner_path.read_text(encoding="utf-8").strip()
@@ -125,10 +143,9 @@ class CookieStore:
             return None
 
     def _write_owner(self) -> None:
-        owner_path = self._owner_path
-        if owner_path is None:
+        if self.path is None:
             return
-        owner_path.write_text(
+        _owner_path(self.path).write_text(
             self.account_id if self.account_id is not None else _ANONYMOUS_OWNER,
             encoding="utf-8",
         )

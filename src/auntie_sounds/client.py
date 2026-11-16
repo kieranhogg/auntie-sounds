@@ -88,11 +88,15 @@ class SoundsClient:
 
     @classmethod
     async def create(cls, *args, **kwargs) -> SoundsClient:
+        """Creates and starts a new SoundsClient instance."""
         client = cls(*args, **kwargs)
         await client.start()
         return client
 
     async def start(self) -> None:
+        """Starts the SoundsClient.
+
+        This is where the session, cookie jar and services are initialised."""
         if self._started:
             logger.info("Client already started.")
             return
@@ -181,14 +185,21 @@ class SoundsClient:
         return True
 
     async def save_cookies(self) -> None:
+        """Save cookies to the cookie jar on disk."""
         self.cookie_store.save()
 
     async def load_cookies(self) -> None:
+        """Load cookies from the cookie jar on disk."""
         self.cookie_store.load()
 
     async def clear_cookies(self) -> None:
+        """Clear cookies from the cookie jar and saves."""
         self.cookie_store.clear()
         self.cookie_store.save()
+
+    def delete_stored_cookies(self) -> None:
+        """Remove the cookie jar file and its owner file, if present."""
+        self.cookie_store.delete()
 
     @property
     def is_signed_in(self) -> bool:
@@ -233,12 +244,6 @@ class SoundsClient:
                 schedule=schedule,
             )
 
-    async def _wants_personalised_menu(self) -> bool:
-        return (
-            self.user.login_details_provided
-            and await self.user.is_uk_account_and_location()
-        )
-
     async def logout(self) -> None:
         """Signs out and clears any stored credentials and details."""
         logger.debug("Logging out...")
@@ -263,6 +268,12 @@ class SoundsClient:
             await self._session.close()
             self._started = False
         logger.debug("Session closed.")
+
+    async def _wants_personalised_menu(self) -> bool:
+        return (
+            self.user.login_details_provided
+            and await self.user.is_uk_account_and_location()
+        )
 
     async def __aenter__(self):
         await self.start()
