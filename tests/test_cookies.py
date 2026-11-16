@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 from unittest.mock import Mock
 
 import aiohttp
@@ -160,3 +161,28 @@ class TestCookieStore:
         )
         store_b.load()
         assert store_b.is_signed_in is False
+
+    async def test_delete_cookies(self, tmp_path: Path):
+        """Test normal cookie deletion function."""
+        jar = tmp_path / "cookies"
+        owner = tmp_path / "cookies.owner"
+        store = CookieStore(
+            session=Mock(cookie_jar=aiohttp.CookieJar()),
+            cookie_file_location=jar,
+            account_id="account-id",
+        )
+        store.save()
+        assert jar.exists()
+        assert owner.exists()
+
+        store.delete()
+        assert not jar.exists()
+        assert not owner.exists()
+
+    async def test_delete_missing_cookies(self, tmp_path: Path):
+        """Test deleting when no cookie files exist doesn't raise."""
+        store = CookieStore(
+            session=Mock(cookie_jar=aiohttp.CookieJar()),
+            cookie_file_location=tmp_path / "cookies",
+        )
+        store.delete()

@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## [Unreleased]
+* New feature: `SoundsClient.delete_stored_cookies()` (which calls `CookieStore.delete()`) removes the cookie jar file
 
 ## [3.0.1] - 2026-11-12
 * Change: tweak the main menu IDs to `live` and `schedules` from `radio` and `schedule`
