@@ -86,7 +86,7 @@ class TestMakeRequestErrors:
         resp.release.assert_called_once()
 
     async def test_404_response_is_raised_correctly(self):
-        resp = AsyncMock(status=404, reason="Not Found")
+        resp = Mock(status=404, reason="Not Found")
         session = Mock(spec=aiohttp.ClientSession)
         session.request = AsyncMock(return_value=resp)
         manager = RequestManager(session=session)
