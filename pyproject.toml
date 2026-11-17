@@ -37,6 +37,7 @@ addopts = [
     "--cov=auntie_sounds",
     "--import-mode=importlib"
 ]
+
 pythonpath = [
   "src"
 ]
@@ -53,6 +54,7 @@ dev = [
     "aioresponses>=0.7.9",
     "anyio>=4.14.0",
     "deptry>=0.25.1",
+    "flake8-class-attributes-order>=0.3.0",
     "mypy>=2.3.1",
     "pytest-cov>=7.0.0",
     "pytest>=9.0.1",
