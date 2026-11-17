@@ -25,7 +25,9 @@ logger = logging.getLogger(__name__)
 
 
 def _promote_if_recommended(menu_item: MenuItem) -> MenuItem:
-    """Convert menu_item to RecommendedMenuItem if its first sub-item is a recommendation."""
+    """
+    Convert menu_item to RecommendedMenuItem if its first sub-item is a recommendation.
+    """
     if not menu_item.sub_items:
         return menu_item
     first_child = menu_item.sub_items[0]
@@ -54,7 +56,8 @@ class Parser:
 
         if isinstance(node, list):
             # While we can have list of nodes and nodes within nodes,
-            # we don't have lists of lists (or if we do we handle them in other functions)
+            # we don't have lists of lists (or if we do we handle them in other
+            # functions)
             results = []
             for item in node:
                 if item is not None:
@@ -103,7 +106,8 @@ class Parser:
         )
         menu_items = [node for node in nodes if isinstance(node, MenuItem)]
 
-        # Promote any menu item to a "recommended" variant if its first child is a recommendation
+        # Promote any menu item to a "recommended" variant if its first child is a
+        # recommendation
         menu.sub_items = [
             _promote_if_recommended(item) for item in menu_items if item.sub_items
         ]

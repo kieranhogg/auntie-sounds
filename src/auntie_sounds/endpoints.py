@@ -11,7 +11,10 @@ class URLs(StrEnum):
     USER_INFO = "https://www.bbc.co.uk/userinfo"
 
     # Streaming URLs
-    MEDIASET = "https://open.live.bbc.co.uk/mediaselector/6/select/version/3.0/mediaset/pc/cvid/urn:bbc:pips:pid:{id}/format/json"
+    MEDIASET = (
+        "https://open.live.bbc.co.uk/mediaselector/6/select/version/3.0/"
+        "mediaset/pc/cvid/urn:bbc:pips:pid:{id}/format/json"
+    )
     """
     Takes: an id, which is the service id for a live station or the vpid for an episode.
     Returns: media variants by bitrate, each with a list of stream connections.
@@ -29,6 +32,7 @@ class URLs(StrEnum):
     )
     LOGIN_BASE = "https://account.bbc.com"
     COOKIE_BASE = "https://www.bbc.co.uk"
+    SPOTIFY_OEMBED = "https://open.spotify.com/oembed"
 
 
 @unique
@@ -36,14 +40,6 @@ class Endpoints(Enum):
     login_required: bool
     response_type: str | None
     return_type: str | None
-
-    def __new__(cls, value, login_required=False, response_type=None, return_type=None):
-        obj = object.__new__(cls)
-        obj._value_ = value
-        obj.login_required = login_required
-        obj.response_type = response_type
-        obj.return_type = return_type
-        return obj
 
     # Station & Networks
     NETWORKS_DETAILED = "/radio/networks.json"
@@ -184,3 +180,11 @@ class Endpoints(Enum):
     # plus progress, which is None for anything not yet played
     PID_PLAYABLE = ("/v2/my/programmes/{pid}/playable", True)
     MY_PLAYABLE_ITEMS_CONTAINER = ("/v2/my/programmes/playable", True)
+
+    def __new__(cls, value, login_required=False, response_type=None, return_type=None):
+        obj = object.__new__(cls)
+        obj._value_ = value
+        obj.login_required = login_required
+        obj.response_type = response_type
+        obj.return_type = return_type
+        return obj

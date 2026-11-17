@@ -98,7 +98,8 @@ def get_stream_variants(
         before the supplier, so an HTTPS stream is picked over an HTTP one
         whenever both exist, whatever the supplier preference.
 
-        The ideal rank is e.g. (False, False, 10) for protocol yes, supplier yes, priority 10.
+        The ideal rank is e.g. (False, False, 10) for protocol yes, supplier yes,
+            priority 10.
         """
         protocol_matches = connection.get("protocol") == preferences.protocol
         supplier_matches = (
@@ -159,8 +160,10 @@ class PlaybackService:
         the first fails to connect.
 
         :param station_id: the ID of the station (also known as the service ID)
-        :param preferences: an optional StreamPreferences object to state the requested stream's preferred options
-        :param international: set to True if this is an international stream, False if not
+        :param preferences: an optional StreamPreferences object to state the requested
+            stream's preferred options
+        :param international: set to True if this is an international stream, False if
+            not
         :return: the stream URLs, which is empty if none match the preferences
         """
         if not station_id:
@@ -200,7 +203,8 @@ class PlaybackService:
         the first fails to connect.
 
         :param vpid: the version PID of the episode
-        :param preferences: an optional StreamPreferences object to state the requested stream's preferred options
+        :param preferences: an optional StreamPreferences object to state the requested
+            stream's preferred options
         :return: the stream URLs, which is empty if none match the preferences
         """
         return await self._get_streams(vpid, preferences)
@@ -212,30 +216,12 @@ class PlaybackService:
         Gets the best stream URL for an episode, see get_episode_streams.
 
         :param vpid: the version PID of the episode
-        :param preferences: an optional StreamPreferences object to state the requested stream's preferred options
+        :param preferences: an optional StreamPreferences object to state the requested
+            stream's preferred options
         :return: the string containing the stream URL, or None
         """
         streams = await self.get_episode_streams(vpid, preferences=preferences)
         return streams[0] if streams else None
-
-    async def _get_streams(
-        self,
-        media_id: str,
-        preferences: StreamPreference | None,
-        jwt_token: str | None = None,
-    ) -> list[str]:
-        """Ask mediaselector for an id's streams and rank them.
-
-        Episodes don't need a token. Live stations need the JWT as a Bearer header.
-        """
-        headers = {"Authorization": f"Bearer {jwt_token}"} if jwt_token else None
-        json_resp = await self.requests.get_json_response(
-            url=URLs.MEDIASET, url_args={"id": media_id}, headers=headers
-        )
-        logger.log(VERBOSE_LOG_LEVEL, json_resp)
-        return _extract_streams(
-            json_resp, preferences=preferences or StreamPreference()
-        )
 
     async def update_episode_play_status(
         self,
@@ -244,7 +230,8 @@ class PlaybackService:
         action: PlayStatus,
         elapsed_time: int,
     ) -> bool:
-        """Update the API's play status endpoint with the latest episode progress/action.
+        """
+        Update the API's play status endpoint with the latest episode progress/action.
 
         :param pid: the episode, or current station programme's pid
         :param action: a `PlayStatus` value for the current action
@@ -287,6 +274,25 @@ class PlaybackService:
             "metadata": {"service_id": service_id, "platform": "web"},
         }
         return await self._update_play_status(data)
+
+    async def _get_streams(
+        self,
+        media_id: str,
+        preferences: StreamPreference | None,
+        jwt_token: str | None = None,
+    ) -> list[str]:
+        """Ask mediaselector for an id's streams and rank them.
+
+        Episodes don't need a token. Live stations need the JWT as a Bearer header.
+        """
+        headers = {"Authorization": f"Bearer {jwt_token}"} if jwt_token else None
+        json_resp = await self.requests.get_json_response(
+            url=URLs.MEDIASET, url_args={"id": media_id}, headers=headers
+        )
+        logger.log(VERBOSE_LOG_LEVEL, json_resp)
+        return _extract_streams(
+            json_resp, preferences=preferences or StreamPreference()
+        )
 
     async def _update_play_status(
         self,

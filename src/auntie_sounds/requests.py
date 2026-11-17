@@ -89,7 +89,8 @@ def build_url(
                 url_args[keyword] = default_args[keyword]
             else:
                 raise InvalidArgumentsError(
-                    f"{keyword} is a required parameter for the URL, but it is not in url_args."
+                    f"{keyword} is a required parameter for the URL, but it is not in"
+                    + " url_args."
                 )
     if parameters_required and url_args:
         return (
@@ -104,7 +105,10 @@ def build_headers(referer: str | None = None) -> dict:
     """Builds the standard headers to send."""
     base_headers = {
         "Accept-Language": "en-GB,en;q=0.9",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+            + "(KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+        ),
         "Origin": URLs.LOGIN_BASE.value,
         "Cache-Control": "max-age=0",
     }
@@ -149,27 +153,6 @@ class RequestManager:
             return await self.reauth_handler(call)
         return await call()
 
-    async def _request_or_raise(self, method, url, **kwargs) -> aiohttp.ClientResponse:
-        """Make a HTTP request, converting any 401s errors into UnauthorisedError
-
-        run() checks against authenticated endpoints, renewing a session if required.
-        To do this we need intercept 401s and raise an UnauthorisedError so it can
-        be retried
-        """
-        try:
-            resp = await self._session.request(method, url, **kwargs)
-            logger.debug("Final URL requested: %s", resp.url)
-        except ClientConnectionError as e:
-            raise NetworkError(str(e)) from e
-        if resp.status >= 400:
-            message = await _error_message(resp)
-            resp.release()
-            logger.debug("HTTP %s from %s: %s", resp.status, resp.url, message)
-            raise _STATUS_ERRORS.get(resp.status, APIResponseError)(
-                message, status_code=resp.status
-            )
-        return resp
-
     async def make_request(
         self,
         method: Literal["GET", "POST"],
@@ -185,6 +168,15 @@ class RequestManager:
         An Endpoints value has a parameter storing if a log in is required. URLs values
         are deliberately separate as they never need auth (and most aren't part of the
         API).
+        :param method:
+        :param url:
+        :param url_args:
+        :param offset:
+        :param limit:
+        :param kwargs:
+        :raises: NetworkError
+        :raises: SoundsException
+        :return:
         """
         kwargs.setdefault("timeout", self.timeout)
         kwargs.setdefault("ssl", True)
@@ -205,7 +197,8 @@ class RequestManager:
         else:
             if url in Endpoints:
                 logger.warning(
-                    "URL used a string found in Endpoints enum, use that directly instead."
+                    "URL used a string found in Endpoints enum, use that directly "
+                    "instead."
                 )
             elif url in URLs:
                 logger.warning(
@@ -247,7 +240,18 @@ class RequestManager:
         page_size: int = DEFAULT_LIMIT,
         **kwargs,
     ) -> dict:
-        """Gets JSON response from an endpoint."""
+        """Gets JSON response from an endpoint.
+
+        :param url:
+        :param url_args:
+        :param fetch_all_items:
+        :param max_items:
+        :param page_size:
+        :param kwargs:
+        :raises:
+        :return:
+
+        """
         if fetch_all_items and max_items is not None:
             raise InvalidArgumentsError("Pass fetch_all_items or max_items, not both")
 
@@ -328,3 +332,23 @@ class RequestManager:
             )
         _raise_for_api_errors(body)
         return body
+
+    async def _request_or_raise(self, method, url, **kwargs) -> aiohttp.ClientResponse:
+        """Make a HTTP request, converting any 401s errors into UnauthorisedError
+
+        run() checks against authenticated endpoints, renewing a session if required.
+        To do this we need intercept 401s and raise an UnauthorisedError so it can
+        be retried
+        """
+        try:
+            resp = await self._session.request(method, url, **kwargs)
+        except ClientConnectionError as e:
+            raise NetworkError(str(e)) from e
+        if resp.status >= 400:
+            message = await _error_message(resp)
+            resp.release()
+            logger.debug("HTTP %s from %s: %s", resp.status, resp.url, message)
+            raise _STATUS_ERRORS.get(resp.status, APIResponseError)(
+                message, status_code=resp.status
+            )
+        return resp

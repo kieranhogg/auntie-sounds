@@ -55,15 +55,6 @@ class SoundsClient:
         ]
     )
 
-    def __getattr__(self, name):
-        if name in self.SERVICES:
-            raise NotStartedError(
-                "The client has not been started. Call `client.start()` or use `async with`"
-            )
-        raise AttributeError(
-            f"{type(self).__name__!r} object has no attribute {name!r}"
-        )
-
     def __init__(
         self,
         username=None,
@@ -85,6 +76,11 @@ class SoundsClient:
         self._session: aiohttp.ClientSession
         self._started = False
         self._cookie_path = cookie_file_location or _default_cookie_file(self.username)
+
+    @property
+    def is_signed_in(self) -> bool:
+        """Check if we have a cookie present."""
+        return self.cookie_store.is_signed_in
 
     @classmethod
     async def create(cls, *args, **kwargs) -> SoundsClient:
@@ -124,45 +120,6 @@ class SoundsClient:
             raise
         self._started = True
 
-    def _create_services(self) -> None:
-        login_details_provided: bool = bool(self.username and self.password)
-
-        self.requests: RequestManager = RequestManager(
-            session=self._session,
-            login_details_provided=login_details_provided,
-        )
-
-        self.auth = AuthService(
-            requests=self.requests,
-            cookie_store=self.cookie_store,
-            username=self.username,
-            password=self.password,
-            debug_login=self.debug_login,
-            on_login_success=self.save_cookies,
-        )
-        self.requests.set_reauth_handler(self.auth.retry_with_reauth)
-        self.owners = OwnerService(requests=self.requests)
-        self.user = UserService(
-            login_details_provided=login_details_provided,
-            requests=self.requests,
-        )
-        self.schedules = ScheduleService(requests=self.requests)
-        self.playback = PlaybackService(
-            requests=self.requests,
-        )
-        self.content = ContentService(
-            requests=self.requests,
-            user=self.user,
-            playback=self.playback,
-            owners=self.owners,
-        )
-        self.stations = StationService(
-            playback=self.playback,
-            schedules=self.schedules,
-            requests=self.requests,
-        )
-        self.personal = PersonalService(requests=self.requests, owners=self.owners)
-
     async def login(self) -> bool:
         """Signs into BBC Sounds.
 
@@ -199,11 +156,6 @@ class SoundsClient:
     def delete_stored_cookies(self) -> None:
         """Remove the cookie jar file and its owner file, if present."""
         self.cookie_store.delete()
-
-    @property
-    def is_signed_in(self) -> bool:
-        """Check if we have a cookie present."""
-        return self.cookie_store.is_signed_in
 
     async def get_recommendation_folders(self) -> Sequence[MenuItem]:
         return await self.personal.get_recommendations()
@@ -267,6 +219,55 @@ class SoundsClient:
             await self._session.close()
             self._started = False
         logger.debug("Session closed.")
+
+    def __getattr__(self, name):
+        if name in self.SERVICES:
+            raise NotStartedError(
+                "The client has not been started. Call `client.start()` or use "
+                "`async with`"
+            )
+        raise AttributeError(
+            f"{type(self).__name__!r} object has no attribute {name!r}"
+        )
+
+    def _create_services(self) -> None:
+        login_details_provided: bool = bool(self.username and self.password)
+
+        self.requests: RequestManager = RequestManager(
+            session=self._session,
+            login_details_provided=login_details_provided,
+        )
+
+        self.auth = AuthService(
+            requests=self.requests,
+            cookie_store=self.cookie_store,
+            username=self.username,
+            password=self.password,
+            debug_login=self.debug_login,
+            on_login_success=self.save_cookies,
+        )
+        self.requests.set_reauth_handler(self.auth.retry_with_reauth)
+        self.owners = OwnerService(requests=self.requests)
+        self.user = UserService(
+            login_details_provided=login_details_provided,
+            requests=self.requests,
+        )
+        self.schedules = ScheduleService(requests=self.requests)
+        self.playback = PlaybackService(
+            requests=self.requests,
+        )
+        self.content = ContentService(
+            requests=self.requests,
+            user=self.user,
+            playback=self.playback,
+            owners=self.owners,
+        )
+        self.stations = StationService(
+            playback=self.playback,
+            schedules=self.schedules,
+            requests=self.requests,
+        )
+        self.personal = PersonalService(requests=self.requests, owners=self.owners)
 
     async def _wants_personalised_menu(self) -> bool:
         return (

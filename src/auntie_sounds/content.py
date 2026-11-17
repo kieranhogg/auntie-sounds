@@ -66,7 +66,8 @@ def assign_seasons(
         by_series[episode.series_pid].append(episode)
 
     def first_release(season: Season) -> str:
-        # An episode can have a release with no date, so fall back to when it became available
+        # An episode can have a release with no date, so fall back to when it became
+        # available
         dates: list[str] = []
         for episode in season.sub_items or ():
             date = (episode.release or {}).get("date") or (
@@ -195,11 +196,6 @@ class ContentService:
 
     async def get_series_pid(self, pid: str) -> str | None:
         return _ancestor_id(await self._get_programme(pid), "series")
-
-        json_resp = await self.requests.get_json_response(
-            url="https://open.spotify.com/oembed", params={"url": url}
-        )
-        return json_resp.get("thumbnail_url") or None
 
     async def get_podcasts(self) -> Menu:
         podcasts = await self.parser.parse_menu(
@@ -464,8 +460,10 @@ class ContentService:
         """Get the show segments (songs played) for a certain show, i.e. catch-up radio.
 
         :param vpid: version PID of the show
-        :param fetch_missing_images: if True, the `Segment.image_url` field will be populated from the Spotify API
-        :param spotify_throttler: an optional SpotifyThrottler instance to use fetching missing images
+        :param fetch_missing_images: if True, the `Segment.image_url` field will be
+            populated from the Spotify API
+        :param spotify_throttler: an optional SpotifyThrottler instance to use fetching
+            missing images
         :return: a list of `Segment` objects for this show
         """
         logger.debug("Fetching show segments for %s", vpid)
@@ -488,6 +486,24 @@ class ContentService:
                 segments=segments, throttler=spotify_throttler
             )
         return segments
+
+    async def get_heartbeat_details(self, pid) -> tuple[str, str]:
+        """Get the details (vpid, resource_type) required to send a heartbeat request.
+
+        :param pid the pid of the stream or episode
+        :return: the vpid (version pid) of the resource, and the resource type,
+            e.g. episode
+        """
+        # _get_programme already returns the programme itself, not the response
+        episode = await self._get_programme(pid)
+        vpid = (episode.get("availability") or {}).get("id")
+        # e.g. urn:bbc:radio:episode:m00321tk
+        # where the 4th part matches playlist.json's parentPIDType
+        urn_parts = (episode.get("urn") or "").split(":")
+        if not vpid or len(urn_parts) < 4:
+            raise APIResponseError(f"Couldn't get details for pid {pid}")
+        resource_type = urn_parts[3]
+        return vpid, resource_type
 
     async def _get_missing_images(
         self, segments: list[Segment], throttler: SpotifyThrottler
@@ -531,25 +547,10 @@ class ContentService:
         for segment, task in zip(missing, tasks, strict=True):
             segment.image_url = task.result()
 
-    async def get_heartbeat_details(self, pid) -> tuple[str, str]:
-        """Get the details (vpid, resource_type) required to send a heartbeat request.
-
-        :param pid the pid of the stream or episode
-        :return: the vpid (version pid) of the resource, and the resource type, e.g. episode
-        """
-        # _get_programme already returns the programme itself, not the response
-        episode = await self._get_programme(pid)
-        vpid = (episode.get("availability") or {}).get("id")
-        # e.g. urn:bbc:radio:episode:m00321tk
-        # where the 4th part matches playlist.json's parentPIDType
-        urn_parts = (episode.get("urn") or "").split(":")
-        if not vpid or len(urn_parts) < 4:
-            raise APIResponseError(f"Couldn't get details for pid {pid}")
-        resource_type = urn_parts[3]
-        return vpid, resource_type
-
     async def _get_programme(self, pid: str) -> dict:
-        """Fetch PROGRAMME_FROM_PID once per pid and return the single programme in it."""
+        """
+        Fetch PROGRAMME_FROM_PID once per pid and return the single programme in it.
+        """
         task = self._programme_cache.get(pid)
         if task is None:
             task = asyncio.create_task(

@@ -113,43 +113,6 @@ class ScheduleService:
         self._segments_poll_at: dict[str, float] = {}
         self._locks: dict[str, asyncio.Lock] = {}
 
-    def _lock(self, station_id: str) -> asyncio.Lock:
-        return self._locks.setdefault(station_id, asyncio.Lock())
-
-    def _parse_broadcasts(self, json_resp: dict) -> list[ScheduleItem | RadioShow]:
-        """Get the broadcasts from an experience or poll response."""
-        nodes = json_resp.get("data") or []
-        # An experience wraps them in the live_play_area module
-        play_area = next(
-            (n for n in nodes if n.get("id") == LIVE_PLAY_AREA and "data" in n), None
-        )
-        if play_area is not None:
-            nodes = play_area["data"] or []
-        broadcasts = [n for n in nodes if n.get("type") in BROADCAST_TYPES]
-        parsed = self.parser.parse_node(broadcasts) if broadcasts else None
-        return unique_broadcasts(
-            item
-            for item in (parsed if isinstance(parsed, list) else [])
-            if isinstance(item, (ScheduleItem, RadioShow))
-        )
-
-    async def _load_experience(self, station_id: str) -> None:
-        """Fetch a station's play experience and keep its polling info and on-air list."""
-        json_resp = await self.requests.get_json_response(
-            url=Endpoints.PLAY_EXPERIENCE,
-            url_args={"service_id": station_id_to_service_id(station_id)},
-        )
-        self._polling[station_id] = {
-            module["id"]: Polling.from_dict(module["uris"]["polling"])
-            for module in json_resp.get("data") or []
-            if (module.get("uris") or {}).get("polling")
-        }
-        self._on_air_items[station_id] = self._parse_broadcasts(json_resp)
-        wait = self._polling[station_id].get(LIVE_PLAY_AREA)
-        self._on_air_refresh_at[station_id] = self._clock() + (
-            wait.wait_before_poll_sec if wait else 0
-        )
-
     async def polling(self, station_id: str) -> dict[str, Polling]:
         """
         Get how each of a station's experience modules asks to be refreshed.
@@ -160,36 +123,15 @@ class ScheduleService:
             await self._load_experience(station_id)
         return self._polling[station_id]
 
-    async def _refresh_on_air(self, station_id: str, needed: bool) -> None:
-        """Poll for the on-air list, early if `needed` because it lists nothing current."""
-        polling = (await self.polling(station_id)).get(LIVE_PLAY_AREA)
-        if polling is None:
-            return
-        if not needed and self._clock() < self._on_air_refresh_at[station_id]:
-            return
-        json_resp = await self.requests.get_json_response(
-            url=build_url(polling.render(offset=0, limit=ON_AIR_LIMIT))
-        )
-        if items := self._parse_broadcasts(json_resp):
-            self._on_air_items[station_id] = items
-            self._on_air_refresh_at[station_id] = (
-                self._clock() + polling.wait_before_poll_sec
-            )
-        else:
-            logger.debug(
-                "No broadcasts in the poll for %s, using the experience", station_id
-            )
-            await self._load_experience(station_id)
-
     async def on_air(
         self, station_id: str, now: dt | None = None
     ) -> ScheduleItem | None:
         """
         Get the programme that is currently on air for a station.
 
-        This is the first programme of the station's on-air poll. The poll also
-        lists the next few, so it is only fetched again once the API's wait has
-        passed or nothing it listed covers the time.
+        This is the first programme of the station's on-air poll. The poll also lists
+        the next few, so it is only fetched again once the API's wait has passed or
+        nothing it listed covers the time.
 
         :param station_id: The station, e.g. bbc_6music.
         :param now: The time to find the programme for, in UTC. Defaults to now.
@@ -214,19 +156,6 @@ class ScheduleService:
             found = covering()
         return found or await self._on_air_from_schedule(station_id, at)
 
-    async def _on_air_from_schedule(
-        self, station_id: str, now: dt
-    ) -> ScheduleItem | None:
-        """Find the programme on air in today's schedule, for stations without a poll."""
-        schedule = await self.get_schedule(station_id)
-        if not schedule or not schedule.sub_items:
-            return None
-        on_air_show = next(
-            (s for s in unique_broadcasts(schedule.sub_items) if _covers(s, now)),
-            None,
-        )
-        return on_air_show if isinstance(on_air_show, ScheduleItem) else None
-
     def history(self, station_id: str) -> SegmentHistory:
         """Get the tracks seen so far on a station, without any request."""
         return self._histories.setdefault(station_id, SegmentHistory())
@@ -235,10 +164,11 @@ class ScheduleService:
         self, station_id: str, now: dt | None = None
     ) -> SegmentHistory:
         """
-        Merge the station's latest tracks into its history, if the API's wait has passed.
+        Merge the station's latest tracks into its history, if the API's wait has
+        passed.
 
-        Stations whose experience has no recent tracks polling just keep an
-        empty history. Calling this more often than the wait does no harm.
+        Stations whose experience has no recent tracks polling just keep an empty
+        history. Calling this more often than the wait does no harm.
 
         :param station_id: The station, e.g. bbc_6music.
         :param now: The time of the poll, in UTC. Defaults to now.
@@ -291,7 +221,8 @@ class ScheduleService:
                 url=url, url_args=url_args
             )
         except APIResponseError as e:
-            # e.g. "Acceptable date must be between 30 days in the past and 7 days in the future"
+            # e.g. "Acceptable date must be between 30 days in the past and 7 days in
+            # the future"
             if date and "acceptable date" in (e.message or "").lower():
                 raise DateOutOfRangeError(
                     f"{e.message}. Date requested: {date}.", status_code=e.status_code
@@ -308,28 +239,6 @@ class ScheduleService:
             *(self.get_schedule(id, date=date) for id in station_ids)
         )
         return [schedule for schedule in schedules if isinstance(schedule, Schedule)]
-
-    async def _get_schedules(
-        self, station_id: str, dates: Sequence[date]
-    ) -> list[Schedule]:
-        """Get a station's schedule for each of the given days.
-
-        It's fairly easy to run into a DateOutOfRangeError at either side of the range
-        due to timezones etc., so these are ignored when encountered.
-        """
-        results = await asyncio.gather(
-            *(self.get_schedule(station_id, date=day.isoformat()) for day in dates),
-            return_exceptions=True,
-        )
-        schedules = []
-        for day, result in zip(dates, results, strict=True):
-            if isinstance(result, DateOutOfRangeError):
-                logger.debug("Skipping %s for %s: %s", day, station_id, result)
-            elif isinstance(result, BaseException):
-                raise result
-            elif isinstance(result, Schedule):
-                schedules.append(result)
-        return schedules
 
     async def get_station_schedules(self, station_id: str) -> list[Schedule]:
         """Get a station's schedules for today and the next 7 days."""
@@ -397,6 +306,105 @@ class ScheduleService:
         ):
             return recently_played[0]
         return None
+
+    async def _load_experience(self, station_id: str) -> None:
+        """
+        Fetch a station's play experience and keep its polling info and on-air list.
+        """
+        json_resp = await self.requests.get_json_response(
+            url=Endpoints.PLAY_EXPERIENCE,
+            url_args={"service_id": station_id_to_service_id(station_id)},
+        )
+        self._polling[station_id] = {
+            module["id"]: Polling.from_dict(module["uris"]["polling"])
+            for module in json_resp.get("data") or []
+            if (module.get("uris") or {}).get("polling")
+        }
+        self._on_air_items[station_id] = self._parse_broadcasts(json_resp)
+        wait = self._polling[station_id].get(LIVE_PLAY_AREA)
+        self._on_air_refresh_at[station_id] = self._clock() + (
+            wait.wait_before_poll_sec if wait else 0
+        )
+
+    async def _get_schedules(
+        self, station_id: str, dates: Sequence[date]
+    ) -> list[Schedule]:
+        """Get a station's schedule for each of the given days.
+
+        It's fairly easy to run into a DateOutOfRangeError at either side of the range
+        due to timezones etc., so these are ignored when encountered.
+        """
+        results = await asyncio.gather(
+            *(self.get_schedule(station_id, date=day.isoformat()) for day in dates),
+            return_exceptions=True,
+        )
+        schedules = []
+        for day, result in zip(dates, results, strict=True):
+            if isinstance(result, DateOutOfRangeError):
+                logger.debug("Skipping %s for %s: %s", day, station_id, result)
+            elif isinstance(result, BaseException):
+                raise result
+            elif isinstance(result, Schedule):
+                schedules.append(result)
+        return schedules
+
+    async def _refresh_on_air(self, station_id: str, needed: bool) -> None:
+        """
+        Poll for the on-air list, early if `needed` because it lists nothing current.
+        """
+        polling = (await self.polling(station_id)).get(LIVE_PLAY_AREA)
+        if polling is None:
+            return
+        if not needed and self._clock() < self._on_air_refresh_at[station_id]:
+            return
+        json_resp = await self.requests.get_json_response(
+            url=build_url(polling.render(offset=0, limit=ON_AIR_LIMIT))
+        )
+        if items := self._parse_broadcasts(json_resp):
+            self._on_air_items[station_id] = items
+            self._on_air_refresh_at[station_id] = (
+                self._clock() + polling.wait_before_poll_sec
+            )
+        else:
+            logger.debug(
+                "No broadcasts in the poll for %s, using the experience", station_id
+            )
+            await self._load_experience(station_id)
+
+    async def _on_air_from_schedule(
+        self, station_id: str, now: dt
+    ) -> ScheduleItem | None:
+        """
+        Find the programme on air in today's schedule, for stations without a poll.
+        """
+        schedule = await self.get_schedule(station_id)
+        if not schedule or not schedule.sub_items:
+            return None
+        on_air_show = next(
+            (s for s in unique_broadcasts(schedule.sub_items) if _covers(s, now)),
+            None,
+        )
+        return on_air_show if isinstance(on_air_show, ScheduleItem) else None
+
+    def _lock(self, station_id: str) -> asyncio.Lock:
+        return self._locks.setdefault(station_id, asyncio.Lock())
+
+    def _parse_broadcasts(self, json_resp: dict) -> list[ScheduleItem | RadioShow]:
+        """Get the broadcasts from an experience or poll response."""
+        nodes = json_resp.get("data") or []
+        # An experience wraps them in the live_play_area module
+        play_area = next(
+            (n for n in nodes if n.get("id") == LIVE_PLAY_AREA and "data" in n), None
+        )
+        if play_area is not None:
+            nodes = play_area["data"] or []
+        broadcasts = [n for n in nodes if n.get("type") in BROADCAST_TYPES]
+        parsed = self.parser.parse_node(broadcasts) if broadcasts else None
+        return unique_broadcasts(
+            item
+            for item in (parsed if isinstance(parsed, list) else [])
+            if isinstance(item, (ScheduleItem, RadioShow))
+        )
 
 
 def station_folders(

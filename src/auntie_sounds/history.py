@@ -86,9 +86,6 @@ class SegmentHistory:
         self.max_age = max_age
         self._entries: dict[str, TimedSegment] = {}
 
-    def __len__(self) -> int:
-        return len(self._entries)
-
     @property
     def oldest_start(self) -> datetime | None:
         """When the earliest known track started."""
@@ -129,7 +126,8 @@ class SegmentHistory:
                 continue
             existing = self._entries.get(segment.id)
             if existing is not None and existing.start < programme_start:
-                # Seen while its own programme was on air, so it can't belong to this one
+                # Seen while its own programme was on air, so it can't belong to this
+                # one
                 continue
             timed = TimedSegment(
                 segment=segment,
@@ -172,3 +170,6 @@ class SegmentHistory:
         self._entries = {
             id_: entry for id_, entry in self._entries.items() if entry.end >= cutoff
         }
+
+    def __len__(self) -> int:
+        return len(self._entries)

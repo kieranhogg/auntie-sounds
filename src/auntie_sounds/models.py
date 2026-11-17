@@ -1,6 +1,7 @@
 from collections.abc import Mapping, Sequence
 from copy import copy
 from dataclasses import dataclass, field
+from datetime import UTC
 from datetime import datetime as dt
 from logging import Logger
 from typing import Annotated, Any, ClassVar, Final, Literal
@@ -11,9 +12,10 @@ from mashumaro.types import Discriminator
 
 from auntie_sounds.utils import image_from_recipe, network_logo
 
-NETWORK_LOGO_FORMAT = "https://sounds.files.bbci.co.uk/3.12.0/networks/{network_id}/{type}_{size}.{format}"
-
-from datetime import UTC
+NETWORK_LOGO_FORMAT = (
+    "https://sounds.files.bbci.co.uk/3.12.0/networks/{network_id}/"
+    "{type}_{size}.{format}"
+)
 
 
 ###### Helpers ##################################################################
@@ -80,12 +82,12 @@ def station_description(station_id, is_local: bool = False):
     )
 
 
-###### Serialisation ###########################################################
+###### Serialisation ###################################################################
 MODEL_TAG: Final = "_model"
 """Key to identify the concrete class.
 
-Without this, base types would de-serialise to accepted, but not neccessarily 
-the correct class.
+Without this, base types would de-serialise to accepted, but not necessarily the correct
+class.
 """
 
 # Fields which can be polymorphic get this to keep their concrete type."""
@@ -98,7 +100,7 @@ _POLYMORPHIC = Discriminator(
 )
 
 
-###### Mixins ##################################################################
+###### Mixins ##########################################################################
 class SerializableMixin(mashumaro.DataClassDictMixin):
     def __post_serialize__(self, d: dict[Any, Any]) -> dict[Any, Any]:
         d[MODEL_TAG] = type(self).__name__
@@ -118,10 +120,10 @@ class IterableMixin:
 class IdentifiableMixin:
     """Gives `item_id`, the one identifier Music Assistant keeps for an item.
 
-    It is the pid at the end of the urn (the episode, clip, brand...), then
-    `pid`, then `id`. For playable items `id` is the version pid, which is
-    what you play but not what the item is, so it comes last. Classes where
-    that is not the right identifier override `item_id`.
+    It is the pid at the end of the urn (the episode, clip, brand...), then `pid`, then
+    `id`. For playable items `id` is the version pid, which is what you play but not
+    what the item is, so it comes last. Classes where that is not the right identifier
+    override `item_id`.
     """
 
     urn: str | None
@@ -149,7 +151,7 @@ class ImageMixin:
             )
 
 
-###### Sub-types ###############################################################
+###### Sub-types #######################################################################
 @dataclass(kw_only=True)
 class Titles:
     primary: str | None = None
@@ -180,8 +182,8 @@ class Progress:
 class Activity:
     """Something the signed-in listener has done with an item.
 
-    For example type="play_activity", action="ended" for a finished episode,
-    or type="favourite_activity", action="favourited".
+    For example type="play_activity", action="ended" for a finished episode, or
+    type="favourite_activity", action="favourited".
     """
 
     type: str
@@ -254,16 +256,24 @@ class Segment(SerializableMixin, IdentifiableMixin, ImageMixin):
     image_url: str | None
     offset: SegmentOffset | None
 
-    def post_processing(self, logger: Logger) -> None:
-        super().post_processing(logger)
-        # The factory hands over the raw dict, a cached copy already has the model
-        if isinstance(self.offset, dict):
-            self.offset = SegmentOffset.from_dict(self.offset)
+    @property
+    def spotify_url(self):
+        return self.music_service_uri("spotify")
+
+    @property
+    def apple_music_url(self):
+        return self.music_service_uri("apple")
 
     @property
     def record_id(self):
         """The music record, the same every time the track is played."""
         return pid_from_urn(self.urn)
+
+    def post_processing(self, logger: Logger) -> None:
+        super().post_processing(logger)
+        # The factory hands over the raw dict, a cached copy already has the model
+        if isinstance(self.offset, dict):
+            self.offset = SegmentOffset.from_dict(self.offset)
 
     def music_service_uri(self, platform: Literal["spotify", "apple"]):
         service_found = next(
@@ -277,14 +287,6 @@ class Segment(SerializableMixin, IdentifiableMixin, ImageMixin):
         if service_found:
             return service_found.uri
         return None
-
-    @property
-    def spotify_url(self):
-        return self.music_service_uri("spotify")
-
-    @property
-    def apple_music_url(self):
-        return self.music_service_uri("apple")
 
 
 @dataclass(kw_only=True)
@@ -309,7 +311,7 @@ class URN(SerializableMixin):
     urn: str
 
 
-###### Base types ##############################################################
+###### Base types ######################################################################
 @dataclass(kw_only=True)
 class BaseObject(SerializableMixin):
     """Base class for all objects with common functionality."""
@@ -383,8 +385,8 @@ class PlayableNetwork(Network):
     The `Network` itself is held in the network attribute.
 
     Parameters
-        id: the service id, e.g. bbc_radio_fourfm, until post_processing
-            replaces it with the network id, e.g. bbc_radio_four
+        id: the service id, e.g. bbc_radio_fourfm, until post_processing replaces it
+            with the network id, e.g. bbc_radio_four
         service_id: the service id once flattened
         urn: the network's urn, e.g. urn:bbc:radio:network:bbc_radio_four
     """
@@ -554,6 +556,18 @@ class PlayableItem(BaseObject, IdentifiableMixin):
             )
         )
 
+    @property
+    def is_live(self) -> bool:
+        if self.start and self.end:
+            return self.start <= dt.now(tz=UTC) < self.end
+        return False
+
+    @property
+    def has_already_aired(self) -> bool:
+        if self.end:
+            return dt.now(tz=UTC) > self.end
+        return True
+
     def post_processing(self, logger: Logger) -> None:
         # image_url is set here so process_image() below can fill in the recipe
         if not self.image_url and self.images:
@@ -620,18 +634,6 @@ class PlayableItem(BaseObject, IdentifiableMixin):
         if isinstance(self, ImageMixin):
             self.process_image()
 
-    @property
-    def is_live(self) -> bool:
-        if self.start and self.end:
-            return self.start <= dt.now(tz=UTC) < self.end
-        return False
-
-    @property
-    def has_already_aired(self) -> bool:
-        if self.end:
-            return dt.now(tz=UTC) > self.end
-        return True
-
 
 @dataclass(kw_only=True)
 class ScheduleItem(PlayableItem, ImageMixin):
@@ -684,7 +686,10 @@ class Station(Container):
 
 @dataclass(kw_only=True)
 class StationSearchResult(SerializableMixin):
-    """Represents a search result showing a station. Keys are different enough to warrant a separate model"""
+    """
+    Represents a search result showing a station. Keys are different enough to warrant a
+    separate model.
+    """
 
     id: str
     type: str

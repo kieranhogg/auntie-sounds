@@ -275,18 +275,6 @@ class ModelFactory:
         BaseSoundsTypes.CONTAINER_ITEMS_PAGINATED_RESPONSE: CollectionItemContainer,
     }
 
-    def _programme_episode(self, original_object) -> tuple[type, dict]:
-        """Reads contents from PROGRAMME_FROM_PID, decides its type and extracts the episode"""
-        programmes = original_object.get("data") or []
-        if len(programmes) != 1:
-            raise ParserError(
-                f"Expected 1 programme in a Programmes response, got {len(programmes)}"
-            )
-        episode = programmes[0]
-        episode_type = _episode_or_show_or_audiobook_episode(episode)
-        # return (PodcastEpisode if "podcasts" in formats else RadioShow), episode
-        return episode_type, episode
-
     def parse_object(
         self,
         original_object: dict,
@@ -339,7 +327,8 @@ class ModelFactory:
                             new_type = self.PLAYABLE_ITEM_URN_MAP[urn]
                         else:
                             logger.warning(
-                                f"No playableitem: {original_object} {type(original_object)}"
+                                f"No playableitem: {original_object} "
+                                f"{type(original_object)}"
                             )
                             return None
 
@@ -354,7 +343,7 @@ class ModelFactory:
                         original_object = _broadcast_as_summary(original_object)
                         playable = original_object.get("playable_item")
                         if playable is not None:
-                            # On a broadcast summary, playable_item.id is the version pid.
+                            # On a broadcast summary, playable_item.id is the vpid
                             original_object = {
                                 **original_object,
                                 "version_pid": playable.get("id"),
@@ -426,6 +415,21 @@ class ModelFactory:
         if hasattr(new_object, "post_processing"):
             new_object.post_processing(logger=logger)
         return new_object
+
+    def _programme_episode(self, original_object) -> tuple[type, dict]:
+        """
+        Reads contents from PROGRAMME_FROM_PID, decides its type and extracts the
+        episode.
+        """
+        programmes = original_object.get("data") or []
+        if len(programmes) != 1:
+            raise ParserError(
+                f"Expected 1 programme in a Programmes response, got {len(programmes)}"
+            )
+        episode = programmes[0]
+        episode_type = _episode_or_show_or_audiobook_episode(episode)
+        # return (PodcastEpisode if "podcasts" in formats else RadioShow), episode
+        return episode_type, episode
 
 
 def convert_between_types(original_object, new_type):

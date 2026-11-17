@@ -62,13 +62,6 @@ class StationService:
             "bbc_swahili_radio",
         ]
 
-    def _is_international_network(self, network_id):
-        """Check if the network is classed as an international network.
-
-        There is a group of radio networks that aren't present in most of the API endpoints,
-        but are nevertheless available to request a stream via an international endpoint."""
-        return network_id in self.international_networks
-
     async def get_networks(
         self,
         international_only: bool = False,
@@ -109,11 +102,16 @@ class StationService:
         Gets the list of all radio stations.
 
         Parameters:
-            include_national_stations: whether to include national radio stations in the returned list
-            include_local_stations: whether to include local radio stations in the returned list
-            include_international_stations: whether to include international stations in the returned list
-            include_streams: whether to append a `.stream` to each object set to the URL of a playable station stream
-            include_schedules: whether to append a Schedule object containing the station schedule to`.schedule`
+            include_national_stations: whether to include national radio stations in
+                the returned list
+            include_local_stations: whether to include local radio stations in the
+                returned list
+            include_international_stations: whether to include international stations in
+                the returned list
+            include_streams: whether to append a `.stream` to each object set to the URL
+                of a playable station stream
+            include_schedules: whether to append a Schedule object containing the
+                station schedule to`.schedule`
         """
         if not (
             include_national_stations
@@ -121,7 +119,8 @@ class StationService:
             or include_international_stations
         ):
             raise InvalidArgumentsError(
-                "One of include_national_stations, include_local_stations or include_international_stations must be set to True"
+                "One of include_national_stations, include_local_stations or "
+                "include_international_stations must be set to True"
             )
         requested_stations: list[dict] = []
         if include_national_stations or include_local_stations:
@@ -165,7 +164,8 @@ class StationService:
             )
 
         if include_streams and isinstance(stations_list, list):
-            # Parallelise the requests to improve speed, one to watch for API rates in future
+            # Parallelise the requests to improve speed, one to watch for API rates in
+            # future
             needs_stream = [
                 s
                 for s in stations_list
@@ -208,8 +208,10 @@ class StationService:
             include_stream (optional): Set LiveStation.stream to the stream URL and
                 LiveStation.fallback_streams to the other CDNs' URLs. Defaults to False.
             stream_format: Stream format preference. Defaults to "hls".
-            include_schedule (optional): Set LiveStation.schedule to the station schedule. Defaults to False.
-            date (optional): The date of the schedule, if `include_schedule` is True. Defaults to None.
+            include_schedule (optional): Set LiveStation.schedule to the station
+                schedule. Defaults to False.
+            date (optional): The date of the schedule, if `include_schedule` is True.
+                Defaults to None.
         """
         if not stream_preferences:
             stream_preferences = StreamPreference()
@@ -257,6 +259,13 @@ class StationService:
             )
         return station
 
+    async def get_broadcast(self, pid: str):
+        json_resp = await self.requests.get_json_response(
+            url=Endpoints.BROADCAST, url_args={"pid": pid}
+        )
+        broadcast = self.parser.parse_node(json_resp)
+        return broadcast
+
     async def _get_international_station(
         self,
         station_id,
@@ -280,9 +289,10 @@ class StationService:
 
         return station
 
-    async def get_broadcast(self, pid: str):
-        json_resp = await self.requests.get_json_response(
-            url=Endpoints.BROADCAST, url_args={"pid": pid}
-        )
-        broadcast = self.parser.parse_node(json_resp)
-        return broadcast
+    def _is_international_network(self, network_id):
+        """Check if the network is classed as an international network.
+
+        There is a group of radio networks that aren't present in most of the API
+        endpoints, but are nevertheless available to request a stream via an
+        international endpoint."""
+        return network_id in self.international_networks

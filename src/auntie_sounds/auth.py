@@ -73,7 +73,10 @@ class AuthService:
     """Service to handle authentication with BBC Sounds."""
 
     ERROR_CLASS = "sb-form-message--error"
-    EMAIL_ERROR_MSG = "We don’t recognise that email or username. You can try again or register for an account"
+    EMAIL_ERROR_MSG = (
+        "We don’t recognise that email or username. You can try again or"
+        " register for an account"
+    )
     PASSWORD_ERROR_MSG = (
         "That password isn’t right. You can try again or reset your password"
     )
@@ -90,7 +93,10 @@ class AuthService:
     FAILURE_BACKOFF_INITIAL = 30.0
     FAILURE_BACKOFF_MAX = 900.0
 
-    PASSWORD_NUMBER_SYMBOL_ERROR_MSG = "Sorry, that password isn't valid. Please include something that isn't a letter."
+    PASSWORD_NUMBER_SYMBOL_ERROR_MSG = (
+        "Sorry, that password isn't valid. Please "
+        "include something that isn't a letter."
+    )
 
     def __init__(
         self,
@@ -201,9 +207,9 @@ class AuthService:
     async def renew_session(self) -> bool:
         """Renew a session which has expired, but user is logged in.
 
-        Returns True if the renewal request succeeded, False otherwise. Success
-        doesn't guarantee the session is valid; retry_with_reauth escalates to
-        a full login if the next request is still unauthorised."""
+        Returns True if the renewal request succeeded, False otherwise. Success doesn't
+        guarantee the session is valid; retry_with_reauth escalates to a full login if
+        the next request is still unauthorised."""
         try:
             await self.requests.make_request("GET", URLs.RENEW_SESSION)
         except _AUTH_ERRORS as e:
@@ -328,7 +334,8 @@ class AuthService:
                 logger.error(msg)
                 raise LoginFailedError(msg)
             logger.debug(
-                f"Redirected with status {request.status} to {request.headers.get('Location')}"
+                f"Redirected with status {request.status} to "
+                f"{request.headers.get('Location')}"
             )
             location = request.headers.get("Location")
             if not location:
@@ -363,11 +370,17 @@ class AuthService:
         try:
             username_form_action = _get_form_action(html_contents)
         except MultipleObjectsFound as e:
-            error_msg = "Didn't get the username form successfully: multiple valid forms found on page."
+            error_msg = (
+                "Didn't get the username form successfully: multiple valid "
+                "forms found on page."
+            )
             logger.error(error_msg)
             raise LoginFailedError(error_msg) from e
         except NotFoundError as e:
-            error_msg = "Didn't get the username form successfully: no valid form action found on page."
+            error_msg = (
+                "Didn't get the username form successfully: no valid form "
+                "action found on page."
+            )
             logger.error(error_msg)
             raise LoginFailedError(error_msg) from e
 

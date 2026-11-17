@@ -41,7 +41,9 @@ class InvalidFormatError(SoundsException):
 
 
 class UnauthorisedError(SoundsHttpException):
-    """The endpoint requires authentication, and the current user is not authenticated."""
+    """
+    The endpoint requires authentication, and the current user is not authenticated.
+    """
 
 
 class InvalidArgumentsError(SoundsException):

@@ -89,10 +89,6 @@ class PersonalService:
         ]
         return menu
 
-    async def _get_experience_menu(self) -> Menu:
-        json_resp = await self.requests.get_json_response(url=Endpoints.EXPERIENCE_MENU)
-        return await self.parser.parse_menu(json_resp)
-
     async def get_my_sounds_menu(self) -> MenuItem:
         """My Sounds, with any section whose request fails left out.
 
@@ -235,3 +231,7 @@ class PersonalService:
             id="continue_listening",
             sub_items=continue_listening_items,
         )
+
+    async def _get_experience_menu(self) -> Menu:
+        json_resp = await self.requests.get_json_response(url=Endpoints.EXPERIENCE_MENU)
+        return await self.parser.parse_menu(json_resp)

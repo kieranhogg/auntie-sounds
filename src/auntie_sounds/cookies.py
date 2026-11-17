@@ -37,6 +37,25 @@ class CookieStore:
         self.session = session
         self.account_id = account_id
 
+    def save(self) -> None:
+        if self.path is None:
+            logger.warning("No cookie file location configured.")
+            return
+        logger.debug("Saving cookies to disk...")
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        cast(aiohttp.CookieJar, self.session.cookie_jar).save(str(self.path))
+        self._write_owner()
+
+    def delete(self) -> None:
+        """Remove the persisted jar and its owner file, if present."""
+        if self.path is None:
+            logger.warning("No cookie file location configured.")
+            return
+        logger.debug("Deleting cookie jar at %s...", self.path)
+        for path in (self.path, _owner_path(self.path)):
+            path.unlink(missing_ok=True)
+            logger.debug("Deleted")
+
     @property
     def is_signed_in(self) -> bool:
         return self._has_cookie(ID_COOKIE)
@@ -44,6 +63,13 @@ class CookieStore:
     @property
     def has_access_token(self) -> bool:
         return self._has_cookie(ACCESS_TOKEN_COOKIE)
+
+    @property
+    def _owner_path(self) -> Path | None:
+        if self.path is None:
+            return None
+
+        return self.path.with_name(self.path.name + ".owner")
 
     def load(self) -> None:
         logger.debug("Loading cookies from disk...")
@@ -85,30 +111,11 @@ class CookieStore:
         else:
             logger.warning("Cookie location does not exist.")
 
-    def save(self) -> None:
-        if self.path is None:
-            logger.warning("No cookie file location configured.")
-            return
-        logger.debug("Saving cookies to disk...")
-        self.path.parent.mkdir(parents=True, exist_ok=True)
-        cast(aiohttp.CookieJar, self.session.cookie_jar).save(str(self.path))
-        self._write_owner()
-
     def clear(self) -> None:
         """Clear the cookies with domains matching `self._COOKIE_CLEAR_DOMAINS`."""
         logger.debug("Clearing cookies, signed in before: %s", self.is_signed_in)
         for base in self._COOKIE_CLEAR_DOMAINS:
             self.session.cookie_jar.clear_domain(base)
-
-    def delete(self) -> None:
-        """Remove the persisted jar and its owner file, if present."""
-        if self.path is None:
-            logger.warning("No cookie file location configured.")
-            return
-        logger.debug("Deleting cookie jar at %s...", self.path)
-        for path in (self.path, _owner_path(self.path)):
-            path.unlink(missing_ok=True)
-            logger.debug("Deleted")
 
     def _has_cookie(self, name: str) -> bool:
         # aiohttp drops expired cookies before we check
@@ -116,12 +123,6 @@ class CookieStore:
             c.key == name and c["domain"].endswith("bbc.co.uk")
             for c in self.session.cookie_jar
         )
-
-    @property
-    def _owner_path(self) -> Path | None:
-        if self.path is None:
-            return None
-        return self.path.with_name(self.path.name + ".owner")
 
     def _read_owner(self) -> str | None:
         """Return the account_id recorded for the on-disk cookie file.
