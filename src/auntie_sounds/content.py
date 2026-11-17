@@ -192,6 +192,7 @@ class ContentService:
         Updates and returns the same segment.
         """
         if segment.image_url is None and segment.spotify_url:
+            logger.debug("Segment image is blank, fetching from Spotify...")
             segment.image_url = await self.fetch_thumbnail_image_from_spotify(
                 segment.spotify_url
             )
