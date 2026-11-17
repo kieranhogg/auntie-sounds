@@ -19,13 +19,11 @@ class UserService:
 
     async def refresh(self) -> None:
         self._user_info = await self.requests.get_json_response(url=URLs.USER_INFO)
-
-    async def _ensure_loaded(self):
-        if not self._user_info:
-            try:
-                await self.refresh()
-            except SoundsException as e:
-                logger.warning("Couldn't get user_info: %s", e)
+        logger.debug(
+            "User info: country %s, UK account and location %s",
+            self._user_info.get("X-Country"),
+            self._user_info.get("X-Ip_is_uk_combined"),
+        )
 
     async def listener_country(self) -> str | None:
         """Return the listener's current country code, e.g. gb, or None if unknown."""
@@ -41,3 +39,10 @@ class UserService:
         """Listener has a UK-based account and is in the UK."""
         await self._ensure_loaded()
         return self._user_info.get("X-Ip_is_uk_combined", "no") == "yes"
+
+    async def _ensure_loaded(self):
+        if not self._user_info:
+            try:
+                await self.refresh()
+            except SoundsException as e:
+                logger.warning("Couldn't get user_info: %s", e)
