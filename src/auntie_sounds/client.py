@@ -180,7 +180,6 @@ class SoundsClient:
             )
 
         await self.auth.authenticate()
-        await self.save_cookies()
         await self.user.refresh()
         return True
 
