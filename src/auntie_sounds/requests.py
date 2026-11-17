@@ -189,7 +189,6 @@ class RequestManager:
         kwargs.setdefault("timeout", self.timeout)
         kwargs.setdefault("ssl", True)
         kwargs.setdefault("allow_redirects", True)
-        # kwargs.setdefault("headers", build_headers())
 
         params = dict(kwargs.get("params") or {})
 
@@ -200,7 +199,6 @@ class RequestManager:
         if params:
             kwargs["params"] = params
 
-        logger.debug("Preparing to request %s", url)
         login_required = isinstance(url, Endpoints) and url.login_required
         if isinstance(url, (Endpoints, URLs)) or url_args:
             url = build_url(url=url, url_args=url_args)
@@ -213,12 +211,7 @@ class RequestManager:
                 logger.warning(
                     "URL used a string found in URLs enum, use that directly instead."
                 )
-        logger.debug(
-            "Making HTTP %s request to %s%s",
-            method,
-            url,
-            f" with params {params}" if params else "",
-        )
+
         try:
             if login_required:
                 resp = await self.run(
@@ -226,7 +219,14 @@ class RequestManager:
                 )
             else:
                 resp = await self._request_or_raise(method, url, **kwargs)
-            logger.debug(f"HTTP {method} {url} - Status {resp.status}")
+                logger.debug(
+                    "HTTP %s %s%s - Status %s%s",
+                    method,
+                    url,
+                    f" with params {params}" if params else "",
+                    resp.status,
+                    f", redirected to {resp.url}" if resp.history else "",
+                )
             return resp
         except TimeoutError as e:
             logger.error(f"HTTP request timed out: {method} {url}")
