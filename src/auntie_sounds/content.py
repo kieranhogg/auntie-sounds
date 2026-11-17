@@ -4,16 +4,18 @@ from collections import OrderedDict, defaultdict
 from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
 from itertools import chain
-from typing import TYPE_CHECKING, Final
+from typing import TYPE_CHECKING, Any, Final
 
 from auntie_sounds import endpoints
 from auntie_sounds.endpoints import Endpoints
 from auntie_sounds.exceptions import (
     APIResponseError,
+    InvalidArgumentsError,
     InvalidFormatError,
     NetworkError,
     NotExpectedTypeError,
     NotFoundError,
+    NotYetAvailableError,
     SoundsException,
 )
 from auntie_sounds.models import (
@@ -150,6 +152,37 @@ class ContentService:
         self.parser = OwnerAwareParser(owners or OwnerService(requests))
         self._programme_cache: OrderedDict[str, asyncio.Task[dict]] = OrderedDict()
 
+    async def fetch_spotify_oembed(self, url: str) -> dict[str, Any]:
+        """Make a request to Spotify OEmbed and return the full response.
+
+        Docs: https://developer.spotify.com/documentation/embeds/reference/oembed
+        """
+        if not url.startswith("https://open.spotify.com/"):
+            raise InvalidArgumentsError(
+                f"Expected a URL starting https://open.spotify.com/, got {url!r}"
+            )
+        return await self.requests.get_json_response(
+            url=endpoints.URLs.SPOTIFY_OEMBED, params={"url": url}
+        )
+
+    async def fetch_thumbnail_image_from_spotify(self, url: str) -> str | None:
+        """Return the URL of the thumbnail from a Spotify song URL, or None."""
+        json_resp = await self.fetch_spotify_oembed(url=url)
+        if not json_resp:
+            return None
+        return json_resp.get("thumbnail_url") or None
+
+    async def ensure_segment_image(self, segment: Segment) -> Segment:
+        """Fill in segment.image_url if it's missing, currently just using Spotify.
+
+        Updates and returns the same segment.
+        """
+        if segment.image_url is None and segment.spotify_url:
+            segment.image_url = await self.fetch_thumbnail_image_from_spotify(
+                segment.spotify_url
+            )
+        return segment
+
     async def get_urn_from_pid(self, pid: str) -> str | None:
         return (await self._get_programme(pid)).get("urn")
 
@@ -163,7 +196,6 @@ class ContentService:
     async def get_series_pid(self, pid: str) -> str | None:
         return _ancestor_id(await self._get_programme(pid), "series")
 
-    async def image_from_spotify(self, url: str) -> str | None:
         json_resp = await self.requests.get_json_response(
             url="https://open.spotify.com/oembed", params={"url": url}
         )
@@ -303,14 +335,16 @@ class ContentService:
             if await self._personalised()
             else Endpoints.PROGRAMME_FROM_PID_PLAYABLE
         )
-        json_resp = await self.requests.get_json_response(
-            url=url, url_args={"pid": pid}
-        )
+        try:
+            json_resp = await self.requests.get_json_response(
+                url=url, url_args={"pid": pid}
+            )
+            logger.debug(json_resp)
 
-        logger.debug(json_resp)
+        except NotFoundError as e:
+            await self._get_programme(pid)
+            raise NotYetAvailableError(f"No playable version of {pid} yet") from e
 
-        if not json_resp:
-            raise NotFoundError(f"Couldn't get item with PID {pid}")
         playable_item = await self.parser.parse_node(json_resp)
 
         if not isinstance(playable_item, PlayableItem):
@@ -318,7 +352,7 @@ class ContentService:
 
         if include_stream:
             if not playable_item.version_pid:
-                raise APIResponseError(f"No available version for PID {pid}")
+                raise NotYetAvailableError(f"No available version for PID {pid}")
             streams = await self.playback.get_episode_streams(
                 vpid=playable_item.version_pid, preferences=stream_preferences
             )
@@ -473,7 +507,9 @@ class ContentService:
                 await asyncio.sleep(throttler.initial_delay)
                 for attempt in range(throttler.max_retries + 1):
                     try:
-                        return await self.image_from_spotify(segment.spotify_url)
+                        return await self.fetch_thumbnail_image_from_spotify(
+                            segment.spotify_url
+                        )
                     except SoundsException as e:
                         if attempt == throttler.max_retries or not _is_retryable(e):
                             logger.debug("No Spotify image for %s: %s", segment.id, e)

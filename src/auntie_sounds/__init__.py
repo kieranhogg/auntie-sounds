@@ -1,5 +1,6 @@
 from auntie_sounds.client import SoundsClient
 from auntie_sounds.constants import SCHEDULE_TIMEZONE, VERBOSE_LOG_LEVEL
+from auntie_sounds.content import SpotifyThrottler
 from auntie_sounds.exceptions import (
     APIResponseError,
     ConfigurationError,
@@ -38,6 +39,7 @@ __all__ = [
     "SoundsClient",
     "SoundsException",
     "SoundsHttpException",
+    "SpotifyThrottler",
     "UnauthorisedError",
     "parse",
 ]
