@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## [Unreleased]
+
+## [3.1.0] - 2026-11-17
 * New feature: `SoundsClient.delete_stored_cookies()` (which calls `CookieStore.delete()`) removes the cookie jar file
 * New feature: `ContentManager.get_show_segments()` now takes a `SpotifyThrottler` instance to throttle Spotify requests
 * New feature: `ContentService.get_by_pid()` now raises a `NotYetAvailableError` exception when the pid is available, but `include_stream=True` is passed and there is not yet a playable version
