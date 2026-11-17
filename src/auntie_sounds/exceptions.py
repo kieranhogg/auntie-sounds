@@ -54,6 +54,13 @@ class NotFoundError(SoundsHttpException):
     """The requested resource was not found."""
 
 
+class NotYetAvailableError(NotFoundError):
+    """
+    A more specific version of NotFoundError where the pid is found, but the playable
+    version is not yet.
+    """
+
+
 class NotExpectedTypeError(NotFoundError):
     """The pid or urn exists, but is a different type of item from the one asked for."""
 
