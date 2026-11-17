@@ -54,10 +54,14 @@ def assign_seasons(
     episodes: Sequence[EpisodeTypes],
     complete: bool = True,
 ) -> None:
-    """Sort episodes into the podcast's seasons.
+    """
+    Sort episodes into the podcast's seasons, returning the original podcast object.
 
-    complete says whether episodes holds every episode. If it doesn't, a
-    season with none of them may just be beyond the ones fetched, so it's kept.
+    :param podcast: the `Podcast` or `RadioSeries` to sort into seasons
+    :param episodes: the list of podcast episodes to sort
+    :param complete: whether episodes holds every episode. If it doesn't, a
+        season with none of them may just be beyond the ones fetched, so it's kept.
+    :return: None
     """
     if not podcast.seasons:
         return
@@ -92,19 +96,21 @@ def assign_seasons(
         )
         or None
     )
-
     # anything left matched no season (including series_pid=None)
     podcast.sub_items = list(chain.from_iterable(by_series.values())) or None
 
 
 def _is_retryable(e: SoundsException) -> bool:
+    """Helper to determine if an exception is retriable."""
     return (
         isinstance(e, NetworkError) or getattr(e, "status", None) in RETRYABLE_STATUSES
     )
 
 
 async def _no_episodes() -> None:
-    """Stands in for the episode fetch in get_podcast's gather when it's not wanted."""
+    """
+    Stands in for the episode fetch in `get_podcast`'s gather when it's not wanted.
+    """
 
 
 def _ancestor_id(programme: dict, kind: str) -> str | None:
@@ -157,6 +163,10 @@ class ContentService:
         """Make a request to Spotify OEmbed and return the full response.
 
         Docs: https://developer.spotify.com/documentation/embeds/reference/oembed
+
+        :param url: a valid Spotify URL e.g. https://open.spotify.com/...
+        :return: the JSON response from the endpoint
+        :raises: InvalidArgumentsError if not a valid Spotify URL
         """
         if not url.startswith("https://open.spotify.com/"):
             raise InvalidArgumentsError(
@@ -167,7 +177,10 @@ class ContentService:
         )
 
     async def fetch_thumbnail_image_from_spotify(self, url: str) -> str | None:
-        """Return the URL of the thumbnail from a Spotify song URL, or None."""
+        """Return the URL of the thumbnail from a Spotify song URL, or None.
+        :param url: a valid Spotify URL e.g. https://open.spotify.com/...
+        :return: The song's thumbnail URL or None if not found
+        """
         json_resp = await self.fetch_spotify_oembed(url=url)
         if not json_resp:
             return None

@@ -165,10 +165,18 @@ class SoundsClient:
         include_local_stations: bool = False,
         include_recommendations: bool = True,
     ) -> Menu:
-        """Get the main Sounds menu."""
+        """Get the main Sounds menu.
+
+        :param include_local_stations: whether to include local radio stations in the
+            list of radio stations
+        :param include_recommendations: whether to include the folders deemed as
+            recommendations, such as 'Recommended For You' etc. Does nothing if
+            receiving an international menu
+        :return: Menu object containing the full menu construction
+        """
+
         # The station list and the UK check don't depend on each other.
         # Without login details there's no personalised menu, so userinfo isn't needed.
-
         stations, personalised = await asyncio.gather(
             self.stations.get_stations(include_local_stations=include_local_stations),
             self._wants_personalised_menu(),
@@ -207,6 +215,7 @@ class SoundsClient:
         logger.debug("Logged out.")
 
     async def close(self) -> None:
+        """Close the session, if started by the client. Will attempt to save cookies."""
         if not self._started:
             return
         logger.debug("Closing session...")
@@ -231,6 +240,7 @@ class SoundsClient:
         )
 
     def _create_services(self) -> None:
+        """Helper to create services after client has been started."""
         login_details_provided: bool = bool(self.username and self.password)
 
         self.requests: RequestManager = RequestManager(
@@ -270,14 +280,17 @@ class SoundsClient:
         self.personal = PersonalService(requests=self.requests, owners=self.owners)
 
     async def _wants_personalised_menu(self) -> bool:
+        """Helper to check if we need a personalised menu."""
         return (
             self.user.login_details_provided
             and await self.user.is_uk_account_and_location()
         )
 
     async def __aenter__(self):
+        """Run when creating the context manager."""
         await self.start()
         return self
 
     async def __aexit__(self, *args):
+        """Run on leaving the context manager."""
         await self.close()
