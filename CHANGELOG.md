@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## [Unreleased]
+* Fix: Make `Activity.action` optional as the API is now returning activity responses without one
 
 ## [3.1.0] - 2026-11-17
 * New feature: `SoundsClient.delete_stored_cookies()` (which calls `CookieStore.delete()`) removes the cookie jar file
