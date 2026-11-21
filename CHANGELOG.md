@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## [Unreleased]
+
+## [3.1.1] - 2026-11-21
 * Fix: Make `Activity.action` optional as the API is now returning activity responses without one
 
 ## [3.1.0] - 2026-11-17
