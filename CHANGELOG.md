@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## [Unreleased]
+* New feature: where possible, `Podcast.seasons` works with `PodcastEpisode.episode_number`, parsed from the title
+* Fix: handle stations where polling and/or schedules might not be available
 
 ## [3.1.1] - 2026-11-21
 * Fix: Make `Activity.action` optional as the API is now returning activity responses without one
