@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## [Unreleased]
+
+## [3.2.0] - 2026-11-22
 * New feature: where possible, `Podcast.seasons` works with `PodcastEpisode.episode_number`, parsed from the title
 * Fix: handle stations where polling and/or schedules might not be available
 
