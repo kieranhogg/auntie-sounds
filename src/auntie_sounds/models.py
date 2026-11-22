@@ -187,7 +187,7 @@ class Activity:
     """
 
     type: str
-    action: str
+    action: str | None = None
     label: str | None = None
     urn: str | None = None
 
