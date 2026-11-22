@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import re
 from collections import OrderedDict, defaultdict
 from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
@@ -48,6 +49,60 @@ MAX_PODCAST_EPISODES: Final = 300
 MAX_CACHE_SIZE = 500
 RETRYABLE_STATUSES = frozenset({429, 500, 502, 503, 504})
 
+# Sorts after any real date, so undated episodes come last
+UNDATED: Final = "9999"
+
+# Matches: "1. Title", "10: Title", "Episode 5", "Case 3: Title", "#10 Title"
+EPISODE_NUMBER: Final = re.compile(
+    r"^(?:(?:episode|ep|part|chapter|case)\.?\s*|#)(\d+)\b|^(\d+)[.:]\s",
+    re.IGNORECASE,
+)
+
+
+def _release_order(episode: EpisodeTypes) -> tuple[str, str]:
+    """Sort key putting episodes in the order they came out, undated ones last.
+
+    An episode can have a release with no date, so they use available date. Box sets go
+    up together, so the availability a few minutes apart differentiates matching release
+    dates.
+    """
+    released = (episode.release or {}).get("date")
+    available = (episode.availability or {}).get("from")
+    available = available if isinstance(available, str) else UNDATED
+    return (released if isinstance(released, str) else available, available)
+
+
+def _title_number(episode: EpisodeTypes) -> int | None:
+    title = episode.titles.entity_title
+    if title is None or (match := EPISODE_NUMBER.match(title)) is None:
+        return None
+    return int(match[1] or match[2])
+
+
+def number_episodes(episodes: Sequence[EpisodeTypes], complete: bool = True) -> None:
+    """Set each episode's `episode_number` from its title, or release order.
+
+    Titles are used when the majority of episodes match a number and no dupes. Otherwise
+    the episodes are numbered oldest first when possible. Promos aren't numbered.
+
+    :param episodes: one season's episodes, or those of a podcast with no seasons
+    :param complete: whether episodes holds every episode in the group
+    """
+    candidates = [episode for episode in episodes if not episode.is_promo]
+    parsed = [
+        (episode, number)
+        for episode in candidates
+        if (number := _title_number(episode)) is not None
+    ]
+    numbers = {number for _, number in parsed}
+    if parsed and len(numbers) == len(parsed) and 2 * len(parsed) >= len(candidates):
+        for episode, number in parsed:
+            episode.episode_number = number
+    elif complete:
+        by_release = sorted(candidates, key=_release_order)
+        for number, episode in enumerate(by_release, start=1):
+            episode.episode_number = number
+
 
 def assign_seasons(
     podcast: Podcast | RadioSeries,
@@ -69,17 +124,10 @@ def assign_seasons(
     for episode in episodes:
         by_series[episode.series_pid].append(episode)
 
-    def first_release(season: Season) -> str:
-        # An episode can have a release with no date, so fall back to when it became
-        # available
-        dates: list[str] = []
-        for episode in season.sub_items or ():
-            date = (episode.release or {}).get("date") or (
-                episode.availability or {}
-            ).get("from")
-            if isinstance(date, str):
-                dates.append(date)
-        return min(dates, default="9999")
+    def first_release(season: Season) -> tuple[str, str]:
+        return min(
+            map(_release_order, season.sub_items or ()), default=(UNDATED, UNDATED)
+        )
 
     for season in podcast.seasons:
         # Container.pid isn't populated from the urn, so use item_id
@@ -87,8 +135,8 @@ def assign_seasons(
             by_series.pop(season.item_id, None) if season.item_id else None
         )
     # The API lists seasons by pid, not by date, and includes ones with nothing
-    # available, e.g. omnibus editions. Drop those, unless the episode list was
-    # cut short, and order the rest by first release.
+    # available. Drop those, unless the episode list was cut short, and order the rest
+    # by first release.
     podcast.seasons = (
         sorted(
             (season for season in podcast.seasons if season.sub_items or not complete),
@@ -136,13 +184,8 @@ class SpotifyThrottler:
 
 
 class ContentService:
-    """Resolving IDs (pids/urns) and browsing the catalog: podcasts, radio
-    series, categories, collections, playlists, and search.
-
-    This is deliberately the "what is this thing, and what's in it" service.
-    Actually playing something lives in PlaybackService; get_by_pid() reaches
-    into it only when a caller explicitly asks for the stream to be attached.
-    """
+    """Resolving IDs (pids/urns) and browsing the catalog: podcasts, radio series,
+    categories, collections, playlists, and search."""
 
     def __init__(
         self,
@@ -234,9 +277,8 @@ class ContentService:
         if urn:
             pid = urn.rsplit(":", 1)[-1]
 
-        # The container holds the podcast's own details and artwork. The series
-        # beneath it are its seasons, which comes back empty when it has none.
-        # None of these depend on each other, so fetch them together.
+        # The brand/container response holds the podcast's own details and artwork
+        # The series response has its seasons, empty when it has none
         brand_json, series_json, episodes_json = await asyncio.gather(
             self.requests.get_json_response(
                 url=Endpoints.CONTAINER_FROM_PIDS, url_args={"pids": pid}
@@ -253,8 +295,7 @@ class ContentService:
             else _no_episodes(),
         )
 
-        # Parsing the brand records its owner, so the episodes parsed after it
-        # don't need to look it up again
+        # Cache the brand owner, so the episodes parsed after it can reuse it
         brand = await self.parser.parse_container(brand_json)
         podcast = brand[0] if isinstance(brand, list) and brand else None
         if not isinstance(podcast, (Podcast, RadioSeries)):
@@ -268,13 +309,21 @@ class ContentService:
                 for item in await self._parse_playable_items(episodes_json)
                 if isinstance(item, EpisodeTypes)
             ]
+            complete = len(episodes_json.get("data") or []) >= episodes_json.get(
+                "total", 0
+            )
             if podcast.seasons:
-                complete = len(episodes_json.get("data") or []) >= episodes_json.get(
-                    "total", 0
-                )
                 assign_seasons(podcast, episodes, complete=complete)
             else:
                 podcast.sub_items = episodes
+            # Episodes without a season are numberless, unless there are no seasons
+            groups = (
+                [s.sub_items for s in podcast.seasons if s.sub_items is not None]
+                if podcast.seasons
+                else [episodes]
+            )
+            for group in groups:
+                number_episodes(group, complete=complete)
         return podcast
 
     async def get_podcast_episodes(

@@ -508,6 +508,9 @@ class PlayableItem(BaseObject, IdentifiableMixin):
     pid: str | None = None
     version_pid: str | None = None
     series_pid: str | None = None
+    # Not from the API. ContentService.get_podcast sets it from the episode's title,
+    # or from its release order within its season.
+    episode_number: int | None = None
     type: str | None = None
     # Duration object normally, but plain seconds on broadcast summaries
     duration: Duration | int | None = None
@@ -773,8 +776,6 @@ class PodcastEpisode(PlayableItem, ImageMixin):
     """Represents a playable podcast episode."""
 
 
-# Not a PodcastEpisode subclass: consumers dispatch on isinstance and check
-# PodcastEpisode before RadioShow.
 @dataclass(kw_only=True)
 class RadioShow(PlayableItem, ImageMixin):
     """Represents a playable radio show."""
