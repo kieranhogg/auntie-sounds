@@ -7,6 +7,7 @@ from pathlib import Path
 
 import pytest
 
+from auntie_sounds.exceptions import APIResponseError
 from auntie_sounds.history import Speech, Track, Unknown
 from auntie_sounds.models import (
     Polling,
@@ -16,7 +17,12 @@ from auntie_sounds.models import (
     SegmentOffset,
 )
 from auntie_sounds.parser import Parser
-from auntie_sounds.schedule import SEGMENT_LIMIT_MAX, ScheduleService, unique_broadcasts
+from auntie_sounds.schedule import (
+    NEXT_TRACK_POLL_SEC,
+    SEGMENT_LIMIT_MAX,
+    ScheduleService,
+    unique_broadcasts,
+)
 
 pytestmark = pytest.mark.anyio
 
@@ -37,7 +43,9 @@ class FakeRequests:
     async def get_json_response(self, url, url_args=None, **kwargs):
         key = url if isinstance(url, str) else url.name
         self.urls.append(key)
-        return copy.deepcopy(self.responses[key])
+        if isinstance(response := self.responses[key], Exception):
+            raise response
+        return copy.deepcopy(response)
 
 
 class Clock:
@@ -153,6 +161,13 @@ class TestPolling:
         await svc.polling("bbc_radio_four")
         assert requests.urls == ["PLAY_EXPERIENCE"]
 
+    async def test_unsupported_station_is_only_asked_once(self):
+        unsupported = APIResponseError("This network is not supported", status_code=400)
+        svc, requests = service(PLAY_EXPERIENCE=unsupported)
+        for _ in range(2):
+            assert await svc.polling("bbc_afrique_radio") == {}
+        assert requests.urls == ["PLAY_EXPERIENCE"]
+
 
 class TestOnAir:
     async def test_first_programme_of_the_experience(self):
@@ -192,6 +207,25 @@ class TestOnAir:
         assert POLL_URL in requests.urls
         assert item is None
 
+    async def test_unsupported_station_has_no_programme(self):
+        unsupported = APIResponseError("This network is not supported", status_code=400)
+        svc, requests = service(PLAY_EXPERIENCE=unsupported, SCHEDULE=unsupported)
+        for _ in range(2):
+            assert await svc.on_air("bbc_afrique_radio") is None
+        assert requests.urls == ["PLAY_EXPERIENCE", "SCHEDULE"]
+
+    async def test_schedule_is_kept_for_a_station_without_an_experience(self):
+        unsupported = APIResponseError("This network is not supported", status_code=400)
+        schedule = load("SCHEDULE.json")
+        svc, requests = service(PLAY_EXPERIENCE=unsupported, SCHEDULE=schedule)
+        # The 6 Music capture was taken during Steve Lamacq, before New Music Fix
+        day = datetime(2026, 9, 14, tzinfo=UTC)
+        lamacq = await svc.on_air("bbc_6music", now=day + timedelta(hours=15.5))
+        fix = await svc.on_air("bbc_6music", now=day + timedelta(hours=18.5))
+        assert lamacq is not None and lamacq.broadcast_pid == "p0p5kmsj"
+        assert fix is not None and fix.broadcast_pid == "p0p5kmsl"
+        assert requests.urls == ["PLAY_EXPERIENCE", "SCHEDULE"]
+
 
 class TestRefreshHistory:
     @staticmethod
@@ -224,6 +258,20 @@ class TestRefreshHistory:
             await svc.refresh_history("bbc_radio_four", now=ON_AIR)
         assert requests.urls.count(RECENT_URL) == 1
         clock.now += 30
+        await svc.refresh_history("bbc_radio_four", now=ON_AIR)
+        assert requests.urls.count(RECENT_URL) == 2
+
+    async def test_polls_sooner_while_the_next_track_is_due(self):
+        clock = Clock()
+        svc, requests = service(clock, **self.segments_responses())
+        item = await svc.on_air("bbc_radio_four", now=ON_AIR)
+        assert item is not None
+        # The newest track ends 7157s in, so 43s before the poll
+        item.start = ON_AIR - timedelta(seconds=7200)
+        for _ in range(2):
+            await svc.refresh_history("bbc_radio_four", now=ON_AIR)
+        assert requests.urls.count(RECENT_URL) == 1
+        clock.now += NEXT_TRACK_POLL_SEC
         await svc.refresh_history("bbc_radio_four", now=ON_AIR)
         assert requests.urls.count(RECENT_URL) == 2
 

@@ -5,7 +5,11 @@ from unittest.mock import AsyncMock
 import pytest
 
 from auntie_sounds import parse
-from auntie_sounds.content import MAX_PODCAST_EPISODES, assign_seasons
+from auntie_sounds.content import (
+    MAX_PODCAST_EPISODES,
+    assign_seasons,
+    number_episodes,
+)
 from auntie_sounds.endpoints import Endpoints
 from auntie_sounds.exceptions import InvalidFormatError, NotFoundError
 from auntie_sounds.models import (
@@ -14,6 +18,7 @@ from auntie_sounds.models import (
     RadioSeries,
     RadioShow,
     Season,
+    Titles,
 )
 from tests.conftest import FIXTURES_FOLDER
 
@@ -85,6 +90,51 @@ class TestSeasons:
         assert len(podcast.seasons[0].sub_items) == 1
         assert podcast.sub_items[0].id == "orphan"
         assert podcast.seasons[0].sub_items[0].id == "season1"
+
+
+def _titled(title: str, released: str | None = None) -> PodcastEpisode:
+    return PodcastEpisode(
+        id=title,
+        titles=Titles(entity_title=title),
+        release={"date": released} if released is not None else None,
+    )
+
+
+class TestEpisodeNumbers:
+    def test_numbers_come_from_titles(self):
+        episodes = [
+            _titled("Trailer"),
+            _titled("1. The Script"),
+            _titled("Episode 2"),
+            _titled("10: Retrospective"),
+            _titled("Our Live Show"),
+        ]
+        number_episodes(episodes)
+        assert [e.episode_number for e in episodes] == [None, 1, 2, 10, None]
+
+    def test_unnumbered_titles_fall_back_to_release_order(self):
+        """Newest first, as a flat feed comes back."""
+        episodes = [
+            _titled("The Final Problem: Part Two", "2026-04-23T00:00:00Z"),
+            _titled("The Final Problem: Part One", "2026-04-16T00:00:00Z"),
+            _titled("A Case of Identity: Part One", "2026-03-05T00:00:00Z"),
+        ]
+        number_episodes(episodes)
+        assert [e.episode_number for e in episodes] == [3, 2, 1]
+
+    def test_repeated_title_numbers_fall_back_to_release_order(self):
+        """A bonus episode shares its number with the episode it follows."""
+        episodes = [
+            _titled("Episode 1 with Ed Gamble", "2025-10-08T00:00:00Z"),
+            _titled("Episode 1 BONUS", "2025-10-09T00:00:00Z"),
+        ]
+        number_episodes(episodes)
+        assert [e.episode_number for e in episodes] == [1, 2]
+
+    def test_partial_list_is_not_numbered_by_release_order(self):
+        episodes = [_titled("Unnumbered", "2026-04-23T00:00:00Z")]
+        number_episodes(episodes, complete=False)
+        assert episodes[0].episode_number is None
 
 
 def _load(name: str) -> dict:
@@ -292,6 +342,17 @@ class TestGetPodcast:
         # 9 of these went out on Radio 4, but the brand is a podcast
         episodes = [e for s in podcast.seasons for e in s.sub_items]
         assert {type(e) for e in episodes} == {PodcastEpisode}
+        # The trailer has no number, and the extras after episode 10 have none either
+        assert [e.episode_number for e in podcast.seasons[0].sub_items] == [
+            None,
+            *range(1, 14),
+        ]
+        assert [e.episode_number for e in podcast.seasons[1].sub_items][-4:] == [
+            10,
+            None,
+            None,
+            None,
+        ]
 
 
 class TestEpisodeContainer:

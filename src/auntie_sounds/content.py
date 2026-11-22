@@ -43,6 +43,8 @@ if TYPE_CHECKING:
 
 logger = logging.getLogger(__name__)
 
+# Blank images are served as this from the API
+BLANK_IMAGE_PID = "p0bqcdzf"
 
 # Define a reasonable upper limit for episodes to fetch
 MAX_PODCAST_EPISODES: Final = 300
@@ -234,7 +236,8 @@ class ContentService:
 
         Updates and returns the same segment.
         """
-        if segment.image_url is None and segment.spotify_url:
+        is_blank = segment.image_url is None or BLANK_IMAGE_PID in segment.image_url
+        if is_blank and segment.spotify_url:
             logger.debug("Segment image is blank, fetching from Spotify...")
             segment.image_url = await self.fetch_thumbnail_image_from_spotify(
                 segment.spotify_url

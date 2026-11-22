@@ -45,11 +45,24 @@ ON_AIR_LIMIT = 5
 # The API rejects any other limit on the latest segments, whatever its spec says
 SEGMENT_LIMIT_MAX = 10
 
+# Tracks are listed up to about 90 seconds after they start, so once the newest known
+# track has ended, poll sooner than the API asks until the next one shows up
+NEXT_TRACK_POLL_SEC = 10
+NEXT_TRACK_WINDOW = timedelta(minutes=2)
+
 
 def _covers(item: ScheduleItem | RadioShow, now: dt) -> bool:
     return (
         item.start is not None and item.end is not None and item.start <= now < item.end
     )
+
+
+def _segments_wait(history: SegmentHistory, api_wait: int, now: dt) -> int:
+    """Return the API's wait, or less while the next track is due to be listed."""
+    newest_end = history.newest_end
+    if newest_end is not None and newest_end <= now < newest_end + NEXT_TRACK_WINDOW:
+        return min(api_wait, NEXT_TRACK_POLL_SEC)
+    return api_wait
 
 
 def _schedule_or_catch_up_dates(
@@ -110,8 +123,10 @@ class ScheduleService:
         self._on_air_items: dict[str, list[ScheduleItem | RadioShow]] = {}
         self._on_air_refresh_at: dict[str, float] = {}
         self._histories: dict[str, SegmentHistory] = {}
-        self._segments_poll_at: dict[str, float] = {}
+        self._segments_polled_at: dict[str, float] = {}
         self._locks: dict[str, asyncio.Lock] = {}
+        # Stations whose schedule the API does not support
+        self._no_schedule: set[str] = set()
 
     async def polling(self, station_id: str) -> dict[str, Polling]:
         """
@@ -120,7 +135,15 @@ class ScheduleService:
         :param station_id: The station, e.g. bbc_6music.
         """
         if station_id not in self._polling:
-            await self._load_experience(station_id)
+            try:
+                await self._load_experience(station_id)
+            except APIResponseError as e:
+                # Unsupported networks respond with a 400
+                if e.status_code != 400:
+                    raise
+                logger.debug("No play experience for %s: %s", station_id, e.message)
+                self._polling[station_id] = {}
+                self._on_air_items[station_id] = []
         return self._polling[station_id]
 
     async def on_air(
@@ -178,12 +201,16 @@ class ScheduleService:
         if polling is None:
             return history
         async with self._lock(f"{station_id}/segments"):
-            if self._clock() < self._segments_poll_at.get(station_id, 0):
+            at = now or dt.now(UTC)
+            polled_at = self._segments_polled_at.get(station_id)
+            wait = _segments_wait(history, polling.wait_before_poll_sec, at)
+
+            if polled_at is not None and self._clock() < polled_at + wait:
                 return history
+
             # Set first so a failed request isn't retried at once
-            self._segments_poll_at[station_id] = (
-                self._clock() + polling.wait_before_poll_sec
-            )
+            self._segments_polled_at[station_id] = self._clock()
+
             programme = await self.on_air(station_id, now)
             if programme is None or programme.start is None:
                 return history
@@ -376,13 +403,25 @@ class ScheduleService:
     ) -> ScheduleItem | None:
         """
         Find the programme on air in today's schedule, for stations without a poll.
+
+        The day's programmes become the station's on-air list, so the schedule is only
+        fetched again once none of them covers the time.
         """
-        schedule = await self.get_schedule(station_id)
+        if station_id in self._no_schedule:
+            return None
+        try:
+            schedule = await self.get_schedule(station_id)
+        except APIResponseError as e:
+            if e.status_code != 400:
+                raise
+            logger.debug("No schedule for %s: %s", station_id, e.message)
+            self._no_schedule.add(station_id)
+            return None
         if not schedule or not schedule.sub_items:
             return None
+        self._on_air_items[station_id] = unique_broadcasts(schedule.sub_items)
         on_air_show = next(
-            (s for s in unique_broadcasts(schedule.sub_items) if _covers(s, now)),
-            None,
+            (s for s in self._on_air_items[station_id] if _covers(s, now)), None
         )
         return on_air_show if isinstance(on_air_show, ScheduleItem) else None
 
