@@ -252,7 +252,8 @@ class SegmentHistory:
         """
         estimate = self._start_estimates.get(scheduled_start)
         shift = estimate.shift if estimate is not None else None
-        logger.debug("Current esimated start time shift: %s", shift)
+        shift_display = f"{shift.total_seconds():+.1f}s" if shift is not None else None
+        logger.debug("Current esimated start time shift: %s", shift_display)
         return scheduled_start + (shift or timedelta(0))
 
     def merge(

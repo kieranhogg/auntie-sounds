@@ -2,7 +2,10 @@
 
 ## [Unreleased]
 
+* Fix: negative time shift displayed poorly
+
 ## [3.3.0] - 2026-11-23
+
 * Fix: revert to not polling more often than advised by the endpoint
 * Fix: `SegmentHistory` places live tracks from when the programme really started, helped with from the
   segments' "N Minutes Ago" labels
@@ -10,22 +13,28 @@
 * New feature: `SegmentHistory.programme_start()` gives that estimate for a programme's scheduled start
 
 ## [3.2.0] - 2026-11-22
+
 * New feature: where possible, `Podcast.seasons` works with `PodcastEpisode.episode_number`, parsed from the title
 * Fix: handle stations where polling and/or schedules might not be available
 
 ## [3.1.1] - 2026-11-21
+
 * Fix: Make `Activity.action` optional as the API is now returning activity responses without one
 
 ## [3.1.0] - 2026-11-17
+
 * New feature: `SoundsClient.delete_stored_cookies()` (which calls `CookieStore.delete()`) removes the cookie jar file
 * New feature: `ContentManager.get_show_segments()` now takes a `SpotifyThrottler` instance to throttle Spotify requests
-* New feature: `ContentService.get_by_pid()` now raises a `NotYetAvailableError` exception when the pid is available, but `include_stream=True` is passed and there is not yet a playable version
+* New feature: `ContentService.get_by_pid()` now raises a `NotYetAvailableError` exception when the pid is available,
+  but `include_stream=True` is passed and there is not yet a playable version
 * New feature: `ContentService.ensure_segment_image()` fills in a missing thumbnail image on an individual `Segment`
 
 ## [3.0.1] - 2026-11-12
+
 * Change: tweak the main menu IDs to `live` and `schedules` from `radio` and `schedule`
 
 ## [3.0.0] - 2026-11-12
+
 * New feature: added international radio stations
 * New feature: podcast and radio series seasons. `Podcast.seasons` / `RadioSeries.seasons` hold `Season`
   containers; with `include_episodes=True`, episodes are grouped into their season and any that don't belong
@@ -39,7 +48,8 @@
 * New feature: `Segment.offset` is now a `SegmentOffset` (`start`, `end`, `label`, `now_playing`) rather than a dict
 * New feature: `ScheduleService.refresh_history()` and `history()` keep a per-station `SegmentHistory` of recent
   tracks. `SegmentHistory.lookup()` says whether a track, speech or nothing known was on air at a time
-* New feature: single broadcast responses (`pid` rather than `id`, with a nested `programme`) get converted into a `ScheduleItem`
+* New feature: single broadcast responses (`pid` rather than `id`, with a nested `programme`) get converted into a
+  `ScheduleItem`
 * Fix: podcasts with more than 30 episodes are no longer truncated
 * Fix: ensure the correct Radio 4 ID is used across all endpoints
 
