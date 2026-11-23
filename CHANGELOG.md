@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## [Unreleased]
+
+## [3.3.0] - 2026-11-23
 * Fix: revert to not polling more often than advised by the endpoint
 * Fix: `SegmentHistory` places live tracks from when the programme really started, helped with from the
   segments' "N Minutes Ago" labels
