@@ -18,7 +18,6 @@ from auntie_sounds.models import (
 )
 from auntie_sounds.parser import Parser
 from auntie_sounds.schedule import (
-    NEXT_TRACK_POLL_SEC,
     SEGMENT_LIMIT_MAX,
     ScheduleService,
     unique_broadcasts,
@@ -36,16 +35,23 @@ def load(name: str) -> dict:
 class FakeRequests:
     """Answers by URL, remembering what was asked for."""
 
-    def __init__(self, responses: dict[str, dict]):
+    def __init__(self, responses: dict[str, dict], age: timedelta = timedelta()):
         self.responses = responses
+        self.age = age
         self.urls: list[str] = []
 
-    async def get_json_response(self, url, url_args=None, **kwargs):
+    def _respond(self, url) -> dict:
         key = url if isinstance(url, str) else url.name
         self.urls.append(key)
         if isinstance(response := self.responses[key], Exception):
             raise response
         return copy.deepcopy(response)
+
+    async def get_json_response(self, url, url_args=None, **kwargs):
+        return self._respond(url)
+
+    async def get_json_and_age(self, url):
+        return self._respond(url), self.age
 
 
 class Clock:
@@ -242,10 +248,13 @@ class TestRefreshHistory:
         item.start = now - timedelta(seconds=7300)
         history = await svc.refresh_history("bbc_radio_four", now=now)
         assert len(history) == 4
-        result = history.lookup(now - timedelta(seconds=7300 - 7000))
+        # The capture's labels put the real start a little after the one given
+        start = history.programme_start(item.start)
+        assert start > item.start
+        result = history.lookup(start + timedelta(seconds=7000))
         assert isinstance(result, Track)
         assert result.segment.id == "p0pbhqfh"
-        assert isinstance(history.lookup(now - timedelta(seconds=7300 - 6950)), Speech)
+        assert isinstance(history.lookup(start + timedelta(seconds=6950)), Speech)
         assert isinstance(history.lookup(now - timedelta(days=1)), Unknown)
 
     async def test_polls_no_faster_than_the_wait(self):
@@ -261,19 +270,17 @@ class TestRefreshHistory:
         await svc.refresh_history("bbc_radio_four", now=ON_AIR)
         assert requests.urls.count(RECENT_URL) == 2
 
-    async def test_polls_sooner_while_the_next_track_is_due(self):
+    async def test_keeps_the_wait_while_the_next_track_is_due(self):
         clock = Clock()
         svc, requests = service(clock, **self.segments_responses())
         item = await svc.on_air("bbc_radio_four", now=ON_AIR)
         assert item is not None
         # The newest track ends 7157s in, so 43s before the poll
         item.start = ON_AIR - timedelta(seconds=7200)
-        for _ in range(2):
-            await svc.refresh_history("bbc_radio_four", now=ON_AIR)
-        assert requests.urls.count(RECENT_URL) == 1
-        clock.now += NEXT_TRACK_POLL_SEC
         await svc.refresh_history("bbc_radio_four", now=ON_AIR)
-        assert requests.urls.count(RECENT_URL) == 2
+        clock.now += 10
+        await svc.refresh_history("bbc_radio_four", now=ON_AIR)
+        assert requests.urls.count(RECENT_URL) == 1
 
     async def test_station_without_recent_tracks_polling_stays_empty(self):
         requests = FakeRequests({"PLAY_EXPERIENCE": load("LIVE_STATION_DETAILS.json")})

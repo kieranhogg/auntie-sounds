@@ -11,6 +11,7 @@ from auntie_sounds.history import (
     Track,
     Unknown,
     current_programme_segments,
+    minutes_ago,
 )
 from auntie_sounds.models import Segment, SegmentOffset
 
@@ -18,13 +19,13 @@ START = datetime(2026, 10, 6, 6, 0, tzinfo=UTC)
 NOW = START + timedelta(minutes=30)
 
 
-def seg(id_: str, start: int, end: int) -> Segment:
+def seg(id_: str, start: int, end: int, label: str | None = None) -> Segment:
     return Segment(
         id=id_,
         segment_type="music",
         uris=[],
         image_url=None,
-        offset=SegmentOffset(start=start, end=end),
+        offset=SegmentOffset(start=start, end=end, label=label),
     )
 
 
@@ -106,7 +107,7 @@ class TestMerge:
         history.merge([loose], START, now=NOW)
         assert len(history) == 0
 
-    def test_old_tracks_are_pruned(self):
+    def test_old_tracks_are_dropped(self):
         history = SegmentHistory(max_age=timedelta(hours=1))
         history.merge(WINDOW, START, now=NOW)
         history.merge([], START, now=NOW + timedelta(hours=2))
@@ -115,6 +116,45 @@ class TestMerge:
     def test_oldest_and_newest(self, history):
         assert history.oldest_start == at(100)
         assert history.newest_end == at(1100)
+
+
+class TestProgrammeStart:
+    """The labels place tracks from the programme's real start, here 180s late."""
+
+    # At NOW, 1800s after the scheduled start, each label puts the start in a
+    # one-minute window that includes 180s
+    LABELLED: ClassVar[list[Segment]] = [
+        seg("c", 900, 1100, "8 Minutes Ago"),
+        seg("b", 399, 700, "15 Minutes Ago"),
+        seg("a", 100, 400, "20 Minutes Ago"),
+    ]
+
+    def test_labels_are_read_as_minutes(self):
+        assert minutes_ago("Less Than a Minute Ago") == 0
+        assert minutes_ago("1 Minute Ago") == 1
+        assert minutes_ago("12 Minutes Ago") == 12
+        assert minutes_ago("Now Playing") is None
+
+    def test_tracks_are_placed_from_the_real_start(self):
+        history = SegmentHistory()
+        history.merge(self.LABELLED, START, now=NOW)
+        assert history.programme_start(START) == START + timedelta(seconds=180)
+        assert history.lookup(at(380)).segment.id == "a"  # type: ignore[union-attr]
+        assert isinstance(history.lookup(at(200)), Unknown)
+
+    def test_a_stray_label_is_outvoted(self):
+        history = SegmentHistory()
+        stray = seg("b", 399, 700, "13 Minutes Ago")
+        history.merge([self.LABELLED[0], stray, self.LABELLED[2]], START, now=NOW)
+        assert history.programme_start(START) == START + timedelta(seconds=180)
+
+    def test_earlier_tracks_move_with_the_estimate(self, history):
+        assert history.lookup(at(200)).segment.id == "a"  # type: ignore[union-attr]
+        assert history.merge(self.LABELLED, START, now=NOW) == 3
+        assert history.lookup(at(380)).segment.id == "a"  # type: ignore[union-attr]
+
+    def test_unlabelled_programme_keeps_its_scheduled_start(self, history):
+        assert history.programme_start(START) == START
 
 
 class TestProgrammeBoundary:
@@ -146,23 +186,19 @@ class TestProgrammeBoundary:
             now=START - timedelta(seconds=5),
         )
         history.merge(self.POLL, START, now=NOW)
-        assert {"old1", "old2", "new1", "new2"} == set(history._entries)
+        assert {"old1", "old2", "new1", "new2"} == set(history._timed_segments)
         assert history.lookup(START - timedelta(seconds=30)).segment.id == "old2"  # type: ignore[union-attr]
 
     def test_no_boundary_keeps_everything(self):
         assert len(current_programme_segments(WINDOW)) == 3
 
     def test_segment_without_offset_is_skipped(self):
-        bare = Segment(
-            id="z", segment_type="music", uris=[], image_url=None, offset=None
-        )
+        bare = Segment(id="z", segment_type="music", uris=[], image_url=None, offset=None)
         assert current_programme_segments([bare, *WINDOW]) == WINDOW
 
     def test_just_after_the_boundary_nothing_new_has_played(self):
         # Five seconds in, every segment is from the last programme and would
         # land in the future if anchored to this one
         history = SegmentHistory()
-        history.merge(
-            [seg("old2", 3500, 3590)], START, now=START + timedelta(seconds=5)
-        )
+        history.merge([seg("old2", 3500, 3590)], START, now=START + timedelta(seconds=5))
         assert len(history) == 0

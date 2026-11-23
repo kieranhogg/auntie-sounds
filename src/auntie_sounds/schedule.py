@@ -45,24 +45,11 @@ ON_AIR_LIMIT = 5
 # The API rejects any other limit on the latest segments, whatever its spec says
 SEGMENT_LIMIT_MAX = 10
 
-# Tracks are listed up to about 90 seconds after they start, so once the newest known
-# track has ended, poll sooner than the API asks until the next one shows up
-NEXT_TRACK_POLL_SEC = 10
-NEXT_TRACK_WINDOW = timedelta(minutes=2)
-
 
 def _covers(item: ScheduleItem | RadioShow, now: dt) -> bool:
     return (
         item.start is not None and item.end is not None and item.start <= now < item.end
     )
-
-
-def _segments_wait(history: SegmentHistory, api_wait: int, now: dt) -> int:
-    """Return the API's wait, or less while the next track is due to be listed."""
-    newest_end = history.newest_end
-    if newest_end is not None and newest_end <= now < newest_end + NEXT_TRACK_WINDOW:
-        return min(api_wait, NEXT_TRACK_POLL_SEC)
-    return api_wait
 
 
 def _schedule_or_catch_up_dates(
@@ -146,9 +133,7 @@ class ScheduleService:
                 self._on_air_items[station_id] = []
         return self._polling[station_id]
 
-    async def on_air(
-        self, station_id: str, now: dt | None = None
-    ) -> ScheduleItem | None:
+    async def on_air(self, station_id: str, now: dt | None = None) -> ScheduleItem | None:
         """
         Get the programme that is currently on air for a station.
 
@@ -191,7 +176,9 @@ class ScheduleService:
         passed.
 
         Stations whose experience has no recent tracks polling just keep an empty
-        history. Calling this more often than the wait does no harm.
+        history. Calling this more often than the wait does no harm. The wait is
+        always kept, so a new track can show up as much as one wait after the API
+        lists it.
 
         :param station_id: The station, e.g. bbc_6music.
         :param now: The time of the poll, in UTC. Defaults to now.
@@ -201,10 +188,8 @@ class ScheduleService:
         if polling is None:
             return history
         async with self._lock(f"{station_id}/segments"):
-            at = now or dt.now(UTC)
             polled_at = self._segments_polled_at.get(station_id)
-            wait = _segments_wait(history, polling.wait_before_poll_sec, at)
-
+            wait = polling.wait_before_poll_sec
             if polled_at is not None and self._clock() < polled_at + wait:
                 return history
 
@@ -214,16 +199,22 @@ class ScheduleService:
             programme = await self.on_air(station_id, now)
             if programme is None or programme.start is None:
                 return history
-            json_resp = await self.requests.get_json_response(
+
+            json_resp, age = await self.requests.get_json_and_age(
                 url=build_url(polling.render(offset=0, limit=SEGMENT_LIMIT_MAX))
             )
+            logger.debug("Age of cached response: %ss", age)
             parsed = self.parser.parse_container(json_resp)
             segments = (
                 [s for s in parsed or [] if isinstance(s, Segment)]
                 if isinstance(parsed, list)
                 else []
             )
-            history.merge(segments, programme.start, now)
+
+            # The CDN can serve a copy up to 45 seconds old, and its labels are as old
+            # as the copy
+            made_at = (now or dt.now(UTC)) - age
+            history.merge(segments, programme.start, made_at)
         return history
 
     async def get_schedule(
@@ -244,9 +235,7 @@ class ScheduleService:
                     "Invalid date specified, must be in the format YYYY-MM-DD"
                 )
         try:
-            json_resp = await self.requests.get_json_response(
-                url=url, url_args=url_args
-            )
+            json_resp = await self.requests.get_json_response(url=url, url_args=url_args)
         except APIResponseError as e:
             # e.g. "Acceptable date must be between 30 days in the past and 7 days in
             # the future"
@@ -297,9 +286,7 @@ class ScheduleService:
         try:
             stations_data = json_resp["data"][0]["data"]
         except (TypeError, KeyError, IndexError) as e:
-            raise APIResponseError(
-                "Station listing data not in expected format."
-            ) from e
+            raise APIResponseError("Station listing data not in expected format.") from e
 
         listing = next(
             (
