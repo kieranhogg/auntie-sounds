@@ -1,6 +1,11 @@
 # CHANGELOG
 
 ## [Unreleased]
+* Fix: revert to not polling more often than advised by the endpoint
+* Fix: `SegmentHistory` places live tracks from when the programme really started, helped with from the
+  segments' "N Minutes Ago" labels
+* Fix: handle API missing required fields more gracefull by logging instead
+* New feature: `SegmentHistory.programme_start()` gives that estimate for a programme's scheduled start
 
 ## [3.2.0] - 2026-11-22
 * New feature: where possible, `Podcast.seasons` works with `PodcastEpisode.episode_number`, parsed from the title
