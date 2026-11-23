@@ -466,14 +466,14 @@ class ContentService:
         category = await self.parser.parse_node(json_resp)
         return category if isinstance(category, CategoryItemContainer) else None
 
-    async def get_collection(self, pid) -> list[EpisodeTypes | Container]:
+    async def get_collection(self, pid) -> list[EpisodeTypes | Container[Any]]:
         json_resp = await self.requests.get_json_response(
             url=Endpoints.COLLECTIONS, url_args={"pid": pid}
         )
         container = await self.parser.parse_container(json_resp)
         if not isinstance(container, Iterable):
             return []
-        return [c for c in container if isinstance(c, (EpisodeTypes, Container))]
+        return [c for c in container if isinstance(c, EpisodeTypes | Container)]
 
     async def get_audiobooks(self):
         json_resp = await self.requests.get_json_response(url=Endpoints.AUDIOBOOKS)
@@ -577,6 +577,8 @@ class ContentService:
         semaphore = asyncio.Semaphore(throttler.max_concurrent_images)
 
         async def fetch(segment: Segment) -> str | None:
+            if not segment.spotify_url:
+                return None
             async with semaphore:
                 await asyncio.sleep(throttler.initial_delay)
                 for attempt in range(throttler.max_retries + 1):

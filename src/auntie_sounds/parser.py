@@ -76,9 +76,7 @@ class Parser:
             if not container:
                 return None
 
-            if isinstance(
-                container, (BasicContainer, Container, CategoryItemContainer, Menu)
-            ):
+            if isinstance(container, (BasicContainer, Container, CategoryItemContainer)):
                 sub_items = self.parse_node(
                     node["data"], parent_network=node_network, type_hint=type_hint
                 )

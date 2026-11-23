@@ -8,6 +8,7 @@ from typing import Annotated, Any, ClassVar, Final, Literal
 from urllib.parse import parse_qs, urlparse
 
 import mashumaro
+from mashumaro.config import BaseConfig
 from mashumaro.types import Discriminator
 
 from auntie_sounds.utils import image_from_recipe, network_logo
@@ -101,6 +102,9 @@ _POLYMORPHIC = Discriminator(
 
 ###### Mixins ##########################################################################
 class SerializableMixin(mashumaro.DataClassDictMixin):
+    class Config(BaseConfig):
+        lazy_compilation = True
+
     def __post_serialize__(self, d: dict[Any, Any]) -> dict[Any, Any]:
         d[MODEL_TAG] = type(self).__name__
         return d
@@ -433,6 +437,34 @@ class PlayableNetwork(Network):
         self.description = station_description(self.item_id)
 
 
+type SoundsTypes = (
+    Category
+    | CategoryItemContainer
+    | CollectionItemContainer
+    | Collection
+    | LiveStation
+    | MenuItem
+    | Network
+    | Playlist
+    | PlayableItem
+    | PlayableNetwork
+    | Podcast
+    | PodcastEpisode
+    | PromoItem
+    | RadioClip
+    | RadioSeries
+    | RadioShow
+    | RecommendedMenuItem
+    | SearchResults
+    | Season
+    | Segment
+    | Schedule
+    | ScheduleItem
+    | Station
+    | StationSearchResult
+)
+
+
 @dataclass(kw_only=True)
 class BasicContainer:
     """Just a bare wrapper for items, e.g. PlayableItemsResponse."""
@@ -442,7 +474,7 @@ class BasicContainer:
 
 
 @dataclass(kw_only=True)
-class Container(BaseObject, IdentifiableMixin, IterableMixin):
+class Container[T = SoundsTypes](BaseObject, IdentifiableMixin, IterableMixin):
     """Base container for organising content and not directly playable."""
 
     id: str | None = None
@@ -458,11 +490,11 @@ class Container(BaseObject, IdentifiableMixin, IterableMixin):
     )
     urn: str | None = None
     network: Annotated[Network, _POLYMORPHIC] | None = None
-    sub_items: Sequence[Annotated[SoundsTypes, _POLYMORPHIC]] | None = None
+    sub_items: Sequence[Annotated[T, _POLYMORPHIC]] | None = None
 
 
 @dataclass(kw_only=True)
-class ImageContainer(Container):
+class ImageContainer[T = SoundsTypes](Container[T]):
     IMAGE_SIZE = 1280
 
     def post_processing(self, logger: Logger) -> None:
@@ -511,8 +543,7 @@ class PlayableItem(BaseObject, IdentifiableMixin):
     # or from its release order within its season.
     episode_number: int | None = None
     type: str | None = None
-    # Duration object normally, but plain seconds on broadcast summaries
-    duration: Duration | int | None = None
+    duration: Duration | None = None
     progress: Progress | None = None
     image_url: str | None = None
     titles: Titles = field(
@@ -552,10 +583,8 @@ class PlayableItem(BaseObject, IdentifiableMixin):
         # Title is exactly Trailer, or contains a promo word and is <5 mins
         return title == "trailer" or (
             any(keyword in title for keyword in promo_keywords)
-            and (
-                (type(self.duration) is int and self.duration < (5 * 60))
-                or (type(self.duration) is Duration and self.duration.value < (5 * 60))
-            )
+            and self.duration is not None
+            and self.duration.value < 5 * 60
         )
 
     @property
@@ -623,6 +652,11 @@ class PlayableItem(BaseObject, IdentifiableMixin):
             elif self.ID_IS_VERSION_PID and self.pid and self.id != self.pid:
                 self.version_pid = self.id
 
+        if isinstance(self.duration, int):
+            self.duration = Duration(
+                label=f"{self.duration // 60} mins", value=self.duration
+            )
+
         # Programmes responses (e.g. get_by_pid) only give the length under availability
         if (
             self.duration is None
@@ -649,8 +683,6 @@ class ScheduleItem(PlayableItem, ImageMixin):
 
     ID_IS_VERSION_PID: ClassVar[bool] = False
 
-    duration: int | None = None  # type: ignore[assignment]  # ty: ignore[invalid-mutable-override]
-
     @property
     def broadcast_pid(self) -> str:
         return self.id
@@ -667,7 +699,8 @@ class Station(Container):
     id: the service id, e.g. bbc_radio_fourfm
     """
 
-    id: str  # ty: ignore[invalid-mutable-override]
+    # pyrefly: ignore[bad-override-mutable-attribute]
+    id: str  # ty: ignore[incompatible-mutable-override]
     pid: str | None = None
     default: bool = True  # Whether this is default for its parent Network
     local: bool = False
@@ -745,12 +778,20 @@ class LiveStation(PlayableItem, ImageMixin):
 
 
 @dataclass(kw_only=True)
-class Schedule(Container):
+class RadioShow(PlayableItem, ImageMixin):
+    """Represents a playable radio show."""
+
+    service_id: str | None = None
+    version_pid: str | None = None
+
+
+@dataclass(kw_only=True)
+class Schedule(Container[ScheduleItem | RadioShow]):
     """Represents a schedule for a given date."""
 
-    id: str  # ty: ignore[invalid-mutable-override]
+    # pyrefly: ignore[bad-override-mutable-attribute]
+    id: str  # ty: ignore[incompatible-mutable-override]
     # title is the date of the schedule
-    sub_items: Sequence[Annotated[ScheduleItem | RadioShow, _POLYMORPHIC]] | None = None  # ty: ignore[invalid-mutable-override]
 
     def get_current_item(self) -> ScheduleItem | None:
         """Get the currently airing schedule item."""
@@ -773,14 +814,6 @@ class RadioClip(PlayableItem, ImageMixin):
 @dataclass(kw_only=True)
 class PodcastEpisode(PlayableItem, ImageMixin):
     """Represents a playable podcast episode."""
-
-
-@dataclass(kw_only=True)
-class RadioShow(PlayableItem, ImageMixin):
-    """Represents a playable radio show."""
-
-    service_id: str | None = None
-    version_pid: str | None = None
 
 
 @dataclass(kw_only=True)
@@ -897,41 +930,38 @@ class Header(BaseObject):
     pass
 
 
-@dataclass(kw_only=True)
-class Season(ImageContainer):
-    API_FIELD_MAP: ClassVar[Mapping[str, str]] = {"tlec_urn": "brand_urn"}
-    brand_urn: str | None = None
-    sub_items: Sequence[Annotated[EpisodeTypes, _POLYMORPHIC]] | None = None  # ty: ignore[invalid-mutable-override]
-
-
 EpisodeTypes = PodcastEpisode | RadioShow | RadioClip
 
-type SoundsTypes = (
-    AudiobookEpisode
-    | Audiobook
-    | CategoryItemContainer
-    | CollectionItemContainer
-    | Container
-    | Collection
-    | LiveStation
-    | MenuItem
-    | Network
-    | PlayableItem
-    | PlayableNetwork
-    | Podcast
-    | PodcastEpisode
-    | PromoItem
-    | RadioClip
-    | RadioSeries
-    | RadioShow
-    | RecommendedMenuItem
-    | SearchResults
-    | Season
-    | Segment
-    | Schedule
-    | ScheduleItem
-    | Station
-    | StationSearchResult
-)
+
+@dataclass(kw_only=True)
+class Season(ImageContainer[EpisodeTypes]):
+    API_FIELD_MAP: ClassVar[Mapping[str, str]] = {"tlec_urn": "brand_urn"}
+    brand_urn: str | None = None
+
+
+# type SoundsTypes = (
+#     CategoryItemContainer
+#     | CollectionItemContainer
+#     | Collection
+#     | LiveStation
+#     | MenuItem
+#     | Network
+#     | PlayableNetwork
+#     | Podcast
+#     | PodcastEpisode
+#     | PromoItem
+#     | RadioClip
+#     | RadioSeries
+#     | RadioShow
+#     | RecommendedMenuItem
+#     | SearchResults
+#     | Season
+#     | Segment
+#     | Schedule
+#     | ScheduleItem
+#     | Station
+#     | StationSearchResult
+# )
+
 """Types we expect to find within other SoundsTypes."""
 type NestedSoundsTypes = ItemCategory | Titles | Synopses | Duration | Progress

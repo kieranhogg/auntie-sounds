@@ -13,8 +13,7 @@ from mashumaro import DataClassDictMixin
 
 from auntie_sounds.models import MODEL_TAG, Container, LiveStation, Podcast, RadioShow
 from auntie_sounds.parser import Parser
-
-from .conftest import FIXTURES_FOLDER
+from tests.conftest import FIXTURES_FOLDER
 
 # Category dicts only ever appear nested (as ItemCategory or raw dicts); fed to
 # the factory on their own they hit the "has a key -> Network" fallback.
