@@ -442,6 +442,7 @@ type SoundsTypes = (
     | CategoryItemContainer
     | CollectionItemContainer
     | Collection
+    | Container
     | LiveStation
     | MenuItem
     | Network
@@ -938,30 +939,6 @@ class Season(ImageContainer[EpisodeTypes]):
     API_FIELD_MAP: ClassVar[Mapping[str, str]] = {"tlec_urn": "brand_urn"}
     brand_urn: str | None = None
 
-
-# type SoundsTypes = (
-#     CategoryItemContainer
-#     | CollectionItemContainer
-#     | Collection
-#     | LiveStation
-#     | MenuItem
-#     | Network
-#     | PlayableNetwork
-#     | Podcast
-#     | PodcastEpisode
-#     | PromoItem
-#     | RadioClip
-#     | RadioSeries
-#     | RadioShow
-#     | RecommendedMenuItem
-#     | SearchResults
-#     | Season
-#     | Segment
-#     | Schedule
-#     | ScheduleItem
-#     | Station
-#     | StationSearchResult
-# )
 
 """Types we expect to find within other SoundsTypes."""
 type NestedSoundsTypes = ItemCategory | Titles | Synopses | Duration | Progress
