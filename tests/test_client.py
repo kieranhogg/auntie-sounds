@@ -36,9 +36,7 @@ class TestClientCookieFileScoping:
         monkeypatch.setattr("auntie_sounds.client.COOKIE_FILE", tmp_path / "sounds_jar")
 
         session_a = aiohttp.ClientSession()
-        client_a = SoundsClient(
-            username="account-a", password="pw-a", session=session_a
-        )
+        client_a = SoundsClient(username="account-a", password="pw-a", session=session_a)
         await client_a.start()
         client_a._session.cookie_jar.update_cookies(
             {ID_COOKIE: "a-session"}, response_url=URL("https://bbc.co.uk")
@@ -47,16 +45,12 @@ class TestClientCookieFileScoping:
         await session_a.close()
 
         session_b = aiohttp.ClientSession()
-        client_b = SoundsClient(
-            username="account-b", password="pw-b", session=session_b
-        )
+        client_b = SoundsClient(username="account-b", password="pw-b", session=session_b)
         await client_b.start()
         try:
             assert client_a.username == "account-a"
             assert client_a.cookie_store.account_id == "account-a"
-            assert _default_cookie_file("account-a") != _default_cookie_file(
-                "account-b"
-            )
+            assert _default_cookie_file("account-a") != _default_cookie_file("account-b")
             assert client_a.cookie_store.path != client_b.cookie_store.path
             assert client_b.cookie_store.is_signed_in is False
         finally:

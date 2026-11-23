@@ -100,9 +100,7 @@ def _mock_user(mock_session, mock_requests, monkeypatch):
         requests=mock_requests,
         login_details_provided=True,
     )
-    monkeypatch.setattr(
-        user, "is_uk_account_and_location", AsyncMock(return_value=True)
-    )
+    monkeypatch.setattr(user, "is_uk_account_and_location", AsyncMock(return_value=True))
     return user
 
 

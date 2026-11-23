@@ -342,9 +342,7 @@ class TestRenewSession:
 
 
 class TestAuthenticate:
-    async def test_stale_cookie_falls_back_to_login(
-        self, mock_auth_service, monkeypatch
-    ):
+    async def test_stale_cookie_falls_back_to_login(self, mock_auth_service, monkeypatch):
         mock_auth_service.username = "user"
         mock_auth_service.password = "pass"
         mock_auth_service.cookie_store = Mock(is_signed_in=True, has_access_token=False)
@@ -521,9 +519,7 @@ class TestLoginInternals:
         monkeypatch.setattr(
             mock_auth_service, "_submit_username", AsyncMock(return_value="b")
         )
-        monkeypatch.setattr(
-            mock_auth_service, "_do_login", AsyncMock(return_value=True)
-        )
+        monkeypatch.setattr(mock_auth_service, "_do_login", AsyncMock(return_value=True))
 
         assert await mock_auth_service.login("user", "pass") is True
 

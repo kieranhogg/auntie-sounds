@@ -32,9 +32,7 @@ def _promote_if_recommended(menu_item: MenuItem) -> MenuItem:
         return menu_item
     first_child = menu_item.sub_items[0]
     if getattr(first_child, "recommendation", None) is not None:
-        data = {
-            field.name: getattr(menu_item, field.name) for field in fields(MenuItem)
-        }
+        data = {field.name: getattr(menu_item, field.name) for field in fields(MenuItem)}
         return RecommendedMenuItem(**data)
     return menu_item
 
@@ -101,9 +99,7 @@ class Parser:
         if "data" not in json_data:
             return menu
 
-        nodes = (
-            self.parse_node(item) for item in json_data["data"] if item is not None
-        )
+        nodes = (self.parse_node(item) for item in json_data["data"] if item is not None)
         menu_items = [node for node in nodes if isinstance(node, MenuItem)]
 
         # Promote any menu item to a "recommended" variant if its first child is a

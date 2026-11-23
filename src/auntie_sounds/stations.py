@@ -66,9 +66,7 @@ class StationService:
         self,
         international_only: bool = False,
     ) -> list[Network | PlayableNetwork]:
-        json_resp = await self.requests.get_json_response(
-            url=Endpoints.NETWORKS_DETAILED
-        )
+        json_resp = await self.requests.get_json_response(url=Endpoints.NETWORKS_DETAILED)
         networks = self.parser.parse_container(json_resp)
         if type(networks) is not list:
             return []

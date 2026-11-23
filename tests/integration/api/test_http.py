@@ -27,9 +27,7 @@ class TestHTTP:
         )
         assert resp.status == 200
 
-    async def test_make_request_authenticated_endpoint_without_credentials(
-        self, client
-    ):
+    async def test_make_request_authenticated_endpoint_without_credentials(self, client):
         with pytest.raises(UnauthorisedError):
             await client.requests.make_request(
                 method="GET", url=Endpoints.EXPERIENCE_MENU

@@ -235,9 +235,7 @@ class SoundsClient:
                 "The client has not been started. Call `client.start()` or use "
                 "`async with`"
             )
-        raise AttributeError(
-            f"{type(self).__name__!r} object has no attribute {name!r}"
-        )
+        raise AttributeError(f"{type(self).__name__!r} object has no attribute {name!r}")
 
     def _create_services(self) -> None:
         """Helper to create services after client has been started."""

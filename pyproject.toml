@@ -16,6 +16,9 @@ dependencies = [
 requires = ["uv_build>=0.11.8,<0.14"]
 build-backend = "uv_build"
 
+[tool.ruff]
+line-length = 90
+
 [tool.mypy]
 enable_error_code = ["truthy-bool", "truthy-iterable"]
 

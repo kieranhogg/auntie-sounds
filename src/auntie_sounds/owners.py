@@ -109,9 +109,7 @@ class OwnerService:
     async def annotate(self, json_data: Any) -> None:
         """Mark each brand and series entry with whether a station owns it."""
         programmes = [
-            (entry, parent)
-            for entry, parent in _walk(json_data)
-            if _is_programme(entry)
+            (entry, parent) for entry, parent in _walk(json_data) if _is_programme(entry)
         ]
         if not programmes:
             return

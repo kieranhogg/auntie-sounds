@@ -132,9 +132,7 @@ class TestStreamRequests:
         assert mediaset_call.kwargs["headers"] == {"Authorization": "Bearer abc"}
         assert result == ["https://akamai_uk/10", "https://cloudfront_uk/20"]
 
-    async def test_episode_stream_uses_highest_bitrate_without_token(
-        self, mock_playback
-    ):
+    async def test_episode_stream_uses_highest_bitrate_without_token(self, mock_playback):
         mock_playback.requests.get_json_response = AsyncMock(
             return_value=MEDIASET_RESPONSE
         )

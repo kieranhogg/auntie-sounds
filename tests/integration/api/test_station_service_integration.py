@@ -92,9 +92,7 @@ class TestStationServiceIntegration:
 
     async def test_get_station_schedule_date(self, real_sounds_client: SoundsClient):
         yesterday = (
-            (dt.now(tz=SCHEDULE_TIMEZONE) - timedelta(days=1))
-            .date()
-            .strftime("%Y-%m-%d")
+            (dt.now(tz=SCHEDULE_TIMEZONE) - timedelta(days=1)).date().strftime("%Y-%m-%d")
         )
         station = await real_sounds_client.stations.get_station(
             "bbc_radio_one", include_schedule=True, date=yesterday

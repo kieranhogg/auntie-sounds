@@ -94,8 +94,7 @@ class AuthService:
     FAILURE_BACKOFF_MAX = 900.0
 
     PASSWORD_NUMBER_SYMBOL_ERROR_MSG = (
-        "Sorry, that password isn't valid. Please "
-        "include something that isn't a letter."
+        "Sorry, that password isn't valid. Please include something that isn't a letter."
     )
 
     def __init__(
@@ -252,9 +251,7 @@ class AuthService:
                     try:
                         self.cookie_store.save()
                     except OSError:
-                        logger.warning(
-                            "Couldn't save the renewed session", exc_info=True
-                        )
+                        logger.warning("Couldn't save the renewed session", exc_info=True)
                     return self._auth_generation
                 logger.warning("Session renewal failed, trying full login...")
             if not (self.username and self.password):

@@ -47,9 +47,7 @@ class TestSeasons:
         assert podcast.seasons is None
 
     def test_podcast_with_seasons(self):
-        podcast = Podcast(
-            id="podcast", seasons=[Season(pid="urn1"), Season(pid="urn2")]
-        )
+        podcast = Podcast(id="podcast", seasons=[Season(pid="urn1"), Season(pid="urn2")])
         episodes = [
             PodcastEpisode(id="season1", series_pid="urn1"),
             PodcastEpisode(id="season2", series_pid="urn2"),
@@ -63,9 +61,7 @@ class TestSeasons:
 
     def test_seasons_beyond_a_partial_fetch_are_kept(self):
         """With only some episodes, an empty season may just not be fetched yet."""
-        podcast = Podcast(
-            id="podcast", seasons=[Season(pid="urn1"), Season(pid="older")]
-        )
+        podcast = Podcast(id="podcast", seasons=[Season(pid="urn1"), Season(pid="older")])
         episodes = [PodcastEpisode(id="season1", series_pid="urn1")]
         assign_seasons(podcast, episodes, complete=False)
         assert [s.pid for s in podcast.seasons] == ["urn1", "older"]
@@ -186,9 +182,7 @@ def _fake_api(responses: dict[Endpoints, dict]):
 class TestGetPodcast:
     @pytest.fixture(autouse=True)
     def anonymous(self, mock_content, monkeypatch):
-        monkeypatch.setattr(
-            mock_content, "_personalised", AsyncMock(return_value=False)
-        )
+        monkeypatch.setattr(mock_content, "_personalised", AsyncMock(return_value=False))
 
     @pytest.fixture
     def brand(self):
@@ -415,9 +409,7 @@ class TestGetPodcastEpisodes:
         self, mock_content, monkeypatch, owner, episode_type, container_type
     ):
         """I'm Not A Monster has episodes on two networks, but one owner."""
-        monkeypatch.setattr(
-            mock_content, "_personalised", AsyncMock(return_value=False)
-        )
+        monkeypatch.setattr(mock_content, "_personalised", AsyncMock(return_value=False))
         listing = _load("PLAYABLE_ITEMS_CONTAINER.json")
         networks = {item["network"]["id"] for item in listing["data"]}
         assert networks == {"bbc_sounds_podcasts", "bbc_radio_four"}
@@ -435,9 +427,7 @@ class TestGetPodcastEpisodes:
         assert {type(e.container) for e in episodes} == {container_type}
 
     async def test_owner_is_looked_up_once(self, mock_content, monkeypatch):
-        monkeypatch.setattr(
-            mock_content, "_personalised", AsyncMock(return_value=False)
-        )
+        monkeypatch.setattr(mock_content, "_personalised", AsyncMock(return_value=False))
         fake, calls = _fake_api(
             {
                 Endpoints.PLAYABLE_ITEMS_CONTAINER: _load(
@@ -499,9 +489,7 @@ class TestGetByPid:
 
         Regression: the container was a bare Container, which MA can't convert.
         """
-        monkeypatch.setattr(
-            mock_content, "_personalised", AsyncMock(return_value=False)
-        )
+        monkeypatch.setattr(mock_content, "_personalised", AsyncMock(return_value=False))
         fake, calls = _fake_api(
             {
                 Endpoints.PROGRAMME_FROM_PID_PLAYABLE: _load(
@@ -525,13 +513,9 @@ class TestGetByPid:
         assert item.version_pid == "p0p78bd4"
         assert item.image_url
 
-    async def test_include_stream_sets_fallback_streams(
-        self, mock_content, monkeypatch
-    ):
+    async def test_include_stream_sets_fallback_streams(self, mock_content, monkeypatch):
         """The best stream goes in `stream`, the other CDNs' streams in `fallback_streams`."""
-        monkeypatch.setattr(
-            mock_content, "_personalised", AsyncMock(return_value=False)
-        )
+        monkeypatch.setattr(mock_content, "_personalised", AsyncMock(return_value=False))
         fake, _ = _fake_api(
             {
                 Endpoints.PROGRAMME_FROM_PID_PLAYABLE: _load(

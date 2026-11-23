@@ -79,9 +79,7 @@ class TestOwnerService:
         assert requests.calls == [["p08yblkf"]]
         # Every container is marked as not station-owned, even under the
         # episodes that went out on Radio 4
-        assert {item["container"]["station_owned"] for item in listing["data"]} == {
-            False
-        }
+        assert {item["container"]["station_owned"] for item in listing["data"]} == {False}
         # Only the mark is added
         assert all("network" not in item["container"] for item in listing["data"])
         assert {item["network"]["id"] for item in listing["data"]} == {

@@ -290,9 +290,7 @@ class PlaybackService:
             url=URLs.MEDIASET, url_args={"id": media_id}, headers=headers
         )
         logger.log(VERBOSE_LOG_LEVEL, json_resp)
-        return _extract_streams(
-            json_resp, preferences=preferences or StreamPreference()
-        )
+        return _extract_streams(json_resp, preferences=preferences or StreamPreference())
 
     async def _update_play_status(
         self,

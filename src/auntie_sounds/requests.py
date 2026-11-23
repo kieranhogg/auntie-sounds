@@ -2,8 +2,9 @@ import logging
 import re
 from collections.abc import Callable, Generator
 from contextlib import contextmanager
+from datetime import timedelta
 from functools import partial
-from typing import Literal
+from typing import Any, Literal
 
 import aiohttp
 from aiohttp import ClientConnectionError
@@ -286,9 +287,7 @@ class RequestManager:
         server_page_size = int(first_page.get("limit") or page_size)
 
         while len(items) < target:
-            logger.debug(
-                "Fetching page at offset %s (%s/%s)", offset, len(items), target
-            )
+            logger.debug("Fetching page at offset %s (%s/%s)", offset, len(items), target)
             resp = await self.make_request(
                 method="GET",
                 url=url,
@@ -320,12 +319,20 @@ class RequestManager:
         with _body_errors(url):
             return await resp.text()
 
+    async def get_json_and_age(
+        self, url: Endpoints | URLs | str
+    ) -> tuple[dict[str, Any], timedelta]:
+        """Get a JSON response, along with its cache age from the headers, if set."""
+        resp = await self.make_request("GET", url)
+        age = timedelta(seconds=int(resp.headers.get("Age", 0)))
+        return await self._read_json(resp, url), age
+
     def set_reauth_handler(self, call: Callable):
         self.reauth_handler = call
 
-    async def _read_json(self, resp, url) -> dict:
+    async def _read_json(self, resp: aiohttp.ClientResponse, url) -> dict[str, Any]:
         with _body_errors(url):
-            body = await resp.json()
+            body: dict[str, Any] = await resp.json()
         if not isinstance(body, dict):
             raise APIResponseError(
                 f"Expected a JSON object from {url}, got {type(body).__name__}"

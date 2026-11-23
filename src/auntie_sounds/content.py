@@ -133,9 +133,7 @@ def assign_seasons(
 
     for season in podcast.seasons:
         # Container.pid isn't populated from the urn, so use item_id
-        season.sub_items = (
-            by_series.pop(season.item_id, None) if season.item_id else None
-        )
+        season.sub_items = by_series.pop(season.item_id, None) if season.item_id else None
     # The API lists seasons by pid, not by date, and includes ones with nothing
     # available. Drop those, unless the episode list was cut short, and order the rest
     # by first release.
@@ -152,9 +150,7 @@ def assign_seasons(
 
 def _is_retryable(e: SoundsException) -> bool:
     """Helper to determine if an exception is retriable."""
-    return (
-        isinstance(e, NetworkError) or getattr(e, "status", None) in RETRYABLE_STATUSES
-    )
+    return isinstance(e, NetworkError) or getattr(e, "status", None) in RETRYABLE_STATUSES
 
 
 async def _no_episodes() -> None:
@@ -548,9 +544,7 @@ class ContentService:
 
         # The Sounds API for catch-up media does not contain image URLs
         if fetch_missing_images:
-            await self._get_missing_images(
-                segments=segments, throttler=spotify_throttler
-            )
+            await self._get_missing_images(segments=segments, throttler=spotify_throttler)
         return segments
 
     async def get_heartbeat_details(self, pid) -> tuple[str, str]:
@@ -579,9 +573,7 @@ class ContentService:
         Any failed images with a retryable status are retried straight away with a
         back-off time which doubles.
         """
-        logger.debug(
-            "Fetching missing images from Spotify with throttler: %s", throttler
-        )
+        logger.debug("Fetching missing images from Spotify with throttler: %s", throttler)
         semaphore = asyncio.Semaphore(throttler.max_concurrent_images)
 
         async def fetch(segment: Segment) -> str | None:

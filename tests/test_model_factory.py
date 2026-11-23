@@ -198,9 +198,7 @@ class TestClipVsPodcastClassification:
             (True, RadioClip, RadioSeries),
         ],
     )
-    def test_clip_follows_its_brand_owner(
-        self, station_owned, expected, container_type
-    ):
+    def test_clip_follows_its_brand_owner(self, station_owned, expected, container_type):
         node = {
             "type": "playable_item",
             "id": "m011",

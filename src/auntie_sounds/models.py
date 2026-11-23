@@ -13,8 +13,7 @@ from mashumaro.types import Discriminator
 from auntie_sounds.utils import image_from_recipe, network_logo
 
 NETWORK_LOGO_FORMAT = (
-    "https://sounds.files.bbci.co.uk/3.12.0/networks/{network_id}/"
-    "{type}_{size}.{format}"
+    "https://sounds.files.bbci.co.uk/3.12.0/networks/{network_id}/{type}_{size}.{format}"
 )
 
 

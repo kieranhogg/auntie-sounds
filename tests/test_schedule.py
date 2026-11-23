@@ -44,9 +44,7 @@ class TestScheduleService:
         with pytest.raises(InvalidFormatError):
             await service.get_schedule("bbc_radio_one", date="2025/01/15")
 
-    async def test_get_schedule_valid_date_format(
-        self, mock_api, real_anonymous_client
-    ):
+    async def test_get_schedule_valid_date_format(self, mock_api, real_anonymous_client):
         """Test get_schedule with valid date format"""
         try:
             await real_anonymous_client.schedules.get_schedule(
