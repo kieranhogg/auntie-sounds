@@ -1,6 +1,6 @@
 import dataclasses
 import logging
-from dataclasses import fields
+from dataclasses import MISSING, fields
 from enum import StrEnum, auto, unique
 from typing import Any, ClassVar, Final, NamedTuple
 
@@ -42,6 +42,8 @@ from auntie_sounds.models import (
 
 logger = logging.getLogger(__name__)
 
+_reported: set[tuple[str, frozenset[str]]] = set()
+
 
 class NestedObject(NamedTuple):
     source_key: str
@@ -65,6 +67,21 @@ NESTED_OBJECTS: Final[tuple[NestedObject, ...]] = (
     NestedObject("uris", URI, list_only=True),
     NestedObject("urn", URN),
 )
+
+
+def _required_fields(cls: type) -> frozenset[str]:
+    return frozenset(
+        f.name
+        for f in fields(cls)  # ty: ignore[invalid-argument-type]
+        if f.default is MISSING and f.default_factory is MISSING
+    )
+
+
+def _report_skipped(where: str, error: ParserError) -> None:
+    key = (where, frozenset(getattr(error, "missing", ())))
+    level = logging.DEBUG if key in _reported else logging.WARNING
+    _reported.add(key)
+    logger.log(level, "Skipped unparseable %s: %s", where, error)
 
 
 def _api_field_map(new_type: type) -> dict[str, str]:
@@ -152,9 +169,7 @@ def _episode_or_show_or_audiobook_episode(
 ) -> type:
     if _is_audiobook_episode(original_object):
         return AudiobookEpisode
-    return (
-        PodcastEpisode if _in_a_podcast(original_object, parent_network) else RadioShow
-    )
+    return PodcastEpisode if _in_a_podcast(original_object, parent_network) else RadioShow
 
 
 def _clip_or_episode(
@@ -457,10 +472,12 @@ def convert_between_types(original_object, new_type):
     try:
         new_object = new_type(**attrs)
     except TypeError as e:
+        required = _required_fields(new_type)
+        missing = required - attrs.keys()
         raise ParserError(
-            "Not all required fields present.\n"
-            f"Required fields: {required_fields}\n"
-            f"Available fields: {attrs}"
+            "Not all required fields present. "
+            f"Required fields: {required}, "
+            f"missing fields: {missing}"
         ) from e
     new_object = parse_nested_objects(new_object)
     return new_object
@@ -486,21 +503,26 @@ def parse_nested_objects(node: SoundsTypes) -> SoundsTypes:
 
         out_objects = []
         for source_dict in source_dicts:
-            if nested_object.concrete_class:
-                out_object = ModelFactory().parse_object(
-                    source_dict,
-                    parent_network=getattr(node, "network", None) or node,
-                    type_hint=nested_object.replacement_model,
-                )
-            else:
-                out_object = ModelFactory().parse_object(
-                    source_dict,
-                    parent_network=getattr(node, "network", None) or node,
-                )
-            if out_object is None or type(out_object) is dict:
-                logger.error("Failed to parse nested object: %s", source_dict)
-            out_objects.append(out_object)
-
+            try:
+                if nested_object.concrete_class:
+                    out_object = ModelFactory().parse_object(
+                        source_dict,
+                        parent_network=getattr(node, "network", None) or node,
+                        type_hint=nested_object.replacement_model,
+                    )
+                else:
+                    out_object = ModelFactory().parse_object(
+                        source_dict,
+                        parent_network=getattr(node, "network", None) or node,
+                    )
+                if out_object is None or type(out_object) is dict:
+                    logger.error("Failed to parse nested object: %s", source_dict)
+                out_objects.append(out_object)
+            except ParserError as e:
+                if nested_object.source_key in _required_fields(type(node)):
+                    raise
+                _report_skipped(nested_object.source_key, e)
+                continue
         setattr(
             node,
             nested_object.source_key,
