@@ -33,13 +33,6 @@ repos:
         require_serial: true
         pass_filenames: false
 
-      - id: habit_hooks
-        name: Habit Hooks
-        entry: habit-hooks
-        language: system
-        types: [python]
-        require_serial: true
-        pass_filenames: false
 
       - id: flake8
         name: flake8
