@@ -269,6 +269,7 @@ dependencies = [
 dev = [
     { name = "aioresponses" },
     { name = "anyio" },
+    { name = "coverage" },
     { name = "deptry" },
     { name = "flake8-class-attributes-order" },
     { name = "mypy" },
@@ -296,6 +297,7 @@ requires-dist = [
 dev = [
     { name = "aioresponses", specifier = ">=0.7.9" },
     { name = "anyio", specifier = ">=4.14.0" },
+    { name = "coverage", specifier = ">=7.16.1" },
     { name = "deptry", specifier = ">=0.25.1" },
     { name = "flake8-class-attributes-order", specifier = ">=0.3.0" },
     { name = "mypy", specifier = ">=2.3.1" },
