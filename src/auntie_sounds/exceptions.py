@@ -1,3 +1,6 @@
+from typing import Any
+
+
 class SoundsException(Exception):
     """Generic exception for the module"""
 
@@ -78,3 +81,15 @@ class DateOutOfRangeError(APIResponseError):
 
 class NotStartedError(SoundsException):
     """SoundsClient services accessed before .start() was called."""
+
+
+class MissingFieldsError(ParserError):
+    """Raised when a required field is missing during parsing API response."""
+
+    model: Any
+    missing: list[str]
+
+    def __init__(self, model: Any, missing: list[str]):
+        self.model = model
+        self.missing = missing
+        super().__init__(self.message)
