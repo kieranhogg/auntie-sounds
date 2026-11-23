@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+## [3.3.1] - 2026-11-23
 * Fix: negative time shift displayed poorly
 
 ## [3.3.0] - 2026-11-23
