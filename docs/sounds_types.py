@@ -722,9 +722,7 @@ sounds_types = {
             },
             "siblings_count": {"type": "integer", "minimum": 0, "example": 2},
             "position": {"$ref": "#/components/schemas/V2Position"},
-            "ancestors": {
-                "items": {"$ref": "#/components/schemas/V2ProgrammeAncestors"}
-            },
+            "ancestors": {"items": {"$ref": "#/components/schemas/V2ProgrammeAncestors"}},
             "availability": {"$ref": "#/components/schemas/V2ProgrammeAvailability"},
         },
         "required": [
@@ -968,49 +966,37 @@ responses = {
     "InternalServiceError": {
         "description": "There is an internal service error",
         "content": {
-            "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
-            }
+            "application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}
         },
     },
     "Unauthorized": {
         "description": "Authorization token is invalid or Expired",
         "content": {
-            "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
-            }
+            "application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}
         },
     },
     "Notfound": {
         "description": "Not found",
         "content": {
-            "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
-            }
+            "application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}
         },
     },
     "BadRequest": {
         "description": "Invalid value provided",
         "content": {
-            "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
-            }
+            "application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}
         },
     },
     "GatewayTimeout": {
         "description": "server error response code indicates that the server, while acting as a gateway or proxy, did not get a response in time from the upstream server that it needed in order to complete the request.",
         "content": {
-            "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
-            }
+            "application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}
         },
     },
     "BadGateway": {
         "description": "server error response code indicates that the server, while acting as a gateway or proxy, received an invalid response from the upstream server.",
         "content": {
-            "application/json": {
-                "schema": {"$ref": "#/components/schemas/ErrorResponse"}
-            }
+            "application/json": {"schema": {"$ref": "#/components/schemas/ErrorResponse"}}
         },
     },
     "TextResponse": {
@@ -1039,9 +1025,7 @@ responses = {
         "description": "Unexpected error",
         "content": {
             "application/json": {
-                "schema": {
-                    "$ref": "#/components/schemas/PersonalisedRadioErrorResponse"
-                }
+                "schema": {"$ref": "#/components/schemas/PersonalisedRadioErrorResponse"}
             }
         },
     },
@@ -1066,9 +1050,7 @@ urls = {
                     "description": "OK",
                     "content": {
                         "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ExperienceResponse"
-                            }
+                            "schema": {"$ref": "#/components/schemas/ExperienceResponse"}
                         }
                     },
                 },
@@ -1233,9 +1215,7 @@ urls = {
                     "description": "OK",
                     "content": {
                         "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/V2NetworksResponse"
-                            }
+                            "schema": {"$ref": "#/components/schemas/V2NetworksResponse"}
                         }
                     },
                 },
@@ -1572,9 +1552,7 @@ urls = {
                     "description": "OK",
                     "content": {
                         "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/BroadcastsResponse"
-                            }
+                            "schema": {"$ref": "#/components/schemas/BroadcastsResponse"}
                         }
                     },
                 },
@@ -1604,9 +1582,7 @@ urls = {
                     "description": "OK",
                     "content": {
                         "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/BroadcastsResponse"
-                            }
+                            "schema": {"$ref": "#/components/schemas/BroadcastsResponse"}
                         }
                     },
                 },
@@ -1650,9 +1626,7 @@ urls = {
                     "description": "OK",
                     "content": {
                         "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/BroadcastsResponse"
-                            }
+                            "schema": {"$ref": "#/components/schemas/BroadcastsResponse"}
                         }
                     },
                 },
@@ -2800,9 +2774,7 @@ urls = {
                     "description": "OK",
                     "content": {
                         "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ExperienceResponse"
-                            }
+                            "schema": {"$ref": "#/components/schemas/ExperienceResponse"}
                         }
                     },
                 },
@@ -2829,9 +2801,7 @@ urls = {
                     "description": "OK",
                     "content": {
                         "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ExperienceResponse"
-                            }
+                            "schema": {"$ref": "#/components/schemas/ExperienceResponse"}
                         }
                     },
                 },
@@ -2858,9 +2828,7 @@ urls = {
                     "description": "OK",
                     "content": {
                         "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ExperienceResponse"
-                            }
+                            "schema": {"$ref": "#/components/schemas/ExperienceResponse"}
                         }
                     },
                 },
@@ -2918,9 +2886,7 @@ urls = {
                     "description": "OK",
                     "content": {
                         "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ExperienceResponse"
-                            }
+                            "schema": {"$ref": "#/components/schemas/ExperienceResponse"}
                         }
                     },
                 },
@@ -3611,9 +3577,7 @@ urls = {
                     "description": "OK",
                     "content": {
                         "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ProgrammesResponse"
-                            }
+                            "schema": {"$ref": "#/components/schemas/ProgrammesResponse"}
                         }
                     },
                 },
