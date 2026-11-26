@@ -43,7 +43,7 @@ jobs:
           ref: stable
           fetch-depth: 0
 
-      - uses: astral-sh/setup-uv@v10.3.3
+      - uses: astral-sh/setup-uv@v10.4.0
         with:
           # Match [tool.uv] required-version, and no cache in a job that publishes
           version-file: "pyproject.toml"
@@ -109,7 +109,7 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - uses: astral-sh/setup-uv@v10.3.3
+      - uses: astral-sh/setup-uv@v10.4.0
         with:
           version-file: "pyproject.toml"
           enable-cache: false
